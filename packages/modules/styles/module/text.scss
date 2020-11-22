@@ -1,0 +1,133 @@
+.text-12 {
+    font-size: 12px!important;
+}
+
+.text-14 {
+    font-size: 14px!important;
+}
+
+.text-16 {
+    font-size: 16px!important;
+}
+
+.text-18 {
+    font-size: 18px!important;
+}
+
+.text-20 {
+    font-size: 20px!important;
+}
+
+.text-22 {
+    font-size: 22px!important;
+}
+
+.text-24 {
+    font-size: 24px!important;
+}
+
+.text-26 {
+    font-size: 26px!important;
+}
+
+.text-28 {
+    font-size: 28px!important;
+}
+
+.text-30 {
+    font-size: 30px!important;
+}
+
+.text-40 {
+    font-size: 40px!important;
+}
+
+.text-50 {
+    font-size: 50px!important;
+}
+
+.text-60 {
+    font-size: 60px!important;
+}
+
+.text-Abc {
+    text-transform: Capitalize;
+}
+
+.text-ABC {
+    text-transform: Uppercase;
+}
+
+.text-abc {
+    text-transform: Lowercase;
+}
+
+.text-price::before {
+    content: "￥";
+    font-size: 80%;
+    margin-right: 4rpx;
+}
+
+.text-cut {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.text-center {
+    text-align: center!important;
+}
+
+.text-content {
+    line-height: 1.6;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-indent-xs {
+    text-indent: 20rpx;
+}
+
+.text-indent-sm {
+    text-indent: 24rpx;
+}
+
+.text-indent-df {
+    text-indent: 28rpx;
+}
+
+.text-indent-lg {
+    text-indent: 32rpx;
+}
+
+.text-indent-xl {
+    text-indent: 36rpx;
+}
+
+.text-indent-xxl {
+    text-indent: 44rpx;
+}
+
+.text-indent-sl {
+    text-indent: 80rpx;
+}
+
+.text-indent-xsl {
+    text-indent: 120rpx;
+}
+
+.text-warp {
+    word-wrap: break-word;
+    word-break: break-all
+}
+

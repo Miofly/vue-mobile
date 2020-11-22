@@ -1,0 +1,355 @@
+import h5Copy from 'uJs/plugin/junyi-h5-copy'
+import test from 'uJs/test.ts'
+
+const roots = {
+	// 信息提示
+	showToast (title: string = '操作成功', icon: string | boolean = 'none', duration: number = 1300, mask: boolean = false): void {
+		// @ts-ignore
+		uni.showToast({ title, icon, duration, mask })
+	},
+	
+	// loading设置
+	showLoading (title: string = '正在加载', mask: boolean = true): void {
+		uni.showLoading({
+			title,
+			mask // 防止触摸穿透
+		})
+	},
+	
+	// 字符串过长截取+省略号
+	strEllipsis (str: any, length: number): string {
+		return String(str).length > length ? `${str.slice(0, length)}...` : str
+	},
+	
+	// 复制文本
+	copyText (data: string, callback = (res) => {
+		if (res) {
+			roots.showToast('复制成功')
+		} else {
+			roots.showToast('复制失败')
+		}
+	}): void {
+		// #ifdef APP-PLUS || MP
+		uni.setClipboardData({
+			data,
+			success (res) {
+				uni.getClipboardData({
+					success () {
+						(typeof callback === 'function') && callback(true)
+					},
+					fail () {
+						(typeof callback === 'function') && callback(false)
+					}
+				})
+			},
+			fail (res) {
+				(typeof callback === 'function') && callback(false)
+			}
+		})
+		// #endif
+		// #ifdef H5
+		const result = h5Copy(data)
+		if (result === false) {
+			callback(false) // eslint-disable-line
+		} else {
+			callback(true) // eslint-disable-line
+		}
+		// #endif
+	},
+	
+	// 图片展示
+	showImg (url: number): void {
+		console.log(url)
+		// @ts-ignore
+		uni.previewImage({ urls: [url], current: 0 })
+	},
+	
+	// 普通路由跳转
+	push (url: string): void {
+		uni.navigateTo({ url })
+	},
+	
+	// 路由替换跳转
+	replace (url: string): void {
+		uni.redirectTo({ url })
+	},
+	
+	// 跳转到 tabBar 页面，并关闭其他所有非 tabBar 页面。路径后不能带参数
+	switchTab (url: string): void {
+		uni.switchTab({ url })
+	},
+	
+	// 关闭所有页面，打开到应用内的某个页面。
+	reLaunch (url: string): void {
+		uni.reLaunch({ url })
+	},
+	
+	// 返回
+	back () {
+		window.history.back()
+	},
+	
+	addUnit (value = 'auto', unit = 'rpx') {
+		value = String(value)
+		// 用uView内置验证规则中的number判断是否为数值
+		return test.number(value) ? `${value}${unit}` : value
+	},
+	
+	// 去除空格
+	trim (str, pos = 'both') {
+		if (pos == 'both') {
+			return str.replace(/^\s+|\s+$/g, '')
+		} else if (pos == 'left') {
+			return str.replace(/^\s*/, '')
+		} else if (pos == 'right') {
+			return str.replace(/(\s*$)/g, '')
+		} else if (pos == 'all') {
+			return str.replace(/\s+/g, '')
+		}
+		return str
+	},
+	
+	// 格式化对象
+	gsh (str: any): void {
+		return JSON.parse(JSON.stringify(str))
+	},
+	
+	// 获取父组件的参数，因为支付宝小程序不支持provide/inject的写法
+	// this.$parent在非H5中，可以准确获取到父组件，但是在H5中，需要多次this.$parent.$parent.xxx
+	// 这里默认值等于undefined有它的含义，因为最顶层元素(组件)的$parent就是undefined，意味着不传name
+	// 值(默认为undefined)，就是查找最顶层的$parent
+	$parent (name: any = undefined) { // eslint-disable-line
+		let parent = this.$parent
+		// 通过while历遍，这里主要是为了H5需要多层解析的问题
+		while (parent) {
+			// 父组件
+			if (parent.$options && parent.$options.name !== name) {
+				// 如果组件的name不相等，继续上一级寻找
+				parent = parent.$parent
+			} else {
+				return parent
+			}
+		}
+		return false
+	},
+	
+	// 得到 localStorage 数据
+	getLocalData (str): any {
+		return localStorage.getItem(str)
+	},
+	
+	emptyPaading (str, sign): any {
+		return str || sign
+	},
+	
+	jumpWX () {
+		window.location.replace('weixin://')
+	},
+	
+	route (options = {}, params = false) { // 路由跳转 注意:本方法没有对跳转的回调函数进行封装
+		let config = {
+			type: 'navigateTo',
+			url: '',
+			delta: 1, // navigateBack页面后退时,回退的层数
+			params: {}, // 传递的参数
+			animationType: 'pop-in', // 窗口动画,只在APP有效
+			animationDuration: 300, // 窗口动画持续时间,单位毫秒,只在APP有效
+		}
+		config = Object.assign(config, options)
+		// 如果url没有"/"开头，添加上，因为uni的路由跳转需要"/"开头
+		if (config.url[0] != '/') config.url = `/${config.url}`
+		// 判断是否有传递显式的参数,Object.keys转为数组并判断长度,switchTab类型时不能携带参数
+		if (Object.keys(config.params).length && config.type != 'switchTab') {
+			// 判断用户传递的url中，是否带有参数
+			// 使用正则匹配，主要依据是判断是否有"/","?","="等，如“/page/index/index?name=mary"
+			// 如果有url中有get参数，转换后无需带上"?"
+			let query = ''
+			if ((/.*\/.*\?.*=.*/).test(config.url)) {
+				// object对象转为get类型的参数
+				query = this.queryParams(config.params, false)
+				// 因为已有get参数,所以后面拼接的参数需要带上"&"隔开
+				config.url += `&${query}`
+			} else {
+				query = this.queryParams(config.params)
+				config.url += query
+			}
+		}
+		// 简写形式，把url和参数拼接起来
+		if (typeof options === 'string' && typeof params == 'object') {
+			let query = ''
+			if ((/.*\/.*\?.*=.*/).test(<string>options)) { // eslint-disable-line
+				// object对象转为get类型的参数
+				query = this.queryParams(params, false)
+				// 因为已有get参数,所以后面拼接的参数需要带上"&"隔开
+				options += `&${query}`
+			} else {
+				query = this.queryParams(params)
+				options += query
+			}
+		}
+		// 判断是否一个字符串，如果是，直接跳转(简写法)
+		// 如果是中情形，默认第二个参数为对象形式的参数
+		if (typeof options === 'string') {
+			if (options[0] != '/') options = `/${options}`
+			return uni.navigateTo(<UniApp.NavigateToOptions>{ url: options }) // eslint-disable-line
+		}
+		// navigateTo类型的跳转
+		if (config.type == 'navigateTo' || config.type == 'to') {
+			return uni.navigateTo({
+				url: config.url,
+				// @ts-ignore
+				animationType: config.animationType,
+				animationDuration: config.animationDuration,
+			})
+		}
+		if (config.type == 'redirectTo' || config.type == 'redirect') {
+			return uni.redirectTo({
+				url: config.url,
+			})
+		}
+		if (config.type == 'switchTab' || config.type == 'tab') {
+			return uni.switchTab({
+				url: config.url,
+			})
+		}
+		if (config.type == 'reLaunch') {
+			return uni.reLaunch({
+				url: config.url
+			})
+		}
+		if (config.type == 'navigateBack' || config.type == 'back') {
+			return uni.navigateBack({
+				delta: parseInt(config.delta ? config.delta : this.delta) // eslint-disable-line
+			})
+		}
+	},
+	
+	// 对象转url参数 isPrefix,是否自动加上"?"
+	queryParams (data = {}, isPrefix = true, arrayFormat = 'brackets') {
+		const prefix = isPrefix ? '?' : ''
+		const _result = [] // eslint-disable-line
+		if (['indices', 'brackets', 'repeat', 'comma'].indexOf(arrayFormat) == -1) arrayFormat = 'brackets'
+		for (const key in data) { // eslint-disable-line
+			const value = data[key]
+			// 去掉为空的参数
+			if (['', undefined, null].indexOf(value) >= 0) {
+				continue // eslint-disable-line
+			}
+			// 如果值为数组，另行处理
+			if (value.constructor === Array) {
+				// e.g. {ids: [1, 2, 3]}
+				switch (arrayFormat) {
+				case 'indices':
+					// 结果: ids[0]=1&ids[1]=2&ids[2]=3
+					for (let i = 0; i < value.length; i++) {
+						_result.push(`${key}[${i}]=${value[i]}`)
+					}
+					break
+				case 'brackets':
+					// 结果: ids[]=1&ids[]=2&ids[]=3
+					value.forEach(_value => {
+						_result.push(`${key}[]=${_value}`)
+					})
+					break
+				case 'repeat':
+					// 结果: ids=1&ids=2&ids=3
+					value.forEach(_value => {
+						_result.push(`${key}=${_value}`)
+					})
+					break
+				case 'comma':
+					// 结果: ids=1,2,3
+					let commaStr = '' // eslint-disable-line
+					value.forEach(_value => {
+						commaStr += (commaStr ? ',' : '') + _value
+					})
+					_result.push(`${key}=${commaStr}`)
+					break
+				default:
+					value.forEach(_value => {
+						_result.push(`${key}[]=${_value}`)
+					})
+				}
+			} else {
+				_result.push(`${key}=${value}`)
+			}
+		}
+		return _result.length ? prefix + _result.join('&') : ''
+	},
+	
+	/**
+	 * 本算法来源于简书开源代码，详见：https://www.jianshu.com/p/fdbf293d0a85
+	 * 全局唯一标识符（uuid，Globally Unique Identifier）,也称作 uuid(Universally Unique IDentifier)
+	 * 一般用于多个组件之间,给它一个唯一的标识符,或者v-for循环的时候,如果使用数组的index可能会导致更新列表出现问题
+	 * 最可能的情况是左滑删除item或者对某条信息流"不喜欢"并去掉它的时候,会导致组件内的数据可能出现错乱
+	 * v-for的时候,推荐使用后端返回的id而不是循环的index
+	 * @param {Number} len uuid的长度
+	 * @param {Boolean} firstU 将返回的首字母置为"u"
+	 * @param {Nubmer} radix 生成uuid的基数(意味着返回的字符串都是这个基数),2-二进制,8-八进制,10-十进制,16-十六进制
+	 */
+	guid (len = 32, firstU = true, radix = null) {
+		const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('')
+		const uuid = []
+		radix = radix || chars.length
+		
+		if (len) {
+			// 如果指定uuid长度,只是取随机的字符,0|x为位运算,能去掉x的小数位,返回整数位
+			for (let i = 0; i < len; i++) uuid[i] = chars[0 | Math.random() * radix]
+		} else {
+			let r
+			// rfc4122标准要求返回的uuid中,某些位为固定的字符
+			uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-'
+			uuid[14] = '4'
+			
+			for (let i = 0; i < 36; i++) {
+				if (!uuid[i]) {
+					r = 0 | Math.random() * 16
+					uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r]
+				}
+			}
+		}
+		// 移除第一个字符,并用u替代,因为第一个字符为数值时,该guuid不能用作id或者class
+		if (firstU) {
+			uuid.shift()
+			return `u${uuid.join('')}`
+		}
+		return uuid.join('')
+	},
+	// 查询节点信息
+	getRect (selector, all) {
+		return new Promise(resolve => {
+			uni.createSelectorQuery()
+			.in(this)[all ? 'selectAll' : 'select'](selector)
+				.boundingClientRect(rect => {
+					if (all && Array.isArray(rect) && rect.length) {
+						resolve(rect)
+					}
+					if (!all && rect) {
+						resolve(rect)
+					}
+				})
+				.exec()
+		})
+	},
+	// 颜色处理
+	rgbToHex (r, g, b) {
+		return `#${this.toHex(r)}${this.toHex(g)}${this.toHex(b)}`
+	},
+	toHex (n) {
+		n = parseInt(n, 10)
+		if (isNaN(n)) return '00'
+		n = Math.max(0, Math.min(n, 255))
+		return '0123456789ABCDEF'.charAt((n - n % 16) / 16) +
+			'0123456789ABCDEF'.charAt(n % 16)
+	},
+	hexToRgb (hex) {
+		const result = (/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i).exec(hex)
+		return result ? {
+			r: parseInt(result[1], 16),
+			g: parseInt(result[2], 16),
+			b: parseInt(result[3], 16)
+		} : null
+	}
+}
+
+export default roots

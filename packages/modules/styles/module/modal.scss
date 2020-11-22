@@ -1,0 +1,63 @@
+.mio-modal-box {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin: auto;
+    background: #fff;
+    z-index: 999;
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
+    box-sizing: border-box;
+    visibility: hidden;
+}
+
+.mio-modal-scale { // 隐藏
+    transform: translate(-50%, -50%) scale(0);
+}
+
+.mio-modal-normal { // 显示
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.mio-modal-show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mio-modal-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 888;
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.mio-mask-show {
+    visibility: visible;
+    opacity: 1;
+}
+
+.mio-modal-title {
+    text-align: center;
+    font-size: 34 rpx;
+    color: #333;
+    padding-top: 20 rpx;
+    font-weight: bold;
+}
+
+.mio-modal-content {
+    text-align: center;
+    color: #999;
+    font-size: 28 rpx;
+    padding-top: 20 rpx;
+    padding-bottom: 60 rpx;
+}
+
+.mio-mtop {
+    margin-top: 30 rpx;
+}
