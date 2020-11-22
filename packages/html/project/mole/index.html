@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html style="background: rgb(212, 169, 126)">
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport"
+		  content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta content="yes" name="apple-mobile-web-app-capable"/>
+	<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+	<meta content="telephone=no" name="format-detection"/>
+	<meta content="email=no" name="format-detection"/>
+	<title>痣相占卜测运</title>
+	<script src="jquery.js"></script>
+	<script type="text/javascript" src="adaptive.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	<!--<body style="background: rgb(212, 169, 126)">-->
+<body style="background: url(./img/background@2x.png) no-repeat;background-size: cover;">
+<div style="overflow-y: hidden!important;position: relative;padding-bottom: 0.3rem;">
+	<div style="width:90%;height:6.2rem;background:rgba(253,249,241,1);border-radius:0.22rem;margin-top: 68%;margin-left: 5%;">
+		<div style="width:100%;text-align: center;padding-top: 0.7rem">
+			<img src="./img/choice.png" style="width: 5.56rem;height: 0.72rem;">
+		</div>
+
+		<div onclick="showChoice()" style="width:92%;height:1.06rem;background:rgba(246,234,223,1);border-radius:0.22rem;position: relative;left: 4%;
+		line-height: 1.06rem;top: 0.52rem;">
+			<span style="position: absolute;left: 10%;font-size:0.42rem;color:#CD2B34;" id="moleName">点击选择痣的位置</span>
+			<img src="./img/select.png"
+				 style="width: 0.62rem;height: 0.34rem;position: absolute;right: 0.4rem;top: 0.36rem;">
+		</div>
+		<div onclick="ljfx()"
+			 style="width: 100%;text-align: center;margin-top: 1.16rem;
+			 -webkit-animation: scale-upOne 2s linear 0s infinite alternate;
+			 -o-animation: scale-upOne 2s linear 0s infinite alternate;animation: scale-upOne 2s linear 0s infinite alternate;">
+			<img src="./img/iconnew@2x.png" style="width: 4.76rem;height: 0.94rem">
+		</div>
+
+		<div style="text-align: center;margin-top: 0.4rem">
+			<span style="font-size:0.36rem;font-weight: bold">当前有<span style="color: #CD2B34" id="sjs"></span><span>正在在线解答</span></span>
+		</div>
+	</div>
+	<div style="width: 90%;margin-left: 5%;margin-top: 0.8rem">
+		<img src="./img/text.png" style="width: 100%;height: 3.26rem">
+	</div>
+</div>
+<div id="choiceDiv"
+	 style="display: none;width:90%;height:8rem;background:rgba(255,255,255,1);border-radius:0.22rem;position: fixed;top: 25%;left: 5%;
+	 overflow-y: auto;padding-top: 20px;padding-bottom: 20px">
+	<form style="width: 100%;height: 100%;overflow: auto" id="comment1s">
+	</form>
+</div>
+
+<div id="tpfx" style="position: fixed;top: 0;z-index: 9999;display: none;width: 100%;height: 100%;background: rgb(17, 12, 44)">
+	<div class="mainbox"
+		 style="background-image: url(./img/bgfx.png);background-size: 100%;background-repeat: no-repeat;">
+		<div class="animation_box">
+			<img src="./img/ani_line.png" class="ani_img ani_line">
+		</div>
+		<img src="./img/ani_cir1.png" class="ani_img ani_cir1">
+		<img src="./img/ani_cir2.png" class="ani_img ani_cir2">
+	</div>
+</div>
+<script>
+	$('#sjs').html(randomNum(1111111,9999999))
+    var tempList = [
+        {name: '脸颊', val: '7'},
+        {name: '眉毛', val: '9'},
+        {name: '嘴角', val: '1'},
+        {name: '眼角', val: '2'},
+        {name: '嘴唇', val: '35'},
+        {name: '眉心', val: '40'},
+        {name: '眼眶', val: '36'},
+        {name: '鼻梁', val: '37'},
+        {name: '鼻尖', val: '38'},
+        {name: '颧骨', val: '39'},
+        {name: '额头', val: '6'},
+        {name: '耳朵', val: '4'},
+        {name: '鼻翼', val: '3'},
+        {name: '左下巴', val: '5'},
+        {name: '右下巴', val: '34'},
+        {name: '锁骨部分', val: '17'},
+        {name: '脖子', val: '8'},
+        {name: '胸部', val: '10'},
+        {name: '背部', val: '11'},
+        {name: '腹部', val: '13'},
+        {name: '腰部', val: '14'},
+        {name: '臀部', val: '15'},
+        {name: '肩部', val: '16'},
+        {name: '肚脐周围', val: '12'},
+        {name: '手腕', val: '21'},
+        {name: '手背', val: '22'},
+        {name: '手指', val: '24'},
+        {name: '手掌心', val: '23'},
+        {name: '上手臂', val: '18'},
+        {name: '下手臂', val: '19'},
+        {name: '胳膊肘', val: '20'},
+        {name: '腋下', val: '25'},
+        {name: '大腿', val: '26'},
+        {name: '小腿', val: '27'},
+        {name: '膝盖', val: '28'},
+        {name: '脚踝', val: '29'},
+        {name: '脚背', val: '31'},
+        {name: '脚趾', val: '33'},
+        {name: '脚后跟', val: '30'},
+        {name: '脚底板', val: '32'},
+    ]
+    $('#comment1s').html('')
+    var html = ''
+    $.each(tempList, function (key, val) {
+        html += '<div onclick="choiceMethod()" style="width: 100%;height: 1.2rem;border-bottom: 1px solid #eeeeee;line-height: 1.2rem;text-align: center">' +
+            '<label style="width: 100%;display: block;font-size: 0.5rem;font-weight: bold">' +
+            '<input type="radio" name="radio2" value="' + tempList[key].val + '" true_name="' + tempList[key].name + '">' + tempList[key].name + '</label></div>'
+    })
+    $('#comment1s').append(html)
+
+    function choiceMethod() {
+        $('#choiceDiv').hide(500)
+        $('#moleName').html($('input[name="radio2"]:checked').attr('true_name'))
+    }
+
+    function showChoice() {
+        $('#choiceDiv').show(500)
+    }
+
+    function ljfx() {
+        if ($('input[name="radio2"]:checked').val() == undefined) {
+            $('#choiceDiv').show(500)
+        } else {
+            $('#tpfx').show(500)
+            setTimeout(function () {
+                location.href = './share.html?num=' + $('input[name="radio2"]:checked').val() + ''
+            }, 3000)
+        }
+    }
+
+    function randomNum(min, max) { // 生成随机数 min<=num<=max
+        return Math.floor(Math.random() * (max - min + 1)) + min
+    }
+</script>
+</body>
+</html>

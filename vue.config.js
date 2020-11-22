@@ -4,8 +4,6 @@ const path = require('path')
 // 11 upgrade listeners added. Use emitter.setMaxListeners() to increase limit
 require('events').EventEmitter.defaultMaxListeners = 0  // eslint-disable-line
 
-
-
 function resolve (dir) {
     return path.join(__dirname, dir)
 }

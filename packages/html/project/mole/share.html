@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport"
+		  content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta content="yes" name="apple-mobile-web-app-capable"/>
+	<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+	<meta content="telephone=no" name="format-detection"/>
+	<meta content="email=no" name="format-detection"/>
+	<title>痣相详解</title>
+	<script src="jquery.js"></script>
+	<script type="text/javascript" src="adaptive.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/share.css"/>
+</head>
+<body style="font-size: 0.05rem;" class="bg-white">
+<div>
+	<div style="padding: 0.30rem;">
+		<div onclick="location.href = 'http://www.baidu.com'" style="margin-left: 0.05rem">
+			<img src="./img/back.png">
+		</div>
+		<!--<div style="font-size:0.46rem;color:rgba(0,0,0,1);height:0.78rem;text-align: center">-->
+			<!--恭喜你结果已生成-->
+		<!--</div>-->
+		<div style="margin-top: 0.1rem">
+			<span onclick="location.href = 'http://www.baidu.com'" style="font-size:0.32rem;color:rgba(55,120,167,1);width: 1.48rem">痣相详解</span>
+			<span style="font-size:0.32rem;color:rgba(153,153,153,1);margin-left: 0.09rem" id="time"></span>
+		</div>
+		<div>
+			<img style="width: 100%" src="./img/gzh.png">
+		</div>
+	</div>
+
+	<div style="position: relative;">
+		<img id="moleImg" style="width: 100%">
+		<img id="btn" src="./img/icon@2x.png" onclick="zqyq()"
+			 style="animation: scale-upOne 2s linear 0s infinite alternate;
+			 width: 4.76rem;height: 0.94rem;position: absolute;margin: 0 auto;left: 18%;bottom:8.5%;text-align: center">
+	</div>
+
+	<div class="padding" style="position: relative">
+		<img style="width: 100%" src="./img/discern.png">
+		<img style="width: 2.6rem;position: absolute;left: 0.68rem;bottom: 1.28rem" src="./img/ewm.png">
+	</div>
+
+	<div id="showqr">
+		<img id="logoimg" src='' style="display:none"/>
+	</div>
+
+	<div id="sum">
+		<div id="mb" style="display: block" class="mio-modal-mask"></div>
+
+		<div style="position: fixed;width: 100%;left: 0;text-align: center;top: 20%;z-index: 13">
+			<img id="shareImg" style="width: 6.48rem;height: 3.96rem;" class="shake1" src="./img/character2@2x.png">
+		</div>
+
+		<div style="position: fixed;width: 100%;left: 0;text-align: center;bottom: 2.34rem;z-index: 13">
+			<img style="width: 2.20rem;height: 2.20rem" src="./img/fingerprint.png">
+		</div>
+		<div style="position: fixed;width: 100%;left: 0;text-align: center;bottom: 2.50rem;z-index: 12;">
+			<img style="-webkit-animation: scale-up 0.9s linear 0s infinite alternate;
+		animation: scale-up 0.9s linear 0s infinite alternate;width: 2.0rem;height: 2.0rem" src="./img/transparent.png">
+		</div>
+		<div style="position: fixed;width: 100%;left: 0;text-align: center;bottom: 1.1rem;z-index: 11;">
+			<div style="display: inline-block;width:100%;height:0.45rem;font-size:0.5rem;font-weight:600;color:rgba(255,255,255,1);">
+				长按屏幕分享
+			</div>
+		</div>
+	</div>
+
+	<div id="imgOne" style="position: fixed;bottom: 0;opacity: 0.01;z-index: 101"></div>
+</div>
+<script type="text/javascript" src="./js/ewm.js"></script>
+<script type="text/javascript" src="./js/canvas.js"></script>
+<script>
+    document.body.addEventListener('touchmove', bodyScroll, {passive: false});
+
+    $('#moleImg').attr('src', './img/' + getUrlParam('num') +'@2x.png')
+
+    qraa({ewmSize: 95, logo: '', url: 'http://www.baidu.com', logoSize: 'default', isShow: false})
+
+    $('#time').html(new Date().toLocaleDateString().replace(/\//g, '-'))
+
+    var imgLists = [
+        {src: './img/diagrammatize@2x.png', left: 0, top: 0, width: 375, height: 667},
+		{src: $('#qrAnonymous').attr('src'), left: 5, top: 570, width: 91, height: 91},
+    ]
+    var canvas = document.createElement('canvas')
+    canvas.width = 375;
+    canvas.height = 667; // 这是canvas的宽高
+    var ctx = canvas.getContext('2d')
+
+    ctx.rect(0, 0, 375, 667); // 这是图片的宽高
+    ctx.fill();
+    drawing(0, $('#imgOne'), false, 100);
+
+    function zqyq() {
+        window.location.href = './index.html'
+    }
+
+    function share_tip(share_app_times, share_timeline_times) { // 分享处理
+        if (share_timeline_times == -1) {
+            if (shareATimes == 1) {
+                $('#shareImg').attr('src', './img/character1@2x.png')
+                $('#shareImg').addClass('shakeTwo')
+            } else if (shareATimes == 2) {
+                document.body.removeEventListener('touchmove', bodyScroll, false);
+                $('#sum').css('display', 'none')
+                $('#imgOne').css('display', 'none')
+            }
+        }
+    }
+
+    var shareATimes = 0
+    var shareTTimes = 0
+    var hiddenProperty = 'hidden' in document ? 'hidden'
+        : 'webkitHidden' in document ? 'webkitHidden'
+            : 'mozHidden' in document ? 'mozHidden'
+                : null
+    var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange')
+
+    var onVisibilityChange = function () {
+        if (!document[hiddenProperty]) {
+            window.show_time = Date.now()
+            shareATimes += 1
+            if (shareATimes > 4) {
+                shareTTimes += 1
+                setTimeout(share_tip(shareATimes, shareTTimes), 100)
+            } else {
+                setTimeout(share_tip(shareATimes, -1), 100)
+            }
+        } else {
+            window.hidden_time = Date.now()
+        }
+    }
+
+    document.addEventListener(visibilityChangeEvent, onVisibilityChange) // 监听
+
+    function bodyScroll(event) {
+        event.preventDefault()
+    }
+
+    function getUrlParam(name) { // 获取地址栏参数
+        var reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`) // 构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg)// 匹配目标参数
+        if (r != null) return unescape(r[2])
+        return null // 返回参数值
+    }
+</script>
+</body>
+</html>
