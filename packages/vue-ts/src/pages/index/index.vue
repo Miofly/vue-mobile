@@ -23,8 +23,6 @@
         type: string,
 	}
 
-
-
 	@Component({})
 	export default class index extends Vue {
 

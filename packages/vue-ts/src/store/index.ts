@@ -35,23 +35,13 @@ import {mapState, mapGetters, mapActions} from 'vuex' export default {
 import Vue from 'vue'
 import Vuex from 'vuex'
 import center from './center'
-import pddVideo from './pddVideo'
-import zs from './zsQuestion'
-import mv from './movie'
-import si from './signIn'
 import root from './root'
-import xcx from './applets'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     modules: {
         center,
-        pddVideo,
-        zs,
-        mv,
-        si,
-        xcx,
         root
     }
 })
