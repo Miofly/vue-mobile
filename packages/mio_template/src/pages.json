@@ -1,0 +1,325 @@
+{
+    "pages": [
+        {
+            "path": "pages/index/index",
+            "style": {
+                "navigationBarTitleText": "vue-超级模板"
+            }
+        },
+        // center
+        {
+            "path": "pages/center/home",
+            "name": "chome"
+        },
+        // center test
+        {
+            "path": "pages/center/test",
+            "style": {
+                "navigationBarTitleText": "",
+                "navigationBarBackgroundColor": "#fff",
+                "navigationBarTextStyle": "black",
+                "backgroundColorTop": "#fcfcfc",
+                "backgroundColorBottom": "#fcfcfc"
+            }
+        },
+        {
+            "path": "pages/center/testOne",
+            "name": "testOne"
+        },
+        {
+            "path": "pages/center/testTwo",
+            "name": "testTwo"
+        },
+        {
+            "path": "pages/center/testThree",
+            "name": "testThree"
+        },
+        {
+            "path": "pages/center/mescroll-swiper-vertical",
+            "name": "mescroll-swiper-vertical"
+        },
+        // center module
+        {
+            "path": "pages/center/addApplets",
+            "name": "addApplets"
+        },
+        {
+            "path": "pages/center/action-sheet",
+            "name": "actionSheet"
+        },
+        {
+            "path": "pages/center/avatar",
+            "name": "avatar"
+        },
+        {
+            "path": "pages/center/button",
+            "name": "button"
+        },
+        {
+            "path": "pages/center/calendar",
+            "name": "calendar"
+        },
+        {
+            "path": "pages/center/checkbox",
+            "name": "checkbox"
+        },
+        {
+            "path": "pages/center/checkGroup",
+            "name": "checkGroup"
+        },
+        {
+            "path": "pages/center/color",
+            "name": "color"
+        },
+        {
+            "path": "pages/center/colorAnalysis",
+            "name": "colorAnalysis"
+        },
+        {
+            "path": "pages/center/copyRight",
+            "name": "copyRight"
+        },
+        {
+            "path": "pages/center/count_down",
+            "name": "count_down"
+        },
+        {
+            "path": "pages/center/count_to",
+            "name": "count_to"
+        },
+
+        {
+            "path": "pages/center/datePick",
+            "name": "datePick"
+        },
+        {
+            "path": "pages/center/dplayer",
+            "name": "dplayer"
+        },
+        {
+            "path": "pages/center/fab",
+            "name": "fab"
+        },
+        {
+            "path": "pages/center/gradient",
+            "name": "gradient"
+        },
+        {
+            "path": "pages/center/image",
+            "name": "image"
+        },
+        {
+            "path": "pages/center/input",
+            "name": "input"
+        },
+        {
+            "path": "pages/center/line-progress",
+            "name": "line-progress"
+        },
+        {
+            "path": "pages/center/list",
+            "name": "list"
+        },
+        {
+            "path": "pages/center/listTemplate",
+            "name": "listTemplate"
+        },
+        {
+            "path": "pages/center/luckDraw",
+            "name": "luckDraw"
+        },
+        {
+            "path": "pages/center/manyPicker",
+            "name": "manyPicker"
+        },
+        {
+            "path": "pages/center/mask",
+            "name": "mask"
+        },
+        {
+            "path": "pages/center/mescroll-swiper-item-two",
+            "name": "mescroll"
+        },
+        {
+            "path": "pages/center/modal",
+            "name": "modal"
+        },
+        {
+            "path": "pages/center/nativeShare",
+            "name": "nativeShare"
+        },
+        {
+            "path": "pages/center/navbar",
+            "style": {
+                "navigationStyle": "custom"
+            },
+            "name": "navbar"
+        },
+        {
+            "path": "pages/center/phone",
+            "name": "phone"
+        },
+        {
+            "path": "pages/center/picker",
+            "name": "picker"
+        },
+        {
+            "path": "pages/center/pickSingle",
+            "name": "pickSingle"
+        },
+        {
+            "path": "pages/center/popup",
+            "name": "popup"
+        },
+        {
+            "path": "pages/center/programmerShare",
+            "name": "programmerShare"
+        },
+        {
+            "path": "pages/center/qrcode",
+            "name": "qrcode"
+        },
+        {
+            "path": "pages/center/radio",
+            "name": "radio"
+        },
+        {
+            "path": "pages/center/scrollMessage",
+            "name": "scrollMessage"
+        },
+        {
+            "path": "pages/center/search",
+            "name": "search"
+        },
+        {
+            "path": "pages/center/searchList",
+            "name": "searchList"
+        },
+
+        {
+            "path": "pages/center/swiperTab",
+            "name": "swiperTab"
+        },
+        {
+            "path": "pages/center/swiperTabList",
+            "name": "swiperTabList"
+        },
+        {
+            "path": "pages/center/switch",
+            "name": "switch"
+        },
+        {
+            "path": "pages/center/timePick",
+            "name": "timePick"
+        },
+        {
+            "path": "pages/center/upImg",
+            "name": "upImg"
+        },
+        {
+            "path": "pages/center/verificationCode",
+            "name": "verificationCode"
+        },
+        {
+            "path": "pages/center/webview",
+            "name": "webview"
+        },
+        // moduleOne chart
+        {
+            "path": "pages/moduleOne/chart/chartBar",
+            "name": "chartBar"
+        },
+        {
+            "path": "pages/moduleOne/chart/chartColumn",
+            "name": "chartColumn"
+        },
+        {
+            "path": "pages/moduleOne/chart/chartColumns",
+            "name": "chartColumns"
+        },
+        {
+            "path": "pages/moduleOne/chart/chartHome",
+            "name": "chartHome"
+        },
+        {
+            "path": "pages/moduleOne/chart/chartIndex",
+            "name": "chartIndex"
+        },
+        {
+            "path": "pages/moduleOne/chart/chartLine",
+            "name": "chartLine"
+        },
+        {
+            "path": "pages/moduleOne/chart/chartPie",
+            "name": "chartPie"
+        },
+        // moduleOne user
+        {
+            "path": "pages/moduleOne/user/login",
+            "name": "m-login"
+        },
+        {
+            "path": "pages/moduleOne/user/reg",
+            "name": "m-reg"
+        },
+        {
+            "path": "pages/moduleOne/user/forget",
+            "name": "m-forget"
+        },
+        // moduleOne wechat
+        {
+            "path": "pages/moduleOne/wechat/home",
+            "name": "w-home"
+        },
+        {
+            "path": "pages/moduleOne/wechat/getLocation",
+            "name": "w-getLocation"
+        },
+        {
+            "path": "pages/moduleOne/wechat/userInfos",
+            "name": "w-userInfos"
+        },
+        // moduleTwo
+        {
+            "path": "pages/moduleTwo/home",
+            "name": "thome"
+        }
+    ],
+    "globalStyle": {
+        "navigationBarTextStyle": "black",
+        // #ifdef H5
+        "navigationStyle": "custom",
+        // #endif
+        "navigationBarBackgroundColor": "#F8F8F8",
+        "backgroundColor": "#F8F8F8"
+    },
+    "condition": {
+        "current": 0,
+        "list": [
+            {
+                "name": "test",
+                "path": "pages/center/test"
+            },
+            {
+                "path": "pages/moduleOne/movie/mvHome",
+                "name": "mvHome"
+            },
+            {
+                "path": "pages/moduleOne/pddVideo/videoPlay",
+                "name": "pddVideoPlay"
+            },
+            {
+                "path": "pages/moduleOne/zsQuestion/home",
+                "name": "zsHome"
+            }
+        ]
+    },
+    "easycom": {
+        "autoscan": true,
+        "custom": {
+            // #ifdef H5
+            "^m-(.*)": "zj/m-$1/m-$1.vue"
+            // #endif
+        }
+    }
+}
