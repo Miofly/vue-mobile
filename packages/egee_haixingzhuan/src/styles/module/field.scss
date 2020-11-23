@@ -1,0 +1,102 @@
+.u-field {
+    font-size: 28rpx;
+    padding: 20rpx 28rpx;
+    text-align: left;
+    position: relative;
+    color: #303133;
+}
+
+.u-field-inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.u-textarea-inner {
+    align-items: flex-start;
+}
+
+.u-textarea-class {
+    min-height: 96rpx;
+    width: auto;
+    font-size: 28rpx;
+}
+
+.fild-body {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    align-items: center;
+}
+
+.u-arror-right {
+    margin-left: 8rpx;
+}
+
+.u-label-text {
+    /* #ifndef APP-NVUE */
+    display: inline-flex;
+    /* #endif */
+}
+
+.u-label-left-gap {
+    margin-left: 6rpx;
+}
+
+.u-label-postion-top {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.u-label {
+    width: 130rpx;
+    flex: 1 1 130rpx;
+    text-align: left;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.u-required::before {
+    content: '*';
+    position: absolute;
+    left: -16rpx;
+    font-size: 14px;
+    color: #fa3534;
+    height: 9px;
+    line-height: 1;
+}
+
+.u-field__input-wrap {
+    position: relative;
+    overflow: hidden;
+    font-size: 28rpx;
+    height: 48rpx;
+    flex: 1;
+    width: auto;
+}
+
+.u-clear-icon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.u-error-message {
+    color: #fa3534;
+    font-size: 26rpx;
+    text-align: left;
+}
+
+.placeholder-style {
+    color: rgb(150, 151, 153);
+}
+
+.u-input-class {
+    font-size: 28rpx;
+}
+
+.u-button-wrap {
+    margin-left: 8rpx;
+}
