@@ -4,6 +4,11 @@ const path = require('path')
 // 11 upgrade listeners added. Use emitter.setMaxListeners() to increase limit
 require('events').EventEmitter.defaultMaxListeners = 0  // eslint-disable-line
 
+// const TransformPages = require('uni-read-pages') // 配置uni-router的路由页面
+// const tfPages = new TransformPages({
+// 	includes: ['path', 'name', 'meta']
+// })
+
 function resolve (dir) {
     return path.join(__dirname, dir)
 }
@@ -60,6 +65,7 @@ module.exports = {
         // config.plugin('provide').use(tfPages.webpack.DefinePlugin, [{ ROUTES: JSON.stringify(tfPages.routes) }])
     },
     devServer: { // 开发环境跨域处理
+    	open: true,
         proxy: {
 			'/tp': {
 				target: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la',

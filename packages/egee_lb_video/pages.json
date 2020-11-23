@@ -1,0 +1,15 @@
+{
+    "pages": [
+        {
+            "path": "pages/lbVideo/videoPlay",
+            "style": {
+                "navigationStyle": "custom"
+            }
+        }
+    ],
+    "globalStyle": {
+        "navigationBarTextStyle": "black",
+        "navigationBarBackgroundColor": "#F8F8F8",
+        "backgroundColor": "#F8F8F8"
+    }
+}

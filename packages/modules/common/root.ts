@@ -1,5 +1,7 @@
+// @ts-ignore
 import h5Copy from 'uJs/plugin/junyi-h5-copy'
-import test from 'uJs/test.ts'
+// @ts-ignore
+import test from 'uJs/test'
 
 const roots = {
 	// 信息提示
@@ -15,7 +17,68 @@ const roots = {
 			mask // 防止触摸穿透
 		})
 	},
-	
+	getSpecialDays (y) { // 判断是否是余年
+		if (y % 400 == 0 || (y % 4 == 0 && y % 100 != 0)) {
+			return 29
+		}
+		return 28
+	},
+	getShengXiao (birth) { // 生肖计算
+		birth = String(birth)
+		const len = birth.length
+		if (len < 4 && len != 2) {
+			return ''
+		}
+		if (len == 2) {
+			birth - 0 > 30 ? birth = `19${birth}` : birth = `20${birth}`
+		}
+		const year = (new Date(birth)).getFullYear()
+		const arr = ['猴', '鸡', '狗', '猪', '鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊']
+		return (/^\d{4}$/).test(String(year)) ? arr[year % 12] : ''
+	},
+	getAstro (m, d) { // 星座计算 getAstro(parseInt('09'), 26)
+		// @ts-ignore
+		return '魔羯水瓶双鱼白羊金牛双子巨蟹狮子处女天秤天蝎射手魔羯'.substr(m * 2 - (d < '102223444433'.charAt(m - 1) - -19) * 2, 2)
+	},
+	getAge (strBirthday) { // 根据出生日期算出年龄 getAge('1995-09-26')
+		let returnAge
+		const strBirthdayArr = strBirthday.split('-')
+		const birthYear = strBirthdayArr[0] // eslint-disable-line
+		const birthMonth = strBirthdayArr[1] // eslint-disable-line
+		const birthDay = strBirthdayArr[2] // eslint-disable-line
+		
+		const d = new Date()
+		const nowYear = d.getFullYear()
+		const nowMonth = d.getMonth() + 1
+		const nowDay = d.getDate()
+		
+		if (nowYear == birthYear) {
+			returnAge = 0// 同年 则为0岁
+		} else {
+			const ageDiff = nowYear - birthYear // 年之差
+			if (ageDiff > 0) {
+				if (nowMonth == birthMonth) {
+					const dayDiff = nowDay - birthDay// 日之差
+					if (dayDiff < 0) {
+						returnAge = ageDiff - 1
+					} else {
+						returnAge = ageDiff
+					}
+				} else {
+					const monthDiff = nowMonth - birthMonth// 月之差
+					if (monthDiff < 0) {
+						returnAge = ageDiff - 1
+					} else {
+						returnAge = ageDiff
+					}
+				}
+			} else {
+				returnAge = -1// 返回-1 表示出生日期输入错误 晚于今天
+			}
+		}
+		
+		return returnAge// 返回周岁年龄
+	},
 	// 字符串过长截取+省略号
 	strEllipsis (str: any, length: number): string {
 		return String(str).length > length ? `${str.slice(0, length)}...` : str
@@ -32,6 +95,7 @@ const roots = {
 		// #ifdef APP-PLUS || MP
 		uni.setClipboardData({
 			data,
+			// @ts-ignore
 			success (res) {
 				uni.getClipboardData({
 					success () {
@@ -42,6 +106,7 @@ const roots = {
 					}
 				})
 			},
+			// @ts-ignore
 			fail (res) {
 				(typeof callback === 'function') && callback(false)
 			}
@@ -56,7 +121,91 @@ const roots = {
 		}
 		// #endif
 	},
-	
+	sha1 (s) { // 字符串加密成 hex 字符串 shal加密
+		const data = new Uint8Array(this.encodeUTF8(s))
+		var i, j, t // eslint-disable-line
+		const l = ((data.length + 8) >>> 6 << 4) + 16
+		// @ts-ignore
+		var s = new Uint8Array(l << 2) // eslint-disable-line
+		s.set(new Uint8Array(data.buffer)), s = new Uint32Array(s.buffer) // eslint-disable-line
+		for (t = new DataView(s.buffer), i = 0; i < l; i++) s[i] = t.getUint32(i << 2) // eslint-disable-line
+		s[data.length >> 2] |= 0x80 << (24 - (data.length & 3) * 8)
+		s[l - 1] = data.length << 3
+		const w = []
+		const f = [
+			function () { // eslint-disable-line
+				return m[1] & m[2] | ~m[1] & m[3]
+			},
+			function () { // eslint-disable-line
+				return m[1] ^ m[2] ^ m[3]
+			},
+			function () { // eslint-disable-line
+				return m[1] & m[2] | m[1] & m[3] | m[2] & m[3]
+			},
+			function () { // eslint-disable-line
+				return m[1] ^ m[2] ^ m[3]
+			}
+		]
+		const rol = function (n, c) { // eslint-disable-line
+			return n << c | n >>> (32 - c)
+		}
+		const k = [1518500249, 1859775393, -1894007588, -899497514]
+		var m = [1732584193, -271733879, null, null, -1009589776]
+		m[2] = ~m[0], m[3] = ~m[1] // eslint-disable-line
+		// @ts-ignore
+		for (i = 0; i < s.length; i += 16) { // eslint-disable-line
+			const o = m.slice(0)
+			for (j = 0; j < 80; j++) {
+				w[j] = j < 16 ? s[i + j] : rol(w[j - 3] ^ w[j - 8] ^ w[j - 14] ^ w[j - 16], 1),  // eslint-disable-line
+					t = rol(m[0], 5) + f[j / 20 | 0]() + m[4] + w[j] + k[j / 20 | 0] | 0,
+					m[1] = rol(m[1], 30), m.pop(), m.unshift(t)
+			}
+			for (j = 0; j < 5; j++) m[j] = m[j] + o[j] | 0
+		}
+		t = new DataView(new Uint32Array(m).buffer)
+		// @ts-ignore
+		for (var i = 0; i < 5; i++) m[i] = t.getUint32(i << 2) // eslint-disable-line
+		
+		const hex = Array.prototype.map.call(new Uint8Array(new Uint32Array(m).buffer), (e) => (e < 16 ? '0' : '') + e.toString(16)).join('')
+		return hex
+	},
+	encodeUTF8 (s) {
+		let i
+		const r = []
+		let c
+		let x
+		for (i = 0; i < s.length; i++) {
+			if ((c = s.charCodeAt(i)) < 0x80) r.push(c)
+			else if (c < 0x800) r.push(0xC0 + (c >> 6 & 0x1F), 0x80 + (c & 0x3F))
+			else {
+				if ((x = c ^ 0xD800) >> 10 == 0) { // 对四字节UTF-16转换为Unicode
+					c = (x << 10) + (s.charCodeAt(++i) ^ 0xDC00) + 0x10000,
+						r.push(0xF0 + (c >> 18 & 0x7), 0x80 + (c >> 12 & 0x3F))
+				} else r.push(0xE0 + (c >> 12 & 0xF))
+				r.push(0x80 + (c >> 6 & 0x3F), 0x80 + (c & 0x3F))
+			}
+		}
+		return r
+	},
+	sortBy (attr, rev) { // 第二个参数没有传递 默认升序排列 true表示升序排列，false降序排序
+		if (rev == undefined) {
+			rev = 1
+		} else {
+			rev = (rev) ? 1 : -1
+		}
+		
+		return function (a, b) {
+			a = a[attr]
+			b = b[attr]
+			if (a < b) {
+				return rev * -1
+			}
+			if (a > b) {
+				return Number(rev)
+			}
+			return 0
+		}
+	},
 	// 图片展示
 	showImg (url: number): void {
 		console.log(url)
@@ -191,7 +340,8 @@ const roots = {
 		// 如果是中情形，默认第二个参数为对象形式的参数
 		if (typeof options === 'string') {
 			if (options[0] != '/') options = `/${options}`
-			return uni.navigateTo(<UniApp.NavigateToOptions>{ url: options }) // eslint-disable-line
+			// @ts-ignore
+			return uni.navigateTo({ url: options }) // eslint-disable-line
 		}
 		// navigateTo类型的跳转
 		if (config.type == 'navigateTo' || config.type == 'to') {
@@ -319,7 +469,7 @@ const roots = {
 	getRect (selector, all) {
 		return new Promise(resolve => {
 			uni.createSelectorQuery()
-			.in(this)[all ? 'selectAll' : 'select'](selector)
+				.in(this)[all ? 'selectAll' : 'select'](selector)
 				.boundingClientRect(rect => {
 					if (all && Array.isArray(rect) && rect.length) {
 						resolve(rect)
