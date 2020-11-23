@@ -5,7 +5,7 @@
 		<!-- 数据列表 -->
 
 		<!--团队长-->
-		<view v-if="$mio.mioroot.getLocalData('is_team_captain') == 1" class="cu-list menu" :class="[false?'sm-border':'', false?'card-menu margin-top':'']">
+		<view v-if="$mio.mioRoot.getLocalData('is_team_captain') == 1" class="cu-list menu" :class="[false?'sm-border':'', false?'card-menu margin-top':'']">
 			<view @click.native="tzMemRank(item.id, item.name)" v-for="(item, index) in dataLists" :key="index" class="cu-item">
 				<view class="content">
 					<view class="fl">{{index + 1}}</view>
@@ -17,13 +17,13 @@
 		</view>
 
 		<view v-else class="cu-list menu" :class="[false?'sm-border':'', false?'card-menu margin-top':'']">
-			<view @click.native="$mio.mioroot.getLocalData('department_id') == item.id ? tzMemRank(item.id, item.name) : ''" v-for="(item, index) in dataLists" :key="index" class="cu-item">
+			<view @click.native="$mio.mioRoot.getLocalData('department_id') == item.id ? tzMemRank(item.id, item.name) : ''" v-for="(item, index) in dataLists" :key="index" class="cu-item">
 				<view class="content">
 					<view class="fl">{{index + 1}}</view>
 					<view class="fl margin-left">{{item.name}}</view>
-					<view class="fr text-red">总计费次数：{{$mio.mioroot.getLocalData('department_id') == item.id ? item.total_click : '*'}}</view>
+					<view class="fr text-red">总计费次数：{{$mio.mioRoot.getLocalData('department_id') == item.id ? item.total_click : '*'}}</view>
 				</view>
-				<view v-show="$mio.mioroot.getLocalData('department_id') == item.id" class="fa fa-angle-right fa-2x margin-left text-gray"></view>
+				<view v-show="$mio.mioRoot.getLocalData('department_id') == item.id" class="fa fa-angle-right fa-2x margin-left text-gray"></view>
 			</view>
 		</view>
 	</mescroll-uni>

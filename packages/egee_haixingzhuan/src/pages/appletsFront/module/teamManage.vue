@@ -2,7 +2,7 @@
 	<view class="bg-white">
 		<view class="full-width hxbg text-xl text-center"
 			  style="height: 100rpx;line-height: 100rpx;padding: 0!important;">
-			<view @click="$mio.mioroot.back()" class="fa fa-angle-left fa-2x fl margin-left"
+			<view @click="$mio.mioRoot.back()" class="fa fa-angle-left fa-2x fl margin-left"
 				  style="line-height: 100rpx"></view>
 			团队管理
 		</view>
@@ -65,7 +65,7 @@
         total_clickOne: number = 0
 
         async created () {
-            this.$mio.mioroot.showLoading()
+            this.$mio.mioRoot.showLoading()
             const dataOne = await appletsPost('team/team-click-trend')
             uni.hideLoading()
             this.dataOneList = dataOne.data.list
@@ -105,16 +105,16 @@
                 this.dataOneHour.push(this.dataOneList[i].trans_hour)
                 this.dataOneClick.push(parseInt(this.dataOneList[i].effective_click_total)) // eslint-disable-line
             }
-            this.$mio.mioroot.showToast('刷新成功')
+            this.$mio.mioRoot.showToast('刷新成功')
         }
 
         async giveSlogan () {
             const data = await appletsPost('team/release-notice', { slogan: this.slogan })
             // console.log(data)
             if (data.code == 200) {
-                this.$mio.mioroot.showToast('发布成功')
+                this.$mio.mioRoot.showToast('发布成功')
             } else {
-                this.$mio.mioroot.showToast(data.message)
+                this.$mio.mioRoot.showToast(data.message)
             }
         }
 	}

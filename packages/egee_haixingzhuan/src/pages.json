@@ -115,6 +115,11 @@
         "backgroundColor": "#F8F8F8"
     },
     "easycom": {
-        "autoscan": true
+        "autoscan": true,
+        "custom": {
+            // #ifdef H5
+            "^m-(.*)": "zj/m-$1/m-$1.vue"
+            // #endif
+        }
     }
 }

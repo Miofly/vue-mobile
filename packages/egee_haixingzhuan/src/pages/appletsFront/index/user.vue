@@ -17,32 +17,32 @@
 					</view>
 				</view>
 				<view style="width: 50vw" class="margin-top-lg margin-left">
-					<view class="text-lg text-solid-black">{{$mio.mioroot.getLocalData('realName')}}</view>
-					<view class="text-df margin-top text-solid-black">手机号：{{$mio.mioroot.getLocalData('lz_mobile')}}</view>
+					<view class="text-lg text-solid-black">{{$mio.mioRoot.getLocalData('realName')}}</view>
+					<view class="text-df margin-top text-solid-black">手机号：{{$mio.mioRoot.getLocalData('lz_mobile')}}</view>
 				</view>
 			</view>
 		</view>
 
-		<view v-if="$mio.mioroot.getLocalData('is_team_captain') == 0" style="width: 206rpx;position: absolute;right: 0;top: 50rpx;background: white;
+		<view v-if="$mio.mioRoot.getLocalData('is_team_captain') == 0" style="width: 206rpx;position: absolute;right: 0;top: 50rpx;background: white;
 				color: black;height: 58rpx;line-height: 58rpx;border-bottom-left-radius: 20px;border-top-left-radius: 20px"
 			  class="text-center">
-			<view style="color: rgb(239, 86, 14);font-size: 12px">邀请码：{{$mio.mioroot.getLocalData('own_invite_code')}}</view>
+			<view style="color: rgb(239, 86, 14);font-size: 12px">邀请码：{{$mio.mioRoot.getLocalData('own_invite_code')}}</view>
 		</view>
 
 		<view style="background: white;box-shadow: 0 2px 4px 0 #D3D1C9;width: 90%;margin-left: 5%;border-radius: 12px;position: absolute;top: 230rpx"
 		class="text-center">
 			<view class="padding-top">
-				<view style="font-size: 20px;color: #FFB400;font-weight: bold">{{$mio.mioroot.getLocalData('todayClick')}}</view>
+				<view style="font-size: 20px;color: #FFB400;font-weight: bold">{{$mio.mioRoot.getLocalData('todayClick')}}</view>
 				<view style="font-size: 14px;color: #000;font-weight: bold">今日计费次数</view>
 			</view>
 			<view class="flex justify-around padding margin-top text-center">
 				<view>
-					<view style="font-size: 20px;color: #FFB400;font-weight: bold">{{$mio.mioroot.getLocalData('yesterdayClick')}}</view>
+					<view style="font-size: 20px;color: #FFB400;font-weight: bold">{{$mio.mioRoot.getLocalData('yesterdayClick')}}</view>
 					<view style="font-size: 14px;color: #000;font-weight: bold">昨日计费次数</view>
 				</view>
 				<view style="height: 30px;background: #eee;width: 1px"></view>
 				<view>
-					<view style="font-size: 20px;color: #FFB400;font-weight: bold">{{$mio.mioroot.getLocalData('monthClick')}}</view>
+					<view style="font-size: 20px;color: #FFB400;font-weight: bold">{{$mio.mioRoot.getLocalData('monthClick')}}</view>
 					<view style="font-size: 14px;color: #000;font-weight: bold">本月计费次数</view>
 				</view>
 			</view>
@@ -50,7 +50,7 @@
 
 		<scroll-view scroll-y style="height: 100vw" class="margin-top-twenty padding-bottom-twenty">
 			<view class="cu-list menu  padding-bottom-thirty" :class="[false?'sm-border':'']">
-				<view @tap="listFn(item.name)" v-for="(item, index) in ($mio.mioroot.getLocalData('is_team_captain') == 1 ? menuList : menuLists)" :key="index" class="cu-item">
+				<view @tap="listFn(item.name)" v-for="(item, index) in ($mio.mioRoot.getLocalData('is_team_captain') == 1 ? menuList : menuLists)" :key="index" class="cu-item">
 					<view class="content padding-tb-sm">
 						<view>
 							<image :src="`/static/images/haixing/${item.icon}.png`" style="width: 50rpx;height: 50rpx"></image>
@@ -89,7 +89,7 @@
 	import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator'
     import mImage from 'zj/m-image/m-image.vue'
     import mButton from 'zj/m-button/m-button.vue'
-    import modal from 'zj/modal/modal.vue'
+    import modal from 'zj/m-modal/m-modal.vue'
 	import {
 	    appletsPost
 	} from '@/api'
@@ -131,7 +131,7 @@
             const data = await appletsPost('auth/log-out')
             localStorage.removeItem('TOKEN_KEY')
             if (data.code == 200) {
-                this.$mio.mioroot.showToast('退出成功')
+                this.$mio.mioRoot.showToast('退出成功')
                 setTimeout(() => {
                     // this.router.replaceAll({name: 'login', params: {id: true}})
                     localStorage.removeItem('PageCur')

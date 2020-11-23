@@ -1,7 +1,7 @@
 <template>
 	<view class="bg-white full-width-height">
 		<view class="full-width hxbg text-xl text-center" style="height: 100rpx;line-height: 100rpx;padding: 0!important;">
-			<view @click="$mio.mioroot.back()" class="fa fa-angle-left fa-2x fl margin-left" style="line-height: 100rpx"></view>
+			<view @click="$mio.mioRoot.back()" class="fa fa-angle-left fa-2x fl margin-left" style="line-height: 100rpx"></view>
 			联系客服
 		</view>
 		<view class="text-center margin-top text-xl margin-bottom-xxl">客服二维码</view>
@@ -22,7 +22,7 @@
         customer_wechat: string = ''
 
         async mounted () {
-            this.$mio.mioroot.showLoading()
+            this.$mio.mioRoot.showLoading()
             const data = await appletsPost('my/system-info')
             uni.hideLoading()
             // console.log(data.data)

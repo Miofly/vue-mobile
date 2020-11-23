@@ -12,7 +12,7 @@
 					  v-if="headerFixCon" style="background: white">
 					<view :style="{height: headerHeight + 'rpx'}">
 						<view class="full-width text-xl text-center" style="background: rgb(251, 207, 36);height: 100rpx;color: black;line-height: 100rpx;padding: 0!important;">
-							<view @click="$mio.mioroot.back()" style="line-height: 100rpx"></view>
+							<view @click="$mio.mioRoot.back()" style="line-height: 100rpx"></view>
 							排行
 						</view>
 						<view class="flex justify-around text-center bg-white"

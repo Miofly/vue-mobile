@@ -15,11 +15,11 @@
 										  style="background-image:url('static/images/haixing/hxlogo1.png');">
 										<view class="cu-tag badge" v-if="false">999</view>
 									</view>
-									<text class="margin-left-ten text-black" style="vertical-align: sub;width: 30vw;color: #333333;font-size: 16px;">{{$mio.mioroot.getLocalData('realName')}}</text>
+									<text class="margin-left-ten text-black" style="vertical-align: sub;width: 30vw;color: #333333;font-size: 16px;">{{$mio.mioRoot.getLocalData('realName')}}</text>
 								</view>
-								<view class="margin-top flex flex-wrap justify-center margin-right" @tap="$mio.mioroot.push('/pages/appletsFront/module/addItem')"
+								<view class="margin-top flex flex-wrap justify-center margin-right" @tap="$mio.mioRoot.push('/pages/appletsFront/module/addItem')"
 									  style="width: 20vw"
-									  v-if="$mio.mioroot.getLocalData('is_department_captain') == 1 || $mio.mioroot.getLocalData('is_team_captain') == 1">
+									  v-if="$mio.mioRoot.getLocalData('is_department_captain') == 1 || $mio.mioRoot.getLocalData('is_team_captain') == 1">
 									<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)"
 											:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]" style="width: 140rpx;height: 138rpx"
 											:shape="['square', 'circle'][0]" src="/static/images/haixing/tianjia@2x.png" bgColor="rgba(0, 0, 0, 1)">
@@ -120,11 +120,12 @@
 </template>
 
 <script lang="ts">
-    import MescrollItem from './index-swiper.vue'
+    import
+	    MescrollItem from './index-swiper.vue'
     import MescrollItemTwo from './index-swiper-two.vue'
     import { Component, Vue, Ref } from 'vue-property-decorator'
     import swiperTab from 'zj/swiperTab/swiperTab.vue'
-    import modal from 'zj/modal/modal.vue'
+    import modal from 'zj/m-modal/m-modal.vue'
     import mImage from 'zj/m-image/m-image.vue'
     import mButton from 'zj/m-button/m-button.vue'
 	import {
@@ -163,8 +164,8 @@
             const str = this.url_lists.join(',')
             const test = str.replace(/,/g, '\n')
             this.modalStatusTwo = false
-            this.$mio.mioroot.copyText(test)
-            this.$mio.mioroot.jumpWX()
+            this.$mio.mioRoot.copyText(test)
+            this.$mio.mioRoot.jumpWX()
         }
 
         created (): void {

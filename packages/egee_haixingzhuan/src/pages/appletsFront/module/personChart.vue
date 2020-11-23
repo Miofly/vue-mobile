@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="full-width hxbg text-xl text-center" style="height: 100rpx;line-height: 100rpx;padding: 0!important;">
-			<view @click="$mio.mioroot.back()" class="fa fa-angle-left fa-2x fl margin-left" style="line-height: 100rpx"></view>
+			<view @click="$mio.mioRoot.back()" class="fa fa-angle-left fa-2x fl margin-left" style="line-height: 100rpx"></view>
 			<view>点击明细
 				<view @tap="tzChart" class="fr margin-right fa fa-bars" style="margin-top: 4%">
 
@@ -40,7 +40,7 @@
         menuList: any = []
 
         async mounted () {
-            this.$mio.mioroot.showLoading()
+            this.$mio.mioRoot.showLoading()
             const data = await appletsPost('my/seven-click-info')
             uni.hideLoading()
             this.menuList = data.data

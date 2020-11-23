@@ -2,13 +2,12 @@ import Vue from 'vue'
 import App from '@/App.vue'
 
 import store from '@/store'
-import mio from '@/common'
+import mio from '../../modules/common'
 
 import lz_index from '@/pages/appletsFront/index/index.vue'
 import lz_rank from '@/pages/appletsFront/index/rank.vue'
 import lz_team from '@/pages/appletsFront/index/team.vue'
 import lz_user from '@/pages/appletsFront/index/user.vue'
-
 
 Vue.prototype.$store = store
 Vue.use(mio)

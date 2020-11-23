@@ -2,7 +2,7 @@
 	<view class="bg-white">
 		<view class="full-width hxbg text-xl text-center"
 			  style="height: 100rpx;line-height: 100rpx;padding: 0!important;">
-			<view @click="$mio.mioroot.back()" class="fa fa-angle-left fa-2x fl margin-left"
+			<view @click="$mio.mioRoot.back()" class="fa fa-angle-left fa-2x fl margin-left"
 				  style="line-height: 100rpx"></view>
 			<view>新增标题</view>
 		</view>
@@ -105,11 +105,11 @@
             },
             async submit() {
                 if (this.desc.trim() == '') {
-                    this.$mio.mioroot.showToast('描述不能为空')
+                    this.$mio.mioRoot.showToast('描述不能为空')
                     return
                 }
                 if (this.file.trim() == '') {
-                    this.$mio.mioroot.showToast('请上传图片')
+                    this.$mio.mioRoot.showToast('请上传图片')
                     return
                 }
                 const formData = new FormData()
@@ -119,7 +119,7 @@
                 formData.append('pic', this.file)
                 const token = localStorage.getItem('TOKEN_KEY')
 
-                this.$mio.mioroot.showLoading('正在上传...')
+                this.$mio.mioRoot.showLoading('正在上传...')
                 uni.uploadFile({
                     url: 'http://api.xiyouzhuan2020.com/api/title/add-team-title', // 仅为示例，非真实的接口地址
                     filePath: this.file,
@@ -133,15 +133,15 @@
                         uni.hideLoading()
                         console.log(res.data)
                         if (JSON.parse(res.data).code == 200) {
-                            this.$mio.mioroot.showToast('上传成功')
+                            this.$mio.mioRoot.showToast('上传成功')
                             this.title = ''
                             this.desc = ''
                             this.imgList = ''
                             this.file = ''
                         } else {
-                            this.$mio.mioroot.showToast(JSON.parse(res.data).message)
+                            this.$mio.mioRoot.showToast(JSON.parse(res.data).message)
                             if (JSON.parse(res.data).code == 403) {
-                                this.$mio.mioroot.showToast('登录已过期...正在跳转至登录界面...')
+                                this.$mio.mioRoot.showToast('登录已过期...正在跳转至登录界面...')
                                 setTimeout(() => {
                                     // this.router.replaceAll({name: 'login'})
                                     uni.reLaunch({
@@ -152,7 +152,7 @@
                         }
                     },
                     error: (err) => {
-                        this.$mio.mioroot.showToast('上传失败，请重新上传')
+                        this.$mio.mioRoot.showToast('上传失败，请重新上传')
                         uni.hideLoading()
                         console.log(err)
                     }

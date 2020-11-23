@@ -19,7 +19,7 @@
 			<!--</view>-->
 		<!--</view>-->
 
-		<view v-if="$mio.mioroot.getLocalData('is_team_captain') == 1" class="cu-list menu" :class="[false?'sm-border':'', false?'card-menu margin-top':'']">
+		<view v-if="$mio.mioRoot.getLocalData('is_team_captain') == 1" class="cu-list menu" :class="[false?'sm-border':'', false?'card-menu margin-top':'']">
 			<view v-for="(item, index) in dataLists" :key="index" class="cu-item">
 				<view class="content">
 					<view class="fl">{{index + 1}}</view>

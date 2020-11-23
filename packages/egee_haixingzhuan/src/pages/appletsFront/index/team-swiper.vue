@@ -5,7 +5,7 @@
 		<!-- 数据列表 -->
 		<view :class="[false?'sm-border':'', false?'card-menu margin-top':'']" class="cu-list menu"
 			  style="border-top: 0px"
-			  v-if="$mio.mioroot.getLocalData('is_team_captain') == 1">
+			  v-if="$mio.mioRoot.getLocalData('is_team_captain') == 1">
 			<view v-for="(item, index) in dataLists" :key="index" class="cu-item" style="line-height: 50px">
 				<view @click="tzChart(item.uid, item.true_name)" class="content">
 					<view class="fl" style="line-height: 50px;">{{index + 1}}</view>
@@ -17,14 +17,14 @@
 		</view>
 
 		<view v-else class="cu-list menu" :class="[false?'sm-border':'', false?'card-menu margin-top':'']">
-			<view @click="item.uid == $mio.mioroot.getLocalData('memberId')? tzChart(item.uid, item.true_name) : ''" v-for="(item, index) in dataLists" :key="index"
+			<view @click="item.uid == $mio.mioRoot.getLocalData('memberId')? tzChart(item.uid, item.true_name) : ''" v-for="(item, index) in dataLists" :key="index"
 				  class="cu-item">
 				<view class="content">
 					<view class="fl" style="line-height: 50px;">{{index + 1}}</view>
 					<view class="fl margin-left">{{item.true_name}}<br> <span style="font-size: 14px">{{item.department_name}}</span></view>
-					<view class="fr " style="line-height: 50px;color:#F41032">总计费次数：{{item.uid == $mio.mioroot.getLocalData('memberId') ? item.effective_click_total : '*'}}</view>
+					<view class="fr " style="line-height: 50px;color:#F41032">总计费次数：{{item.uid == $mio.mioRoot.getLocalData('memberId') ? item.effective_click_total : '*'}}</view>
 				</view>
-				<view v-show="item.uid == $mio.mioroot.getLocalData('memberId')" class="fa fa-angle-right fa-2x margin-left text-gray"></view>
+				<view v-show="item.uid == $mio.mioRoot.getLocalData('memberId')" class="fa fa-angle-right fa-2x margin-left text-gray"></view>
 			</view>
 		</view>
 	</mescroll-uni>

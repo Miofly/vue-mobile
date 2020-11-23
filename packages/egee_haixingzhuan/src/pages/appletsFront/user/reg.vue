@@ -98,7 +98,7 @@
 									 startText="获取验证码"></m-verification-code>
 
 				<view class="flex justify-end margin-top-xl padding-left-right-sm">
-					<text @tap="$mio.mioroot.push('/pages/appletsFront/user/login')" class="textNew-red">
+					<text @tap="$mio.mioRoot.push('/pages/appletsFront/user/login')" class="textNew-red">
 						已有账号，立即登录
 					</text>
 				</view>
@@ -138,7 +138,7 @@
                 {
                     trigger: ['change', 'blur'],
                     message: '手机号码不正确',
-                    validator: (rule, value, callback) => this.$mio.miotest.mobile(value)
+                    validator: (rule, value, callback) => this.$mio.mioTest.mobile(value)
                 },
             ],
             password: [
@@ -196,7 +196,7 @@
 				    max: 5,
 				    message: '必须是中文',
 				    trigger: ['change', 'blur'],
-				    validator: (rule, value, callback) => this.$mio.miotest.chinese(value)
+				    validator: (rule, value, callback) => this.$mio.mioTest.chinese(value)
 				},
             ],
             inviteCode: [
@@ -228,7 +228,7 @@
 
         async getCode () {
             if (this.model.mobile.trim() == '') {
-                this.$mio.mioroot.showToast('手机号不能为空')
+                this.$mio.mioRoot.showToast('手机号不能为空')
                 return
             }
             if ((this.$refs.uCode as any).canGetCode) {
@@ -242,16 +242,16 @@
                 if (data.code == 200) {
                     uni.hideLoading()
                     // 这里此提示会被this.start()方法中的提示覆盖
-                    this.$mio.mioroot.showToast('验证码已发送')
+                    this.$mio.mioRoot.showToast('验证码已发送')
                     // 通知验证码组件内部开始倒计时
                     ;(this.$refs.uCode as any).start()
                 } else {
                     uni.hideLoading()
-                    this.$mio.mioroot.showToast(data.message)
+                    this.$mio.mioRoot.showToast(data.message)
                 }
 
             } else {
-                this.$mio.mioroot.showToast('倒计时结束后再发送')
+                this.$mio.mioRoot.showToast('倒计时结束后再发送')
             }
         }
 
@@ -264,7 +264,7 @@
                 if (valid) {
                     const data = await appletsPost('auth/register', this.model)
 
-                    this.$mio.mioroot.showToast(data.message)
+                    this.$mio.mioRoot.showToast(data.message)
 
                     if (data.code == 200) { // 注册成功跳转登录页面
                         setTimeout(() => {

@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="full-width-height">
-			<view v-if="$mio.mioroot.getLocalData('is_team_captain') == 1">
+			<view v-if="$mio.mioRoot.getLocalData('is_team_captain') == 1">
 				<lz_index v-if="pageCur==newFootabs[0].type"></lz_index>
 				<lz_team v-if="pageCur==newFootabs[1].type"></lz_team>
 				<lz_rank v-if="pageCur==newFootabs[2].type"></lz_rank>
@@ -35,7 +35,7 @@
         @State('footabs', { namespace: 'xcx' }) footabs
         @State('footabsTwo', { namespace: 'xcx' }) footabsTwo
 
-		newFootabs: any = this.$mio.mioroot.getLocalData('is_team_captain') == 1 ? this.$store.state.xcx.footabs : this.$store.state.xcx.footabsTwo
+		newFootabs: any = this.$mio.mioRoot.getLocalData('is_team_captain') == 1 ? this.$store.state.xcx.footabs : this.$store.state.xcx.footabsTwo
 
         pageCur: string = localStorage.getItem('PageCur') ? localStorage.getItem('PageCur') : this.newFootabs[0].type
         interstitialAd: any = null

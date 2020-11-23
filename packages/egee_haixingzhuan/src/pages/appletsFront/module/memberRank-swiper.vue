@@ -5,7 +5,7 @@
 		<!-- 数据列表 -->
 
 		<view :class="[false?'sm-border':'', false?'card-menu margin-top':'']" class="cu-list menu"
-			  style="border-top: 0px" v-if="$mio.mioroot.getLocalData('is_department_captain') == 1 || $mio.mioroot.getLocalData('is_team_captain') == 1">
+			  style="border-top: 0px" v-if="$mio.mioRoot.getLocalData('is_department_captain') == 1 || $mio.mioRoot.getLocalData('is_team_captain') == 1">
 			<view v-for="(item, index) in dataLists" :key="index" class="cu-item" style="line-height: 50px">
 				<view @click="tzChart(item.uid, item.true_name)" class="content">
 					<view class="fl" style="line-height: 50px;">{{index + 1}}</view>
@@ -18,14 +18,14 @@
 
 		<view v-else class="cu-list menu" :class="[false?'sm-border':'', false?'card-menu margin-top':'']">
 			<view v-for="(item, index) in dataLists" :key="index" class="cu-item">
-				<view @click="item.uid == $mio.mioroot.getLocalData('memberId') ? tzChart(item.uid, item.true_name) : ''" class="content flex justify-between align-center">
+				<view @click="item.uid == $mio.mioRoot.getLocalData('memberId') ? tzChart(item.uid, item.true_name) : ''" class="content flex justify-between align-center">
 					<view class="fl full-width margin-left">
 						<view class="fl" style="line-height: 50px;">{{index + 1}}</view>
 						<view class="fl margin-left" style="line-height: 50px;">{{item.true_name}}</view>
-						<view class="width-eighty fr text-red ">总计费次数：{{item.uid == $mio.mioroot.getLocalData('memberId') ? item.effective_click_total : '*'}}</view>
+						<view class="width-eighty fr text-red ">总计费次数：{{item.uid == $mio.mioRoot.getLocalData('memberId') ? item.effective_click_total : '*'}}</view>
 					</view>
 				</view>
-				<view v-if="item.uid == $mio.mioroot.getLocalData('memberId')" class="fa fa-angle-right fa-2x margin-left text-gray"></view>
+				<view v-if="item.uid == $mio.mioRoot.getLocalData('memberId')" class="fa fa-angle-right fa-2x margin-left text-gray"></view>
 			</view>
 		</view>
 	</mescroll-uni>
@@ -117,7 +117,7 @@
             const pageSize = page.size // 页长
             console.log('数据类型：', this.nowType, '|', '页码：', pageNum, '|', '页长：', pageSize)
 
-            const data = await appletsPost('team/department-member-list', { date_type: this.i + 1, page: pageNum, per_page: pageSize, department_id: this.$mio.mioroot.getLocalData('teamId') }) // 默认数据
+            const data = await appletsPost('team/department-member-list', { date_type: this.i + 1, page: pageNum, per_page: pageSize, department_id: this.$mio.mioRoot.getLocalData('teamId') }) // 默认数据
 
             const curPageData = data.data.data // 当前页数据列表
             const curPageLen = curPageData.length // 当前页数据长度

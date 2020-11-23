@@ -15,10 +15,10 @@
 							<view class="padding-left-xl margin-top-xxl"
 								  style="width: 100%;height: auto;overflow-x: hidden">
 								<view class="text-lg" style="overflow: hidden">
-									{{ $mio.mioroot.strEllipsis(item.title, 10) }}
+									{{ $mio.mioRoot.strEllipsis(item.title, 10) }}
 								</view>
 								<view class="text-df text-grey" style="overflow: hidden">
-									{{ $mio.mioroot.strEllipsis(item.desc, 10) }}
+									{{ $mio.mioRoot.strEllipsis(item.desc, 10) }}
 								</view>
 							</view>
 							<view class="flex justify-between">
@@ -121,7 +121,7 @@
 	import Component, { mixins } from 'vue-class-component'
 	import scrollMixins from 'zj/mescroll-uni/scroll-mixin'
 	import mescrollUni from 'zj/mescroll-uni/mescroll-uni.vue'
-	import modal from 'zj/modal/modal.vue'
+	import modal from 'zj/m-modal/m-modal.vue'
 	import mImage from 'zj/m-image/m-image.vue'
 	import mButton from 'zj/m-button/m-button.vue'
 	import NativeShare from 'nativeshare'
@@ -156,23 +156,23 @@
 		group_code: string | number = ''
 
 		modalWxTwo () {
-			this.$mio.mioroot.copyText(this.shortChain)
-			this.$mio.mioroot.jumpWX()
+			this.$mio.mioRoot.copyText(this.shortChain)
+			this.$mio.mioRoot.jumpWX()
 			this.shortChain = ''
 			this.modalStatus = false
 			this.tempTwo = true
 		}
 
 		copyTwo () {
-			this.$mio.mioroot.copyText(this.shortChain)
+			this.$mio.mioRoot.copyText(this.shortChain)
 			this.modalStatus = false
-			this.$mio.mioroot.showToast('复制成功')
+			this.$mio.mioRoot.showToast('复制成功')
 			this.shortChain = ''
 			this.tempTwo = true
 		}
 
 		async jumpWxQq (title, desc, pic, id) {
-			this.$mio.mioroot.showLoading()
+			this.$mio.mioRoot.showLoading()
 			const data = await appletsPost('title/title-share', {
 				id,
 				url_type: 0,
@@ -182,11 +182,11 @@
 			let url = data.data
 			uni.hideLoading()
 			if (data.data === null) {
-				this.$mio.mioroot.showToast('获取失败，请重新获取')
+				this.$mio.mioRoot.showToast('获取失败，请重新获取')
 			} else if (data.data.substring(0, data.data.length - 1) == '') {
-				this.$mio.mioroot.showToast('获取失败，请重新获取')
+				this.$mio.mioRoot.showToast('获取失败，请重新获取')
 			} else if (navigator.userAgent.toLowerCase().indexOf('micromessenger') !== -1) {
-				this.$mio.mioroot.showToast('图文分享请打开百度APP或者qq浏览器')
+				this.$mio.mioRoot.showToast('图文分享请打开百度APP或者qq浏览器')
 				location.href = 'mqqbrowser://url=http://web.xiyouzhuan2020.com'
 			} else {
 				try {
@@ -201,15 +201,15 @@
 					})
 					this.nativeShare.call('wechatFriend')
 				} catch (err) {
-					this.$mio.mioroot.showToast('图文分享请打开百度APP或者qq浏览器')
+					this.$mio.mioRoot.showToast('图文分享请打开百度APP或者qq浏览器')
 					location.href = 'mqqbrowser://url=http://web.xiyouzhuan2020.com'
 				}
 			}
 		}
 
 		async jumpWx (title, desc, pic, id) {
-			this.$mio.mioroot.copyText('http://web.xiyouzhuan2020.com')
-			this.$mio.mioroot.showLoading()
+			this.$mio.mioRoot.copyText('http://web.xiyouzhuan2020.com')
+			this.$mio.mioRoot.showLoading()
 			const data = await appletsPost('title/title-share', {
 				id,
 				url_type: 0,
@@ -219,11 +219,11 @@
 			let url = data.data
 			uni.hideLoading()
 			if (data.data === null) {
-				this.$mio.mioroot.showToast('获取失败，请重新获取')
+				this.$mio.mioRoot.showToast('获取失败，请重新获取')
 			} else if (data.data.substring(0, data.data.length - 1) == '') {
-				this.$mio.mioroot.showToast('获取失败，请重新获取')
+				this.$mio.mioRoot.showToast('获取失败，请重新获取')
 			} else if (navigator.userAgent.toLowerCase().indexOf('micromessenger') !== -1) {
-				this.$mio.mioroot.showToast('图文分享请打开百度APP或者qq浏览器')
+				this.$mio.mioRoot.showToast('图文分享请打开百度APP或者qq浏览器')
 				location.href = 'baiduboxapp://url=http://web.xiyouzhuan2020.com'
 			} else {
 				try {
@@ -240,7 +240,7 @@
 					})
 					this.nativeShare.call('wechatFriend')
 				} catch (err) {
-					this.$mio.mioroot.showToast('图文分享请打开百度APP或者qq浏览器')
+					this.$mio.mioRoot.showToast('图文分享请打开百度APP或者qq浏览器')
 					location.href = 'baiduboxapp://url=http://web.xiyouzhuan2020.com'
 					// location.href = 'baiduboxapp://s=http://web.xiyouzhuan2020.com.com'
 				}

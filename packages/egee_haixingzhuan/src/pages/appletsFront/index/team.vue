@@ -21,27 +21,27 @@
 									</view>
 								</view>
 								<view class="margin-top-sm fl margin-left-xl" style="font-size: 16px;font-weight: bolder;color: black;width: 300rpx">
-									<text>{{$mio.mioroot.emptyPaading(headerInfos.teamName, '团队')}}</text>
+									<text>{{$mio.mioRoot.emptyPaading(headerInfos.teamName, '团队')}}</text>
 									<text class="margin-left-lg inline-block text-center" style="font-size: 12px;color: black;width: 120rpx;
 									height: 42rpx;line-height: 42rpx;background: white;border-radius: 14px;">
-										{{$mio.mioroot.getLocalData('realName')}}
+										{{$mio.mioRoot.getLocalData('realName')}}
 									</text>
 								</view>
 
 								<view class="padding-top-bottom" style="border-radius: 10px;
 								color:black;display: inline-block;margin-left: 42rpx">
-									{{$mio.mioroot.emptyPaading(headerInfos.teamSlogan, '正在加载团队口号...')}}
+									{{$mio.mioRoot.emptyPaading(headerInfos.teamSlogan, '正在加载团队口号...')}}
 								</view>
 							</view>
 
 							<view style="box-shadow: 0 2px 4px 0 #D3D1C9;width: 90%;background: white;margin-left: 5%;border-radius: 12px;position: fixed;top: 165rpx;"
 								  class="flex justify-around padding margin-top-xl text-center">
 								<view>
-									<view style="font-size: 18px;color: #FFB400;font-weight: bold">{{$mio.mioroot.emptyPaading(headerInfos.memberNums, 0)}}</view>
+									<view style="font-size: 18px;color: #FFB400;font-weight: bold">{{$mio.mioRoot.emptyPaading(headerInfos.memberNums, 0)}}</view>
 									<view style="font-size: 14px;color: #000;font-weight: bold">团队人数</view>
 								</view>
 								<view>
-									<view style="font-size: 18px;color: #FFB400;font-weight: bold">{{$mio.mioroot.getLocalData('is_team_captain') == 1 ? this.$store.state.xcx.jfcs : '*'}}</view>
+									<view style="font-size: 18px;color: #FFB400;font-weight: bold">{{$mio.mioRoot.getLocalData('is_team_captain') == 1 ? this.$store.state.xcx.jfcs : '*'}}</view>
 									<view style="font-size: 14px;color: #000;font-weight: bold">
 										{{this.$store.state.xcx.phIndex == 0 ? '今日':
 										this.$store.state.xcx.phIndex == 1 ? '昨日' : this.$store.state.xcx.phIndex == 2 ?

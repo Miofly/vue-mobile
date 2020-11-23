@@ -32,8 +32,8 @@
 				</m-button>
 
 				<view class="flex justify-between margin-top-xl padding-left-right-sm">
-					<text class="textNew-red" @tap="$mio.mioroot.push('/pages/appletsFront/user/forget')">忘记密码</text>
-					<text class="textNew-red" @tap="$mio.mioroot.push('/pages/appletsFront/user/reg')">注册账号</text>
+					<text class="textNew-red" @tap="$mio.mioRoot.push('/pages/appletsFront/user/forget')">忘记密码</text>
+					<text class="textNew-red" @tap="$mio.mioRoot.push('/pages/appletsFront/user/reg')">注册账号</text>
 				</view>
 			</view>
 		</view>
@@ -64,7 +64,7 @@
 				{
                     trigger: ['change', 'blur'],
                     message: '手机号码不正确',
-                    validator: (rule, value, callback) => this.$mio.miotest.mobile(value)
+                    validator: (rule, value, callback) => this.$mio.mioTest.mobile(value)
 				},
             ],
             password: [
@@ -83,16 +83,16 @@
 		}
 
         onReady () {
+        	console.log(this.rules);
             (this.$refs.uForm as any).setRules(this.rules)
         }
 
         submit () {
             (this.$refs.uForm as any).validate(async valid => {
+            	console.log(3)
                 if (valid) {
-                    this.$mio.mioroot.showLoading('正在登录...请稍后...')
-
+                    // this.$mio.mioRoot.showLoading('正在登录...请稍后...')
                     const data = await appletsPost('auth/login', { mobile: this.model.mobile, password: this.model.password })
-
                     const res = await appletsPost('my/click-info')
 
                     localStorage.setItem('realName', res.data.true_name)
@@ -109,14 +109,14 @@
                         localStorage.setItem('is_department_captain', data.data.is_department_captain)
                         localStorage.setItem('department_id', data.data.department_id)
                         uni.hideLoading()
-                        this.$mio.mioroot.showToast('登录成功...正在跳转至首页', 'none', 1500)
+                        this.$mio.mioRoot.showToast('登录成功...正在跳转至首页', 'none', 1500)
                         // console.log(localStorage.getItem('TOKEN_KEY'))
                         // setTimeout(() => {
                         // this.router.push({name: 'lz_home'})
-                        this.$mio.mioroot.replace('/pages/appletsFront/home')
+                        this.$mio.mioRoot.replace('/pages/appletsFront/home')
                     } else {
                         uni.hideLoading()
-                        this.$mio.mioroot.showToast(data.message)
+                        this.$mio.mioRoot.showToast(data.message)
                     }
                 } else {
                     console.log('验证失败')

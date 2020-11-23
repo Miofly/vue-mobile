@@ -1,5 +1,5 @@
 {
-    "name": "西游转",
+    "name": "vue-ts",
     "appid": "",
     "description": "",
     "versionName": "1.0.0",
@@ -83,7 +83,7 @@
         "usingComponents": true
     },
     "h5": {
-        "template": "template.h5.html",
+        "template": "../public/index.html",
         "router": {
             //  "mode" : "history",
             "mode": "hash",

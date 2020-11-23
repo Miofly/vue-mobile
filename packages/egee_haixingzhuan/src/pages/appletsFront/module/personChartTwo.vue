@@ -2,7 +2,7 @@
 	<view class="full-width-height bg-white">
 		<view class="full-width hxbg text-xl text-center"
 			  style="height: 100rpx;line-height: 100rpx;padding: 0!important;">
-			<view @click="$mio.mioroot.back()" class="fa fa-angle-left fa-2x fl margin-left"
+			<view @click="$mio.mioRoot.back()" class="fa fa-angle-left fa-2x fl margin-left"
 				  style="line-height: 100rpx"></view>
 			<view>点击明细</view>
 		</view>
@@ -61,7 +61,7 @@
         lineWidth: string = '2300rpx'
 
         async mounted () {
-            this.$mio.mioroot.showLoading()
+            this.$mio.mioRoot.showLoading()
             const dataOne = await appletsPost('my/member-click-trend')
             const dataTwo = await appletsPost('my/member-seven-click-trend')
             uni.hideLoading()
@@ -93,7 +93,7 @@
 
 
             this.showPicker = false
-            this.$mio.mioroot.showLoading()
+            this.$mio.mioRoot.showLoading()
             this.mytime = `${e.startDate.slice(5)}至${e.endDate.slice(5)}`
 
 
