@@ -1,12 +1,12 @@
 <template>
 	<view class="full-height">
-		<swiperTabUpt :fullWidth="leftCon == false && rightCon == false ? '100vw' : '70vw'" :isBold="true"
+		<m-swiperTab :fullWidth="leftCon == false && rightCon == false ? '100vw' : '70vw'" :isBold="true"
 				   :tabHeight="tabHeight - 12" :tabLists.sync="tabLists" :tagRight="20" :tagStatus="true" :tagTop="0" :underLineHeight="10"
 				   activeColor="white" mainColor="transparent"
 				    ref="swiperTab" tagBg="red" :lineStatus="false"
 				   activeSize="16px" textSize="14px" :customStyle="{borderRadius: '20px'}"
 				   v-model="tabClick">
-		</swiperTabUpt>
+		</m-swiperTab>
 	</view>
 </template>
 

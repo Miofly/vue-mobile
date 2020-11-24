@@ -24,7 +24,7 @@
 										<image src="/static/images/lbVideo/paihangbang.png" style="width: 72rpx;height: 100rpx">
 										</image>
 									</view>
-									<swiperTab :fullWidth="leftCon == false && rightCon == false ? '100vw' : '70vw'" :isBold="true"
+									<m-swiperTab :fullWidth="leftCon == false && rightCon == false ? '100vw' : '70vw'" :isBold="true"
 											   :tabHeight="tabHeight - 12" :tabLists.sync="tabLists"
 											   :tagRight="20" :tagStatus="true" :tagTop="0" :underLineHeight="10"
 											   :underLineWidth="50 + '%'" activeColor="black" activeSize="24px"
@@ -33,7 +33,7 @@
 											   lineRadius="10px"
 											   ref="swiperTab" tagBg="red" textSize="20px"
 											   v-model="tabClick">
-									</swiperTab>
+									</m-swiperTab>
 									<!--tab栏右侧需要的内容-->
 									<view v-if="rightCon">
 										<image src="/static/images/lbVideo/paihangbang.png"
@@ -81,7 +81,7 @@
 										<image src="/static/images/lbVideo/paihangbang.png" style="width: 72rpx;height: 100rpx">
 										</image>
 									</view>
-									<swiperTab :fullWidth="leftCon == false && rightCon == false ? '100vw' : '70vw'" :isBold="true"
+									<m-swiperTab :fullWidth="leftCon == false && rightCon == false ? '100vw' : '70vw'" :isBold="true"
 											   :tabHeight="tabHeight - 12" :tabLists.sync="tabLists"
 											   :tagRight="20" :tagStatus="true" :tagTop="0" :underLineHeight="10"
 											   :underLineWidth="50 + '%'" activeColor="black" activeSize="24px"
@@ -90,7 +90,7 @@
 											   lineRadius="10px"
 											   ref="swiperTab" tagBg="red" textSize="20px"
 											   v-model="tabClick">
-									</swiperTab>
+									</m-swiperTab>
 									<!--tab栏右侧需要的内容-->
 									<view v-if="rightCon">
 										<image src="/static/images/lbVideo/paihangbang.png"
@@ -131,7 +131,7 @@
     import MescrollItem from './mescrollItem.vue'
     import MescrollItemTwo from './mescrollItemTwo.vue'
     import swiperTab from 'zj/swiperTab/swiperTab.vue'
-    import search from 'zj/search/search.vue'
+    import search from 'zj/m-searchUpdate/m-searchUpdate.vue'
     // #endif
 
     @Component({

@@ -124,7 +124,7 @@
 	    MescrollItem from './index-swiper.vue'
     import MescrollItemTwo from './index-swiper-two.vue'
     import { Component, Vue, Ref } from 'vue-property-decorator'
-    import swiperTab from 'zj/swiperTab/swiperTab.vue'
+    import swiperTab from 'zj/m-swiperTab/m-swiperTab.vue'
     import modal from 'zj/m-modal/m-modal.vue'
     import mImage from 'zj/m-image/m-image.vue'
     import mButton from 'zj/m-button/m-button.vue'
