@@ -1,51 +1,38 @@
 {
     "pages": [
         {
-            "path": "pages/home",
+            "path": "pages/movie/mvIndex",
             "style": {
-                "navigationBarTitleText": "书城"
+                "navigationBarTitleText": ""
             }
         },
         {
-            "path": "pages/index/rank"
+            "path": "pages/movie/mvHome"
         },
         {
-            "path": "pages/index/recentRead"
+            "path": "pages/movie/dm"
         },
         {
-            "path": "pages/index/searchHome"
+            "path": "pages/movie/dy"
         },
         {
-            "path": "pages/module/bookDetail"
+            "path": "pages/movie/lxj"
         },
         {
-            "path": "pages/module/bookRead"
+            "path": "pages/movie/zy"
         },
         {
-            "path": "pages/module/classifyDetail"
+            "path": "pages/movie/module/mvSearch"
         },
         {
-            "path": "pages/module/classifyTemplate"
+            "path": "pages/movie/module/moviePlay"
         },
         {
-            "path": "pages/user/index"
+            "path": "pages/movie/module/movieDetail"
         },
         {
-            "path": "pages/user/openVip"
-        },
-        {
-            "path": "pages/user/readRecord"
-        },
-        {
-            "path": "pages/user/recharge"
-        },
-        {
-            "path": "pages/user/rechargeRecord"
-        },
-        {
-            "path": "pages/user/signIn"
+            "path": "pages/movie/module/mescroll-swiper-item-two"
         }
-
     ],
     "globalStyle": {
         "navigationBarTextStyle": "black",
@@ -54,27 +41,6 @@
         // #endif
         "navigationBarBackgroundColor": "#F8F8F8",
         "backgroundColor": "#F8F8F8"
-    },
-    "condition": {
-        "current": 0,
-        "list": [
-            {
-                "name": "test",
-                "path": "pages/center/test"
-            },
-            {
-                "path": "pages/modalOne/movie/mvHome",
-                "name": "mvHome"
-            },
-            {
-                "path": "pages/modalOne/pddVideo/videoPlay",
-                "name": "pddVideoPlay"
-            },
-            {
-                "path": "pages/modalOne/zsQuestion/home",
-                "name": "zsHome"
-            }
-        ]
     },
     "easycom": {
         "autoscan": true,

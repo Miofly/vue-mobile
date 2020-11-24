@@ -12,7 +12,7 @@
 				<view :key="index" @tap="navChange(index)" v-if="item.show" class="action" v-for="(item, index) in footabs"> <!--eslint-disable-line-->
 					<view class="fa-cu-image">
 						<view :class="[pageCur==item.type?'text-blue':'text-gray', 'fa-' + item.type]"
-							  class="fa"></view>
+						      class="fa"></view>
 					</view>
 					<view :class="pageCur==item.type?'text-blue':'text-gray'">{{item.name}}</view>
 				</view>
@@ -22,18 +22,18 @@
 </template>
 
 <script lang="ts">
-    import { Component, Vue } from 'vue-property-decorator'
-    import { State } from 'vuex-class'
+import { Component, Vue } from 'vue-property-decorator'
+import { State } from 'vuex-class'
 
-    @Component
-    export default class index extends Vue {
-        @State('footabs', { namespace: 'mv' }) footabs
+@Component
+export default class index extends Vue {
+	@State('footabs', { namespace: 'mv' }) footabs
 
-        pageCur: string = this.$store.state.mv.footabs[2].type
-        interstitialAd: any = null
+	pageCur: string = this.$store.state.mv.footabs[2].type
+	interstitialAd: any = null
 
-        navChange (num: number): void {
-            this.pageCur = this.footabs[num].type
-        }
-    }
+	navChange (num: number): void {
+		this.pageCur = this.footabs[num].type
+	}
+}
 </script>

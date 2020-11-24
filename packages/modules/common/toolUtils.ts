@@ -383,8 +383,8 @@ const yunFun = (name, params, success, showToast = true, message = '正在玩命
         name, // 云函数名称
         data: params
     }).then(res => { // 调用成功
+	    uni.hideLoading()
         success(res)
-        uni.hideLoading()
     }).catch(err => { // eslint-disable-line
         // console.log(err)
         // fail(err)
