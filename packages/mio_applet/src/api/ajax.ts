@@ -21,8 +21,8 @@ instanceOne.defaults.baseURL = '' // 实例的baseurl
 
 axios.interceptors.request.use(config => {
 	// #ifdef H5
-	const token = localStorage.getItem('TOKEN_KEY')
-	config.headers.Authorization = `${token}`
+	// const token = localStorage.getItem('TOKEN_KEY')
+	// config.headers.Authorization = `${token}`
 	// #endif
 	return config
 }, error => Promise.reject(error))
@@ -30,23 +30,23 @@ axios.interceptors.request.use(config => {
 // 响应拦截器
 axios.interceptors.response.use(response => {
 	// #ifdef H5
-	if (response.data.code !== 200) {
-		if (response.data.code == 403) {
-			root.showToast('登录已过期...正在跳转至登录界面...')
-			localStorage.removeItem('TOKEN_KEY')
-			setTimeout(() => {
-				uni.reLaunch({
-					url: '/pages/moduleOne/appletsFront/user/login'
-				})
-				console.log('执行了吗')
-				// Router.replaceAll({name: 'login'})
-			}, 2000)
-			
-		} else {
-			// root.showToast(response.data.message)
-		}
-	}
-	response.data.data.token && localStorage.setItem('TOKEN_KEY', response.data.data.token)
+	// if (response.data.code !== 200) {
+	// 	if (response.data.code == 403) {
+	// 		root.showToast('登录已过期...正在跳转至登录界面...')
+	// 		localStorage.removeItem('TOKEN_KEY')
+	// 		setTimeout(() => {
+	// 			uni.reLaunch({
+	// 				url: '/pages/moduleOne/appletsFront/user/login'
+	// 			})
+	// 			console.log('执行了吗')
+	// 			// Router.replaceAll({name: 'login'})
+	// 		}, 2000)
+	//
+	// 	} else {
+	// 		// root.showToast(response.data.message)
+	// 	}
+	// }
+	// response.data.data.token && localStorage.setItem('TOKEN_KEY', response.data.data.token)
 	// #endif
 	return response
 }, (error) => {

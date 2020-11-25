@@ -7,7 +7,7 @@ import axios from 'axios'
 import store from '@/store' // 引入vuex
 
 // 默认配置
-axios.defaults.baseURL = '' // 优先级比axios实例要低
+axios.defaults.baseURL = process.env.VUE_APP_BASE_API // 优先级比axios实例要低
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8'
 
 // 创建一个axios实例 ==> instanceOne

@@ -114,8 +114,8 @@
 
 				this.ui.showLoading('正在上传...')
                 uni.uploadFile({
-                    url: 'http://api.lezhuan2020.cn/api/title/add-team-title', // 仅为示例，非真实的接口地址
-                    // url: 'http://new-lz-test.52eja.com:443/api/title/add-team-titzle', // 仅为示例，非真实的接口地址
+                    // url: 'http://api.lezhuan2020.cn/api/title/add-team-title', // 仅为示例，非真实的接口地址
+                    url: 'http://new-lz-test.52eja.com:443/api/title/add-team-titzle', // 仅为示例，非真实的接口地址
                     filePath: this.file,
                     header: {Authorization: `${token}`},
                     name: 'pic',

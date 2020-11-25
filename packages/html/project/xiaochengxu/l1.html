@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js" type="text/javascript"></script>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+	<style>
+		*{margin: 0;padding: 0}
+	</style>
+</head>
+<body>
+<div style="position: relative;height:250px;text-align: center;">
+
+	<div style="width: 94vw;height: 260px;margin-left: 3vw;background: url(./img/beijing@2x.png);background-repeat:no-repeat;background-size: 100% 100%;background-position:center;position: relative">
+		<div style="position: absolute;left: -15%;top: 15%;">
+			<img src="./img/renwu@2x.png" style="width: 60%;height: 100%">
+		</div>
+		<div style="width: 64px;height: 17px;background: #FFFFFF;border-radius: 9px;position: absolute;left: 0;top: 15%;">
+			<img src="img/tiao@2x.png" style="height: 10px;width: 10px;position: absolute;left: 15%;top: 15%;">
+			<div id="nowtime" style="height: 10px;width: 10px;position: absolute;left: 18%;top: 15%;color: bla"></div>
+		</div>
+		<div style="color: white;width: 100%;text-align: left">
+			<div style="font-size: 25px;position: absolute;top: 10%;left: 55%">
+				<div>清纯美女</div>
+				<div>在线直播</div>
+			</div>
+			<div style="width: 4px;position: absolute;bottom: 10%;left: 50%;height: 41px;background: #6305FF;"></div>
+			<div style="font-size: 14px;position: absolute;bottom: 10%;left: 55%">
+				<div>直播有惊喜</div>
+				<div>点击进入 不容错过</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+
+	var myDate = `Wed Nov 25 2020 ${Math.ceil(Math.random()*5)}:${Math.ceil(Math.random()*59)}:${Math.ceil(Math.random()*59)} GMT+0800 (中国标准时间)`
+	var num = Math.ceil(Math.random()*5)
+
+	function NowTime(){
+		//获取年月日
+		var time=new Date(new Date().getTime() - new Date(myDate).getTime())
+
+		var m=time.getMinutes() -1;
+		var s=time.getSeconds()
+
+		//检查是否小于10
+		m=check(m);
+		s=check(s);
+		document.getElementById("nowtime").innerHTML=num+":"+m+":"+s;
+	}
+	function check(i){
+		var num;
+		i<10?num="0"+i:num=i;
+		return num;
+	}
+	NowTime()
+	window.onload=function(){
+		//每1秒刷新时间
+		setInterval("NowTime()",1000);
+	}
+</script>
+</body>
+</html>

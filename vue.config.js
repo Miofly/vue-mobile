@@ -74,11 +74,18 @@ module.exports = {
 					'^/tp': ''
 				}
 			},
-            '/api': {
-                target: 'https://www.okzyw.com',
+			'/api': {
+				target: 'https://www.okzyw.com',
+				changeOrigin: true, // 是否跨域
+				pathRewrite: {
+					'^/api': ''
+				}
+			},
+            '/appmv': {
+                target: 'https://app.movie',
                 changeOrigin: true, // 是否跨域
                 pathRewrite: {
-                    '^/api': ''
+                    '^/appmv': ''
                 }
             },
             '/foo': {

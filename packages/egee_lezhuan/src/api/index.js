@@ -6,8 +6,7 @@ instanceOne.defaults.baseURL = '' // 实例的baseurl
 instanceOne.defaults.withCredentials = false // 实例的baseurl
 
 const commonPost = (url, data) => ajax({
-    // url: 'http://new-lz-test.52eja.com:443/api' + url,
-    url: 'http://api.lezhuan2020.cn/api' + url,
+	url,
     method: 'POST',
     data: data,
     getHeader: {

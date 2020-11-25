@@ -33,8 +33,8 @@
 
 <script>
 /* eslint-disable */
-import Emitter from '../../common/plugin/emitter.js';
-import schema from '../../common/plugin/async-validator';
+import Emitter from 'uJs/plugin/emitter.js';
+import schema from 'uJs/plugin/async-validator';
 // 去除警告信息
 schema.warning = function() {};
 export default {

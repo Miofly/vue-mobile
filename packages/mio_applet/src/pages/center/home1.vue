@@ -1,7 +1,8 @@
-
 <template>
 	<view style="height: 100%;background: rgb(30, 40, 40);color: white">
-		
+		<view style="width: 70vw">
+
+		</view>
 	</view>
 </template>
 
@@ -20,6 +21,8 @@ const cheerio = require('cheerio')
 	}
 })
 export default class mvIndex extends Vue {
+	value: any = ''
+
 	mvUrl: string = ''
 	dtTitle: string = ''
 	dtType: string = ''
@@ -30,13 +33,10 @@ export default class mvIndex extends Vue {
 	mvDetailData: any = []
 	mvDetailDataMU: any = []
 
-	created () {
-		this.loadOkSearch()
-		// this.loadOkInfos()
-	}
-
-	async loadOkSearch () { // ok资源网搜索
-		const okIndex = await commonGet('https://www.okzyw.com/index.php?m=vod-search-pg-3-wd-2020.html')
+	async loadOkSearch (keyWord) { // ok资源网搜索
+		console.log(keyWord)
+		this.$mio.mioRoot.showLoading('正在加载')
+		const okIndex = await commonGet(`/api?m=vod-search-pg-3-wd-${keyWord}.html`)
 		const $ = cheerio.load(okIndex, { _useHtmlParser2: true })
 		const data = []
 		for (let i = 0; i < $('.xing_vb4 a').length; i++) {

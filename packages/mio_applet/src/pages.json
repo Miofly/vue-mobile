@@ -11,10 +11,7 @@
             "path": "pages/center/home"
         },
         {
-            "path": "pages/center/mescrollItem"
-        },
-        {
-            "path": "pages/center/mescrollItemTwo"
+            "path": "pages/center/mescroll-swiper-item-two"
         },
         // moduleOne
         {
