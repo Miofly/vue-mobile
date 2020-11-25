@@ -263,11 +263,13 @@
     	// #ifdef MP-WEIXIN
 	// @ts-ignore
 	import mescrollUni from '../../components/mescroll-uni/mescroll-uni.vue'
+    // @ts-ignore
     import scrollMixins from '../../components/mescroll-uni/scroll-mixin'
     // #endif
 	// #ifdef H5
 	// @ts-ignore
 	import mescrollUni from 'zj/mescroll-uni/mescroll-uni.vue'
+    // @ts-ignore
     import scrollMixins from 'zj/mescroll-uni/scroll-mixin'
 	// #endif
     import mImage from 'zj/m-image/m-image.vue'
