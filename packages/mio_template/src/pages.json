@@ -197,10 +197,13 @@
             "path": "pages/center/search",
             "name": "search"
         },
-//        {
-//            "path": "pages/center/searchList",
-//            "name": "searchList"
-//        },
+        {
+            "path": "pages/center/searchList",
+            "name": "searchList"
+        },
+        {
+            "path": "pages/center/singleScroll"
+        },
         {
             "path": "pages/center/swiperTab",
             "name": "swiperTab"

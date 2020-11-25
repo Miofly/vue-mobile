@@ -58,13 +58,14 @@
             { title: '消息滚动', name: 'scrollMessage', icon: 'user', color: 'blueSix', url: 'scrollMessage' },
             { title: '搜索', name: 'search', icon: 'user', color: 'blueSix', url: 'search', bgColor: 'linear-gradient(-225deg, #A445B2 0%, #D41872 52%, #FF0066 100%) !important' },
             { title: '搜索列表', name: 'searchList', icon: 'user', color: 'blueSix', url: 'searchList', bgColor: 'linear-gradient(to right, #4facfe 0%, #00f2fe 100%) !important' },
+            { title: '单页滚动列表', name: 'singleScroll', icon: 'user', color: 'loveRedThree', url: 'singleScroll' },
             { title: '滑动Tab', name: 'm-swiperTab.vue', icon: 'user', color: 'gradual-blue', url: 'swiperTab' },
             { title: '滑动Tab加列表', name: 'swiperTabList', icon: 'user', color: 'lovePinkOne', url: 'swiperTabList' },
-            { title: '开关', name: 'switch', icon: 'user', color: 'gradual-red', url: 'switch' },
-            { title: '时间选择', name: 'timePick', icon: 'user', color: 'gradual-red', url: 'timePick' },
+            { title: '开关', name: 'switch', icon: 'user', color: 'blackOne', url: 'switch' },
+            { title: '时间选择', name: 'timePick', icon: 'user', color: 'loveOneFive', url: 'timePick' },
             { title: '上传图片', name: 'upImg', icon: 'user', color: 'gradual-red', url: 'upImg' },
-            { title: '验证码', name: 'verificationCode', icon: 'user', color: 'gradual-red', url: 'verificationCode' },
-            { title: 'webview', name: 'webview', icon: 'user', color: 'loveRedThree', url: 'webview' }
+            { title: '验证码', name: 'verificationCode', icon: 'user', color: 'otherThree', url: 'verificationCode' },
+            { title: 'webview', name: 'webview', icon: 'user', color: 'loveRedTwo', url: 'webview' }
 
         ]
 
