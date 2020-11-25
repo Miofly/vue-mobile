@@ -319,16 +319,17 @@
 
 <script lang="ts">
     import Component, { mixins } from 'vue-class-component'
-    import scrollMixins from 'zj/mescroll-uni/scroll-mixin'
     import { goodGirlData } from '@/api'
 	import newData from 'json/zsQuestion.json'
 
     	// #ifdef MP-WEIXIN
 	// @ts-ignore
-	import mescrollUni from '@/components/mescroll-uni/mescroll-uni.vue'
+	import mescrollUni from '../../components/mescroll-uni/mescroll-uni.vue'
+    import scrollMixins from '../../components//mescroll-uni/scroll-mixin'
 	// #endif
 	// #ifdef H5
 	// @ts-ignore
+    import scrollMixins from 'zj/mescroll-uni/scroll-mixin'
 	import mescrollUni from 'zj/mescroll-uni/mescroll-uni.vue'
 	// #endif
     import mImage from 'zj/m-image/m-image.vue'

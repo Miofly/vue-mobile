@@ -10,6 +10,12 @@
         {
             "path": "pages/center/home"
         },
+        {
+            "path": "pages/center/mescrollItem"
+        },
+        {
+            "path": "pages/center/mescrollItemTwo"
+        },
         // moduleOne
         {
             "path": "pages/moduleOne/home"

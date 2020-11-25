@@ -74,18 +74,19 @@
 
 <script lang="ts">
 import Component, { mixins } from 'vue-class-component'
-import scrollMixins from 'zj/mescroll-uni/scroll-mixin'
 import { goodGirlData } from '@/api'
 import { PropSync } from 'vue-property-decorator'
 
-	// #ifdef MP-WEIXIN
-	// @ts-ignore
-	import mescrollUni from '@/components/mescroll-uni/mescroll-uni.vue'
-	// #endif
-	// #ifdef H5
-	// @ts-ignore
-	import mescrollUni from 'zj/mescroll-uni/mescroll-uni.vue'
-	// #endif
+// #ifdef MP-WEIXIN
+// @ts-ignore
+import mescrollUni from '../../components/mescroll-uni/mescroll-uni.vue'
+import scrollMixins from '../../components/mescroll-uni/scroll-mixin'
+// #endif
+// #ifdef H5
+// @ts-ignore
+import scrollMixins from 'zj/mescroll-uni/scroll-mixin'
+import mescrollUni from 'zj/mescroll-uni/mescroll-uni.vue'
+// #endif
 import mImage from 'zj/m-image/m-image.vue'
 import mButton from 'zj/m-button/m-button.vue'
 @Component({

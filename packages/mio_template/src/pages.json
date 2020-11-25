@@ -38,6 +38,12 @@
             "path": "pages/center/mescroll-swiper-vertical",
             "name": "mescroll-swiper-vertical"
         },
+        {
+            "path": "pages/center/mescrollItem"
+        },
+        {
+            "path": "pages/center/mescrollItemTwo"
+        },
         // center module
         {
             "path": "pages/center/addApplets",
@@ -278,6 +284,11 @@
         {
             "path": "pages/moduleOne/wechat/userInfos",
             "name": "w-userInfos"
+        },
+        // moduleTwo
+        {
+            "path": "pages/moduleOne/home",
+            "name": "thome"
         },
         // moduleTwo
         {

@@ -90,6 +90,7 @@
     import { Component, Prop, Vue, Emit } from 'vue-property-decorator'
     import { debounce, throttle } from 'uJs/toolUtils'
 
+    @Component({})
     export default class NewSearch extends Vue {
         @Prop({ default: true, type: Boolean }) avatarShow?: boolean // 是否显示头像
         @Prop({ default: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg', type: String }) avatarSrc?: string // 头像资源

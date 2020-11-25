@@ -27,10 +27,18 @@
             "scripthost",
             "es2015",
             "es5"
+        ],
+        "types": [ // 设置引入的定义文件 来禁用自动引入@types包。
+            "node",
+            "jest",
+            "webpack-env",
+            "@dcloudio/types",
+            "miniprogram-api-typings",
+            "mini-types"
         ]
     },
     "include": [
-        "src/*",
-        "src/**/*"
+        "./src/*",
+        "./src/**/*"
     ]
 }

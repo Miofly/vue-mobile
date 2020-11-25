@@ -62,13 +62,15 @@
 	import { Component, Vue, Ref } from 'vue-property-decorator'
 
 	import MescrollItem from './mescroll-swiper-item-two.vue'
-	import swiperTab from 'zj/m-swiperTab/m-swiperTab.vue'
+	// #ifdef H5
+	import mSwiperTab from 'zj/m-swiperTab/m-swiperTab.vue'
+	// #endif
 
 	@Component({
 		components: {
 			MescrollItem,
 			// #ifdef H5
-			swiperTab
+			mSwiperTab
 			// #endif
 		}
 	})
@@ -85,7 +87,7 @@
 
         swiperChange (e: any): void { // 轮播菜单
             this.tabClick = e.detail.current
-            ;(this.$refs.swiperTab as swiperTab).longClick(e.detail.current)
+            ;(this.$refs.swiperTab as mSwiperTab).longClick(e.detail.current)
         }
 
         mounted (): void {
