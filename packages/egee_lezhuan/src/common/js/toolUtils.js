@@ -285,7 +285,10 @@ const tu = {
         var r = window.location.search.substr(1).match(reg) // 匹配目标参数
         if (r != null) return unescape(r[2])
         return null // 返回参数值
-    }
+    },
+	getLocalData (str) {
+		return localStorage.getItem(str)
+	},
 }
 
 export {

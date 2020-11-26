@@ -103,6 +103,12 @@
         {
             "path": "pages/appletsFront/user/reg",
             "name": "app-reg"
+        },
+        {
+            "path": "pages/appletsFront/module/with-draw"
+        },
+        {
+            "path": "pages/appletsFront/module/with-draw-record"
         }
     ],
     "globalStyle": {

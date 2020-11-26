@@ -111,6 +111,7 @@
             { icon: 'power-off', color: 'xyz', badge: 0, name: '退出登录' },
             { icon: 'user-plus', color: 'xyz', badge: 0, name: '团队管理' },
           { icon: 'address-card', color: 'xyz', badge: 0, name: '个人资料' },
+          { icon: 'money', color: 'xyz', badge: 0, name: '余额提现' },
         ]
 
         menuLists: any = [
@@ -119,6 +120,7 @@
             { icon: 'commenting', color: 'red', badge: 0, name: '联系客服' },
             { icon: 'power-off', color: 'red', badge: 0, name: '退出登录' },
           	{ icon: 'address-card', color: 'red', badge: 0, name: '个人资料' },
+	        { icon: 'money', color: 'red', badge: 0, name: '余额提现' },
         ]
 
         created (): void {

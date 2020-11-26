@@ -96,6 +96,15 @@
             "path": "pages/index/module/chart",
             "style": {},
             "name": "chart"
+        },
+        {
+            "path": "pages/index/module/with-draw"
+        },
+        {
+            "path": "pages/index/module/with-draw-record"
+        },
+        {
+            "path": "pages/index/module/with-draw-verification"
         }
     ],
     "globalStyle": {

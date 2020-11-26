@@ -13,7 +13,13 @@
 					  :down="downOption"
 					  @init="mescrollInit"
 					  @down="downCallback">
-			<view class="cu-list grid" :class="['col-' + 3, true?'':'no-border']">
+			<view class="cu-list grid" :class="['col-' + 1, true?'':'no-border']">
+				<view class="cu-item">
+					<view class="text-bold text-red text-xxl">99</view>
+					<text style="color: black">累计收入</text>
+				</view>
+			</view>
+			<view class="cu-list grid" :class="['col-' + 3, true?'':'no-border']" style="margin-top: 0!important;">
 				<view class="cu-item" v-for="(item, index) in jfLists" :key="index">
 					<view class="fa" :class="['fa-' + item.icon,'text-' + item.color]">
 						<view class="cu-tag badge" v-if="item.badge!=0">
@@ -21,11 +27,11 @@
 						</view>
 					</view>
 					<view class="text-bold text-red text-xxl">{{item.frequency}}</view>
-					<text>{{item.name}}</text>
+					<text style="color: black">{{item.name}}</text>
 				</view>
 			</view>
 			<view v-if="is_team_captain" class="cu-list grid" :class="['col-' + 3, true?'':'no-border']">
-				<view class="cu-item"  @tap="listFn(item.name)" v-for="(item, index) in menuList" :key="index">
+				<view class="cu-item" @tap="listFn(item.name)" v-for="(item, index) in menuList" :key="index">
 					<view class="fa" :class="['fa-' + item.icon,'text-' + item.color]">
 						<view class="cu-tag badge" v-if="item.badge!=0">
 							<block v-if="item.badge!=1">{{item.badge>99?'99+':item.badge}}</block>
@@ -35,7 +41,7 @@
 				</view>
 			</view>
 			<view v-else class="cu-list grid" :class="['col-' + 3, true?'':'no-border']">
-				<view class="cu-item"  @tap="listFn(item.name)" v-for="(item, index) in menuLists" :key="index">
+				<view class="cu-item" @tap="listFn(item.name)" v-for="(item, index) in menuLists" :key="index">
 					<view class="fa" :class="['fa-' + item.icon,'text-' + item.color]">
 						<view class="cu-tag badge" v-if="item.badge!=0">
 							<block v-if="item.badge!=1">{{item.badge>99?'99+':item.badge}}</block>
@@ -97,39 +103,41 @@
 
                 modalStatus: false,
                 menuList: [
-                    {icon: 'navicon', color: 'red', badge: 0, name: '点击明细'},
-                    {icon: 'lock', color: 'red', badge: 0, name: '修改密码'},
-                    {icon: 'address-card', color: 'red', badge: 0, name: '个人资料'},
-                    {icon: 'commenting', color: 'red', badge: 0, name: '联系客服'},
-                    {icon: 'power-off', color: 'red', badge: 0, name: '退出登录'},
-                    {icon: 'user-plus', color: 'red', badge: 0, name: '团队管理'}
+	                { icon: 'money', color: 'red', badge: 0, name: '余额提现' },
+	                { icon: 'navicon', color: 'red', badge: 0, name: '点击明细' },
+                    { icon: 'lock', color: 'red', badge: 0, name: '修改密码' },
+                    { icon: 'address-card', color: 'red', badge: 0, name: '个人资料' },
+                    { icon: 'commenting', color: 'red', badge: 0, name: '联系客服' },
+                    { icon: 'power-off', color: 'red', badge: 0, name: '退出登录' },
+                    { icon: 'user-plus', color: 'red', badge: 0, name: '团队管理' },
                 ],
                 menuLists: [
-                    {icon: 'navicon', color: 'red', badge: 0, name: '点击明细'},
-                    {icon: 'lock', color: 'red', badge: 0, name: '修改密码'},
-                    {icon: 'address-card', color: 'red', badge: 0, name: '个人资料'},
-                    {icon: 'commenting', color: 'red', badge: 0, name: '联系客服'},
-                    {icon: 'power-off', color: 'red', badge: 0, name: '退出登录'},
+	                { icon: 'money', color: 'red', badge: 0, name: '余额提现' },
+	                { icon: 'navicon', color: 'red', badge: 0, name: '点击明细' },
+                    { icon: 'lock', color: 'red', badge: 0, name: '修改密码' },
+                    { icon: 'address-card', color: 'red', badge: 0, name: '个人资料' },
+                    { icon: 'commenting', color: 'red', badge: 0, name: '联系客服' },
+                    { icon: 'power-off', color: 'red', badge: 0, name: '退出登录' },
                 ]
             }
         },
 		computed: {
-            jfLists: function () {
+            jfLists () {
                 return [
-                    {frequency: this.todayClick, color: 'red', badge: 0, name: '今日计费次数'},
-                    {frequency: this.yesterdayClick, color: 'red', badge: 0, name: '昨日计费次数'},
-                    {frequency: this.monthClick, color: 'red', badge: 0, name: '本月计费次数'}
+                    { frequency: this.todayClick, color: 'red', badge: 0, name: '今日收入' },
+                    { frequency: this.yesterdayClick, color: 'red', badge: 0, name: '转发收入' },
+                    { frequency: this.monthClick, color: 'red', badge: 0, name: '账户余额' }
                 ]
             }
 		},
 		methods: {
-            downCallback() { // 下拉刷新的回调
+            downCallback () { // 下拉刷新的回调
                 const data = true
                 this.userInfo(data)
             },
 	        async userInfo (params) {
                 const res = await commonPost('/my/click-info')
-                const data = res.data
+                const { data } = res
 				if (res.code == 200 && params) {
                     this.mescroll.endDownScroll()
 					this.ui.showToast('刷新成功')
@@ -154,7 +162,7 @@
                             // this.router.replaceAll({name: 'login', params: {id: true}})
                             localStorage.removeItem('PageCur')
                             uni.reLaunch({
-                                url:'/pages/index/login/login'
+                                url: '/pages/index/login/login'
                             })
                         }, 2000)
 					}
@@ -169,25 +177,25 @@
 					// this.router.push({name: 'personCharts'})
                     uni.navigateTo({
                         url: '/pages/index/module/personCharts'
-                    });
+                    })
 				}
                 if (name == '联系客服') {
                     // this.router.push({name: 'config'})
                     uni.navigateTo({
                         url: '/pages/index/module/config'
-                    });
+                    })
                 }
                 if (name == '个人资料') {
                     // this.router.push({name: 'personInfos'})
                     uni.navigateTo({
                         url: '/pages/index/module/personInfos'
-                    });
+                    })
                 }
                 if (name == '修改密码') {
                     // this.router.push({name: 'forgetOne'})
                     uni.navigateTo({
                         url: '/pages/index/module/forgetOne'
-                    });
+                    })
                 }
                 if (name == '退出登录') {
                     this.modalStatus = true
@@ -196,8 +204,14 @@
                     // this.router.push({name: 'teamManage'})
                     uni.navigateTo({
                         url: '/pages/index/module/teamManage'
-                    });
+                    })
                 }
+	            if (name == '余额提现') {
+		            // this.router.push({name: 'teamManage'})
+		            uni.navigateTo({
+			            url: '/pages/index/module/with-draw'
+		            })
+	            }
             },
 		},
     }
