@@ -1,161 +1,72 @@
 <template>
-	<view class="bg-white">
-		<view class="full-width bg-red text-xl text-center"
-		      style="height: 100rpx;line-height: 100rpx;padding: 0!important;">
-			<view @click="testOne" class="fa fa-angle-left fa-2x fl margin-left"
-			      style="line-height: 100rpx"></view>
-			团队管理
+	<view class="full-height" id="parent">
+		<view class="full-width text-xl text-center" style="position: fixed;top: 0;left: 0;height: 100rpx;line-height: 100rpx;padding: 0!important;background: #E54D42;color: white">
+			<view @click="tu.back()" class="fa fa-angle-left fa-2x fl margin-left" style="line-height: 100rpx"></view>
+			{{name}}成员排行
 		</view>
-		<mescroll-uni ref="mescrollRef" height="100vh" bottom="0"
-		              :down="downOption"
-		              @init="mescrollInit"
-		              @down="downCallback" class="margin-bottom-xxl">
-			<view class="padding">
-				<image src="/static/images/lz/lz.png" mode="scaleToFill"  class="fr" style="width: 120rpx;height: 120rpx"
-				       :class="[true?'cu-avatar':'', true?'round': '']"></image>
-				<view class="text-xl text-bold">{{teamName}}
-					<span class="text-normal text-df margin-left text">(共{{member_nums}}人)</span>
-				</view>
-				<view class="margin-top">
-					<span class="text-normal text-df text">{{team_captain_name}}</span>
-				</view>
-				<view class="margin-top">
-					<span class="text-normal text-df text">{{inviter_code}} <a class="text-blue margin-left" @tap="tu.getClipboardData(inviter_code)">复制</a></span>
-				</view>
-				<view style="border-bottom: 1px solid rgba(0, 0, 0, 0.3)">
-					<input class="margin-top" :value="slogan" @input="test" :focus="false" :password=false
-					       placeholder="请输入公告"
-					       maxlength="-1" confirm-type="完成"/>
-				</view>
-				<view @tap="giveSlogan" class="text-center margin-top-xxl margin-bottom-xl">
-					<button class="cu-btn" :class="[['bg-red', 'line-blue', 'line-blue lines-blue'][0],
-				        ['sm', 'lg', ''][1], false ? 'round' : '', true ? 'shadow' : '', true ? 'block' : '']">
-						<text v-show="false" class="fa fa-wechat padding-right-twenty" :disabled=false></text>
-						发布
-					</button>
-				</view>
-			</view>
+		<view style="height: 100rpx"></view>
+		<view class="full-height">
+			<app-tabs v-model="tabIndex" :tabs="tabs" :fixed="false"></app-tabs>
+			<swiper :style="{height: height}" :current="tabIndex" @change="swiperChange">
+				<!--全部 -->
+				<swiper-item>
+					<mescroll-item ref="stOne" :url="url" :parmas="parmas" :i="0" :index="tabIndex" :tabs="tabs"></mescroll-item>
+				</swiper-item>
 
-			<view class="margin-bottom margin-left" style="overflow: hidden!important;">
-				团队今日视频总计费次数：{{total_clickOne}}
-			</view>
-			<scroll-view scroll-x>
-				<lineChart :xData="dataOneHour" :yData="dataOneClick"></lineChart>
-			</scroll-view>
-		</mescroll-uni>
+				<!-- 奶粉 -->
+				<swiper-item>
+					<mescroll-item ref="stTwo" :url="url" :parmas="parmas" :i="1" :index="tabIndex" :tabs="tabs"></mescroll-item>
+				</swiper-item>
 
+				<!-- 面膜 -->
+				<swiper-item>
+					<mescroll-item ref="stThree" :url="url" :parmas="parmas" :i="2" :index="tabIndex" :tabs="tabs"></mescroll-item>
+				</swiper-item>
+
+				<!-- 图书 -->
+<!--				<swiper-item>-->
+<!--					<mescroll-item ref="stFour" :url="url" :parmas="parmas" :i="3" :index="tabIndex" :tabs="tabs"></mescroll-item>-->
+<!--				</swiper-item>-->
+			</swiper>
+		</view>
 	</view>
 </template>
 
 <script>
-import {
-	commonPost
-} from '@/api'
-import MescrollMixin from '../../../components/mescroll-uni/mescroll-mixins.js'
-
+import MescrollItem from './record-swiper'
+import AppTabs from '../../../components/mescroll-uni/app-tabs-new.vue'
 export default {
-	mixins: [MescrollMixin],
-	data() {
+	components: {
+		MescrollItem,
+		AppTabs
+	},
+	onLoad (e) {
+		// const data = JSON.parse(e.query)
+		this.id = localStorage.getItem('teamId')
+		this.name = localStorage.getItem('teamName')
+		this.parmas = { department_id: this.id }
+	},
+	data () {
 		return {
-			downOption: {
-				auto: false,
-				textInOffset: '下拉刷新',
-				textOutOffset: '释放更新',
-				textLoading: '正在拼命的加载中 ...',
-			},
-			slogan: '该团长还未设置口号',
-			teamName: '',
-			inviter_code: '',
-			member_nums: '',
-			team_captain_name: '',
-			dataOneList: [],
-			dataOneHour: [],
-			dataOneClick: [],
-			total_clickOne: 0,
+			name: '',
+			id: '',
+			url: '/team/department-member-list',
+			parmas: {},
+			status: true,
+			height: '90%', // 需要固定swiper的高度
+			tabs: ['全部记录', '进行中', '已完成'],
+			tabIndex: 0, // 当前tab的下标
 		}
 	},
-	async created() {
-		this.ui.showLoading()
-		const dataOne = await commonPost('/team/team-click-trend')
-		uni.hideLoading()
-		this.dataOneList = dataOne.data.list
-		this.total_clickOne = dataOne.data.total_click
-		for (let i = 0; i < this.dataOneList.length; i++) {
-			this.dataOneHour.push(this.dataOneList[i].trans_hour)
-			this.dataOneClick.push(parseInt(this.dataOneList[i].effective_click_total))
-		}
-
-		const newData = await commonPost('/team/team-info')
-		// console.log(newData.data.slogan)
-		// console.log(newData.data.slogan == '')
-		if (newData.data.slogan == '' || newData.data.slogan == null) {
-			this.slogan = '该团长还未设置口号'
-		} else {
-			this.slogan = newData.data.slogan
-		}
-
-		this.teamName = newData.data.name
-		this.inviter_code = newData.data.inviter_code
-		this.member_nums = newData.data.member_nums
-		this.team_captain_name = newData.data.team_captain_name
-	},
-	// async onPullDownRefresh () {
-	//     this.dataOneList = []
-	//     this.dataOneHour = []
-	//     this.dataOneClick = []
-	//     const dataOne = await commonPost('/team/team-click-trend')
-	//     uni.stopPullDownRefresh()
-	//     this.dataOneList = dataOne.data.list
-	//     this.total_clickOne = dataOne.data.total_click
-	//     for (let i = 0; i < this.dataOneList.length; i++) {
-	//         this.dataOneHour.push(this.dataOneList[i].trans_hour)
-	//         this.dataOneClick.push(parseInt(this.dataOneList[i].effective_click_total))
-	//     }
-	//     this.ui.showToast('刷新成功')
-	// },
 	methods: {
-		onUnLoad () {
-			// this.router.replace({name: 'lz_home'})
-			uni.redirectTo({
-				url: '/pages/index/index/home'
-			});
+		// 轮播菜单
+		swiperChange (e) {
+			this.tabIndex = e.detail.current
 		},
-		testOne () {
-			uni.redirectTo({
-				url: '/pages/index/index/home'
-			});
-		},
-		test (e) {
-			this.slogan = e.target.value
-		},
-		async downCallback() {
-			this.dataOneList = []
-			this.dataOneHour = []
-			this.dataOneClick = []
-			const dataOne = await commonPost('/team/team-click-trend')
-			this.dataOneList = dataOne.data.list
-			this.total_clickOne = dataOne.data.total_click
-			for (let i = 0; i < this.dataOneList.length; i++) {
-				this.dataOneHour.push(this.dataOneList[i].trans_hour)
-				this.dataOneClick.push(parseInt(this.dataOneList[i].effective_click_total))
-			}
-			this.mescroll.endDownScroll()
-			this.ui.showToast('刷新成功')
-		},
-		async giveSlogan() {
-			const data = await commonPost('/team/release-notice', {slogan: this.slogan})
-			// console.log(data)
-			if (data.code == 200) {
-				this.ui.showToast('发布成功')
-			} else {
-				this.ui.showToast(data.message)
-			}
-			// console.log(this.slogan)
-		},
-	},
+	}
 }
 </script>
 
 <style>
-.upwarp-tip{display: none!important;}
+
 </style>

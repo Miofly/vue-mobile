@@ -8,6 +8,25 @@
 		</view>
 		<view style="height: 100rpx"></view>
 
+		<view class="cu-list menu" :class="[false ? 'card-menu' : '']">
+			<view v-for="(item, index) in [{ name: '列表一', icon: 'navicon' },
+		    { name: '列表1一', icon: 'address-card' },
+		    { name: '列表2一', icon: 'power-off' },
+		    { name: '列表3一', icon: 'user-plus' },
+		    { name: '列表4一', icon: 'commenting' }]" :key="index" class="cu-item">
+				<view class="content">
+					<view>
+						<!--<image :src="`/static/images/haixing/${item.icon}.png`" style="width: 40rpx;height: 40rpx"></image>-->
+						<text class="">{{ item.name }}</text>
+					</view>
+				</view>
+				<view v-if="true" class="action">
+					<input class="margin-top text-right" :value="slogan" @input="test" :focus="false" :password=false
+					       placeholder="请输入公告"
+					       maxlength="-1" confirm-type="完成"/>
+				</view>
+			</view>
+		</view>
 
 		<view class="margin-top-xxl margin-left">
 			<view style="color: #666666;font-size: 14px">注意事项</view>
