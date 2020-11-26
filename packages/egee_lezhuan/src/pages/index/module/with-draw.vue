@@ -10,7 +10,7 @@
 		<view class="flex justify-between margin-top-xxl align-end">
 			<view class="margin-left-xl">
 				<view style="font-size: 14px" class="text-bold">账户余额（元）</view>
-				<view style="font-size: 38px;color: #F30A30;font-weight: bolder" class="margin-top-xxl">0.01</view>
+				<view style="font-size: 38px;color: #F30A30;font-weight: bolder" class="margin-top-xxl">{{ overage }}</view>
 			</view>
 			<view style="border-radius: 15px;border: 1px solid #E54D42;width: 176rpx;height: 60rpx;text-align: center;line-height: 60rpx"
 			      class="margin-right-xl margin-bottom">
@@ -74,7 +74,7 @@
 			</view>
 		</view>
 
-		<view class="flex justify-center margin-top-bottom-ten">
+		<view @tap="withdraw" class="flex justify-center margin-top-bottom-ten">
 			<image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
 				src="/static/images/lz/lijitixian@2x.png"
 				style="width: 430rpx;height: 92rpx"></image>
@@ -88,9 +88,9 @@
 			</view>
 		</modal>
 
-		<modal id="mtwo" :custom="true" :show="modalStatusTwo" content="这是内容" title="标题" style="padding: 0px!important;">
+		<modal id="mtwo" :custom="true" :show="modalStatusTwo" content="这是内容" title="标题" style="padding: 0px!important;position: relative">
 			<view style="height: 164rpx;line-height: 192rpx;color: #333333;font-weight: bold;font-size: 18px;text-align: center">提现短信验证</view>
-			<view style="height: 100rpx">
+			<view style="height: 100rpx" class="margin-top-xl">
 				<view class="fl text-red" style="font-size: 18px;color: #333333;width: 144rpx;height: 80rpx;line-height: 80rpx;margin-left: 36rpx;font-weight: bold">手机号:</view>
 				<view style="width: 462rpx;height: 80rpx;border-radius: 20px;border: 1px solid #E54D42;line-height: 80rpx;margin-left: 180rpx" class="">
 					<view v-show="regInfos.mobile" class="fa fa-close fr margin-right-xxl"
@@ -100,7 +100,7 @@
 					       maxlength="11" confirm-type="完成"/>
 				</view>
 			</view>
-			<view class="">
+			<view class="margin-top-xl">
 				<view class="fl text-red" style="font-size: 18px;color: #333333;width: 144rpx;height: 80rpx;line-height: 80rpx;margin-left: 36rpx;font-weight: bold">验证码:</view>
 				<view style="width: 460rpx;position: relative">
 					<view style="width: 282rpx;height: 80rpx;border-top-left-radius: 20px;border-bottom-left-radius: 20px;
@@ -117,7 +117,21 @@
 					</view>
 				</view>
 			</view>
+			<view style="clear: both"></view>
+			<view class="text-center margin-top-xxl padding-bottom-ten">
+				<image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
+					src="/static/images/lz/qued@2x.png"
+					style="width: 430rpx;height: 92rpx"></image>
+				<view style="color: #F30A30;font-size: 12px" class="margin-top">注：为您提现安全，请填写正确手机号</view>
+			</view>
+
+			<view @tap="modalStatusTwo=false" style="position: absolute;width: 100%;left: 0;text-align: center" class="margin-top-xxl">
+				<image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
+					src="/static/images/lz/closelive_but@2x.png"
+					style="width: 98rpx;height: 98rpx"></image>
+			</view>
 		</modal>
+
 	</view>
 </template>
 
@@ -135,10 +149,12 @@ export default {
 				msgCode: '',
 				type: 1001
 			},
+
+			overage: 9.01,
 			disabled: false,
 			codeMess: '获取验证码',
 
-			modalStatusTwo: true,
+			modalStatusTwo: false,
 			modalStatus: false,
 			wx: 'hongbao1322',
 			moneyIndex: 0,
@@ -182,6 +198,13 @@ export default {
 	//     this.ui.showToast('刷新成功')
 	// },
 	methods: {
+		withdraw () {
+			if (this.overage < this.lists[this.moneyIndex].amount) {
+				this.modalStatus = true
+			} else {
+				this.modalStatusTwo = true
+			}
+		},
 		async btnSend() {
 			if (!this.disabled) {
 				if (this.regInfos.mobile.trim() == '') {
@@ -221,7 +244,6 @@ export default {
 		goWeixin () {
 			this.tu.getClipboardData(this.wx)
 			this.tu.jumpWX()
-
 		},
 		chooseMoney (index) {
 			this.moneyIndex = index

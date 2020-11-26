@@ -1,62 +1,66 @@
 <template>
 	<view class="bg-white">
-		<view class="full-width bg-red text-xl text-center"
-		      style="height: 100rpx;line-height: 100rpx;padding: 0!important;">
-			<view @click="testOne" class="fa fa-angle-left fa-2x fl margin-left"
+		<view class="full-width text-xl text-center text-bold text-white"
+		      style="height: 100rpx;line-height: 100rpx;padding: 0!important;position: fixed;top: 0;left: 0;z-index: 999999;background: red">
+			<view @click="testOne" class="fa fa-angle-left fa-2x fl margin-left text-white"
 			      style="line-height: 100rpx"></view>
-			团队管理
+			提现验证
 		</view>
-		<mescroll-uni ref="mescrollRef" height="100vh" bottom="0"
-		              :down="downOption"
-		              @init="mescrollInit"
-		              @down="downCallback" class="margin-bottom-xxl">
-			<view class="padding">
-				<image src="/static/images/lz/lz.png" mode="scaleToFill"  class="fr" style="width: 120rpx;height: 120rpx"
-				       :class="[true?'cu-avatar':'', true?'round': '']"></image>
-				<view class="text-xl text-bold">{{teamName}}
-					<span class="text-normal text-df margin-left text">(共{{member_nums}}人)</span>
-				</view>
-				<view class="margin-top">
-					<span class="text-normal text-df text">{{team_captain_name}}</span>
-				</view>
-				<view class="margin-top">
-					<span class="text-normal text-df text">{{inviter_code}} <a class="text-blue margin-left" @tap="tu.getClipboardData(inviter_code)">复制</a></span>
-				</view>
-				<view style="border-bottom: 1px solid rgba(0, 0, 0, 0.3)">
-					<input class="margin-top" :value="slogan" @input="test" :focus="false" :password=false
-					       placeholder="请输入公告"
-					       maxlength="-1" confirm-type="完成"/>
-				</view>
-				<view @tap="giveSlogan" class="text-center margin-top-xxl margin-bottom-xl">
-					<button class="cu-btn" :class="[['bg-red', 'line-blue', 'line-blue lines-blue'][0],
-				        ['sm', 'lg', ''][1], false ? 'round' : '', true ? 'shadow' : '', true ? 'block' : '']">
-						<text v-show="false" class="fa fa-wechat padding-right-twenty" :disabled=false></text>
-						发布
-					</button>
-				</view>
-			</view>
+		<view style="height: 100rpx"></view>
 
-			<view class="margin-bottom margin-left" style="overflow: hidden!important;">
-				团队今日视频总计费次数：{{total_clickOne}}
-			</view>
-			<scroll-view scroll-x>
-				<lineChart :xData="dataOneHour" :yData="dataOneClick"></lineChart>
-			</scroll-view>
-		</mescroll-uni>
 
+		<view class="margin-top-xxl margin-left">
+			<view style="color: #666666;font-size: 14px">注意事项</view>
+			<view style="color: #666666;font-size: 14px" class="margin-top-sm">
+				1.每人每天提现1次，审核工作日时间9:00-21:00
+			</view>
+			<view style="color: #666666;font-size: 14px" class="margin-top-sm">
+				2.提现1分钟内到账，如遇节假日与双休日顺延
+			</view>
+			<view style="color: #666666;font-size: 14px" class="margin-top-sm">
+				3.提现成功后可在支付宝/微信-我的-账单查看到账详情
+			</view>
+		</view>
+
+		<view @tap="withdraw" class="flex justify-center margin-top-bottom-ten">
+			<image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
+			       src="/static/images/lz/lijitixian@2x.png"
+			       style="width: 430rpx;height: 92rpx"></image>
+		</view>
 	</view>
 </template>
 
 <script>
+/* eslint-disable */
 import {
 	commonPost
 } from '@/api'
-import MescrollMixin from '../../../components/mescroll-uni/mescroll-mixins.js'
 
 export default {
-	mixins: [MescrollMixin],
 	data() {
 		return {
+			regInfos: {
+				mobile: '',
+				msgCode: '',
+				type: 1001
+			},
+
+			overage: 9.01,
+			disabled: false,
+			codeMess: '获取验证码',
+
+			modalStatusTwo: false,
+			modalStatus: false,
+			wx: 'hongbao1322',
+			moneyIndex: 0,
+			lists: [
+				{ amount: '10' },
+				{ amount: '20' },
+				{ amount: '50' },
+				{ amount: '100' },
+				{ amount: '200' },
+				{ amount: '500' },
+			],
 			downOption: {
 				auto: false,
 				textInOffset: '下拉刷新',
@@ -74,31 +78,6 @@ export default {
 			total_clickOne: 0,
 		}
 	},
-	async created() {
-		this.ui.showLoading()
-		const dataOne = await commonPost('/team/team-click-trend')
-		uni.hideLoading()
-		this.dataOneList = dataOne.data.list
-		this.total_clickOne = dataOne.data.total_click
-		for (let i = 0; i < this.dataOneList.length; i++) {
-			this.dataOneHour.push(this.dataOneList[i].trans_hour)
-			this.dataOneClick.push(parseInt(this.dataOneList[i].effective_click_total))
-		}
-
-		const newData = await commonPost('/team/team-info')
-		// console.log(newData.data.slogan)
-		// console.log(newData.data.slogan == '')
-		if (newData.data.slogan == '' || newData.data.slogan == null) {
-			this.slogan = '该团长还未设置口号'
-		} else {
-			this.slogan = newData.data.slogan
-		}
-
-		this.teamName = newData.data.name
-		this.inviter_code = newData.data.inviter_code
-		this.member_nums = newData.data.member_nums
-		this.team_captain_name = newData.data.team_captain_name
-	},
 	// async onPullDownRefresh () {
 	//     this.dataOneList = []
 	//     this.dataOneHour = []
@@ -114,6 +93,56 @@ export default {
 	//     this.ui.showToast('刷新成功')
 	// },
 	methods: {
+		withdraw () {
+			if (this.overage < this.lists[this.moneyIndex].amount) {
+				this.modalStatus = true
+			} else {
+				this.modalStatusTwo = true
+			}
+		},
+		async btnSend() {
+			if (!this.disabled) {
+				if (this.regInfos.mobile.trim() == '') {
+					this.ui.showToast('手机号不能为空')
+					return
+				}
+				const data = await commonPost('/bus/send', this.regInfos)
+				console.log(data)
+				this.ui.showToast(data.message)
+
+				if (data.code == 200) {
+					this.disabled = true
+					this.codeMess = '请稍候...'
+					setTimeout(() => {
+						this.doLoop(60)
+					}, 500)
+				}
+			}
+		},
+		doLoop(seconds) {
+			seconds = seconds || 60
+			this.codeMess = seconds + 's后获取'
+			const countdown = setInterval(() => {
+				if (seconds > 0) {
+					this.codeMess = seconds + 's后获取'
+					--seconds
+				} else {
+					this.codeMess = '获取验证码'
+					this.disabled = false
+					clearInterval(countdown)
+				}
+			}, 1000)
+		},
+		delVals(val) {
+			this.regInfos[val] = ''
+		},
+		goWeixin () {
+			this.tu.getClipboardData(this.wx)
+			this.tu.jumpWX()
+		},
+		chooseMoney (index) {
+			this.moneyIndex = index
+		},
 		onUnLoad () {
 			// this.router.replace({name: 'lz_home'})
 			uni.redirectTo({
@@ -157,5 +186,10 @@ export default {
 </script>
 
 <style>
+>>>.mio-modal-box{padding: 0!important;}
+>>>#mtwo .mio-modal-box{width: 90%!important;}
 .upwarp-tip{display: none!important;}
+page{
+	background: white;
+}
 </style>
