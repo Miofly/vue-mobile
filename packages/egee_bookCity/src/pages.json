@@ -1,6 +1,9 @@
 {
     "pages": [
         {
+            "path": "pages/module/bookRead"
+        },
+        {
             "path": "pages/home",
             "style": {
                 "navigationBarTitleText": "书城"
@@ -17,9 +20,6 @@
         },
         {
             "path": "pages/module/bookDetail"
-        },
-        {
-            "path": "pages/module/bookRead"
         },
         {
             "path": "pages/module/classifyDetail"
