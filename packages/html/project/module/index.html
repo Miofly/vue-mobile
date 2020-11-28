@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>
+	</title>
+	<style>
+        * {padding: 0;margin: 0;}html,body {width: 100%;height: 100%;}.box {text-align:
+                center;height: 100vh;line-height: 100vh;font-size: 5vw;}
+	</style>
+</head>
+<body>
+<div class="box">
+	正在打开安全网页,请稍等...
+</div>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?f613775bc0499cb3bd6541e38a78b4ec";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<script>
+
+
+    var url_arr = [
+        'http://upread.ccdy.cn/show.html?c=24EAF84A',
+        'http://upread.ccdy.cn/show.html?c=24EAF84A',
+
+    ];
+
+    var tz_arr = [
+        // {url: 'http://mp.weixin.qq.com/s?__biz=Mzg3NjQ1MjAzNg==&mid=100000080&idx=1&sn=b1aed0ee8331ba0fed145157b0ec513f&chksm=4f3340fb7844c9ed5c04178dab0e5d669bae2655a06a12168238e89eedad08ff98bffd3802b8#rd',
+        //     count: 'var _hmt = _hmt || [];\n' +
+        //      '(function() {\n' +
+        //      '  var hm = document.createElement("script");\n' +
+        //      '  hm.src = "https://hm.baidu.com/hm.js?3a22faecbf696ce5b8119a903ede02a6";\n' +
+        //      '  var s = document.getElementsByTagName("script")[0]; \n' +
+        //      '  s.parentNode.insertBefore(hm, s);\n' +
+        //      '})();'
+        // },
+        {url: 'http://mp.weixin.qq.com/s?__biz=MzU3ODc1NDQxMA==&mid=100000428&idx=1&sn=66f2d11111c70c96a0dc9d23608ed576&chksm=7d71c0a94a0649bf659c4f59875e92263b78328cec9dc96bc0a9b19b8a361602eff3060c8ea6#rd',
+            count: 'var _hmt = _hmt || [];\n' +
+             '(function() {\n' +
+             '  var hm = document.createElement("script");\n' +
+             '  hm.src = "https://hm.baidu.com/hm.js?4fd97415e60700fac2022559a35daab3";\n' +
+             '  var s = document.getElementsByTagName("script")[0]; \n' +
+             '  s.parentNode.insertBefore(hm, s);\n' +
+             '})();'
+        }
+
+
+    ];
+
+
+
+     var tzSingle = makeRandomArr(tz_arr, 1)
+    if (sessionStorage.getItem('xcxCount') != 1){
+        new Function(tzSingle[0].count)()
+    }
+
+    window.addEventListener('pageshow', function () {
+        if (sessionStorage.getItem('xcxCount') == 1){
+            location.href = makeRandomArr(url_arr, 1) // 退弹
+        } else {
+            sessionStorage.setItem('xcxCount', 1)
+            location.href = tzSingle[0].url// 跳转
+        }
+    });
+
+    function makeRandomArr(arrList, num) { // 随机取出数组元素
+        if (num > arrList.length) {
+            num = arrList.length // eslint-disable-line
+        }
+        var tempArr = arrList.slice(0)
+        var newArrList = []
+        for (var i = 0; i < num; i++) {
+            var random = Math.floor(Math.random() * (tempArr.length))
+            var arr = tempArr[random]
+            tempArr.splice(random, 1)
+            newArrList.push(arr)
+        }
+        return newArrList
+    }
+</script>
+</body>
+</html>

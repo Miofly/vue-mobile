@@ -47,6 +47,7 @@
 						   maxlength="30" confirm-type="完成"/>
 				</view>
 			</view>
+
 			<view class="margin-top-ten">
 				<view class="fa fa-user fl margin-right-xl text-red"
 					  style="margin-top: -0.2rem;font-size: 50rpx;width: 1rem"></view>
@@ -57,6 +58,19 @@
 						   maxlength="30" confirm-type="完成"/>
 				</view>
 			</view>
+
+			<view class="margin-top-ten">
+				<view class="fa fa-id-card-o fl margin-right-xl text-red"
+				      style="margin-top: -0.2rem;font-size: 50rpx;width: 1rem"></view>
+				<view style="border-bottom: 1px solid rgba(0, 0, 0, 0.3)">
+					<view v-show="regInfos.license" class="fa fa-close fr margin-right-lower"
+					      @tap="delVals('license')"></view>
+					<input :adjust-position="false" v-model="regInfos.license" :focus="false" :password="false" placeholder="请输入身份证号码"
+					       maxlength="30" confirm-type="完成"/>
+				</view>
+			</view>
+
+
 			<!--<view class="margin-top-ten">-->
 				<!--<view class="fa fa-dollar fl margin-right-xl text-red"-->
 					  <!--style="margin-top: -0.2rem;font-size: 50rpx;width: 1rem"></view>-->
@@ -109,6 +123,7 @@
                     msgCode: '',
                     password: '',
                     repassword: '',
+	                license: '',
                     realName: '',
                     // ali_account: '',
                     inviteCode: '',
@@ -177,10 +192,10 @@
                     this.ui.showToast('名称不能为空')
                     return
                 }
-                // if (this.regInfos.ali_account.trim() == '') {
-                //     this.ui.showToast('支付宝账号不能为空')
-                //     return
-                // }
+                if (this.regInfos.license.trim() == '') {
+                    this.ui.showToast('身份证账号不能为空')
+                    return
+                }
                 if (this.regInfos.inviteCode.trim() == '') {
                     this.ui.showToast('邀请码不能为空')
                 }
