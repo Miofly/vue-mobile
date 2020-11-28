@@ -15,7 +15,7 @@
 					  @down="downCallback">
 			<view class="cu-list grid" :class="['col-' + 1, true?'':'no-border']">
 				<view class="cu-item">
-					<view class="text-bold text-red text-xxl">99</view>
+					<view class="text-bold text-red text-xxl">{{ totalProfit }}</view>
 					<text style="color: black">累计收入</text>
 				</view>
 			</view>
@@ -99,7 +99,10 @@
                 mobile: '',
                 monthClick: '',
                 todayClick: '',
-                yesterdayClick: '',
+                // yesterdayClick: '',
+                // yesterdayClick: '',
+                // yesterdayClick: '',
+                // yesterdayClick: '',
 
                 modalStatus: false,
                 menuList: [
@@ -124,9 +127,9 @@
 		computed: {
             jfLists () {
                 return [
-                    { frequency: this.todayClick, color: 'red', badge: 0, name: '今日收入' },
-                    { frequency: this.yesterdayClick, color: 'red', badge: 0, name: '昨日收入' },
-                    { frequency: this.monthClick, color: 'red', badge: 0, name: '账户余额' }
+                    { frequency: this.todayProfit, color: 'red', badge: 0, name: '今日收入' },
+                    { frequency: this.yesterdayProfit, color: 'red', badge: 0, name: '昨日收入' },
+                    { frequency: this.balance, color: 'red', badge: 0, name: '账户余额' }
                 ]
             }
 		},
