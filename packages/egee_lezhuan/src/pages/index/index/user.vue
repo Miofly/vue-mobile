@@ -125,7 +125,7 @@
             jfLists () {
                 return [
                     { frequency: this.todayClick, color: 'red', badge: 0, name: '今日收入' },
-                    { frequency: this.yesterdayClick, color: 'red', badge: 0, name: '转发收入' },
+                    { frequency: this.yesterdayClick, color: 'red', badge: 0, name: '昨日收入' },
                     { frequency: this.monthClick, color: 'red', badge: 0, name: '账户余额' }
                 ]
             }

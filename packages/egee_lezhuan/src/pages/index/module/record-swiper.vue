@@ -20,7 +20,7 @@
 						{{ i==0? '待完成' : i == 1 ? '失败': '成功' }}
 					</view>
 					<view v-else>
-						{{ item.status==0? '待完成' : item.status==1||item.status==3 ? '失败': '成功' }}
+						{{ item.status==0 || item.status==2 ? '待完成' : item.status==1||item.status==3 ? '失败': '成功' }}
 					</view>
 				</view>
 
@@ -32,8 +32,8 @@
 				<view v-else>
 					{{ item.status==0 || item.status==2 ? '待完成' : item.status==1||item.status==3 ? '失败': '成功' }}
 				</view>
-				<view style="font-size: 14px;color: #999999;">
-					{{ item.create_at }}
+				<view style="font-size: 14px;color: #999999;width: 100%">
+					{{ item.create_at.slice(5) }}
 				</view>
 			</view>
 		</view>

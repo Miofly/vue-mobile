@@ -23,8 +23,8 @@
 				</view>
 			</view>
 
-			<view v-if="need_auth!=1" style="width: 100%;text-align: center">
-				<view @tap="infoUpdate" style="color: #E54D42;margin-left: 20rpx;border-radius: 15px;border: 1px solid #E54D42;width: 266rpx;height: 60rpx;text-align: center;line-height: 60rpx"
+			<view v-if="need_auth!=1" style="width: 100%;text-align: center;margin-left: 40rpx" class="">
+				<view @tap="infoUpdate" style="color: #E54D42;border-radius: 15px;border: 1px solid #E54D42;width: 266rpx;height: 60rpx;text-align: center;line-height: 60rpx"
 				      class="margin-right-xl margin-bottom">
 					个人认证信息修改
 				</view>
@@ -61,7 +61,7 @@
 						<image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
 						       src="/static/images/lz/zhifubao@2x.png"
 						       style="width: 60rpx"></image>
-						<text style="vertical-align: top;" class="margin-left-xxl">{{ tu.getLocalData('realName') }} {{alipay_account.slice(0, 4)+'********'}}</text>
+						<text style="vertical-align: top;" class="margin-left-xxl">{{ tu.getLocalData('realName') }} {{alipay_account}}</text>
 					</view>
 					<view @tap="modalStatusThree=true" style="background: #E54D42;text-align: center;color: white;border-radius: 16px;width: 218rpx;height: 56rpx;line-height: 56rpx">更改账号</view>
 				</view>
@@ -164,7 +164,22 @@
 						确认
 					</view>
 				</view>
+			</modal>
 
+			<modal id="mfive" :custom="true" :show="modalStatusFive" content="这是内容" title="确认提现？" style="padding: 0!important;">
+				<view style="height: 164rpx;line-height: 164rpx;color: #333333;font-weight: bold;font-size: 18px;text-align: center">
+					提现总额超过500需跳转至
+					<text>电子合同签署页面</text>
+				</view>
+				<view style="width: 100%;height: 1px;background: #eee;"></view>
+				<view class="flex" style="height: 100rpx;text-align: center;color: #E54D42;font-size: 18px;line-height: 100rpx">
+					<view style="width: 50%;border-right: 1px solid #eee;color: black" @tap="modalStatusFive=false">
+						放弃提现
+					</view>
+					<view style="width: 50%" @click="goSigned">
+						确认跳转
+					</view>
+				</view>
 			</modal>
 		</scroll-view>
 	</view>
@@ -193,6 +208,7 @@ export default {
 			new_alipay_account: '',
 			alipay_account_old: '',
 			alipay_account_status: '',
+			contract_url: '',
 
 			disabled: false,
 			codeMess: '获取验证码',
@@ -201,6 +217,7 @@ export default {
 			modalStatus: false,
 			modalStatusThree: false,
 			modalStatusFour: false,
+			modalStatusFive: false,
 			wx: 'hongbao1322',
 			moneyIndex: 0,
 
@@ -253,10 +270,9 @@ export default {
 				return
 			}
 			if (code == 414) {
-			    setTimeout(() => {
-				    this.modalStatusFour = false
-			        // location.href = data.contract_url
-			    }, 1000)
+				 this.modalStatusFour = false
+				 this.modalStatusFive = true
+			     this.contract_url = data.contract_url
 			}
 		},
 		async withdraw () {
@@ -286,6 +302,9 @@ export default {
 			} else {
 				uni.showToast({title:`审核工作时间为${this.timeSection}`, duration: 2000, icon: 'none'})
 			}
+		},
+		goSigned () {
+			location.href = this.contract_url
 		},
 		async bindAlipay () {
 			this.modalStatusTwo = true
@@ -378,6 +397,7 @@ export default {
 <style>
 >>>.mio-modal-box{padding: 0!important;}
 >>>.mtwo .mio-modal-box{width: 90%!important;}
+>>>#mfive .mio-modal-box{width: 98%!important;}
 .upwarp-tip{display: none!important;}
 page{
 	background: white;
