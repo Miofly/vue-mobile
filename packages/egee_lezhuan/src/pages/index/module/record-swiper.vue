@@ -32,7 +32,7 @@
 				<view v-else>
 					{{ item.status==0 || item.status==2 ? '待完成' : item.status==1||item.status==3 ? '失败': '成功' }}
 				</view>
-				<view style="font-size: 14px;color: #999999;width: 100%">
+				<view style="font-size: 14px;color: #999999;width: 130%">
 					{{ item.create_at.slice(5) }}
 				</view>
 			</view>

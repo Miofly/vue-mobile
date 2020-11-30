@@ -98,6 +98,7 @@
 				    // this.$store.state.is_team_captain = data.data.is_team_captain
 				    localStorage.setItem('is_team_captain', data.data.is_team_captain)
 				    localStorage.setItem('memberId', data.data.memberId)
+				    localStorage.setItem('memberId', data.data.memberId)
 				    localStorage.setItem('is_department_captain', data.data.is_department_captain)
 				    localStorage.setItem('department_id', data.data.department_id)
 				    uni.hideLoading()

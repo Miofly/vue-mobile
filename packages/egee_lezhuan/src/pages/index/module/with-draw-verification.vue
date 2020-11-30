@@ -30,7 +30,7 @@
 					<text class=""><text class="text-red margin-right" style="vertical-align: text-top">*</text>身份证号码</text>
 				</view>
 				<view v-if="true" class="action">
-					<input class="margin-top text-right" v-model="license" placeholder="请输入身份证号码" :focus="false" :password=false  maxlength="-1" confirm-type="完成"/>
+					<input style="width: 270px" class="margin-top text-right" v-model="license" placeholder="请输入身份证号码" :focus="false" :password=false  maxlength="-1" confirm-type="完成"/>
 				</view>
 			</view>
 			<view class="cu-item">
@@ -38,7 +38,7 @@
 					<text class="">银行卡号</text>
 				</view>
 				<view v-if="true" class="action">
-					<input class="margin-top text-right" v-model="bank" placeholder="请输入银行卡号" :focus="false" :password=false  maxlength="-1" confirm-type="完成"/>
+					<input style="width: 270px" class="margin-top text-right" v-model="bank" placeholder="请输入银行卡号" :focus="false" :password=false  maxlength="-1" confirm-type="完成"/>
 				</view>
 			</view>
 		</view>
@@ -77,9 +77,13 @@ export default {
 			mobile: '',
 			license: '',
 			bank: '',
+			isNeed: 0,
 		}
 	},
-	async created() {
+	onLoad (option) {
+		this.isNeed = option.isNeed
+	},
+	async created(option) {
 		const {data} = await commonPost('/my/assets_auth')
 		this.name = data.name
 		this.mobile = data.mobile
@@ -121,8 +125,16 @@ export default {
 				return
 			}
 
-			const data = await commonPost('/my/handle_assets_auth',{name:this.name, mobile: this.mobile, license: this.license, bank: this.bank})
-			console.log(data)
+			const {data, code} = await commonPost('/my/handle_assets_auth',{name:this.name, mobile: this.mobile, license: this.license, bank: this.bank})
+			if (code == 200) {
+				if (this.isNeed == 1) {
+					location.href = data.contract_url
+				} else {
+					uni.showToast({title:`操作成功`, duration: 2000, icon: 'none'})
+				}
+			} else {
+
+			}
 		},
 	},
 }

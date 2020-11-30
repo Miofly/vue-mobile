@@ -99,14 +99,15 @@
                 mobile: '',
                 monthClick: '',
                 todayClick: '',
-                // yesterdayClick: '',
-                // yesterdayClick: '',
-                // yesterdayClick: '',
-                // yesterdayClick: '',
+                yesterdayClick: '',
+	            balance: '',
+	            todayProfit: '',
+	            totalProfit: '',
+                yesterdayProfit: '',
 
                 modalStatus: false,
                 menuList: [
-	                { icon: 'money', color: 'red', badge: 0, name: '余额提现' },
+	                { icon: 'credit-card-alt', color: 'red', badge: 0, name: '余额提现' },
 	                { icon: 'navicon', color: 'red', badge: 0, name: '点击明细' },
                     { icon: 'lock', color: 'red', badge: 0, name: '修改密码' },
                     { icon: 'address-card', color: 'red', badge: 0, name: '个人资料' },
@@ -115,7 +116,7 @@
                     { icon: 'user-plus', color: 'red', badge: 0, name: '团队管理' },
                 ],
                 menuLists: [
-	                { icon: 'money', color: 'red', badge: 0, name: '余额提现' },
+	                { icon: 'credit-card-alt', color: 'red', badge: 0, name: '余额提现' },
 	                { icon: 'navicon', color: 'red', badge: 0, name: '点击明细' },
                     { icon: 'lock', color: 'red', badge: 0, name: '修改密码' },
                     { icon: 'address-card', color: 'red', badge: 0, name: '个人资料' },
@@ -151,6 +152,12 @@
                 this.mobile = data.mobile
                 this.alipay_account = data.alipay_account
                 this.name = data.true_name
+
+		        this.balance = data.balance
+			    this.todayProfit = data.todayProfit
+			    this.totalProfit = data.totalProfit
+			    this.yesterdayProfit = data.totalProfit
+		        localStorage.setItem('realName', data.true_name)
 	        },
             async handClick (e) {
                 // console.log(e)

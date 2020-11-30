@@ -87,7 +87,11 @@
 				</view>
 			</view>
 
-			<view @tap="withdraw" class="flex justify-center margin-top-bottom-ten padding-bottom">
+			<view style="height: 30vw">
+
+			</view>
+
+			<view style="position: fixed;bottom: 50rpx;width: 100%;left: 0;text-align: center" @tap="withdraw" class="">
 				<image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
 				       src="/static/images/lz/lijitixian@2x.png"
 				       style="width: 430rpx;height: 92rpx"></image>
@@ -168,7 +172,7 @@
 
 			<modal id="mfive" :custom="true" :show="modalStatusFive" content="这是内容" title="确认提现？" style="padding: 0!important;">
 				<view style="height: 164rpx;line-height: 164rpx;color: #333333;font-weight: bold;font-size: 18px;text-align: center">
-					提现总额超过500需跳转至
+					当前操作需跳转至
 					<text>电子合同签署页面</text>
 				</view>
 				<view style="width: 100%;height: 1px;background: #eee;"></view>
@@ -293,7 +297,7 @@ export default {
 					// this.alipay_account_status = data.alipay_account_status
 					if (this.need_auth == 1) {
 						uni.navigateTo({
-							url: '/pages/index/module/with-draw-verification'
+							url: '/pages/index/module/with-draw-verification?isNeed=1'
 						})
 					} else {
 						this.modalStatusFour = true
@@ -304,7 +308,10 @@ export default {
 			}
 		},
 		goSigned () {
-			location.href = this.contract_url
+			this.modalStatusFive = false
+			uni.navigateTo({
+				url: '/pages/index/module/with-draw-verification?isNeed=1'
+			})
 		},
 		async bindAlipay () {
 			this.modalStatusTwo = true
