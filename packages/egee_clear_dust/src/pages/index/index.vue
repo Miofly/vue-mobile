@@ -38,7 +38,7 @@
 			</view>
 		</view>
 		<ad ad-intervals="30" style="margin: 40rpx 0" unit-id="adunit-00e1022d0ea25478"></ad>
-		<!--		<ad style="margin: 40rpx 0 40rpx 5%;width: 90%;" unit-id="adunit-00e1022d0ea25478" ad-intervals="30"></ad>-->
+
 		<button class="text-18 text-white" open-type="share"
 		        style="margin-top: 30rpx;height: 96rpx;line-height: 96rpx;width: 86%;margin-left: 7%;background: #FF4343;border-radius: 24px;">分享
 		</button>
@@ -102,7 +102,6 @@ export default class index extends Vue {
 	playAudio () {
 		this.$mio.mioRoot.showToast('正在拉取视频..')
 		// 用户触发广告后，显示激励视频广告
-
 		this.rewardedVideoAd.show().catch(() => {
 			// 失败重试
 			this.rewardedVideoAd.load()
@@ -111,7 +110,6 @@ export default class index extends Vue {
 					console.log('激励视频 广告显示失败', err)
 				})
 		})
-
 	}
 
 	realPlay () {
