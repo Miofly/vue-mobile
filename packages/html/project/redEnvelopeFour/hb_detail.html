@@ -36,13 +36,13 @@
 	    </div>
 	    <img src="image/qun_img.png" class="qunImg">
 	</div>
-	
+
 <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="js/jquery.qrcode.min.js"></script>
 <script type="text/javascript">
-    // 生成二维码 
-    var qrcode= $('#code').qrcode('<?=$shareurl?>').hide();   
-    var canvas=qrcode.find('canvas').get(0);  
+    // 生成二维码
+    var qrcode= $('#code').qrcode('<?=$shareurl?>').hide();
+    var canvas=qrcode.find('canvas').get(0);
     $('#imgOne').attr('src',canvas.toDataURL('image/jpg'));
 </script>
 <script type="text/javascript" src="js/mhb_detail.js"></script>
