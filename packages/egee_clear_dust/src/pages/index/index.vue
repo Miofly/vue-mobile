@@ -37,7 +37,11 @@
 				当然清理出来的灰尘也是细小的，肉眼自然看不见很多灰尘出来。部分双扬声器的手机听筒也可以发声，所以这个方法也可以为听筒清灰。
 			</view>
 		</view>
-		<ad ad-intervals="30" style="margin: 40rpx 0" unit-id="adunit-00e1022d0ea25478"></ad>
+
+		<view style="width: 90%;margin: 50rpx 0 50rpx 5%">
+			<ad ad-intervals="30" unit-id="adunit-00e1022d0ea25478"></ad>
+		</view>
+
 
 		<button class="text-18 text-white" open-type="share"
 		        style="margin-top: 30rpx;height: 96rpx;line-height: 96rpx;width: 86%;margin-left: 7%;background: #FF4343;border-radius: 24px;">分享
@@ -69,7 +73,7 @@ export default class index extends Vue {
 		this.rewardedVideoAd = null
 		if (wx.createInterstitialAd) {
 			this.rewardedVideoAd = wx.createRewardedVideoAd({
-				adUnitId: 'adunit-c032eda868cde7c8'
+				adUnitId: 'adunit-b1a2e6819f2e59de'
 			})
 			this.rewardedVideoAd.onLoad(() => {
 				console.log('激励广告加载成功')

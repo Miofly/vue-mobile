@@ -96,7 +96,7 @@
                     })
                     view.onShareAppMessage = function () {
                         return {
-                            title: '更多精彩，点此观看！',
+                            title: '让你的手机一尘不染！',
                             path: view.route
                         }
                     }

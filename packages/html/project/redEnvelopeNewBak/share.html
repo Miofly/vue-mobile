@@ -9,7 +9,7 @@
 	<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
 	<meta content="telephone=no" name="format-detection"/>
 	<meta content="email=no" name="format-detection"/>
-	<title>端午节</title>
+	<title></title>
 	<script src="js/jquery.js"></script>
 	<script src="js/adaptive.js" type="text/javascript"></script>
 	<script src="js/share.js" type="text/javascript"></script>
@@ -19,33 +19,146 @@
 <body class="bg-white" style="font-size: 0.05rem;">
 <audio id="mp3" preload="auto" src="./img/gold.mp3"></audio>
 <div>
-	<!--此处跳广告-->
-	<div style="position: fixed;left: 0.3rem;top: 0.5rem;z-index: 9999">
+	<div @click="showPoster()" style="position: fixed;left: 0.3rem;top: 0.5rem;z-index: 9999">
 		<img src="./img/back.png" style="width: 0.27rem;height: 0.43rem">
 	</div>
 	<div onclick="" style="text-align: center">
-		<img src="./img/shang@2x.png" style="width: 100%">
-		<h1 style="font-size:1.15rem;height: 1.61rem;font-weight:600;color:rgba(204,170,118,1);">100.00</h1>
-		<img onclick="ljlq()" src="./img/anniu@2x.png" style="width: 4.48rem;height: 1.13rem;z-index: 99999;
-		animation: scale-upOne 2s linear 0s infinite alternate;">
+		<div style="position: relative">
+			<img src="./img/xingzhuang.png" style="width: 100%">
+			<div id="dismantled" style="position: absolute;top: 30px;width: 100%;text-align: center;color: black;display: none">
+				<div style="width: 50%;background: white;margin-left: 25%;height: 0.8rem;line-height: 0.8rem;border-radius: 1rem;font-weight: bold">
+					红包已拆完
+				</div>
+			</div>
+		</div>
+
+		<div style="margin-top: 0.5rem">
+			<img id="personAvatar" src="" style="width: 0.7rem;height: 0.7rem;border-radius: 50%">
+			<span id="personName" style="font-weight: bolder;font-size: 16px;vertical-align: top;line-height: 0.8rem"></span>
+		</div>
+
+		<div style="font-size: 14px;font-family: PingFangSC-Regular, PingFang SC;font-weight: 400;color: #999999;">
+			恭喜发财，大吉大利
+		</div>
+
+		<h1 id="redEnvelopeAmount" style="font-size:1.15rem;font-weight:bold;color:rgba(204,170,118,1);margin-top: 0.8rem"></h1>
+
+		<h1 id="balance" style="font-size:0.26rem;color:rgba(204,170,118,1);margin-top: 0.3rem">
+			已存入零钱，可用于发红包>
+		</h1>
+
+
+		<div id="again"  style="text-align: center;width: 100%;margin-top: 0.6rem;" class="btnTwinkle">
+			<div style="width: 70%;margin-left: 15%;height: 0.93rem;line-height: 0.93rem;z-index: 99999;font-size: 18px;background: rgb(230, 89, 75);color: white;border-radius: 10px">
+				再拆一个
+			</div>
+		</div>
+
+		<div style="height: 0.2rem;background: rgb(244, 244, 244);margin-top: 0.7rem"></div>
+
+		<div style="text-align: left;height: 0.9rem;line-height: 0.9rem;border-bottom: 1px solid #eee;color: #999999;">
+			<div style="margin-left: 0.3rem">
+				已领取<span id="count"></span>个，共<span id="money"></span>元
+			</div>
+		</div>
 	</div>
 
-	<div id="sum" style="display: none">
+	<div id="poster" style="display: none">
 		<div id="mb" class="mio-modal-mask" style="display: block"></div>
-		<div style="position: fixed;top: 0;right: 0.5rem;z-index: 13">
-			<img id="fxImg" src="./img/wei.png" style="width: 6.02rem;height: 1.83rem;">
-		</div>
-
-		<div style="position: fixed;width: 100%;left: 0;text-align: center;top: 25%;z-index: 13">
-			<img id="shareImg" class="shake" src="./img/jx.png" style="width: 5.81rem;height: 5.78rem;">
+		<div style="position: fixed;width: 100%;left: 0;text-align: center;top: 10%;z-index: 13">
+			<img id="posterImg" class="shake" style="width: 80%;height: 8.78rem;">
+			<div class="shake" style="background: white;width: 80%;margin-left: 10%;margin-top: -0.1rem;font-size: 20px;height: 1.4rem;">
+				<span style="line-height: 0.8rem">长按上方图片，发送给朋友</span>
+				<br>
+				<span style="">你必得一个 <span style="color: red">现金红包</span></span>
+			</div>
 		</div>
 	</div>
+
+	<div id="balanceModal" style="display: none">
+		<div id="mb1" class="mio-modal-mask" style="display: block"></div>
+		<div style="position: fixed;width: 100%;left: 0;text-align: center;top: 20%;z-index: 13;border-radius: 10px">
+			<div class="" style="background: white;width: 80%;margin-left: 10%;font-size: 20px;border-radius: 10px;margin-top: 0.3rem">
+				<div style="padding-top: 0.5rem">我的余额</div>
+				<div id="balanceCount" style="color: rgb(221, 43, 40);font-size: 0.8rem;font-weight: bolder;margin-top: 0.8rem"></div>
+				<div style="color: #999999;font-size: 14px;margin-top: 0.2rem">可提现</div>
+				<div id="withdraw" style="width: 40%;margin-left: 30%;height: 0.8rem;line-height: 0.8rem;z-index: 99999;font-size: 18px;background: rgb(230, 89, 75);
+				color: white;border-radius: 10px;margin-top: 0.6rem">
+					提现
+				</div>
+				<div style="color: #000;font-size: 14px;margin-top: 0.15rem;padding-bottom: 0.3rem">已提现：<span id="withdrawn"></span>元</div>
+			</div>
+
+			<div id="getMoney" style="font-size: 18px;width: 60%;margin-left: 20%;color: black;background: rgb(255, 204, 0);border-radius: 1rem;margin-top: 10%;height: 0.8rem;line-height: 0.8rem">
+				继续领红包
+			</div>
+
+			<div id="insufficientBalance" style="display: none;font-size: 14px;width: 50%;margin-left: 25%;color: white;background: rgba(0, 0, 0, 0.7);border-radius: 0.1rem;margin-top: 3%;height: 0.8rem;line-height: 0.8rem">
+				满2元才可以提现哦！
+			</div>
+		</div>
+	</div>
+
 
 	<div class="show_list">
 		<ul id="demoDown"></ul>
 	</div>
 </div>
 <script>
+	var obj = {
+		avatarSrc: './img/xtx/2.jpg',
+		personName: '上官大人的红包',
+		redEnvelopeAmount: '0.30<span style="font-size: 14px;color:rgba(204,170,118,1);margin-left: 5px">元</span>',
+		count: '2/4',
+		money: '0.45/1.00',
+		dismantled: true, // 无邀请再次从公众号点击进入，显示提示
+		posterImg: './img/poster.jpg', // 海报
+		balanceCount: '1.65', //
+		withdrawn: '0.3', //
+	}
+
+	if (!obj.dismantled) {
+	    $('#dismantled').show()
+	}
+	$('#posterImg').attr('src', obj.posterImg)
+	$('#personAvatar').attr('src', obj.avatarSrc)
+	$('#personName').html(obj.personName)
+	$('#redEnvelopeAmount').html(obj.redEnvelopeAmount)
+	$('#count').html(obj.count)
+	$('#withdrawn').html(obj.withdrawn)
+	$('#money').html(obj.money)
+	$('#balanceCount').html(obj.balanceCount + '<span style="font-size: 20px">元</span>')
+	$('#again').click(function () {
+		$('#poster').show()
+	})
+	$('#balance').click(function () {
+		$('#balanceModal').show()
+	})
+	$('#getMoney').click(function () {
+		$('#balanceModal').show()
+	})
+	$('#withdraw').click(function () { // 点击提现
+		if (obj.balanceCount < 2) { // 小于两元
+		    $('#insufficientBalance').show(0)
+			setTimeout(function (){
+				$('#insufficientBalance').hide()
+			}, 2000)
+		} else { // 提现成功逻辑
+
+		}
+	})
+	setTimeout(function (){
+	    $('#poster').show()
+	}, 5000)
+	$('#getMoney').click(function (){
+		$('#balanceModal').hide()
+		$('#poster').show()
+	})
+
+	function showPoster() {
+		$('#poster').show()
+	}
+
 	var daoz = document.createElement("div");
 	daoz.innerHTML = '<audio src="image/music.mp3" preload="auto" autoplay="autoplay" id="mp3"></audio><div class="daoztx">' +
 		'<div class="new-bg-tz"><div class="daoz_top"><div class="t_l_text"><div><img src="image/wei_xin.png" alt=""></div>' +
@@ -64,10 +177,10 @@
 
 	audioAutoPlay("mp3");
 	setTimeout(function () {
-		// document.getElementsByClassName('daoztx')[0].style.visibility = 'hidden'
+		document.getElementsByClassName('daoztx')[0].style.visibility = 'hidden'
 	}, 3000)
 
-	/*var mList = [{mimg: './img/xtx/1.jpg', mname: "love girl"}, {
+	var mList = [{mimg: './img/xtx/1.jpg', mname: "love girl"}, {
 		mimg: './img/xtx/2.jpg',
 		mname: "laneud"
 	}, {mimg: './img/xtx/3.jpg', mname: "胡歌的小迷妹"}, {
@@ -79,22 +192,7 @@
 	}, {mimg: './img/xtx/7.jpg', mname: "默默的爱"}, {
 		mimg: './img/xtx/8.jpg',
 		mname: "本田销售"
-	}, {mimg: './img/xtx/9.jpg', mname: "小妞儿"}, {
-		mimg: './img/xtx/10.jpg',
-		mname: "MK-星图"
-	}, {mimg: './img/xtx/11.jpg', mname: "蔡徐坤"}, {
-		mimg: './img/xtx/12.jpg',
-		mname: "宝贝"
-	}, {mimg: './img/xtx/13.jpg', mname: "左左妈妈"}, {
-		mimg: './img/xtx/14.jpg',
-		mname: "大量收号"
-	}, {mimg: './img/xtx/15.jpg', mname: "吃遍天下无敌手"}, {
-		mimg: './img/xtx/16.jpg',
-		mname: "情归何处"
-	}, {mimg: './img/xtx/17.jpg', mname: "小亮儿奶奶"}, {
-		mimg: './img/xtx/18.jpg',
-		mname: "柳暗花明"
-	}, {mimg: './img/xtx/19.jpg', mname: "pgOne"}, {mimg: './img/xtx/20.jpg', mname: "周.."}]
+	}]
 	for (var i = 0; i < mList.length; i++) {
 		var img = mList[i].mimg;
 		var name = mList[i].mname;
@@ -107,30 +205,6 @@
 		var mhtml = '<li><div class="user_infor"><img src="' + img + '" class="head_img"><div class="user_name"><p>' + name + '<\/p><span>' + sjt + '<\/span><\/div></div><div class="money">' + sjm + '元<\/div></li>';
 		$("#demoDown").append(mhtml);
 	}
-
-
-	function Scroll() {
-	}
-
-	Scroll.prototype.upScroll = function (dom, _h, interval) {
-		var dom = document.getElementById(dom);
-		var timer = setTimeout(function () {
-			var _field = dom.firstElementChild;
-			_field.style.marginTop = _h;
-			clearTimeout(timer);
-		}, 1000)
-		setInterval(function () {
-			var _field = dom.firstElementChild;
-			_field.style.marginTop = "0px";
-			dom.appendChild(_field);
-			var _field = dom.firstElementChild
-			_field.style.marginTop = _h;
-		}, interval)
-	}
-
-
-	var myScroll = new Scroll();
-	myScroll.upScroll("demoDown", "-1.2rem", 2500);*/
 </script>
 </body>
 </html>
