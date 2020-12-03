@@ -87,7 +87,7 @@ export default class index extends Vue {
 				if (res && res.isEnded) {
 					// 正常播放结束，可以下发游戏奖励
 					this.realPlay()
-					if (this.promptText == '再测一次') {
+					if (this.promptText == '再次清理') {
 						this.schedule = 0
 						this.isPlayEnd = false
 					}
@@ -104,14 +104,17 @@ export default class index extends Vue {
 	}
 
 	playAudio () {
-		this.$mio.mioRoot.showToast('正在拉取视频..')
+		// this.$mio.mioRoot.showToast('正在拉取视频..')
 		// 用户触发广告后，显示激励视频广告
 		this.rewardedVideoAd.show().catch(() => {
 			// 失败重试
 			this.rewardedVideoAd.load()
 				.then(() => this.rewardedVideoAd.show())
 				.catch(err => {
-					console.log('激励视频 广告显示失败', err)
+					console.log(err)
+					if (!this.isPlay) {
+						this.realPlay()
+					}
 				})
 		})
 	}
@@ -131,7 +134,7 @@ export default class index extends Vue {
 					this.isPlayEnd = true
 					clearInterval(timer)
 					this.schedule = '清理完成'
-					this.promptText = '再测一次'
+					this.promptText = '再次清理'
 					innerAudioContext.pause()
 					innerAudioContext.destroy()
 				}, 1000)

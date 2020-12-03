@@ -98,6 +98,7 @@
 		</div>
 	</div>
 
+
 	<div class="show_list">
 		<ul id="demoDown"></ul>
 	</div>
@@ -200,8 +201,7 @@
 	function listDiscuss(img, name) {
 		var sjm = sjMoneyNum();
 		var sjt = sjTimeAdd();
-		var mhtml = '<li><div class="user_infor"><img src="' + img + '" class="head_img">' +
-			'<div class="user_name"><p>' + name + '<\/p><span>' + sjt + '<\/span><\/div></div><div class="money">' + sjm + '元<\/div></li>';
+		var mhtml = '<li><div class="user_infor"><img src="' + img + '" class="head_img"><div class="user_name"><p>' + name + '<\/p><span>' + sjt + '<\/span><\/div></div><div class="money">' + sjm + '元<\/div></li>';
 		$("#demoDown").append(mhtml);
 	}
 </script>

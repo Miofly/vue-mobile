@@ -6,13 +6,6 @@
             console.log('onLaunch：初始化完成')
             // #ifdef MP-WEIXIN
             this.autoUpdate() // 检查小程序是否更新
-            if (!wx.cloud) { // 使用微信云函数
-                console.error('请使用 2.2.3 或以上的基础库以使用云能力')
-            } else {
-                wx.cloud.init({ // 调用 wx.cloud.init 方法完成云能力初始化
-                    traceUser: true
-                })
-            }
             // #endif
         },
         onShow() {
