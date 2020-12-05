@@ -3,18 +3,18 @@
 	      style="background-repeat:repeat-y;background-size:100% 120%">
 		<view style="height: 160rpx"></view>
 		<view class="full-width text-center" style="position: relative;width: 100%;height: 160rpx">
-			<view :class="[isPlay&&!isPlayEnd ? 'pulse' : '']"
+			<view :class="[isPlay&&!isPlayEnd ? 'newShake' : '']"
 			      style="position: absolute;top:50%;left:50%;margin-top: -120rpx;margin-left: -120rpx;width: 240rpx;height: 240rpx;border-radius: 50%;border: 4px solid white;"></view>
-			<view :class="[isPlay&&!isPlayEnd ? 'pulse' : '']"
+			<view :class="[isPlay&&!isPlayEnd ? 'newShake ' : '']"
 			      style="position: absolute;top:50%;left:50%;margin-top: -150rpx;margin-left: -150rpx;width: 300rpx;height: 300rpx;border-radius: 50%;border: 3px solid white;opacity: 0.7;"></view>
-			<view :class="[isPlay&&!isPlayEnd ? 'pulse' : '']"
+			<view :class="[isPlay&&!isPlayEnd ? 'newShake ' : '']"
 			      style="position: absolute;top:50%;left:50%;margin-top: -180rpx;margin-left: -180rpx;width: 360rpx;height: 360rpx;border-radius: 50%;border: 2px solid white;opacity: 0.3;"></view>
 			<image v-if="!isPlay" :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
 			       src="/static/images/anniu@2x.png"
-			       style="position: absolute;top:50%;left:50%;transform:translate(-50%,-50%);width: 196rpx;height: 196rpx"></image>
-			<view v-else :class="[isPlayEnd ? 'text-20' : 'text-30']"
+			       style="position: absolute;top:50%;left:50%;margin-top: -98rpx;margin-left: -98rpx;width: 196rpx;height: 196rpx"></image>
+			<view v-else :class="[isPlayEnd ? 'text-20' : 'text-30', isPlay&&!isPlayEnd ? 'newShake ' : '']"
 			      class="text-white text-bold text-center"
-			      style="position: absolute;top:50%;left:50%;transform:translate(-50%,-50%);width: 196rpx;height: 196rpx;line-height: 196rpx;border-radius: 50%;background: rgb(24, 81, 219)">
+			      style="position: absolute;top:50%;left:50%;margin-top: -98rpx;margin-left: -98rpx;width: 196rpx;height: 196rpx;line-height: 196rpx;border-radius: 50%;background: rgb(24, 81, 219)">
 				{{ schedule }}{{ isPlayEnd ? '' : '%' }}
 			</view>
 		</view>
@@ -39,7 +39,7 @@
 		</view>
 
 		<view style="width: 90%;margin: 50rpx 0 50rpx 5%">
-			<ad ad-intervals="30" unit-id="adunit-00e1022d0ea25478"></ad>
+			<ad ad-intervals="30" unit-id="adunit-60f954ce26ce0f92"></ad>
 		</view>
 
 
@@ -73,7 +73,7 @@ export default class index extends Vue {
 		this.rewardedVideoAd = null
 		if (wx.createInterstitialAd) {
 			this.rewardedVideoAd = wx.createRewardedVideoAd({
-				adUnitId: 'adunit-b1a2e6819f2e59de'
+				adUnitId: 'adunit-64b41a9e2fa80176'
 			})
 			this.rewardedVideoAd.onLoad(() => {
 				console.log('激励广告加载成功')
@@ -104,19 +104,25 @@ export default class index extends Vue {
 	}
 
 	playAudio () {
-		// this.$mio.mioRoot.showToast('正在拉取视频..')
-		// 用户触发广告后，显示激励视频广告
-		this.rewardedVideoAd.show().catch(() => {
-			// 失败重试
-			this.rewardedVideoAd.load()
-				.then(() => this.rewardedVideoAd.show())
-				.catch(err => {
-					console.log(err)
-					if (!this.isPlay) {
-						this.realPlay()
-					}
-				})
-		})
+		if (this.isPlayEnd) {
+		    this.isPlay = false
+		}
+		if (!this.isPlay) {
+			// this.$mio.mioRoot.showToast('正在拉取视频..')
+			// 用户触发广告后，显示激励视频广告
+			this.rewardedVideoAd.show().catch(() => {
+				// 失败重试
+				this.rewardedVideoAd.load()
+					.then(() => this.rewardedVideoAd.show())
+					.catch(err => {
+						console.log(err)
+						console.log(this.isPlay)
+						if (!this.isPlay) {
+							this.realPlay()
+						}
+					})
+			})
+		}
 	}
 
 	realPlay () {
@@ -137,6 +143,7 @@ export default class index extends Vue {
 					this.promptText = '再次清理'
 					innerAudioContext.pause()
 					innerAudioContext.destroy()
+
 				}, 1000)
 			}
 		}, 1000)
@@ -155,6 +162,22 @@ export default class index extends Vue {
 <style>
 page {
 	background: rgb(21, 61 150);
+}
+
+.newShake {
+	animation: shake 0.3s linear 0s infinite alternate;
+}
+
+@keyframes shake {
+	0%{
+		transform: translateX(-18px)
+	}
+	50% {
+		transform: translateX(0px)
+	}
+	100% {
+		transform: translateX(18px)
+	}
 }
 
 @keyframes warn {

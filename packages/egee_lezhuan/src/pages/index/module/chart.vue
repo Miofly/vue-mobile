@@ -7,7 +7,7 @@
 		</view>
 		<view class="padding-sm">
 			<view>
-				今日视频总计费次数：{{total_click}}
+				今日视频{{tu.getLocalData('isMoney') == 1 ? '总收入' : '总计费次数'}}：{{total_click}}
 			</view>
 			<scroll-view scroll-x style="border-radius: 10px">
 				<lineChart :xData="xData" :yData="yData"></lineChart>
@@ -18,7 +18,7 @@
 
 		<view class="padding-sm">
 			<view>
-				{{mytime}}视频总计费次数：{{total_clickTwo}}
+				{{mytime}}视频{{tu.getLocalData('isMoney') == 1 ? '总收入' : '总计费次数'}}：{{total_clickTwo}}
 				<button @tap="onShowDatePicker('range')" class="cu-btn fr" :class="[['bg-blue', 'line-blue', 'line-blue lines-blue'][0],
 				        ['sm', 'lg', ''][0], false ? 'round' : '', true ? 'shadow' : '', false ? 'block' : '']"
 						style="width:250rpx">

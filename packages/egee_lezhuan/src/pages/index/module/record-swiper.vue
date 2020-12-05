@@ -17,20 +17,20 @@
 				<view class="fl margin-left">
 					<view style="color: #333333;font-size: 16px;">支付宝提现 金额：{{ item.money }}元</view>
 					<view v-if="i<3" style="font-size: 14px;color: #999999">
-						{{ i==0? '待完成' : i == 1 ? '失败': '成功' }}
+						{{ item.status==0 || item.status==2 ? '进行中' : item.status==1||item.status==3 ? '失败': '已完成' }}
 					</view>
-					<view v-else>
-						{{ item.status==0 || item.status==2 ? '待完成' : item.status==1||item.status==3 ? '失败': '成功' }}
+					<view v-else >
+						{{ item.status==0 || item.status==2 ? '进行中' : item.status==1||item.status==3 ? '失败': '已完成' }}
 					</view>
 				</view>
 
 			</view>
 			<view class="margin-right">
-				<view v-if="i<3" style="font-size: 16px;color: #333333;">
-					{{ i==0? '待完成' : i == 1 ? '失败': '成功' }}
+				<view v-if="i<3" style="font-size: 16px;color: #333333;" :style="{color: item.status==1||item.status==3? 'red' : 'green' }">
+					{{ item.status==0 || item.status==2 ? '进行中' : item.status==1||item.status==3 ? '失败': '已完成' }}
 				</view>
-				<view v-else>
-					{{ item.status==0 || item.status==2 ? '待完成' : item.status==1||item.status==3 ? '失败': '成功' }}
+				<view v-else :style="{color: item.status==1||item.status==3? 'red' : 'green' }">
+					{{ item.status==0 || item.status==2 ? '进行中' : item.status==1||item.status==3 ? '失败': '已完成' }}
 				</view>
 				<view style="font-size: 14px;color: #999999;width: 130%">
 					{{ item.create_at.slice(5) }}
@@ -85,7 +85,7 @@
 	                },
 	                page: {
 	                    num: 0, // 当前页码,默认0,回调之前会加1,即callback(page)会从1开始
-	                    size: 10 // 每页数据的数量,默认10
+	                    size: 20 // 每页数据的数量,默认10
 	                },
                     textLoading: '正在玩命的加载...',
                     textNoMore: '我也是有底线的...'

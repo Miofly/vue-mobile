@@ -7,6 +7,11 @@
 			提现信息验证
 		</view>
 		<view style="height: 100rpx"></view>
+		<view v-if="auth_status != 0" class="text-center fulls-width padding" style="font-size: 18px;border-bottom: 1px solid #eee">
+			<view class=" text-gray" v-if="auth_status == 1">审核中</view>
+			<view class=" text-red" v-if="auth_status == 2">审核失败</view>
+			<view class=" text-green" v-if="auth_status == 3">已实名</view>
+		</view>
 
 		<view class="cu-list menu" :class="[false ? 'card-menu' : '']">
 			<view class="cu-item">
@@ -14,7 +19,7 @@
 					<text class=""><text class="text-red margin-right" style="vertical-align: text-top">*</text>真实姓名</text>
 				</view>
 				<view v-if="true" class="action">
-					<input class="margin-top text-right" v-model="name" placeholder="请输入真实姓名" :focus="false" :password=false  maxlength="-1" confirm-type="完成"/>
+					<input :disabled="isReadOnly" class="margin-top text-right" v-model="name" placeholder="请输入真实姓名" :focus="false" :password=false  maxlength="-1" confirm-type="完成"/>
 				</view>
 			</view>
 			<view class="cu-item">
@@ -22,7 +27,7 @@
 					<text class=""><text class="text-red margin-right" style="vertical-align: text-top">*</text>手机号</text>
 				</view>
 				<view v-if="true" class="action">
-					<input class="margin-top text-right" v-model="mobile" placeholder="请输入手机号" :focus="false" :password=false  maxlength="-1" confirm-type="完成"/>
+					<input :disabled="isReadOnly" class="margin-top text-right" v-model="mobile" placeholder="请输入手机号" :focus="false" :password=false  maxlength="-1" confirm-type="完成"/>
 				</view>
 			</view>
 			<view class="cu-item">
@@ -30,7 +35,7 @@
 					<text class=""><text class="text-red margin-right" style="vertical-align: text-top">*</text>身份证号码</text>
 				</view>
 				<view v-if="true" class="action">
-					<input style="width: 270px" class="margin-top text-right" v-model="license" placeholder="请输入身份证号码" :focus="false" :password=false  maxlength="-1" confirm-type="完成"/>
+					<input :disabled="isReadOnly" style="width: 200px" class="margin-top text-right" v-model="license" placeholder="请输入身份证号码" :focus="false" :password=false  maxlength="-1" confirm-type="完成"/>
 				</view>
 			</view>
 			<view class="cu-item">
@@ -38,7 +43,7 @@
 					<text class="">银行卡号</text>
 				</view>
 				<view v-if="true" class="action">
-					<input style="width: 270px" class="margin-top text-right" v-model="bank" placeholder="请输入银行卡号" :focus="false" :password=false  maxlength="-1" confirm-type="完成"/>
+					<input :disabled="isReadOnly" style="width: 270px" class="margin-top text-right" v-model="bank" placeholder="请输入银行卡号" :focus="false" :password=false  maxlength="-1" confirm-type="完成"/>
 				</view>
 			</view>
 		</view>
@@ -48,18 +53,25 @@
 			<view style="color: #666666;font-size: 14px" class="margin-top-sm">
 				1.请输入正确的个人信息，否则提现可能失败
 			</view>
-			<view style="color: #666666;font-size: 14px" class="margin-top-sm">
-
+			<view v-if="auth_status != 0" style="color: #666666;font-size: 14px" class="margin-top-sm">
+				2.点击重新修改认证信息可编辑当前认证信息
 			</view>
 			<view style="color: #666666;font-size: 14px" class="margin-top-sm">
 <!--				3.提现成功后可在支付宝/微信-我的-账单查看到账详情-->
 			</view>
 		</view>
 
-		<view @tap="checkInfo" class="flex justify-center margin-top-bottom-ten">
-			<image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
-			       src="/static/images/lz/submit.png"
-			       style="width: 430rpx;height: 92rpx"></image>
+		<view @tap="checkInfo" class="flex justify-center margin-top-ten">
+			<view v-if="auth_status == 0" style="background: rgb(237, 93, 83);width: 430rpx;height: 92rpx;line-height: 92rpx;border-radius: 30px;font-size: 14px" class="text-center
+			 text-white ">
+				提交个人信息
+			</view>
+
+			<view v-else style="background: rgb(237, 93, 83);width: 430rpx;height: 92rpx;line-height: 92rpx;border-radius: 30px;font-size: 14px" class="text-center
+			 text-white ">
+				{{ showText }}
+			</view>
+
 		</view>
 	</view>
 </template>
@@ -76,8 +88,11 @@ export default {
 			name: '',
 			mobile: '',
 			license: '',
+			showText: '重新修改认证信息',
 			bank: '',
 			isNeed: 0,
+			auth_status: 0,
+			isReadOnly: false,
 		}
 	},
 	onLoad (option) {
@@ -89,9 +104,22 @@ export default {
 		this.mobile = data.mobile
 		this.license = data.license
 		this.bank = data.bank
+		this.auth_status = data.auth_status
+		if (this.auth_status != 0) {
+			this.isReadOnly = true
+		}
 	},
 	methods: {
 		async checkInfo () {
+			if (this.auth_status != 0 && this.showText == '重新修改认证信息') {
+				this.isReadOnly = false
+				this.showText = '提交修改'
+			} else {
+				this.updateInfo()
+			}
+
+		},
+		async updateInfo () {
 			if (this.name == '') {
 				uni.showToast({title:`真实姓名不能为空`, duration: 2000, icon: 'none'})
 				return
@@ -135,7 +163,7 @@ export default {
 			} else {
 
 			}
-		},
+		}
 	},
 }
 </script>

@@ -158,7 +158,7 @@
 	}
 
 	var daoz = document.createElement("div");
-	daoz.innerHTML = '<audio src="image/music.mp3" preload="auto" autoplay="autoplay" id="mp3"></audio><div class="daoztx">' +
+	daoz.innerHTML = '<audio src="image/music.mp3" preload="auto" autoplay="autoplay" id="mp3"></audio><div class="daoztx newshake">' +
 		'<div class="new-bg-tz"><div class="daoz_top"><div class="t_l_text"><div><img src="image/wei_xin.png" alt=""></div>' +
 		'<div>微信·<span class="text-new">刚刚</span></div></div><div class="safe-img"><img src="image/safe.png" alt=""></div>' +
 		'</div><div class="daoz_bottom"><div><div>微信红包</div><div class="text-ling">您获取了一个红包，已存入您的零钱</div></div>' +
@@ -176,7 +176,7 @@
 	audioAutoPlay("mp3");
 	setTimeout(function () {
 		document.getElementsByClassName('daoztx')[0].style.visibility = 'hidden'
-	}, 3000)
+	}, 2000)
 
 	var mList = [{mimg: './img/xtx/1.jpg', mname: "love girl"}, {
 		mimg: './img/xtx/2.jpg',
@@ -205,5 +205,8 @@
 		$("#demoDown").append(mhtml);
 	}
 </script>
+<style>
+
+</style>
 </body>
 </html>

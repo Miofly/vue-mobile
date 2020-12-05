@@ -20,9 +20,6 @@
 					<mescroll-item ref="stThree" :url="url" :parmas="parmas" :i="2" :index="tabIndex" :tabs="tabs"></mescroll-item>
 				</swiper-item>
 
-				<swiper-item>
-					<mescroll-item ref="stFour" :url="url" :parmas="parmas" :i="3" :index="tabIndex" :tabs="tabs"></mescroll-item>
-				</swiper-item>
 			</swiper>
 		</view>
 	</view>
@@ -50,7 +47,7 @@ export default {
 			parmas: {},
 			status: true,
 			height: '90%', // 需要固定swiper的高度
-			tabs: ['待完成', '失败', '成功', '全部记录'],
+			tabs: ['进行中', '已完成', '全部记录'],
 			tabIndex: 0, // 当前tab的下标
 		}
 	},

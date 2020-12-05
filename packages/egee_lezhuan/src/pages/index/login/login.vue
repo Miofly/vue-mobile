@@ -93,8 +93,7 @@
 				localStorage.setItem('lz_password', this.password)
                 this.ui.showLoading('正在登录...请稍后...')
 
-
-				if (data.code == 200) {
+	            if (data.code == 200) {
 				    // this.$store.state.is_team_captain = data.data.is_team_captain
 				    localStorage.setItem('is_team_captain', data.data.is_team_captain)
 				    localStorage.setItem('memberId', data.data.memberId)

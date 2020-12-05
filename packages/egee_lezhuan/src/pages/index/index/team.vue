@@ -26,10 +26,10 @@
 				<view class="flex justify-between margin-top-xl">
 					<view class="">{{headerInfos.teamLeader}}</view>
 					<view>{{headerInfos.teamNums}}</view>
-					<view v-if="tabIndex == 0">今日总计费次数：{{is_team_captain ? teamClickOne : '*'}}</view>
-					<view v-if="tabIndex == 1">今日总计费次数：{{is_team_captain ? teamClickTwo : '*'}}</view>
-					<view v-if="tabIndex == 2">今日总计费次数：{{is_team_captain ? teamClickThree : '*'}}</view>
-					<view v-if="tabIndex == 3">今日总计费次数：{{is_team_captain ? teamClickFour : '*'}}</view>
+					<view v-if="tabIndex == 0">今日{{tu.getLocalData('isMoney') == 1 ? '总收入' : '总计费次数'}}：{{is_team_captain ? teamClickOne : '*'}}</view>
+					<view v-if="tabIndex == 1">今日{{tu.getLocalData('isMoney') == 1 ? '总收入' : '总计费次数'}}：{{is_team_captain ? teamClickTwo : '*'}}</view>
+					<view v-if="tabIndex == 2">今日{{tu.getLocalData('isMoney') == 1 ? '总收入' : '总计费次数'}}：{{is_team_captain ? teamClickThree : '*'}}</view>
+					<view v-if="tabIndex == 3">今日{{tu.getLocalData('isMoney') == 1 ? '总收入' : '总计费次数'}}：{{is_team_captain ? teamClickFour : '*'}}</view>
 				</view>
 			</view>
 		</view>
@@ -103,6 +103,8 @@
             this.headerInfos.avatar = data.data.team_avatar
             this.headerInfos.memberNums = data.data.member_nums
 
+	        const dataOne = await commonPost('/my/get_show_type', {})
+			localStorage.setItem('isMoney', dataOne.data.click_to_money)
         },
         data() {
             return {

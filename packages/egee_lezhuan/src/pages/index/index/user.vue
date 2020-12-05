@@ -84,7 +84,11 @@
                 this.is_team_captain = test
             }, 0)
 			this.userInfo()
+
+	        const dataOne = await commonPost('/my/get_show_type', {})
+	        localStorage.setItem('isMoney', dataOne.data.click_to_money)
 		},
+
         data () {
             return {
                 is_team_captain: '',

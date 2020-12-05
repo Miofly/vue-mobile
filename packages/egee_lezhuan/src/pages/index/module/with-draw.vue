@@ -32,7 +32,7 @@
 
 			<view class="flex text-center flex-wrap justify-around margin-top-ten">
 				<view v-for="(item, index) in allow_money" :key="index" style="width: 200rpx;height: 180rpx" class="text-center">
-					<view @tap="chooseMoney(index)" :style="{color: moneyIndex==index? 'white' : 'red', background: moneyIndex==index? '#E54D42' : 'rgb(249, 249, 249)'}"
+					<view @tap="chooseMoney(item.index)" :style="{color: moneyIndex==index? 'white' : 'red', background: moneyIndex==index? '#E54D42' : 'rgb(249, 249, 249)'}"
 					      style="border: 1px solid rgb(239, 239, 239);border-radius: 35px;height: 140rpx;width: 200rpx;line-height: 140rpx;font-size: 30px;"
 					      class="margin-top-xxl text-bold">
 						{{ item.label.replace('元', '') }}
@@ -70,18 +70,18 @@
 			<view class="margin-top-xxl margin-left">
 				<view style="color: #666666;font-size: 14px">注意事项</view>
 				<view style="color: #666666;font-size: 14px" class="margin-top-sm">
-					1.每人每天提现1次，审核工作日时间{{timeSection}}
+					1.每人每天提现{{frequency}}次，审核工作日时间{{timeSection}}
 				</view>
 				<view style="color: #666666;font-size: 14px" class="margin-top-sm">
-					2.提现1分钟内到账，如遇节假日与双休日顺延
+					2.提现到账可能会有延迟，请等待
 				</view>
 				<view style="color: #666666;font-size: 14px" class="margin-top-sm">
-					3.提现成功后可在支付宝/微信-我的-账单查看到账详情
+					3.提现成功后可在支付宝-我的-账单查看到账详情
 				</view>
 			</view>
 
 			<view class="flex justify-between align-center margin-top-xl">
-				<view style="font-size: 14px;color: #E54D42;" class="margin-left">客服微信：{{ introduce_content }}</view>
+				<view style="font-size: 14px;color: #E54D42;" class="margin-left">客服微信：{{ wechat }}</view>
 				<view @tap="goWeixin" style="width: 219rpx;height: 56rpx;border-radius: 16px;border: 1px solid #E54D42;text-align: center;line-height: 56rpx;color: #E54D42" class="margin-right-xl">
 					复制打开微信
 				</view>
@@ -203,7 +203,7 @@ export default {
 			alipay_account: '',
 			allow_money: [],
 			balance: 0,
-			introduce_content: '',
+			wechat: '',
 			member_id: '',
 			need_auth:'',
 			work_time: [],
@@ -213,6 +213,7 @@ export default {
 			alipay_account_old: '',
 			alipay_account_status: '',
 			contract_url: '',
+			frequency: '',
 
 			disabled: false,
 			codeMess: '获取验证码',
@@ -222,7 +223,6 @@ export default {
 			modalStatusThree: false,
 			modalStatusFour: false,
 			modalStatusFive: false,
-			wx: 'hongbao1322',
 			moneyIndex: 0,
 
 			downOption: {
@@ -252,11 +252,14 @@ export default {
 		this.alipay_account_old = data.alipay_account
 		this.allow_money = data.allow_money
 		this.balance = data.balance
-		this.introduce_content = data.introduce_content
+		this.frequency = data.frequency
+		this.wechat = data.wechat
 		this.member_id = data.member_id
 		this.need_auth = data.need_auth
-		this.work_time = data.work_time
+		this.work_time = JSON.parse(data.work_time)
 		this.timeSection = `${this.work_time[0]}-${this.work_time[1]}`
+
+		console.log(Object.keys(this.allow_money))
 	},
 	methods: {
 		infoUpdate () {
@@ -276,7 +279,7 @@ export default {
 			if (code == 414) {
 				 this.modalStatusFour = false
 				 this.modalStatusFive = true
-			     this.contract_url = data.contract_url
+			     location.href = data.contract_url
 			}
 		},
 		async withdraw () {
@@ -295,7 +298,7 @@ export default {
 				} else {
 					// const {data} = await commonPost('/my/fetch_alipay_account')
 					// this.alipay_account_status = data.alipay_account_status
-					if (this.need_auth == 1) {
+					if (this.need_auth) {
 						uni.navigateTo({
 							url: '/pages/index/module/with-draw-verification?isNeed=1'
 						})
@@ -325,7 +328,6 @@ export default {
 				}
 				this.modalStatusTwo = false
 			}
-
 		},
 		async changeAlipay () {
 			if (this.alipay_account_old == '') {
@@ -352,7 +354,7 @@ export default {
 			this[val] = ''
 		},
 		goWeixin () {
-			this.tu.getClipboardData(this.introduce_content)
+			this.tu.getClipboardData(this.wechat)
 			this.tu.jumpWX()
 		},
 		chooseMoney (index) {

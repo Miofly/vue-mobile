@@ -9,14 +9,14 @@
 		</view>
 
 		<view class="padding" style="border: 1px solid #eee">
-			<view>今日视频总计费次数：{{total_clickOne}}</view>
+			<view>今日视频{{tu.getLocalData('isMoney') == 1 ? '总收入' : '总计费次数'}}：{{total_clickOne}}</view>
 			<scroll-view scroll-x>
 				<lineChart :xData="dataOneHour" :yData="dataOneClick"></lineChart>
 			</scroll-view>
 		</view>
 		<view class="padding" style="border: 1px solid #eee">
 			<view>
-				{{mytime}}总计费次数:{{total_clickTwo}}
+				{{mytime}}{{tu.getLocalData('isMoney') == 1 ? '总收入' : '总计费次数'}}:{{total_clickTwo}}
 				<button @tap="onShowDatePicker('range')" class="cu-btn fr" :class="[['bg-blue', 'line-blue', 'line-blue lines-blue'][0],
 				        ['sm', 'lg', ''][0], false ? 'round' : '', true ? 'shadow' : '', false ? 'block' : '']"
 						style="width:250rpx">

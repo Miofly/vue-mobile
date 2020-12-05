@@ -60,7 +60,9 @@
 <script>
     import MescrollItem from './rank-swiper'
     import MescrollItems from './rank-swipers'
-
+	import {
+		commonPost
+	} from '@/api'
     import AppTabs from '../../../components/mescroll-uni/app-tabs.vue'
     export default {
         components: {
@@ -76,6 +78,10 @@
                 tabIndex: 0, // 当前tab的下标
             }
         },
+	    async mounted() {
+		    const dataOne = await commonPost('/my/get_show_type', {})
+		    localStorage.setItem('isMoney', dataOne.data.click_to_money)
+	    },
         methods: {
             // 轮播菜单
             swiperChange(e) {

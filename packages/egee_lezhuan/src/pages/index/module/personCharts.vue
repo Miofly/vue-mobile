@@ -19,7 +19,7 @@
 
 				<view v-show="true" class="action">
 					<view>
-						<text class="width-eighty">总计费 {{ item.effective_click_total }} 次</text>
+						<text class="width-eighty">{{tu.getLocalData('isMoney') == 1 ? '总收入' : '总计费次数'}} {{ item.effective_click_total }} </text>
 					</view>
 				</view>
 				<!--<view v-show="true" class="fa fa-angle-right fa-2x margin-left text-gray"></view>-->

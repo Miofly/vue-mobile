@@ -14,7 +14,7 @@
 				<view class="content">
 					<view class="fl">{{index + 1}}</view>
 					<view class="fl margin-left">{{item.name}}</view>
-					<view class="fr text-red">总计费次数：{{item.total_click}}</view>
+					<view class="fr text-red">{{tu.getLocalData('isMoney') == 1 ? '总收入' : '总计费次数'}}：{{item.total_click}}</view>
 				</view>
 				<view v-show="true" class="fa fa-angle-right fa-2x margin-left text-gray"></view>
 			</view>
@@ -25,7 +25,7 @@
 				<view class="content">
 					<view class="fl">{{index + 1}}</view>
 					<view class="fl margin-left">{{item.name}}</view>
-					<view class="fr text-red">总计费次数：{{department_id == item.id ? item.total_click : '*'}}</view>
+					<view class="fr text-red">{{tu.getLocalData('isMoney') == 1 ? '总收入' : '总计费次数'}}：{{department_id == item.id ? item.total_click : '*'}}</view>
 				</view>
 				<view v-show="department_id == item.id" class="fa fa-angle-right fa-2x margin-left text-gray"></view>
 			</view>
@@ -37,7 +37,7 @@
 				<!--<view class="content">-->
 					<!--<view class="fl">{{index + 1}}</view>-->
 					<!--<view class="fl margin-left">{{item.name}}</view>-->
-					<!--<view class="fr text-red">总计费次数：{{item.total_click}}</view>-->
+					<!--<view class="fr text-red">{{tu.getLocalData('isMoney') == 1 ? '总收入' : '总计费次数'}}：{{item.total_click}}</view>-->
 				<!--</view>-->
 				<!--<view v-show="true" class="fa fa-angle-right fa-2x margin-left text-gray"></view>-->
 			<!--</view>-->
