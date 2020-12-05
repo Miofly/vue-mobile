@@ -8,8 +8,7 @@
 
 		<m-button :hairLine="true" :loading="false" :plain="false" :ripple="true" :disabled="false"
 				  :shape="['square', 'circle'][1]" :size="['default', 'medium', 'mini'][1]"
-				  :type="['default', 'primary', 'error', 'warning', 'success'][1]" style=""
-				  @click="saveImg" class="text-white" :customStyle="{fontSize: '14px'}">
+				  :type="['default', 'primary', 'error', 'warning', 'success'][1]" style="" @click="saveImg('https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg')" class="text-white" :customStyle="{fontSize: '14px'}">
 			<view class="fa text-xl fa-android margin-right-xxl" style="height: 50rpx" v-if="false"></view>
 			保存图片
 		</m-button>
@@ -25,29 +24,20 @@ export default class extends Vue {
 
 	}
 
-	saveImg () {
-		console.log(1)
+	saveImg (imgSrc) {
 		wx.authorize({
-			scope: 'scope.writePhotosAlbum',
-			success () {
-				uni.saveImageToPhotosAlbum({
-					filePath: '/static/images/beijng2@2x.png',
-					success () {
-						console.log('save success')
-					},
-					fail () {
+			scope: 'scope.',
+			success: () => {
 
-					}
-				})
 			},
-			fail () {
+			fail: () => {
 				wx.getSetting({
 					success: res => {
 						const { authSetting } = res
-						if (!authSetting['scope.writePhotosAlbum']) {
+						if (!authSetting['scope.']) {
 							wx.showModal({
 								title: '提示',
-								content: '您未开启保存图片到相册的权限，请点击确定去开启权限！',
+								content: '',
 								success (data) {
 									wx.openSetting({})
 								},
