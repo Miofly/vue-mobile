@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>按钮点击水波纹效果jquery</title>
+
+	<style type="text/css">
+        .c-button {
+			background-color: coral;
+           width: 200px;
+			height: 200px;
+            transition: all 0.2s ease;
+        }
+
+        .c-ripple {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: transparent;
+            border-radius: 6px;
+        }
+
+        .c-ripple__circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.25);
+        }
+        .c-ripple.is-active .c-ripple__circle {
+            -webkit-animation: a-ripple .4s ease-in;
+            animation: a-ripple .4s ease-in;
+        }
+        @keyframes a-ripple {
+            0% {
+                opacity: 0;
+            }
+            25% {
+                opacity: 1;
+            }
+            100% {
+                width: 200%;
+                padding-bottom: 200%;
+                opacity: 0;
+            }
+        }
+	</style>
+</head>
+<body>
+
+<div class="c-button c-button--blue" id="rytBTn">
+	<div class="c-ripple js-ripple">
+		<span class="c-ripple__circle"></span>
+	</div>
+</div>
+
+<script type="text/javascript">
+	var rytBtn = document.getElementById('rytBTn')
+	rytBtn.onclick = function (e){
+		var shuibo = document.getElementsByClassName('js-ripple')[0];   //获取水波DOM元素
+		var btnTop = shuibo.parentElement.offsetTop //按钮盒子距离浏览器窗口顶部距离
+		var btnLeft = shuibo.parentElement.offsetLeft //按钮距离浏览器盒子窗口左侧距离
+
+		var x = e.pageY - btnTop
+		var y = e.pageX - btnLeft
+
+		var bowen = document.getElementsByClassName('c-ripple__circle')[0]
+		bowen.style.top = x + 'px'
+		bowen.style.left = y + 'px'
+		shuibo.classList.add('is-active')
+	}
+	rytBtn.addEventListener('animationend',function (){
+		var shuibo = document.getElementsByClassName('js-ripple')[0]
+		shuibo.classList.remove('is-active')
+	})
+</script>
+</body>
+</html>

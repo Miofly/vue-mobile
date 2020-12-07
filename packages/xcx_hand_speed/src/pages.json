@@ -3,9 +3,14 @@
         {
             "path": "pages/index/index",
             "style": {
-                "navigationBarTitleText": "每日清理"
+                "navigationBarTitleText": "十秒手速"
             }
-        }
+        },
+        {"path": "pages/index/groupChallenge"},
+        {"path": "pages/index/playGame"},
+        {"path": "pages/index/poster"},
+        {"path": "pages/index/rank"},
+        {"path": "pages/index/rankBefore"}
     ],
     "globalStyle": {
         "navigationBarTextStyle": "black",
@@ -19,7 +24,7 @@
         "autoscan": true,
         "custom": {
             // #ifdef H5
-            "^m-(.*)": "zj/m-$1/m-$1.vue"
+            "^m-(.*)": "zj/m-$1/m-$1"
             // #endif
         }
     }

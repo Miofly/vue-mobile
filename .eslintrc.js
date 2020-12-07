@@ -147,6 +147,7 @@ module.exports = {
         'vue/html-closing-bracket-newline': 0,
         'vue/valid-v-model': 0,
         'vue/no-use-v-if-with-v-for': 0,
+        'vue/no-parsing-error': 0,
         // 与 JavaScript 代码中可能的错误或逻辑错误有关
         'for-direction': 2, // 强制 “for” 循环中更新子句的计数器朝着正确的方向移动
         'getter-return': 2, // 强制 getter 函数中出现 return 语句

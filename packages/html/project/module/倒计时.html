@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+</head>
+<body>
+<div id="num"></div>
+<script>
+	var temp = '99'
+	setInterval(() => {
+		if (temp == 0) {
+		    temp = 99
+		}
+	    temp = temp - 1
+		console.log(temp)
+		$('#num').html(temp)
+
+	}, 10)
+
+</script>
+</body>
+</html>
