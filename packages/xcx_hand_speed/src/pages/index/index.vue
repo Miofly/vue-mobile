@@ -58,7 +58,11 @@
 </template>
 
 <script lang="ts">
+import {
+	commonPost, commonGet
+} from '@/api'
 import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator'
+import faker from 'faker'
 
 @Component({})
 export default class extends Vue {
@@ -85,7 +89,11 @@ export default class extends Vue {
 
 	ptgg: string = 'adunit-60f954ce26ce0f92'
 
-	created () {
+	async created () {
+		console.log(faker)
+		console.log(faker.random.arrayElement(['1', '3']))
+		const data = await commonGet('/mytest/articles?page=2&limit=50')
+
 		wx.getUserInfo({
 			success: (res) => {
 				console.log(res.userInfo)

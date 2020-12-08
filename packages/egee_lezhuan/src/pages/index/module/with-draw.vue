@@ -32,7 +32,7 @@
 
 			<view class="flex text-center flex-wrap justify-around margin-top-ten">
 				<view v-for="(item, index) in allow_money" :key="index" style="width: 200rpx;height: 180rpx" class="text-center">
-					<view @tap="chooseMoney(item.index)" :style="{color: moneyIndex==index? 'white' : 'red', background: moneyIndex==index? '#E54D42' : 'rgb(249, 249, 249)'}"
+					<view @tap="chooseMoney(index)" :style="{color: moneyIndex==index? 'white' : 'red', background: moneyIndex==index? '#E54D42' : 'rgb(249, 249, 249)'}"
 					      style="border: 1px solid rgb(239, 239, 239);border-radius: 35px;height: 140rpx;width: 200rpx;line-height: 140rpx;font-size: 30px;"
 					      class="margin-top-xxl text-bold">
 						{{ item.label.replace('元', '') }}

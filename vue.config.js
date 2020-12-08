@@ -13,6 +13,8 @@ function resolve (dir) {
     return path.join(__dirname, dir)
 }
 
+const mockServerPort = 9999
+
 /**
  *  publicPath 不支持，如果需要配置，请在 manifest.json->h5->router->base 中配置，
  *  outputDir 不支持
@@ -67,6 +69,14 @@ module.exports = {
     devServer: { // 开发环境跨域处理
     	open: true,
         proxy: {
+			'/mytest': {
+				target: `http://127.0.0.1:${mockServerPort}/mock-api/v1`,
+				changeOrigin: true, // needed for virtual hosted sites
+				ws: true, // proxy websockets
+				pathRewrite: {
+					'^/mytest' : ''
+				}
+			},
 			'/tp': {
 				target: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la',
 				changeOrigin: true, // 是否跨域

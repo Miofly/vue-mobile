@@ -1,0 +1,19 @@
+openapi: 3.0.0
+info:
+    description: Mock API for vue-typescript-admin-template.
+    version: 1.0.0
+    title: Mock API
+    contact:
+        email: armourcy@email.com
+    license:
+        name: MIT
+        url: https://opensource.org/licenses/MIT
+servers:
+    - url: /mock-api/v1
+paths:
+    /users/login:
+        post:
+            operationId: login
+    /articles:
+        get:
+            operationId: getArticles
