@@ -1,6 +1,6 @@
 <template>
-	<view class="text-white text-center padding-bottom-ten box"
-	      style="background-repeat:repeat-y;background-size:100% 100%">
+	<view class="text-white text-center padding-bottom-ten box full-width-height"
+	      style="background-repeat:repeat-y;background-size:100% 100%;overflow-x: hidden">
 		<view style="height: 96rpx"></view>
 		<view class="full-width text-center" style="position: relative;width: 200%;height: 150rpx">
 			<view style="position: absolute;width: 100%;height: 280rpx;top: -130rpx">
@@ -116,6 +116,8 @@ export default class index extends Vue {
 	status: boolean = false
 	statusTwo: boolean = false
 	timeLength: number = 1000
+	chatterTimer: any = null
+	chatterTimerNum: number = 400
 
 	ptgg: 'adunit-60f954ce26ce0f92'
 
@@ -164,6 +166,14 @@ export default class index extends Vue {
 		}
 	}
 
+	onUnload () {
+		clearInterval(this.chatterTimer)
+	}
+
+	onHide () {
+		clearInterval(this.chatterTimer)
+	}
+
 	playAudio () {
 		if (this.isPlayEnd) {
 		    this.isPlay = false
@@ -206,21 +216,34 @@ export default class index extends Vue {
 		this.promptText = '开始清理'
 		const innerAudioContext = uni.createInnerAudioContext()
 		innerAudioContext.autoplay = true
+		innerAudioContext.volume = 1
+		innerAudioContext.obeyMuteSwitch = false
 		innerAudioContext.src = '/static/images/voice.mp3'
+		uni.setInnerAudioOption({
+			obeyMuteSwitch: false
+		})
 		this.isPlay = true
 		this.schedule = 0
 		this.isPlayEnd = false
+		this.chatterTimer = setInterval(() => {
+			wx.vibrateLong()
+		}, this.chatterTimerNum)
 		const timer = setInterval(() => {
 			this.promptText = `正在清理 ${this.schedule}%`
 			this.schedule += 10
 			if (this.schedule == 100) {
 				setTimeout(() => {
 					this.promptText = '清理完成'
+					if (this.clean_num == 1) {
+						this.$mio.mioRoot.showToast('清理完成，可继续深度清理')
+					}
 					this.isPlayEnd = true
 					clearInterval(timer)
+					clearInterval(this.chatterTimer)
 					innerAudioContext.pause()
 					innerAudioContext.destroy()
 					this.timeLength = 1300
+					this.chatterTimerNum = 300
 				}, 1000)
 				setTimeout(() => {
 					if (this.clean_num == 2) {
@@ -247,7 +270,7 @@ export default class index extends Vue {
 
 <style>
 page {
-	background: rgb(21, 61 150);
+	background: rgb(1, 19, 103);
 }
 
 .newShake {
