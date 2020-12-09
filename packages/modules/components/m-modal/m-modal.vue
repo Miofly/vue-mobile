@@ -1,10 +1,10 @@
 <template>
 	<view @touchmove.stop.prevent>
 		<view :class="[(fadein || show)?'mio-modal-normal':'mio-modal-scale',show?'mio-modal-show':'']"
-		      :style="{width:width,padding:padding,borderRadius:radius, marginTop: modalTop}"
-		      class="mio-modal-box" style="background-color: transparent">
+		      :style="{width:width,padding:padding,borderRadius:radius, marginTop: modalTop, background: bgColor}"
+		      class="mio-modal-box">
 			<view>
-				<view :style="{fontSize: closeSize + 'rpx'}" @tap="show = false" class="fa fa-times-circle-o"
+				<view :style="{fontSize: closeSize + 'rpx', color: closeColor}" @tap="show = false" class="fa fa-times-circle-o"
 				      style="position: absolute; top:20px;right: 20px" v-if="closeShow"></view>
 				<view :style="{fontSize: titleSize + 'rpx', color: titleColor}" class="mio-modal-title" v-if="showTitle">
 					{{title}}
@@ -32,6 +32,7 @@ export default class modal extends Vue {
 	@Prop({ default: '40rpx 64rpx', type: String }) padding?: string // modal padding值
 	@Prop({ default: '24rpx', type: String }) radius?: string // modal 圆角
 	@Prop({ default: 'white', type: String }) bgColor?: string // 背景颜色
+	@Prop({ default: 'black', type: String }) closeColor?: string // 背景颜色
 	@Prop({ default: false, type: Boolean }) maskClosable?: boolean // 点击蒙板是否可以关闭modal框
 	@Prop({ default: 0, type: [Number, String] }) modalTop?: number | string //
 

@@ -1,8 +1,8 @@
 <template>
 	<view @touchmove.stop.prevent>
 		<view :class="[(fadein || show)?'mio-modal-normal':'mio-modal-scale',show?'mio-modal-show':'']"
-		      :style="{width:width,padding:padding,borderRadius:radius, marginTop: modalTop}"
-		      class="mio-modal-box" style="background-color: transparent">
+		      :style="{width:width,padding:padding,borderRadius:radius, marginTop: modalTop, background: bgColor}"
+		      class="mio-modal-box">
 			<view>
 				<view :style="{fontSize: closeSize + 'rpx'}" @tap="show = false" class="fa fa-times-circle-o"
 				      style="position: absolute; top:20px;right: 20px" v-if="closeShow"></view>
