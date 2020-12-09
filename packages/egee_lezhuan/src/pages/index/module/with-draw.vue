@@ -54,7 +54,7 @@
 						       style="width: 60rpx"></image>
 						<text style="vertical-align: top;" class="margin-left-xxl">未绑定</text>
 					</view>
-					<view style="background: #E54D42;text-align: center;color: white;border-radius: 16px;width: 218rpx;height: 56rpx;line-height: 56rpx">绑定账号</view>
+					<view @tap="modalStatusThree=true" style="background: #E54D42;text-align: center;color: white;border-radius: 16px;width: 218rpx;height: 56rpx;line-height: 56rpx">绑定账号</view>
 				</view>
 				<view v-else class="flex justify-around align-center margin-top-xl">
 					<view style="height: 60rpx;line-height: 60rpx;width: 400rpx" class="">

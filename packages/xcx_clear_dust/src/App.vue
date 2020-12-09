@@ -10,7 +10,7 @@
         },
         onShow() {
             // #ifdef MP-WEIXIN
-            this.share() // 定义微信小程序全局分享
+            // this.share() // 定义微信小程序全局分享
             // #endif
             console.log('onShow：应用页面显示')
         },
@@ -87,10 +87,12 @@
                     wx.showShareMenu({
                         withShareTicket: true
                     })
-                    view.onShareAppMessage = function () {
+                    view.onShareAppMessage = function (res) {
+                    	console.log(res)
                         return {
                             title: '让你的手机一尘不染！',
-                            path: view.route
+                            path: view.route,
+	                        imageUrl: '/static/images/fengxiang@2x.png'
                         }
                     }
                 })
