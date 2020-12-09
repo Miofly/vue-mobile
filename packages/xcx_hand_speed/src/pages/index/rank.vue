@@ -51,12 +51,30 @@
 						<view @click="nationalRanking" class="border-left-radius" :class="[status ? 'activeStyle' : 'inActiveStyle']" style="width: 50%;">全国排行</view>
 						<view @click="friendsRanking" class="border-right-radius" :class="[!status ? 'activeStyle' : 'inActiveStyle']" style="width: 50%;">好友排行</view>
 					</view>
+					<view class="cu-list menu" style="margin-top: 44rpx">
+						<view class="cu-item" style="background-color: rgba(255, 252, 225, 1)!important;border-bottom: 0px solid transparent!important;">
+							<view class="content">
+								<view>
+									<view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="width: 80rpx;height: 80rpx"
+									      :style="{backgroundImage: 'url('+ infoConfig.defaultAvatar +')'}">
+										<view v-if="false" class="cu-tag badge">999</view>
+									</view>
+									<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ infoConfig.name }}</text>
+								</view>
+							</view>
+							<view v-if="true" class="action">
+								<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">888</text>
+							</view>
+						</view>
+					</view>
+					<view style="height: 8rpx;background: #FEE5CE;width: 94%;margin: 16rpx 0 16rpx 3%"></view>
 					<view>
 						<view class="cu-list menu" :class="[false ? 'card-menu' : '']">
-							<view v-for="(item, index) in rankLists" :key="index" class="cu-item" style="background-color: rgba(255, 252, 225, 1)!important;">
+							<view v-for="(item, index) in rankLists" :key="index" class="cu-item" style="border-bottom: 0px solid transparent!important;background-color: rgba(255, 252, 225, 1)!important;">
 								<view class="content">
 									<view>
-										<view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="width: 80rpx;height: 80rpx"
+										<view class="text-18 text-bold" style="color: #333333;">{{index}}</view>
+										<view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="width: 80rpx;height: 80rpx;margin-left: 54rpx"
 										      :style="{backgroundImage: 'url('+ item.imageURL +')'}">
 											<view v-if="false" class="cu-tag badge">999</view>
 										</view>
@@ -69,7 +87,8 @@
 							</view>
 						</view>
 					</view>
-					<view style="height: 30rpx;width: 100%;background-color: rgb(0, 15, 84);position: absolute;margin-top: 100rpx">
+					<view style="height: 30rpx;padding: 60rpx 0;width: 100%;background-color: rgb(0, 15, 84);color: #D3D5DE;;position: absolute;line-height: 0rpx">
+						榜单仅显示前100名
 					</view>
 				</view>
 

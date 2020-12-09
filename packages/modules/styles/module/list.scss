@@ -63,7 +63,8 @@
     min-height: 100rpx;
     background-color: #ffffff;
     justify-content: space-between;
-    align-items: center
+    align-items: center;
+    border-bottom: 1rpx solid #ddd;
 }
 
 .cu-list.menu>.cu-item:last-child:after {
@@ -78,7 +79,7 @@
     box-sizing: border-box;
     width: 200%;
     height: 200%;
-    border-bottom: 1rpx solid #ddd;
+
     border-radius: inherit;
     content: " ";
     transform: scale(.5);

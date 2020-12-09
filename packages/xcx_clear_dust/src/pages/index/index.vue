@@ -110,12 +110,12 @@ export default class index extends Vue {
 	schedule: any = 90
 	promptText: string = '清理灰尘'
 	videoAd: any = null
-	interstitialAd: any = null
 	rewardedVideoAd: any = null
+	interstitialAd: any = null
 	clean_num: number = 0
 	status: boolean = false
 	statusTwo: boolean = false
-	timeLength: number = 1000
+	timeLength: number = 1500
 	chatterTimer: any = null
 	chatterTimerNum: number = 400
 
@@ -164,6 +164,23 @@ export default class index extends Vue {
 				}
 			})
 		}
+
+		this.interstitialAd = null
+		if (wx.createInterstitialAd) {
+			this.interstitialAd = wx.createInterstitialAd({
+				adUnitId: 'adunit-2d05b89d262a6943'
+			})
+			this.interstitialAd.onLoad(() => {
+				console.log('插屏广告加载成功')
+			})
+			this.interstitialAd.onError((err) => {
+				console.log('插屏广告加载出错', err)
+			})
+			this.interstitialAd.onClose(() => {
+				console.log('插屏广告关闭')
+			})
+		}
+
 	}
 
 	onUnload () {
@@ -242,7 +259,7 @@ export default class index extends Vue {
 					clearInterval(this.chatterTimer)
 					innerAudioContext.pause()
 					innerAudioContext.destroy()
-					this.timeLength = 1300
+					this.timeLength = 1700
 					this.chatterTimerNum = 300
 				}, 1000)
 				setTimeout(() => {
@@ -250,6 +267,14 @@ export default class index extends Vue {
 						this.status = true
 					}
 					this.promptText = '深度清理'
+					this.interstitialAd.show().catch(() => {
+						// 失败重试
+						this.interstitialAd.load()
+							.then(() => this.interstitialAd.show())
+							.catch(err => {
+								console.log(err)
+							})
+					})
 				}, 2000)
 				setTimeout(() => {
 					this.baseConfig.cleanGif = '/static/images/qingli2.gif'
