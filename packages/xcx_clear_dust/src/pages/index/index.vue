@@ -337,7 +337,7 @@ export default class index extends Vue {
 					setTimeout(() => {
 						this.promptText = '清理完成'
 						if (this.clean_num == 1) {
-							this.$mio.mioRoot.showToast('清理完成，可继续深度清理', 'none', 2500)
+							this.$mio.mioRoot.showToast('清理完成，可继续深度清理', 'none', 2000)
 						}
 						this.isPlayEnd = true
 						clearInterval(timer)
