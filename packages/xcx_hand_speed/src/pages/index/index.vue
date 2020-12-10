@@ -122,7 +122,7 @@ export default class extends Vue {
 	}
 
 	goGroup () {
-		this.$mio.mioRoot.push('/pages/index/poster')
+		this.$mio.mioRoot.push('/pages/index/groupChallenge')
 	}
 }
 </script>

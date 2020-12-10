@@ -28,7 +28,7 @@
 					<view class="text-14" style="margin-top: 28rpx">全国排名</view>
 				</view>
 			</view>
-			<view>
+			<view @click="goGame">
 				<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)"
 						:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]" style="width: 66%;margin-left: 17%;margin-top: 34rpx"
 						:shape="['square', 'circle'][0]" :src="infoConfig.startChallenge" bgColor="rgba(0, 0, 0, 1)">
@@ -55,7 +55,8 @@
 						<view class="cu-item" style="background-color: rgba(255, 252, 225, 1)!important;border-bottom: 0px solid transparent!important;">
 							<view class="content">
 								<view>
-									<view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="width: 80rpx;height: 80rpx"
+									<view class="text-18 text-bold" style="color: #333333;width: 80rpx">66</view>
+									<view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="width: 80rpx;height: 80rpx;margin-left: 15rpx"
 									      :style="{backgroundImage: 'url('+ infoConfig.defaultAvatar +')'}">
 										<view v-if="false" class="cu-tag badge">999</view>
 									</view>
@@ -73,12 +74,12 @@
 							<view v-for="(item, index) in rankLists" :key="index" class="cu-item" style="border-bottom: 0px solid transparent!important;background-color: rgba(255, 252, 225, 1)!important;">
 								<view class="content">
 									<view>
-										<view class="text-18 text-bold" style="color: #333333;">{{index}}</view>
-										<view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="width: 80rpx;height: 80rpx;margin-left: 54rpx"
+										<view class="text-18 text-bold" style="color: #333333;width: 80rpx">{{index}}</view>
+										<view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="width: 80rpx;height: 80rpx;margin-left: 15rpx"
 										      :style="{backgroundImage: 'url('+ item.imageURL +')'}">
 											<view v-if="false" class="cu-tag badge">999</view>
 										</view>
-										<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ item.author }}</text>
+										<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ $mio.mioRoot.strEllipsis(item.author, 15) }}</text>
 									</view>
 								</view>
 								<view v-if="true" class="action">
@@ -140,14 +141,26 @@ export default class extends Vue {
 		console.log(this.rankLists)
 	}
 
-	nationalRanking () {
-		console.log(1)
-		this.status = !this.status
+	goGame () {
+		this.$mio.mioRoot.push('/pages/index/playGame')
 	}
 
-	friendsRanking () {
-		console.log(2)
-		this.status = !this.status
+	async nationalRanking () {
+		if (!this.status) {
+			this.status = !this.status
+			this.rankLists = []
+			const { data } = await commonGet('/mytest/articles?page=2&limit=50')
+			this.rankLists = data.items
+		}
+	}
+
+	async friendsRanking () {
+		if (this.status) {
+			this.status = !this.status
+			this.rankLists = []
+			const { data } = await commonGet('/mytest/articles?page=2&limit=50')
+			this.rankLists = data.items
+		}
 	}
 }
 </script>
