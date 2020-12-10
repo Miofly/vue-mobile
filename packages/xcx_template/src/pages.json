@@ -1,0 +1,26 @@
+{
+    "pages": [
+        {
+            "path": "pages/index/index",
+            "style": {
+                "navigationBarTitleText": "每日清理"
+            }
+        }
+    ],
+    "globalStyle": {
+        "navigationBarTextStyle": "black",
+        // #ifdef H5
+        "navigationStyle": "custom",
+        // #endif
+        "navigationBarBackgroundColor": "#F8F8F8",
+        "backgroundColor": "#F8F8F8"
+    },
+    "easycom": {
+        "autoscan": true,
+        "custom": {
+            // #ifdef H5
+            "^m-(.*)": "zj/m-$1/m-$1.vue"
+            // #endif
+        }
+    }
+}

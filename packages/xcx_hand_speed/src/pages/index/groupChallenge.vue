@@ -30,14 +30,28 @@
 			</view>
 		</view>
 
-		<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)"
-				:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]" style="width: 100vw;margin-top: 80rpx"
-				:shape="['square', 'circle'][0]" :src="baseConfig.introduceImg" bgColor="rgba(0, 0, 0, 1)">
-			<view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
-		</m-image>
+		<view style="position: relative">
+			<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)"
+			         :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]" style="width: 100vw;margin-top: 80rpx"
+			         :shape="['square', 'circle'][0]" :src="baseConfig.introduceImg" bgColor="rgba(0, 0, 0, 1)">
+				<view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
+			</m-image>
+			<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="100"
+					:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" style="position: absolute;bottom: 50rpx"
+					:shape="['square', 'circle'][0]" :src="baseConfig.captureImg" bgColor="rgba(0, 0, 0, 1)">
+				<view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
+			</m-image>
+		</view>
 
-		<view style="position: relative;width: 92%;margin-left: 4%" class="margin-top">
-			<view style="background-color: rgba(255, 252, 225, 1);width: 100%;position: absolute;top: 85rpx;border-radius: 20rpx">
+
+
+		<view style="position: relative;" class="margin-top">
+			<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="120"
+			         style="width: 97vw;position: absolute;left: 1.5vw"
+			         :shape="['square', 'circle'][0]" :src="baseConfig.newTextImg" bgColor="rgba(0, 0, 0, 1)">
+				<view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
+			</m-image>
+			<view style="background-color: rgba(255, 252, 225, 1);position: absolute;top: 105rpx;width: 92vw;margin-left: 4vw">
 				<view class="cu-list menu" style="margin-top: 44rpx">
 					<view class="cu-item" style="background-color: rgba(255, 252, 225, 1)!important;border-bottom: 0px solid transparent!important;">
 						<view class="content">
@@ -94,7 +108,7 @@ export default class extends Vue {
 		introduceImg: '/static/images/jieshaobeijing@2x.png',
 		captureImg: '/static/images/capture.png',
 		textImg: '/static/images/qunnei@2x.png',
-		newTextImg: '/static/images/wenzibeij@2x.png.png',
+		newtextImg: '/static/images/biaoti@2x.png',
 		defaultAvatar: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg',
 
 		name: 'y',

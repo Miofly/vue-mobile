@@ -1,5 +1,6 @@
 <script>
     import { yunFun } from 'uJs/toolUtils'
+    const WXBizDataCrypt = require('uJs/plugin/WXBizDataCrypt')
     /* eslint-disable */
     export default {
         onLaunch(e) {
@@ -21,18 +22,20 @@
 	        wx.getShareInfo({
 		        shareTicket: e.shareTicket,
 		        success: res => {
-			        console.log(res)
+			        const WXBizDataCrypt = require('uJs/plugin/WXBizDataCrypt')
+			        const appId = 'wx5f036ada6b1ca382'
+			        const sessionKey = '683fecc3c4e99c632b25fefb46480b93'
+			        const encryptedData = res.encryptedData
+			        const iv =  res.iv
+			        const pc = new WXBizDataCrypt(appId, sessionKey)
+			        const data = pc.decryptData(encryptedData , iv)
+			        console.log('解密后 data: ', data)
 		        },
 		        fail: err => {
-			        console.log(err)
+			        console.log(err, '获取信息失败')
 		        }
 	        })
 	        console.log(e, 'onShow：页面展示')
-
-
-            // #ifdef MP-WEIXIN
-            // this.share() // 定义微信小程序全局分享
-            // #endif
         },
         onHide() {
             console.log('onHide：应用页面隐藏')
