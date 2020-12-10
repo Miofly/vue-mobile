@@ -13,7 +13,7 @@ function resolve (dir) {
     return path.join(__dirname, dir)
 }
 
-const mockServerPort = 9999
+const mockServerPort = 8686
 
 /**
  *  publicPath 不支持，如果需要配置，请在 manifest.json->h5->router->base 中配置，

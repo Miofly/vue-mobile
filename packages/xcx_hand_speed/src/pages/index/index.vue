@@ -13,7 +13,7 @@
 		</view>
 
 		<!--玩游戏-->
-		<button class="margin-top" @click="goPlay" open-type="getUserInfo" @getuserinfo="getUserInfo">
+		<button class="margin-top" open-type="getUserInfo" @getuserinfo="getUserInfo">
 			<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)"
 					:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
 					:shape="['square', 'circle'][0]" :src="infoConfig.tzImg" bgColor="rgba(0, 0, 0, 1)">
@@ -62,7 +62,7 @@ import {
 	commonPost, commonGet
 } from '@/api'
 import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator'
-import faker from 'faker'
+import { State } from 'vuex-class'
 
 @Component({})
 export default class extends Vue {
@@ -72,7 +72,7 @@ export default class extends Vue {
 		xcx_name: '十秒手速',
 		defaultAvatar: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg',
 		occupationGroup: '',
-		best_score: 100,
+		best_score: 0,
 		tzImg: '/static/images/game.png',
 		heroImg: '/static/images/hero.png',
 		groupImg: '/static/images/group.png',
@@ -80,33 +80,58 @@ export default class extends Vue {
 		customerServiceImg: '/static/images/qun.png',
 		bg: '/static/images/bg.png',
 		bg1: '/static/images/bg1.png',
-
-		name: 'y',
+		name: '',
 		avatar: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big81005.jpg',
-
 		ptgg: 'adunit-60f954ce26ce0f92'
 	}
 
 	ptgg: string = 'adunit-60f954ce26ce0f92'
 
 	async created () {
-		console.log(faker)
-		console.log(faker.random.arrayElement(['1', '3']))
-		const data = await commonGet('/mytest/articles?page=2&limit=50')
-
 		wx.getUserInfo({
 			success: (res) => {
-				console.log(res.userInfo)
+				console.log(res)
+				this.infoConfig.name = res.userInfo.nickName
+				this.infoConfig.avatar = res.userInfo.avatarUrl
 			},
 			fail: err => {
 				console.log(err)
 			}
 		})
+
+		this.$store.state.center.open_id = this.$mio.mioRoot.getStorageSync('hand_open_id')
+		console.log('当前用户openId：', this.$store.state.center.open_id)
+		// 如果存在 open_id 代表已经登录过
+		if (this.$store.state.center.open_id != '' && this.$store.state.center.open_id != null) {
+			const { data } = await commonPost('/login-info', { open_id: this.$store.state.center.open_id })
+			console.log('获取用户信息：', data)
+			this.infoConfig.best_score = data.id
+			this.infoConfig.best_score = data.id
+		} else { // 调用微信登录
+			wx.login({
+				success: async (res) => {
+					if (res.code) {
+						const { data } = await commonPost('/login-info')
+						this.$mio.mioRoot.setStorage('hand_open_id', data.mobile)
+					} else {
+						console.log(`登录失败！${res.errMsg}`)
+					}
+				}
+			})
+		}
+	}
+
+	async getTrueUserInfo () {
+		const { data } = await commonPost('/login-info', { open_id: this.$store.state.center.open_id })
+		console.log('获取用户信息：', data)
+		this.infoConfig.best_score = data.id
+		this.infoConfig.best_score = data.id
 	}
 
 	getUserInfo (e) {
-		console.log(e)
-		console.log(e.detail.userInfo)
+		if (e.detail.userInfo != undefined) {
+		    this.goPlay()
+		}
 	}
 
 	goPlay () {

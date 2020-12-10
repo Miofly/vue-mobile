@@ -30,14 +30,15 @@
 			</view>
 		</view>
 
-		<view style="position: relative">
+		<view style="position: relative;margin-top: 80rpx" class="full-width text-center">
 			<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)"
 			         :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]" style="width: 100vw;margin-top: 80rpx"
 			         :shape="['square', 'circle'][0]" :src="baseConfig.introduceImg" bgColor="rgba(0, 0, 0, 1)">
 				<view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
 			</m-image>
-			<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="100"
-					:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" style="position: absolute;bottom: 50rpx"
+			<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)"
+					:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
+					 style="position: absolute;bottom: 50rpx;left: 20%;width: 60%"
 					:shape="['square', 'circle'][0]" :src="baseConfig.captureImg" bgColor="rgba(0, 0, 0, 1)">
 				<view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
 			</m-image>
@@ -45,13 +46,13 @@
 
 
 
-		<view style="position: relative;" class="margin-top">
+		<view style="position: relative;margin-top: 40rpx">
 			<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="120"
 			         style="width: 97vw;position: absolute;left: 1.5vw"
 			         :shape="['square', 'circle'][0]" :src="baseConfig.newTextImg" bgColor="rgba(0, 0, 0, 1)">
 				<view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
 			</m-image>
-			<view style="background-color: rgba(255, 252, 225, 1);position: absolute;top: 105rpx;width: 92vw;margin-left: 4vw">
+			<view style="background-color: rgba(255, 252, 225, 1);position: absolute;top: 105rpx;width: 92vw;margin-left: 4vw;border-bottom-right-radius: 20rpx;border-bottom-left-radius: 20rpx">
 				<view class="cu-list menu" style="margin-top: 44rpx">
 					<view class="cu-item" style="background-color: rgba(255, 252, 225, 1)!important;border-bottom: 0px solid transparent!important;">
 						<view class="content">
@@ -72,7 +73,7 @@
 				<view style="height: 8rpx;background: #FEE5CE;width: 94%;margin: 16rpx 0 16rpx 3%"></view>
 				<view>
 					<view class="cu-list menu" :class="[false ? 'card-menu' : '']">
-						<view v-for="(item, index) in rankLists" :key="index" class="cu-item" style="border-bottom: 0px solid transparent!important;background-color: rgba(255, 252, 225, 1)!important;">
+						<view v-for="(item, index) in rankLists" :key="index" class="cu-item" style="border-radius: 20px;border-bottom: 0px solid transparent!important;background-color: rgba(255, 252, 225, 1)!important;">
 							<view class="content">
 								<view>
 									<view class="text-18 text-bold" style="color: #333333;width: 80rpx">{{index}}</view>
@@ -89,8 +90,8 @@
 						</view>
 					</view>
 				</view>
-				<view style="height: 30rpx;padding: 60rpx 0;width: 100%;background-color: rgb(0, 15, 84);color: #D3D5DE;;position: absolute;line-height: 0rpx">
-					榜单仅显示前100名
+				<view style="height: 20rpx;padding: 30rpx 0;width: 100%;background-color: rgb(0, 15, 84);color: #D3D5DE;;position: absolute;line-height: 0rpx">
+
 				</view>
 			</view>
 		</view>
@@ -108,7 +109,7 @@ export default class extends Vue {
 		introduceImg: '/static/images/jieshaobeijing@2x.png',
 		captureImg: '/static/images/capture.png',
 		textImg: '/static/images/qunnei@2x.png',
-		newtextImg: '/static/images/biaoti@2x.png',
+		newTextImg: '/static/images/biaoti@2x.png',
 		defaultAvatar: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg',
 
 		name: 'y',
@@ -121,7 +122,14 @@ export default class extends Vue {
 	rankLists: any = []
 
 	async created () {
-		const { data } = await commonGet('/mytest/articles?page=2&limit=50')
+		// #ifdef H5
+		// @ts-ignore
+		const { data } = await commonGet('/mytest/articles?page=2&limit=50') // eslint-disable-line
+		// #endif
+
+		// #ifdef MP-WEIXIN
+		const { data } = await commonGet('/articles?page=2&limit=50')
+		// #endif
 		this.rankLists = data.items
 		console.log(this.rankLists)
 	}

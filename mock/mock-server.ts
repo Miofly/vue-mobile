@@ -9,22 +9,17 @@ import yaml from 'yamljs'
 import * as api from './api'
 
 const app = express()
-const port = 9999
+const port = 8686
 const { connector, summarise } = require('swagger-routes-express')
 
-// Compression
 app.use(compression())
-// Logger
 app.use(morgan('dev'))
-// Enable CORS
 app.use(cors())
-// POST, PUT, DELETE body parser
 app.use(bodyParser.json({ limit: '20mb' }))
 app.use(bodyParser.urlencoded({
 	limit: '20mb',
 	extended: false
 }))
-// No cache
 app.use((req, res, next) => {
 	res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
 	res.header('Pragma', 'no-cache')
@@ -46,7 +41,7 @@ connectSwagger(app)
 const apiSummary = summarise(apiDefinition)
 console.log(apiSummary)
 
-// Catch 404 error
+// 捕获404错误
 app.use((req, res, next) => {
 	const err = new Error('Not Found')
 	res.status(404).json({
@@ -55,15 +50,15 @@ app.use((req, res, next) => {
 	})
 })
 
-// Create HTTP server.
+// 创建HTTP服务器。
 const server = http.createServer(app)
 
-// Listen on provided port, on all network interfaces.
+// 在所有网络接口上侦听提供的端口。
 server.listen(port)
 server.on('error', onError)
 console.log(`Mock server started on port ${port}!`)
 
-// Event listener for HTTP server "error" event.
+// HTTP服务器“错误”事件的事件侦听器。
 function onError (error: any) {
 	if (error.syscall !== 'listen') {
 		throw error

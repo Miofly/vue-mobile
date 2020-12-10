@@ -1,5 +1,5 @@
 <template>
-	<view :style="{backgroundImage: 'url('+ infoConfig.bg +')'}" class="full-width-height"
+	<view :style="{backgroundImage: 'url('+ infoConfig.bg +')'}`" class="full-width-height"
 	      style="background-repeat:no-repeat;background-size: 100vw 100vh;background-position:bottom left;">
 		<view class="full-width text-center">
 			<!--倒计时-->
@@ -7,7 +7,7 @@
 				<text>倒计时：</text>
 				<m-count-down v-show="gameStatus" ref="count_down" :autoplay="autoPlay" :fontSize="40"
 				              :separator="['colon', 'zh'][0]" :showBorder="false" :showDays="false" :showHours="false"
-				              :showMinutes="false" :timestamp="['60', '86400', '983272', '1'][3]"
+				              :showMinutes="false" :timestamp="['60', '86400', '983272', '21'][3]"
 				              bg-color="transparent" border-color="#303133" class="" color="#FF5555"
 				              separator-color="#303133" @end="end"></m-count-down>
 				<text v-show="!gameStatus">10</text>
@@ -25,16 +25,16 @@
 			<view style="width: 100%;margin-top: 134rpx;text-align: center">
 				<m-image v-show="imgChange" :borderRadius="10" :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" :shape="['square', 'circle'][0]" :showLoading="false"
 				         :src="infoConfig.clickSrc"
-				         bgColor="rgba(0, 0, 0, 1)"
+				         bgColor="rgba(0, 0, 0, 1)" height="186"
 				         bgColorError="rgba(0, 0, 0, 1)"
-				         duration="0" style="height: 186rpx;width: 60%;margin-left: 20%" @click="addNum">
+				         duration="0" style="" @click="addNum">
 					<view slot="error" class="text-white" style="font-size: 24rpx;">加载失败</view>
 				</m-image>
 				<m-image v-show="!imgChange" :borderRadius="10" :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" :shape="['square', 'circle'][0]" :showLoading="false"
 				         :src="infoConfig.clickSrcTwo"
-				         bgColor="rgba(0, 0, 0, 1)"
+				         bgColor="rgba(0, 0, 0, 1)" height="186"
 				         bgColorError="rgba(0, 0, 0, 1)"
-				         duration="0" style="height: 186rpx;width: 60%;margin-left: 20%" @click="addNum">
+				         duration="0" style="" @click="addNum">
 					<view slot="error" class="text-white" style="font-size: 24rpx;">加载失败</view>
 				</m-image>
 			</view>
@@ -122,8 +122,8 @@ export default class extends Vue {
 				clearInterval(tempTimer)
 				this.gameOut = true
 				this.tempStatus = true
-				this.infoConfig.clickSrc = '/static/images/zailai@2x.png'
-				this.infoConfig.clickSrcTwo = '/static/images/zailai@2x.png'
+				// this.infoConfig.clickSrc = '/static/images/zailai@2x.png'
+				// this.infoConfig.clickSrcTwo = '/static/images/zailai@2x.png'
 			}
 		}, 10)
 	}

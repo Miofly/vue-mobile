@@ -10,7 +10,7 @@ import root from 'uJs/root'
 import { AxiosRequestConfig } from './types'
 
 // axios 默认配置
-axios.defaults.baseURL = '' // 优先级比axios实例要低
+axios.defaults.baseURL = 'http://127.0.0.1:8686/mock-api/v1' // 优先级比axios实例要低
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8'
 axios.defaults.withCredentials = true // 允许axios请求携带cookie等凭证
 

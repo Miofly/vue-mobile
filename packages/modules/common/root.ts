@@ -499,6 +499,33 @@ const roots = {
 			g: parseInt(result[2], 16),
 			b: parseInt(result[3], 16)
 		} : null
+	},
+	setStorage (key: string, data: any) {
+		uni.setStorage({
+			key,
+			data,
+			success () {
+				console.log('存储成功', data)
+			},
+			fail (err) {
+				console.log(err)
+			}
+		})
+	},
+	getStorage (key: string) {
+		uni.getStorage({
+			key,
+			success (res) {
+				console.log('获取成功', res.data)
+				return res.data
+			},
+			fail (err) {
+				console.log(err)
+			}
+		})
+	},
+	getStorageSync (key: string) {
+		return uni.getStorageSync(key)
 	}
 }
 

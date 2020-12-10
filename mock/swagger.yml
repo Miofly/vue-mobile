@@ -11,9 +11,18 @@ info:
 servers:
     - url: /mock-api/v1
 paths:
-    /users/login:
+    /login:
         post:
             operationId: login
+    /login-info:
+        post:
+            operationId: getLoginInfo
+    /auth-list:
+        post:
+            operationId: getAuthList
+    /getSelectLists:
+        post:
+            operationId: getSelectLists
     /articles:
         get:
             operationId: getArticles

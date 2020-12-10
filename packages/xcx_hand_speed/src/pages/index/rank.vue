@@ -29,8 +29,8 @@
 				</view>
 			</view>
 			<view @click="goGame">
-				<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)"
-						:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]" style="width: 66%;margin-left: 17%;margin-top: 34rpx"
+				<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="100"
+						:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" style="margin-left: 17%;margin-top: 34rpx"
 						:shape="['square', 'circle'][0]" :src="infoConfig.startChallenge" bgColor="rgba(0, 0, 0, 1)">
 					<view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
 				</m-image>
@@ -136,9 +136,15 @@ export default class extends Vue {
 	rankLists: any = []
 
 	async created () {
-		const { data } = await commonGet('/mytest/articles?page=2&limit=50')
+		// #ifdef H5
+		// @ts-ignore
+		// const { data } = await commonGet('/mytest/articles?page=2&limit=50')
+		// #endif
+
+		// #ifdef MP-WEIXIN
+		const { data } = await commonGet('/articles?page=2&limit=50')
+		// #endif
 		this.rankLists = data.items
-		console.log(this.rankLists)
 	}
 
 	goGame () {
