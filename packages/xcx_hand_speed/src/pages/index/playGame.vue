@@ -1,5 +1,5 @@
 <template>
-	<view :style="{backgroundImage: 'url('+ infoConfig.bg +')'}`" class="full-width-height"
+	<view :style="{backgroundImage: 'url('+ infoConfig.bg +')'}" class="full-width-height"
 	      style="background-repeat:no-repeat;background-size: 100vw 100vh;background-position:bottom left;">
 		<view class="full-width text-center">
 			<!--倒计时-->

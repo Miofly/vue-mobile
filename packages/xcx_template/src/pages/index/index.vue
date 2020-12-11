@@ -1,11 +1,15 @@
 <template>
-	<view class="tetx-black text-center padding-bottom-ten box full-width-height">
-		测试
+	<view class="bg-black text-center padding-bottom-ten box full-width-height">
+<!--		<lottie :options="defaultOptions" :height="200" :width="200" @animCreated="handleAnimation" />-->
+		<canvas id="canvas" type="2d" style="width: 300px;height: 150px"></canvas>
+
 	</view>
 </template>
 
 <script lang="ts">
+import * as animationData from './test.json'
 import { Component, Vue } from 'vue-property-decorator'
+import lottie from 'lottie-miniprogram'
 
 @Component({})
 export default class index extends Vue {
@@ -19,6 +23,31 @@ export default class index extends Vue {
 			withShareTicket: true,
 			menus: ['shareAppMessage', 'shareTimeline']
 		})
+	}
+
+	onReady () {
+		wx.createSelectorQuery().select('#canvas').node(res => {
+			const canvas = res.node
+			const context = canvas.getContext('2d')
+			lottie.setup(canvas)
+			lottie.loadAnimation({ // 微信小程序给的接口，调用就完事了，原理不太懂
+				loop: true, // 是否循环播放（选填）
+				autoplay: true, // 是否自动播放（选填）
+				path: 'https://assets1.lottiefiles.com/packages/lf20_ysjldspv/data.json', // lottie json包的网络链接，可以防止小程序的体积过大，要注意请求域名要添加到小程序的合法域名中
+				rendererSettings: {
+					context// es6语法：等同于context:context（必填）
+				}
+			})
+		}).exec()
+	}
+
+	defaultOptions: any = { animationData }
+	animationSpeed: any = 1
+	anim: any = {}
+
+	handleAnimation (anim) {
+		this.anim = anim
+		console.log(anim) // 这里可以看到 lottie 对象的全部属性
 	}
 
 	onShareAppMessage (res) {

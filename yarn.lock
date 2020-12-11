@@ -7447,6 +7447,16 @@ lolex@^5.0.0:
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+lottie-miniprogram@^1.0.11:
+  version "1.0.11"
+  resolved "https://registry.npm.taobao.org/lottie-miniprogram/download/lottie-miniprogram-1.0.11.tgz#3ed7fd43209e141312debcedfe81c9c2c8f67ecd"
+  integrity sha1-Ptf9QyCeFBMS3rzt/oHJwsj2fs0=
+
+lottie-web@^5.1.9:
+  version "5.7.5"
+  resolved "https://registry.npm.taobao.org/lottie-web/download/lottie-web-5.7.5.tgz#92d72de9d94c733ac21ce613a5f3fc21ebe3f92c"
+  integrity sha1-ktct6dlMczrCHOYTpfP8Ievj+Sw=
+
 loud-rejection@^1.0.0:
   version "1.6.0"
   resolved "https://registry.npm.taobao.org/loud-rejection/download/loud-rejection-1.6.0.tgz?cache=0&sync_timestamp=1602841488406&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Floud-rejection%2Fdownload%2Floud-rejection-1.6.0.tgz#5b46f80147edee578870f086d04821cf998e551f"
@@ -11526,6 +11536,13 @@ vue-loader@^15.9.2:
     loader-utils "^1.1.0"
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
+
+vue-lottie@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.npm.taobao.org/vue-lottie/download/vue-lottie-0.2.1.tgz#f9f62c34a276e6834255406118fb05b51f765e4b"
+  integrity sha1-+fYsNKJ25oNCVUBhGPsFtR92Xks=
+  dependencies:
+    lottie-web "^5.1.9"
 
 vue-property-decorator@^8.0.0:
   version "8.5.1"

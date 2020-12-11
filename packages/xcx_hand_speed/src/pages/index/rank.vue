@@ -11,16 +11,16 @@
 		<view style="height: 422rpx;background: #F5F6FC;border-radius: 12px;border: 4px solid #36CCF1;margin-top: 40rpx" class="text-center">
 			<view class="flex justify-around">
 				<view style="margin-top: 136rpx">
-					<view style="color: #FF5555" class="text-20 text-bold">{{infoConfig.score}}次</view>
+					<view style="color: #FF5555" class="text-20 text-bold">{{score}}次</view>
 					<view class="text-14" style="margin-top: 28rpx">最好成绩</view>
 				</view>
 				<view style="margin-top: 40rpx">
 					<view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="border: 2px solid #FFFFFF;width: 132rpx;height: 132rpx"
-					      :style="{backgroundImage: 'url('+ infoConfig.defaultAvatar +')'}">
+					      :style="{backgroundImage: avatar == '' ? 'url('+ infoConfig.defaultAvatar +')' : 'url('+ avatar +')'}">
 						<view v-if="false" class="cu-tag badge">999</view>
 					</view>
 					<view style="margin-top: 24rpx;color: #333;" class="text-18">
-						{{infoConfig.name}}
+						{{name}}
 					</view>
 				</view>
 				<view style="margin-top: 136rpx">
@@ -57,14 +57,14 @@
 								<view>
 									<view class="text-18 text-bold" style="color: #333333;width: 80rpx">66</view>
 									<view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="width: 80rpx;height: 80rpx;margin-left: 15rpx"
-									      :style="{backgroundImage: 'url('+ infoConfig.defaultAvatar +')'}">
+									      :style="{backgroundImage: avatar == '' ? 'url('+ infoConfig.defaultAvatar +')' : 'url('+ avatar +')'}">
 										<view v-if="false" class="cu-tag badge">999</view>
 									</view>
-									<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ infoConfig.name }}</text>
+									<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ name }}</text>
 								</view>
 							</view>
 							<view v-if="true" class="action">
-								<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">888</text>
+								<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ score }}</text>
 							</view>
 						</view>
 					</view>
@@ -114,8 +114,13 @@ import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator'
 import {
     commonGet
 } from '@/api'
+import { State } from 'vuex-class'
 @Component({})
 export default class extends Vue {
+	@State('name', { namespace: 'center' }) name
+	@State('avatar', { namespace: 'center' }) avatar
+	@State('score', { namespace: 'center' }) score
+
 	status: boolean = true
 	infoConfig: any = {
 		bg: '/static/images/bg.png',
@@ -125,11 +130,8 @@ export default class extends Vue {
 		startChallenge: '/static/images/kaishi@2x.png',
 		rankImg: '/static/images/paihang@2x.png',
 		defaultAvatar: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg',
-
-		name: 'y',
-		score: '11',
 		rank: '未上榜',
-		sumPerson: '1231321',
+		sumPerson: this.$mio.mioRoot.randomNum(100000, 30),
 		time: '3:00',
 	}
 
@@ -154,8 +156,8 @@ export default class extends Vue {
 	async nationalRanking () {
 		if (!this.status) {
 			this.status = !this.status
-			this.rankLists = []
-			const { data } = await commonGet('/mytest/articles?page=2&limit=50')
+			// this.rankLists = []
+			const { data } = await commonGet('/articles?page=2&limit=50')
 			this.rankLists = data.items
 		}
 	}
@@ -163,8 +165,8 @@ export default class extends Vue {
 	async friendsRanking () {
 		if (this.status) {
 			this.status = !this.status
-			this.rankLists = []
-			const { data } = await commonGet('/mytest/articles?page=2&limit=50')
+			// this.rankLists = []
+			const { data } = await commonGet('/articles?page=1&limit=50')
 			this.rankLists = data.items
 		}
 	}
@@ -188,6 +190,7 @@ page {
 	color: #772E01;
 }
 .inActiveStyle{
+	font-weight: bolder;
 	font-size: 18px;
 	background-color: rgba(255, 255, 255, 0.9);
 	color: #772E01;

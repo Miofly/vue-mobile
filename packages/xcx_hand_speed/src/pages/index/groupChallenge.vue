@@ -11,16 +11,16 @@
 			</m-image>
 			<view class="flex justify-around text-white" style="margin-top: 62rpx">
 				<view style="margin-top: 128rpx">
-					<view style="color: #FF5555" class="text-20 text-bold">{{baseConfig.score}}次</view>
+					<view style="color: #FF5555" class="text-20 text-bold">{{score}}次</view>
 					<view class="text-14" style="margin-top: 28rpx">最好成绩</view>
 				</view>
 				<view style="">
 					<view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="border: 4px solid #FFEB7E;;width: 164rpx;height: 164rpx"
-					      :style="{backgroundImage: 'url('+ baseConfig.defaultAvatar +')'}">
+					      :style="{backgroundImage: avatar == '' ? 'url('+ infoConfig.defaultAvatar +')' : 'url('+ avatar +')'}">
 						<view v-if="false" class="cu-tag badge">999</view>
 					</view>
 					<view style="margin-top: 24rpx;" class="text-18">
-						{{baseConfig.name}}
+						{{name}}
 					</view>
 				</view>
 				<view style="margin-top: 128rpx">
@@ -45,8 +45,16 @@
 		</view>
 
 
+		<view v-if="rankLists.length == 0" style="position: relative;margin-top: 40rpx">
+			<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="678"
+					:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]"
+					:shape="['square', 'circle'][0]" :src="baseConfig.emptyImg" bgColor="rgba(0, 0, 0, 1)">
+				<view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
+			</m-image>
+			<view style="height: 20rpx;padding: 30rpx 0;width: 100%;background-color: rgb(0, 15, 84);color: #D3D5DE;;position: absolute;line-height: 0rpx"></view>
+		</view>
 
-		<view style="position: relative;margin-top: 40rpx">
+		<view v-else style="position: relative;margin-top: 40rpx">
 			<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="120"
 			         style="width: 97vw;position: absolute;left: 1.5vw"
 			         :shape="['square', 'circle'][0]" :src="baseConfig.newTextImg" bgColor="rgba(0, 0, 0, 1)">
@@ -90,9 +98,7 @@
 						</view>
 					</view>
 				</view>
-				<view style="height: 20rpx;padding: 30rpx 0;width: 100%;background-color: rgb(0, 15, 84);color: #D3D5DE;;position: absolute;line-height: 0rpx">
-
-				</view>
+				<view style="height: 20rpx;padding: 30rpx 0;width: 100%;background-color: rgb(0, 15, 84);color: #D3D5DE;;position: absolute;line-height: 0rpx"></view>
 			</view>
 		</view>
 	</view>
@@ -101,15 +107,21 @@
 <script lang="ts">
 import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator'
 import { commonGet } from '@/api'
+import { State } from 'vuex-class'
 
 @Component({})
 export default class extends Vue {
+	@State('name', { namespace: 'center' }) name
+	@State('avatar', { namespace: 'center' }) avatar
+	@State('score', { namespace: 'center' }) score
+
 	baseConfig: any = {
 		bg: '/static/images/bg.png',
 		introduceImg: '/static/images/jieshaobeijing@2x.png',
 		captureImg: '/static/images/capture.png',
 		textImg: '/static/images/qunnei@2x.png',
 		newTextImg: '/static/images/biaoti@2x.png',
+		emptyImg: '/static/images/tupian@2x.png',
 		defaultAvatar: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg',
 
 		name: 'y',
@@ -128,10 +140,10 @@ export default class extends Vue {
 		// #endif
 
 		// #ifdef MP-WEIXIN
-		const { data } = await commonGet('/articles?page=2&limit=50')
+		const { data } = await commonGet('/articles?page=2&limit=50') // eslint-disable-line
 		// #endif
+		// this.rankLists = data.items
 		this.rankLists = data.items
-		console.log(this.rankLists)
 	}
 }
 </script>

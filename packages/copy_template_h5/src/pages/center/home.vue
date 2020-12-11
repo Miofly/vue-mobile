@@ -1,14 +1,11 @@
 <template>
 	<view>
-		center
+		<lottie :options="defaultOptions" :height="200" :width="200" @animCreated="handleAnimation" />
+
 	</view>
 </template>
 
 <script lang="ts">
-	import { Component, Prop, Vue } from 'vue-property-decorator'
 
-	@Component({})
-	export default class home extends Vue {
 
-	}
 </script>

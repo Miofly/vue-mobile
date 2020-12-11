@@ -9,6 +9,13 @@ const commonPost = (url, data = {}, showLoading = true) => ajax({
 	showLoading
 })
 
+const commonOtherPost = (url, data = {}, showLoading = true) => ajax({
+	url,
+	method: 'POST',
+	data,
+	showLoading
+})
+
 const commonGet = (url, showLoading = true) => ajax({
 	url: defaultUrl + url,
 	getHeader: {
@@ -17,7 +24,17 @@ const commonGet = (url, showLoading = true) => ajax({
 	showLoading
 })
 
+const commonOtherGet = (url, showLoading = true) => ajax({
+	url,
+	getHeader: {
+		'Content-Type': 'json'
+	},
+	showLoading
+})
+
 export {
+	commonOtherPost,
+	commonOtherGet,
 	commonPost,
 	commonGet
 }
