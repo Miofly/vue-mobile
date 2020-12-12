@@ -94,7 +94,7 @@
                 default: false
             },
         },
-        mounted() {
+        mounted () {
             this.system = this.getSystem()
         },
         methods: {

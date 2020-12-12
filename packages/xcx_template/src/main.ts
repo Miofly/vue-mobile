@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
 import mio from '../../modules/common'
+
 Vue.use(mio)
 
 Vue.config.productionTip = false

@@ -1,5 +1,3 @@
-import Vue from 'vue'
-
 // import Router from 'uni-simple-router'
 
 // Vue.use(Router)

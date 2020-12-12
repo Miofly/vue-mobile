@@ -7452,7 +7452,7 @@ lottie-miniprogram@^1.0.11:
   resolved "https://registry.npm.taobao.org/lottie-miniprogram/download/lottie-miniprogram-1.0.11.tgz#3ed7fd43209e141312debcedfe81c9c2c8f67ecd"
   integrity sha1-Ptf9QyCeFBMS3rzt/oHJwsj2fs0=
 
-lottie-web@^5.1.9, lottie-web@^5.7.5:
+lottie-web@^5.1.9:
   version "5.7.5"
   resolved "https://registry.npm.taobao.org/lottie-web/download/lottie-web-5.7.5.tgz#92d72de9d94c733ac21ce613a5f3fc21ebe3f92c"
   integrity sha1-ktct6dlMczrCHOYTpfP8Ievj+Sw=
@@ -11954,6 +11954,11 @@ ws@^7.0.0, ws@^7.2.3:
   version "7.4.0"
   resolved "https://registry.npm.taobao.org/ws/download/ws-7.4.0.tgz#a5dd76a24197940d4a8bb9e0e152bb4503764da7"
   integrity sha1-pd12okGXlA1Ki7ng4VK7RQN2Tac=
+
+wxa-plugin-canvas@^1.1.12:
+  version "1.1.12"
+  resolved "https://registry.npm.taobao.org/wxa-plugin-canvas/download/wxa-plugin-canvas-1.1.12.tgz#639a9857e4849ca6bac3552c96d5441beb9e28f6"
+  integrity sha1-Y5qYV+SEnKa6w1UsltVEG+ueKPY=
 
 x-domhandler@^2.4.2:
   version "2.4.2"

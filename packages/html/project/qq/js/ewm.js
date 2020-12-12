@@ -702,8 +702,10 @@ function utf16to8(str) {
     }
 })(jQuery)
 
-function qraa({url, ewmSize, logo, background = '#ffffff', foreground = '#000000',
-                  logoSize = 'default', isShow = true}) {
+function qraa({
+                  url, ewmSize, logo, background = '#ffffff', foreground = '#000000',
+                  logoSize = 'default', isShow = true
+              }) {
     var qrurl = url
     $('#qrAnonymous').remove()
     var qr1 = decodeURIComponent(qrurl)
