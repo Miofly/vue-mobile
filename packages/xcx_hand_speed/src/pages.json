@@ -3,14 +3,30 @@
         {
             "path": "pages/index/index",
             "style": {
-                "navigationBarTitleText": "十秒手速"
+                "navigationBarTitleText": "是男人就超过一百次"
             }
         },
-        {"path": "pages/index/groupChallenge"},
-        {"path": "pages/index/playGame"},
-        {"path": "pages/index/poster"},
-        {"path": "pages/index/rank"},
-        {"path": "pages/index/rankBefore"}
+        {
+            "path": "pages/index/groupChallenge",
+            "style": {
+                "navigationBarTitleText": "群挑战"
+            }
+        },
+        {
+            "path": "pages/index/playGame"
+        },
+        {
+            "path": "pages/index/poster"
+        },
+        {
+            "path": "pages/index/rank",
+            "style": {
+                "navigationBarTitleText": "排位赛"
+            }
+        },
+        {
+            "path": "pages/index/rankBefore"
+        }
     ],
     "globalStyle": {
         "navigationBarTextStyle": "black",

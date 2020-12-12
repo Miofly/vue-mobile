@@ -140,6 +140,7 @@ export default class extends Vue {
 		// #endif
 
 		// #ifdef MP-WEIXIN
+		// @ts-ignore
 		const { data } = await commonGet('/articles?page=2&limit=50') // eslint-disable-line
 		// #endif
 		// this.rankLists = data.items

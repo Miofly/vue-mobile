@@ -1,6 +1,5 @@
 import ajax from './ajax'
-
-const defaultUrl = 'http://127.0.0.1:8686/mock-api/v1'
+const defaultUrl = process.env.VUE_APP_BASE_API
 
 const commonPost = (url, data = {}, showLoading = true) => ajax({
 	url: defaultUrl + url,

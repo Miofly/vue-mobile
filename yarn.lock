@@ -7452,7 +7452,7 @@ lottie-miniprogram@^1.0.11:
   resolved "https://registry.npm.taobao.org/lottie-miniprogram/download/lottie-miniprogram-1.0.11.tgz#3ed7fd43209e141312debcedfe81c9c2c8f67ecd"
   integrity sha1-Ptf9QyCeFBMS3rzt/oHJwsj2fs0=
 
-lottie-web@^5.1.9:
+lottie-web@^5.1.9, lottie-web@^5.7.5:
   version "5.7.5"
   resolved "https://registry.npm.taobao.org/lottie-web/download/lottie-web-5.7.5.tgz#92d72de9d94c733ac21ce613a5f3fc21ebe3f92c"
   integrity sha1-ktct6dlMczrCHOYTpfP8Ievj+Sw=

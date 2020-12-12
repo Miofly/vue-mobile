@@ -1,4 +1,5 @@
 const path = require('path')
+const os = require('os');
 
 // 解决内存溢出问题 MaxListenersExceededWarning: Possible EventEmitter memory leak detected.
 // 11 upgrade listeners added. Use emitter.setMaxListeners() to increase limit
@@ -13,14 +14,31 @@ function resolve (dir) {
     return path.join(__dirname, dir)
 }
 
+function getIpAddress () { // 获取真实IP地址
+	const interfaces = os.networkInterfaces()
+	for (const devName in interfaces) {
+		if (devName == 'WLAN') {
+			const iface = interfaces[devName]
+			for (let i = 0; i < iface.length; i++) {
+				const alias = iface[i]
+				if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
+					return alias.address
+				}
+			}
+		}
+	}
+}
+
 const mockServerPort = 8686
 
+process.env.VUE_APP_BASE_API = `http://${getIpAddress()}:8686/mock-api/v1`
 /**
  *  publicPath 不支持，如果需要配置，请在 manifest.json->h5->router->base 中配置，
  *  outputDir 不支持
  *  assetsDir 固定 static
  */
 module.exports = {
+
     /**
      * 在vuex-module-decorators@0.9.3版本开始, 代码最终发布为ES5格式, 因此下面的部分主要针对v0.9.2及以前的版本最终生成的代码是ES2015(ES6)格式的
     */
@@ -41,7 +59,7 @@ module.exports = {
         //     .rule('zepto')
         //     .test(require.resolve('./src/common/plugin/zepto.min.js'))
         //     .use('exports')
-        //     .loader('exports-loader?window.zepto')
+        //     .loader('exports-loader?global.zepto')
         //     .end()
         //     .use('script')
         //     .loader('script-loader')
@@ -49,7 +67,7 @@ module.exports = {
         // config.module.rule('tvp')
         //     .test(require.resolve('./src/common/plugin/tvp.js'))
         //     .use('exports')
-        //     .loader('exports-loader?window.tvp')
+        //     .loader('exports-loader?global.tvp')
         //     .end()
         //     .use('script')
         //     .loader('script-loader')
@@ -69,12 +87,12 @@ module.exports = {
     devServer: { // 开发环境跨域处理
     	open: true,
         proxy: {
-			'/mytest': {
-				target: `http://127.0.0.1:${mockServerPort}/mock-api/v1`,
+			'/mockApi': {
+				target: process.env.VUE_APP_BASE_API,
 				changeOrigin: true, // needed for virtual hosted sites
 				ws: true, // proxy websockets
 				pathRewrite: {
-					'^/mytest' : ''
+					['^' + process.env.VUE_APP_BASE_API]: ''
 				}
 			},
 			'/tp': {
