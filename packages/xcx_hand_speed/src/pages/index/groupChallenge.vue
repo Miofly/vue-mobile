@@ -61,39 +61,21 @@
 				<view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
 			</m-image>
 			<view style="background-color: rgba(255, 252, 225, 1);position: absolute;top: 105rpx;width: 92vw;margin-left: 4vw;border-bottom-right-radius: 20rpx;border-bottom-left-radius: 20rpx">
-				<view class="cu-list menu" style="margin-top: 44rpx">
-					<view class="cu-item" style="background-color: rgba(255, 252, 225, 1)!important;border-bottom: 0px solid transparent!important;">
-						<view class="content">
-							<view>
-								<view class="text-18 text-bold" style="color: #333333;width: 80rpx">66</view>
-								<view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="width: 80rpx;height: 80rpx;margin-left: 15rpx"
-								      :style="{backgroundImage: 'url('+ baseConfig.defaultAvatar +')'}">
-									<view v-if="false" class="cu-tag badge">999</view>
-								</view>
-								<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ baseConfig.name }}</text>
-							</view>
-						</view>
-						<view v-if="true" class="action">
-							<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">888</text>
-						</view>
-					</view>
-				</view>
-				<view style="height: 8rpx;background: #FEE5CE;width: 94%;margin: 16rpx 0 16rpx 3%"></view>
 				<view>
 					<view class="cu-list menu" :class="[false ? 'card-menu' : '']">
 						<view v-for="(item, index) in rankLists" :key="index" class="cu-item" style="border-radius: 20px;border-bottom: 0px solid transparent!important;background-color: rgba(255, 252, 225, 1)!important;">
 							<view class="content">
 								<view>
-									<view class="text-18 text-bold" style="color: #333333;width: 80rpx">{{index}}</view>
-									<view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="width: 80rpx;height: 80rpx;margin-left: 15rpx"
-									      :style="{backgroundImage: 'url('+ item.imageURL +')'}">
-										<view v-if="false" class="cu-tag badge">999</view>
-									</view>
-									<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ $mio.mioRoot.strEllipsis(item.author, 15) }}</text>
+									<view class="text-18 text-bold" style="color: #333333;width: 80rpx">{{index + 1}}</view>
+<!--									<view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="width: 80rpx;height: 80rpx;margin-left: 15rpx"-->
+<!--									      :style="{backgroundImage: 'url('+ item.imageURL +')'}">-->
+<!--										<view v-if="false" class="cu-tag badge">999</view>-->
+<!--									</view>-->
+                                    <open-data  style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold" type="groupName" :open-gid="item.openGid"></open-data>
 								</view>
 							</view>
 							<view v-if="true" class="action">
-								<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ item.pageviews }}</text>
+								<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ item.score }}</text>
 							</view>
 						</view>
 					</view>
@@ -106,7 +88,7 @@
 
 <script lang="ts">
 import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator'
-import { commonGet } from '@/api'
+import { commonPost } from '@/api'
 import { State } from 'vuex-class'
 
 @Component({})
@@ -134,17 +116,10 @@ export default class extends Vue {
 	rankLists: any = []
 
 	async created () {
-		// #ifdef H5
-		// @ts-ignore
-		const { data } = await commonGet('/mytest/articles?page=2&limit=50') // eslint-disable-line
-		// #endif
-
-		// #ifdef MP-WEIXIN
-		// @ts-ignore
-		const { data } = await commonGet('/articles?page=2&limit=50') // eslint-disable-line
-		// #endif
-		// this.rankLists = data.items
-		this.rankLists = data.items
+        this.status = !this.status
+        // this.rankLists = []
+        const { data } = await commonPost('/api/user_achievement/top', { type: 3 }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
+        this.rankLists = data
 	}
 }
 </script>

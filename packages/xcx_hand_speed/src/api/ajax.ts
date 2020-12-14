@@ -41,7 +41,7 @@ axios.interceptors.response.use(response => {
 				console.log('执行了吗')
 				// Router.replaceAll({name: 'login'})
 			}, 2000)
-			
+
 		} else {
 			// root.showToast(response.data.message)
 		}
@@ -60,7 +60,7 @@ function ajax (config: AxiosRequestConfig): any {
 		cancelBefore = false, errHandle = false, getHeader, contentType, showLoading
 	} = config
 	let promise: any = null
-	
+
 	return new Promise((resolve, reject) => {
 		// 执行异步ajax请求
 		if (method.toUpperCase() === 'GET') {
@@ -69,9 +69,9 @@ function ajax (config: AxiosRequestConfig): any {
 		} else {
 			// 发送post请求
 			// @ts-ignore
-			promise = sourceAxios({ method: 'POST', url, data, headers: { 'Content-Type': contentType } })
+			promise = sourceAxios({ method: 'POST', url, data, headers: contentType })
 		}
-		
+
 		promise.then((response) => {
 			if (showLoading) {
 				uni.hideLoading()

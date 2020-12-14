@@ -24,7 +24,7 @@
 					</view>
 				</view>
 				<view style="margin-top: 136rpx">
-					<view style="color: #FF5555" class="text-20 text-bold">{{infoConfig.rank}}</view>
+					<view style="color: #FF5555" class="text-20 text-bold">{{level}}</view>
 					<view class="text-14" style="margin-top: 28rpx">全国排名</view>
 				</view>
 			</view>
@@ -55,16 +55,16 @@
 						<view class="cu-item" style="background-color: rgba(255, 252, 225, 1)!important;border-bottom: 0px solid transparent!important;">
 							<view class="content">
 								<view>
-									<view class="text-18 text-bold" style="color: #333333;width: 80rpx">66</view>
+									<view class="text-18 text-bold" style="color: #333333;width: 80rpx">{{ person.level }}</view>
 									<view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="width: 80rpx;height: 80rpx;margin-left: 15rpx"
-									      :style="{backgroundImage: avatar == '' ? 'url('+ infoConfig.defaultAvatar +')' : 'url('+ avatar +')'}">
+									      :style="{backgroundImage: person.avatar == '' ? 'url('+ infoConfig.defaultAvatar +')' : 'url('+ person.avatar +')'}">
 										<view v-if="false" class="cu-tag badge">999</view>
 									</view>
-									<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ name }}</text>
+									<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ person.nickName }}</text>
 								</view>
 							</view>
 							<view v-if="true" class="action">
-								<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ score }}</text>
+								<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ person.score }}</text>
 							</view>
 						</view>
 					</view>
@@ -74,16 +74,16 @@
 							<view v-for="(item, index) in rankLists" :key="index" class="cu-item" style="border-bottom: 0px solid transparent!important;background-color: rgba(255, 252, 225, 1)!important;">
 								<view class="content">
 									<view>
-										<view class="text-18 text-bold" style="color: #333333;width: 80rpx">{{index}}</view>
+										<view class="text-18 text-bold" style="color: #333333;width: 80rpx">{{item.level}}</view>
 										<view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="width: 80rpx;height: 80rpx;margin-left: 15rpx"
-										      :style="{backgroundImage: 'url('+ item.imageURL +')'}">
+										      :style="{backgroundImage: 'url('+ item.avatar +')'}">
 											<view v-if="false" class="cu-tag badge">999</view>
 										</view>
-										<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ $mio.mioRoot.strEllipsis(item.author, 15) }}</text>
+										<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ item.nickName }}</text>
 									</view>
 								</view>
 								<view v-if="true" class="action">
-									<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ item.pageviews }}</text>
+									<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ item.score }}</text>
 								</view>
 							</view>
 						</view>
@@ -112,7 +112,7 @@
 <script lang="ts">
 import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator'
 import {
-    commonGet
+    commonPost
 } from '@/api'
 import { State } from 'vuex-class'
 @Component({})
@@ -120,8 +120,18 @@ export default class extends Vue {
 	@State('name', { namespace: 'center' }) name
 	@State('avatar', { namespace: 'center' }) avatar
 	@State('score', { namespace: 'center' }) score
+	@State('level', { namespace: 'center' }) level
+
+    onShareAppMessage (res) {
+        return {
+            title: '是男人就来！',
+            imageUrl: '/static/images/poster.png',
+            path: `pages/index/index?openId=${this.$store.state.center.openId}`,
+        }
+    }
 
 	status: boolean = true
+    person: any = {}
 	infoConfig: any = {
 		bg: '/static/images/bg.png',
 		clickSrc: '/static/images/click_me@2x.png',
@@ -144,9 +154,10 @@ export default class extends Vue {
 		// #endif
 
 		// #ifdef MP-WEIXIN
-		const { data } = await commonGet('/articles?page=2&limit=50')
+		const { data } = await commonPost('/api/user_achievement/top', { type: 1 }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
 		// #endif
-		this.rankLists = data.items
+		this.rankLists = data.list
+        this.person = data.mine
 	}
 
 	goGame () {
@@ -155,19 +166,25 @@ export default class extends Vue {
 
 	async nationalRanking () {
 		if (!this.status) {
+            this.$mio.mioRoot.showLoading('正在加载')
 			this.status = !this.status
 			// this.rankLists = []
-			const { data } = await commonGet('/articles?page=2&limit=50')
-			this.rankLists = data.items
+            const { data } = await commonPost('/api/user_achievement/top', { type: 1 }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
+            uni.hideLoading()
+			this.rankLists = data.list
+            this.person = data.mine
 		}
 	}
 
 	async friendsRanking () {
 		if (this.status) {
+            this.$mio.mioRoot.showLoading('正在加载')
 			this.status = !this.status
 			// this.rankLists = []
-			const { data } = await commonGet('/articles?page=1&limit=50')
-			this.rankLists = data.items
+            const { data } = await commonPost('/api/user_achievement/top', { type: 2 }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
+            uni.hideLoading()
+			this.rankLists = data.list == undefined ? [] : data.list
+			this.person = data.mine
 		}
 	}
 }

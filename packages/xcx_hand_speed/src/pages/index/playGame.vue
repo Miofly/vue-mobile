@@ -7,7 +7,7 @@
 				<text>倒计时：</text>
 				<m-count-down v-show="gameStatus" ref="count_down" :autoplay="autoPlay" :fontSize="40"
 				              :separator="['colon', 'zh'][0]" :showBorder="false" :showDays="false" :showHours="false"
-				              :showMinutes="false" :timestamp="['60', '86400', '983272', '21'][3]"
+				              :showMinutes="false" :timestamp="['60', '86400', '983272', '2'][3]"
 				              bg-color="transparent" border-color="#303133" class="" color="#FF5555"
 				              separator-color="#303133" @end="end"></m-count-down>
 				<text v-show="!gameStatus">10</text>
@@ -46,7 +46,9 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-
+import {
+    commonPost
+} from '@/api'
 @Component({})
 export default class extends Vue {
 	infoConfig: any = {
@@ -58,7 +60,7 @@ export default class extends Vue {
 
 	millisecond: number = 0
 	num: number = 0
-	chanceNum: number = 0
+	chanceNum: number = 2
 	millisecondTimer: any = null
 	autoPlay: boolean = false
 	gameStatus: boolean = false
@@ -122,10 +124,18 @@ export default class extends Vue {
 				clearInterval(tempTimer)
 				this.gameOut = true
 				this.tempStatus = true
-				// this.infoConfig.clickSrc = '/static/images/zailai@2x.png'
-				// this.infoConfig.clickSrcTwo = '/static/images/zailai@2x.png'
+                this.$mio.mioRoot.showToast('游戏结束，可再来一次')
+				this.infoConfig.clickSrc = '/static/images/zailai@2x.png'
+				this.infoConfig.clickSrcTwo = '/static/images/zailai@2x.png'
+                this.putScore({ type: this.$store.state.center.type, openGid: this.$store.state.center.openGid, score: this.num, openId: this.$store.state.center.firend_openId })
 			}
 		}, 10)
+	}
+
+	async putScore ({ openId, openGid, score, type }) {
+	    console.log(openId, openGid, score, type)
+		const data = await commonPost('/api/user_achievement/record', { openId, openGid, score, type }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
+        console.log(data, '游戏结束返回了多少数据')
 	}
 }
 </script>

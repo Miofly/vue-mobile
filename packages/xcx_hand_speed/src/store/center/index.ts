@@ -12,4 +12,9 @@ export default class Index extends VuexModule {
 	name: string = ''
 	avatar: string = ''
 	score: number = 0
+	chanceNumber: number = 0
+	level: string|number = ''
+	type: number = 1 // 2好友 3群
+	firend_openId: string = ''
+	openGid: string = ''
 }

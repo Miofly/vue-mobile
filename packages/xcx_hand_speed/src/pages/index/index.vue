@@ -108,13 +108,12 @@ export default class extends Vue {
 	async created () {
 		wx.getUserInfo({
 			success: (res) => {
-				console.log(res)
 				this.is_first = false
 				this.$store.state.center.name = res.userInfo.nickName
 				this.$store.state.center.avatar = res.userInfo.avatarUrl
 			},
 			fail: err => {
-				console.log(err)
+				this.getTrueUserInfo()
 			}
 		})
 
@@ -122,18 +121,21 @@ export default class extends Vue {
 		console.log('当前用户openId：', this.$store.state.center.open_id)
 		// 如果存在 open_id 代表已经登录过
 		if (this.$store.state.center.open_id != '' && this.$store.state.center.open_id != null) {
-			const { data } = await commonPost('/login-info', { open_id: this.$store.state.center.open_id })
-			console.log('获取用户信息：', data)
-			this.$store.state.center.score = data.id
-			this.infoConfig.occupationGroup = data.id
+			// const { data } = await commonPost('/login-info', { open_id: this.$store.state.center.open_id })
+			// console.log('获取用户信息：', data)
+			// this.$store.state.center.score = data.id
+			// this.infoConfig.occupationGroup = data.id
+            this.getTrueUserInfo()
 		} else { // 调用微信登录
 			wx.login({
 				success: async (res) => {
 					if (res.code) {
-						const data= await commonOtherGet(`https://api.weixin.qq.com/sns/jscode2session?appid=${this.wx.appid}&secret=${this.wx.secret}&js_code=${res.code}&grant_type=authorization_code`)
+						// const data= await commonOtherGet(`https://api.weixin.qq.com/sns/jscode2session?appid=${this.wx.appid}&secret=${this.wx.secret}&js_code=${res.code}&grant_type=authorization_code`)
+						const {data} = await commonPost('/mina/wx_auth/login', {code: res.code})
 						this.wx.openid = data.openid
 						this.wx.session_key = data.session_key
 						this.$mio.mioRoot.setStorage('hand_open_id', data.openid)
+						this.$mio.mioRoot.setStorage('hand_session_key', data.session_key)
 					} else {
 						console.log(`登录失败！${res.errMsg}`)
 					}
@@ -143,10 +145,16 @@ export default class extends Vue {
 	}
 
 	async getTrueUserInfo () {
-		const { data } = await commonPost('/login-info', { open_id: this.$store.state.center.open_id })
-		console.log('获取用户信息：', data)
-		this.infoConfig.best_score = data.id
-		this.infoConfig.best_score = data.id
+        this.is_first = false
+		const { data } = await commonGet('/api/user/user_info', false, {'AUTH-TOKEN': this.$store.state.center.open_id})
+        this.$store.state.center.score = data.score
+        this.$store.state.center.name = data.nickname
+        this.$store.state.center.avatar = data.avatar
+        this.$store.state.center.level = data.level
+	}
+
+	async putUserInfo (encryptedData, iv) {
+		const data = await commonPost('/mina/wx_auth/decrypt_data', {encryptedData: encryptedData, iv: iv, sessionKey: this.$mio.mioRoot.getStorageSync('hand_session_key'), type: 2})
 	}
 
 	getUserInfoRank (e) {
@@ -155,6 +163,7 @@ export default class extends Vue {
 			this.$store.state.center.name = e.detail.userInfo.nickName
 			this.$store.state.center.avatar = e.detail.userInfo.avatarUrl
 			this.goRank()
+            this.putUserInfo(e.detail.encryptedData, e.detail.iv)
 		}
 	}
 
@@ -164,6 +173,7 @@ export default class extends Vue {
 			this.$store.state.center.name = e.detail.userInfo.nickName
 			this.$store.state.center.avatar = e.detail.userInfo.avatarUrl
 			this.goGroup()
+            this.putUserInfo(e.detail.encryptedData, e.detail.iv)
 		}
 	}
 
@@ -173,6 +183,7 @@ export default class extends Vue {
 			this.$store.state.center.name = e.detail.userInfo.nickName
 			this.$store.state.center.avatar = e.detail.userInfo.avatarUrl
 		    this.goPlay()
+            this.putUserInfo(e.detail.encryptedData, e.detail.iv)
 		}
 	}
 
