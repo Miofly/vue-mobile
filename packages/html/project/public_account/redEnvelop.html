@@ -2,10 +2,143 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/redbag.css">
+    <script src="./js/jquery-1.7.2.min.js"></script>
+    <script src="./js/adaptiveTwo.js"></script>
+    <script src="./js/template.js"></script>
 </head>
 <body>
+<div class="contain">
+    <!-- 遮罩层 -->
+    <div class="mask" ></div>
+    <div class="redbag">
+        <div class="money">99.80</div>
+        <span>元</span>
+    </div>
+    <img class="btn" src="./img/lingqu@2x.png" alt="">
+
+    <div id="time">
+        红包失效倒计时:&nbsp;&nbsp;<span id="Countdown">23:59:59</span>
+    </div>
+
+    <div id="templete_list">
+        <!-- <div class = "list">
+          <img class="touxiang" src="./img/zhuli@2x.png" alt="">
+          <div class="title">待助力</div>
+        </div> -->
+    </div>
+    <div class="share">
+        <img class="fenxiang" src="./img/fenxiang@2x.png" alt="">
+    </div>
+
+    <div class="receive">
+        <div class="title">领取成功</div>
+        <div class="amount"><span>98.00</span>元已存入余额</div>
+        <div class="OK">好的</div>
+        <img class="close" src="./img/x@2x.png" alt="">
+
+    </div>
+
+    <div class="invite">
+        <img class="top" src="./img/tou@2x.png" alt="">
+        <img class="yaoqing" src="./img/yaoqing@2x.png" alt="">
+        <img class = 'close_btn' src="./img/x@2x.png" alt="">
+    </div>
+
+</div>
+
+
+<script type="text/html" id="friend_list">
+    {{each arr}}
+    <div class = "list">
+        <img class="touxiang" src={{$value.src}} alt="">
+        <div class="title">{{$value.title}}</div>
+    </div>
+    {{/each}}
+
+</script>
+<script>
+
+    //发送请求返回的数组
+    var data = {
+        arr: [
+            { src: './img/zhuli@2x.png', title:'111' },
+            { src: './img/zhuli@2x.png', title:'222' },
+            { src: './img/zhuli-1@2x.png', title:'待助力' },
+            { src: './img/zhuli-1@2x.png', title:'待助力' },
+            { src: './img/zhuli-1@2x.png', title:'待助力' },
+
+        ]
+    }
+
+    var html = template('friend_list',data);
+    var container = document.querySelector('#templete_list');
+    container.innerHTML = html;
+
+    /**
+     * 倒计时
+     */
+    function countDown(time) {
+        var hour = parseInt(time / 60 / 60);
+        var minute = parseInt(time / 60) % 60;
+        var second = parseInt(time % 60);
+        // 对时间进行处理，1-9号在前面添加一个“0”
+        if (hour >= 0 && hour <= 9) {
+            hour = "0" + hour;
+        }
+        if (minute >= 0 && minute <= 9) {
+            minute = "0" + minute;
+        }
+        if (second >= 0 && second <= 9) {
+            second = "0" + second;
+        }
+        // console.log(hour + ":" + minute + ":" + second);
+        $("#Countdown").html(hour + ":" + minute + ":" + second);
+    }
+    function startcountDown(time) {
+        var set = setInterval(function () {
+            time--;
+            if (time === 0) {
+                clearInterval(set);
+            }
+            countDown(time);
+        }, 1000);
+    }
+
+    startcountDown('86399'); //后台返回时间戳
+
+    $('.money').text('99.99') //后台返回钱数
+
+    $('.btn').click(function(){
+        $('.mask').show();
+        $('.receive').show();
+
+    })
+
+    $('.OK').click(function(){
+        $('.receive').hide();
+        $('.mask').hide();
+    })
+    $('.close').click(function(){
+        $('.receive').hide();
+        $('.mask').hide();
+    })
+
+    $('.share').click(function(){
+        $('.mask').show();
+        $('.invite').show();
+    })
+
+    $('.close_btn').click(function(){
+        $('.mask').hide();
+        $('.invite').hide();
+    })
+
+
+
+</script>
 
 </body>
 </html>

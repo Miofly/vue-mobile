@@ -10,7 +10,6 @@
     <script src="./js/art-template.js"></script>
     <link href="./css/index.css" rel="stylesheet" type="text/css"/>
     <style>
-
         #content p {
             color: #222;
             text-align: justify;
@@ -30,9 +29,9 @@
     </style>
 </head>
 <body>
-<!--<div style="height: 0.38rem;">-->
-<!--    <img src="./img/hbts.png" style="height: 0.38rem;width: 100vw;padding:0;margin: 0;vertical-align: sub">-->
-<!--</div>-->
+<div style="height: 0.38rem;">
+    <img src="./img/hbts.png" style="height: 0.38rem;width: 100vw;padding:0;margin: 0;vertical-align: sub">
+</div>
 <div style="padding: 0.16rem">
     <div id="title" style="color: #333333;font-size: 24px;font-weight: bolder"></div>
     <!--文章内容-->
@@ -48,8 +47,10 @@
         <img src="./img/rmtj.png" style="height: 0.17rem">
     </div>
 
-    <div>
-        <div id="dataList"></div>
+    <div id="dataList" style="padding-bottom: 0.5rem"></div>
+
+    <div style="position: fixed;bottom: 0.2rem;width: 100%;left: 0;text-align: center">
+        <img src="img/fxzq.png">
     </div>
     <!--广告-->
     <div class="container" style="padding-bottom: 3%;margin-top:0vh">
@@ -124,7 +125,7 @@
     </div>
 </div>
 
-<script src="./js/adInfo.js?v=10005"></script>
+<script src="./js/adInfo.js"></script>
 <script>
     var obj = {
         title: '数字货币交易所还是一门好生意么？',
@@ -135,8 +136,6 @@
     $('#content').html(obj.content)
 
     getListData({num: 1, size: 40})
-
-
 
     function openAll() {
         $('#content').height('auto')
