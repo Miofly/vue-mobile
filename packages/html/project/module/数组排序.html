@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+</head>
+<body>
+<script>
+    var arr1 = [3, 5, 123, 312, 100]
+    var arr2 = ['赵3', '围殴非得', '胡歌', '赵丽颖', '失眠']
+    var arr3 = ["2020-09-24T03:37:08.198Z", "2020-09-24T03:37:20.629Z", "2020-09-24T03:37:26.261Z", 312, 100]
+    var arr4 = [
+        {yw: 'w', id: 11, name: '测试1', date: '2020-09-26T03:47:08.198Z', dateOne: 'Thu Sep 24 2019 11:42:03 GMT+0800 (中国标准时间)'},
+        {yw: 'zdsa', id: 2, name: '胡歌测试1', date: '2020-09-24T03:37:08.198Z', dateOne: 'Thu Sep 24 2018 09:41:57 GMT+0800 (中国标准时间)'},
+        {yw: 'asad', id: 13, name: '杨幂测试1', date: '2020-09-24T03:27:08.198Z', dateOne: 'Thu Sep 24 2020 10:42:03 GMT+0800 (中国标准时间)'},
+        {yw: 'gdsa', id: 4, name: '赵丽颖测试1', date: '2020-09-25T03:57:08.198Z', dateOne: 'Thu Sep 24 2021 05:42:03 GMT+0800 (中国标准时间)'},
+    ]
+
+	console.log(arr4.sort(arrSort('name', 'zw', 'up')))
+
+	function arrSort(prop, type, desc = 'down') {
+		if (type == 'date' && desc == 'down') {
+            return function (obj1, obj2) {
+                var val1 = obj1[prop]
+                var val2 = obj2[prop]
+                return Date.parse(val1) - Date.parse(val2)
+            }
+		}
+
+        if (type == 'date' && desc == 'up') {
+            return function (obj1, obj2) {
+                var val1 = obj1[prop]
+                var val2 = obj2[prop]
+                return Date.parse(val2) - Date.parse(val1)
+            }
+        }
+
+        if (type == 'num' && desc == 'down') {
+            return function (obj1, obj2) {
+                var val1 = obj1[prop]
+                var val2 = obj2[prop]
+                return val1 - val2
+            }
+        }
+
+        if (type == 'num' && desc == 'up') {
+            return function (obj1, obj2) {
+                var val1 = obj1[prop]
+                var val2 = obj2[prop]
+                return val2 - val1
+            }
+        }
+
+        if (type == 'yw' && desc == 'down') {
+            return function (obj1, obj2) {
+                var val1 = obj1[prop].toLowerCase();
+                var val2 = obj2[prop].toLowerCase();
+                if (val1 < val2) {return -1}
+                if (val1 > val2) {return 1}
+                return 0;
+            }
+        }
+
+        if (type == 'yw' && desc == 'up') {
+            return function (obj1, obj2) {
+                var val1 = obj1[prop].toLowerCase();
+                var val2 = obj2[prop].toLowerCase();
+                if (val1 < val2) {return 1}
+                if (val1 > val2) {return -1}
+                return 0;
+            }
+        }
+
+        if (type == 'zw' && desc == 'down') {
+            return function (obj1, obj2) {
+                var val1 = obj1[prop]
+                var val2 = obj2[prop]
+                return val2.localeCompare(val1)
+            }
+        }
+
+        if (type == 'zw' && desc == 'up') {
+            return function (obj1, obj2) {
+                var val1 = obj1[prop]
+                var val2 = obj2[prop]
+                return val1.localeCompare(val2)
+            }
+        }
+    }
+
+    function sortDownUpDate(prop) {
+        return function (obj1, obj2) {
+            var val1 = obj1[prop]
+            var val2 = obj2[prop]
+            return Date.parse(val1) - Date.parse(val2)
+        }
+    }
+
+    function sortUpDownDate(prop) {
+        return function (obj1, obj2) {
+            var val1 = obj1[prop]
+            var val2 = obj2[prop]
+            return Date.parse(val2) - Date.parse(val1)
+        }
+    }
+
+    function sortDownUpNum(prop) {
+        return function (obj1, obj2) {
+            var val1 = obj1[prop]
+            var val2 = obj2[prop]
+            return val1 - val2
+        }
+    }
+
+    function sortUpDownNum(prop) {
+        return function (obj1, obj2) {
+            var val1 = obj1[prop]
+            var val2 = obj2[prop]
+            return val2 - val1
+        }
+    }
+
+    function sortDownUpYw(prop) {
+        return function (obj1, obj2) {
+            var val1 = obj1[prop].toLowerCase();
+            var val2 = obj2[prop].toLowerCase();
+            if (val1 < val2) {return -1}
+            if (val1 > val2) {return 1}
+            return 0;
+        }
+    }
+
+    function sortUpDownYw(prop) {
+        return function (obj1, obj2) {
+            var val1 = obj1[prop].toLowerCase();
+            var val2 = obj2[prop].toLowerCase();
+            if (val1 < val2) {return 1}
+            if (val1 > val2) {return -1}
+            return 0;
+        }
+    }
+
+    function sortUpDownZw(prop) {
+        return function (obj1, obj2) {
+            var val1 = obj1[prop]
+            var val2 = obj2[prop]
+            return val2.localeCompare(val1)
+        }
+    }
+
+    function sortDownUpZw(prop) {
+        return function (obj1, obj2) {
+            var val1 = obj1[prop]
+            var val2 = obj2[prop]
+            return val1.localeCompare(val2)
+        }
+    }
+</script>
+</body>
+</html>

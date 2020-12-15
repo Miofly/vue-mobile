@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+</head>
+<body>
+<div style="position: fixed;top: 0;left: 0;height: 3vh;width: 100vw;"></div>
+<div id="test">
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>12312</div>
+	<div>asdasdasd</div>
+	<div>asdasdasd</div>
+	<div>asdasdasd</div>
+	<div>asdasdasd</div>
+	<div>asdasdasd</div>
+	<div>asdasdasd</div>
+	<div>asdasdasd</div>
+	<div>asdasdasd</div>
+	<div>asdasdasd</div>
+	<div>asdasdasd</div>
+	<div>asdasdasd</div>
+	<div>asdasdasd</div>
+	<div>asdasdasd</div>
+	<div>asdasdasd</div>
+	<div>asdasdasd</div>
+	<div>asdasdasd</div>
+	<div>asdasdasd</div>
+	<div>asdasdasd</div>
+	<div>asdasdasd</div>
+	<div>asdasdasd</div>
+	<div>asdasdasd</div>
+	<div>asdasdasd</div>
+	<div>asdasdasd</div>
+	<div>asdasdasd</div>
+	<div>asdasdasd</div>
+
+</div>
+<script>
+
+    document.body.addEventListener('touchmove', function (e) {
+        if (!document.querySelector('#test').contains(e.target)) {
+            e.preventDefault();
+        }
+    }, {passive: false});
+
+    document.body.addEventListener('touchmove', function (e) {
+        e.preventDefault();
+    }, {passive: false});
+
+    function handleTouchEvent(event) {
+        //只跟踪一次触摸
+        event.preventDefault();
+        if (event.touches.length == 1) {
+            var ht = document.body.clientHeight;
+            var wh = document.body.clientWidth;
+            event.stopPropagation();
+            if (!(event.touches[0].clientY < 25
+                || event.touches[0].clientY + 25 > ht
+                || event.touches[0].clientX < 25
+                || event.touches[0].clientX + 25 > wh)) {
+                event.stopPropagation();
+                ourRole.style.top = event.touches[0].clientY - mainRole.imageHeight / 2 + "px";
+                ourRole.style.left = event.touches[0].clientX - mainRole.imageWidth / 2 + "px";
+            }
+        }
+    }
+
+    // document.querySelector('body').addEventListener("touchstart",handleTouchEvent,false);
+</script>
+</body>
+</html>

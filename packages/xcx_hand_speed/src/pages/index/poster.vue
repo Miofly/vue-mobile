@@ -12,7 +12,7 @@
                 </m-image>
             </button>
 
-            <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" style="width: 48%"
+            <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" class="fr" style="width: 48%"
                      :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]" @click="handleSaveCanvasImage"
                      :shape="['square', 'circle'][0]" :src="baseConfig.saverSrc" bgColor="rgba(0, 0, 0, 1)">
                 <view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>

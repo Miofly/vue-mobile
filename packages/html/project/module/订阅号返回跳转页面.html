@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <title> </title>
+	<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+        function open(url) {
+            var anchor = document.createElement('a');
+            anchor.setAttribute('rel', 'noreferrer');
+            anchor.setAttribute('id', 'm_noreferrer');
+            anchor.setAttribute('href', url);
+            document.body.appendChild(anchor);
+            document.getElementById('m_noreferrer').click();
+            document.body.removeChild(anchor);
+        }
+
+        // 记录返回次数
+        var url = new URL(location.href);
+        var time = url.searchParams.get("ts");
+        var key = 'count_' + time;
+        var count = localStorage.getItem(key);
+        if(count == null) {
+            count = 0;
+        }
+
+        var list = [
+            'http://mp.weixin.qq.com/s?__biz=Mzg3OTM4NzI1Ng==&mid=100000118&idx=1&sn=03f7b0339a0813601ce28c1bd7dc3137&chksm=4f0476617873ff77c223771fc13aa94fa8d4cab760421ac1d580274710377456419ae0ef064b#rd',//发大阅读
+            'http://mp.weixin.qq.com/s?__biz=MzU1MDgwMzI4Nw==&mid=100000022&idx=1&sn=a33c3ac55467e5acbe57653e01719eb5&chksm=7b9a432e4cedca3834ecce7574009f34aef77aedb9e7e7e854941135dca3dcb4d9b8cf65dee0#rd',//淼淼订阅号
+            'http://mp.weixin.qq.com/s?__biz=MzkwNzEzMzc5MQ==&mid=100000008&idx=1&sn=39fc03938aa75cd975954aa9b2fcf6fb&chksm=40dc973877ab1e2ec49d3905194ccf7035c79b187982d3013fd381a0396d260480b509980572#rd',//娜玉好美
+            'http://mp.weixin.qq.com/s?__biz=Mzg3NjQ1MjAzNg==&mid=100000031&idx=1&sn=9ec47530647266f8bb266584d5df2546&chksm=4f3340b47844c9a2c80d101c4293468d49ae725d407488796c2cb902fe0612d5838fd435dc15#rd',//清淡阅读
+            'http://mp.weixin.qq.com/s?__biz=Mzg5MTQ1MzI1OQ==&mid=100000008&idx=1&sn=3a7852707268e2b2a6c10c98556fe269&chksm=4fcc6b2c78bbe23a48e3ec067a7207977e78503ff7e5672692792d5906c0c39ee0d9a71d1878#rd'//木吉阅读
+        ]
+
+
+		if (count) {
+
+		}
+
+        $.post('【下一页链接接口】', {count:count}, function(res) {
+            count++;
+            localStorage.setItem(key, count);
+
+            if(res.url != '') {
+                var next = res.url;
+            } else {
+                var next = '【接口返回为空时跳转地址】';
+            }
+
+            open(next);
+        });
+	</script>
+</body>
+</html>

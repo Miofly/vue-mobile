@@ -2,10 +2,274 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+    <title>今日热点</title>
+    <script src="./js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="./js/adaptive.js" type="text/javascript"></script>
+    <script src="./js/common.js" type="text/javascript"></script>
+    <script src="./js/EventEmitter.min.js"></script>
+    <script src="./js/art-template.js"></script>
+    <link href="./css/index.css" rel="stylesheet" type="text/css"/>
+    <style>
+
+        #content p {
+            color: #222;
+            text-align: justify;
+            font-size: 18px;
+            line-height: 0.28rem;
+            margin-top: 0.17rem;;
+            text-indent: 2em;
+            word-wrap: break-word;
+            list-style-position: inside;
+            list-style-type: square
+        }
+
+        #content img {
+            display: block;
+            width: 100%
+        }
+    </style>
 </head>
 <body>
+<!--<div style="height: 0.38rem;">-->
+<!--    <img src="./img/hbts.png" style="height: 0.38rem;width: 100vw;padding:0;margin: 0;vertical-align: sub">-->
+<!--</div>-->
+<div style="padding: 0.16rem">
+    <div id="title" style="color: #333333;font-size: 24px;font-weight: bolder"></div>
+    <!--文章内容-->
+    <div id="contentParent" style="margin-top: 0.03rem;position: relative;height: 1.4rem;">
+        <div id="content" style="position: absolute;top: 0;left: 0;overflow-y: hidden;height: 1.4rem;
+        font-size: 18px;text-indent: 2em;line-height: 1.28rem;text-align:justify"></div>
+        <div id="openAll" onclick="openAll()" style="position: absolute;top: 0.58rem;left: 0">
+            <img src="./img/ckqw.png">
+        </div>
+    </div>
 
+    <div style="margin-top: 0.18rem">
+        <img src="./img/rmtj.png" style="height: 0.17rem">
+    </div>
+
+    <div>
+        <div id="dataList"></div>
+    </div>
+    <!--广告-->
+    <div class="container" style="padding-bottom: 3%;margin-top:0vh">
+        <!--单图-->
+        <script id="ad-template" type="text/html">
+            <div class="ad-template-info"
+                 style="display: flex;justify-content: space-between;height: 0.93rem;margin-top: 0.12rem"
+                 onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},2,'<?=$uuid?>')">
+                <div style="width: 65%">
+                    <div class="line-two"
+                         style="font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.22rem;">
+                        {{ title }}
+                    </div>
+                    <div style="display: flex;justify-content: space-between;margin-top: 0.14rem">
+                        <span style="color: rgba(255, 66, 55, 1);font-size: 14px;">
+                            <img src="./img/xhb.png"
+                                 style="margin-top: -0.02rem;margin-right: 0.03rem;width: 0.14rem;height: 0.14rem"><span>分享好友得1元红包</span>
+                        </span>
+                        <img src="./img/fxzq.png" style="height: 0.17rem;">
+                    </div>
+                </div>
+                <div style="width: 1rem;height: 0.8rem;padding-right: 0rem;line-height: 0.7rem">
+                    <img src="{{srcUrls[0]}}" style="height: 0.8rem;border-radius: 4px;">
+                </div>
+            </div>
+            <div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>
+        </script>
+        <!--三图-->
+        <script id="ad-template-3img" type="text/html">
+            <div class="ad-template-3img" style="padding: 0.12rem 0"
+                 onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},3,'<?=$uuid?>')">
+                <div class="line-two"
+                     style="padding: 0 0rem;font-weight: bolder;line-height: 0.22rem;color: #333;font-size: 16px!important;">
+                    {{ title }}
+                </div>
+                <div style="display: flex;justify-content: space-between;padding: 0 0rem;margin-top: 0.1rem">
+                    {{ each srcUrls as value }}
+                    <img style="height: 0.8rem;border-radius: 4px;" src="{{value}}" alt="">
+                    {{ /each   }}
+                </div>
+                <div style="display: flex;justify-content: space-between;margin-top: 0.14rem;padding: 0 0rem">
+                    <span style="color: rgba(255, 66, 55, 1);font-size: 14px;">
+                        <img src="./img/xhb.png"
+                             style="margin-top: 0rem;margin-right: 0rem;width: 0.14rem;height: 0.14rem"><span>分享好友得1元红包</span>
+                    </span>
+                    <img src="./img/fxzq.png" style="height: 0.17rem;">
+                </div>
+            </div>
+
+            <div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>
+        </script>
+        <!--大图-->
+        <script id="ad-template-big" type="text/html">
+            <div class="ad-template-info-big" style="padding: 0.12rem 0"
+                 onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},1,'14b98633-ef72-49e4-9427-8b76328ded6f')">
+                <div class="line-two"
+                     style="padding: 0 0rem;font-weight: bolder;line-height: 0.22rem;color: #333;font-size: 16px!important;">
+                    {{ title }}
+                </div>
+                <div style="display: flex;justify-content: space-between;padding: 0 0rem;margin-top: 0.1rem">
+                    <img style="height: 2.28rem;width: 100%;border-radius: 4px;" src="{{srcUrls[0]}}" alt="">
+                </div>
+                <div style="display: flex;justify-content: space-between;margin-top: 0.14rem;padding: 0 0rem">
+                    <span style="color: rgba(255, 66, 55, 1);font-size: 14px;">
+                        <img src="./img/xhb.png" style="margin-top: -0.02rem;margin-right: 0.04rem;width: 0.14rem;height: 0.14rem"><span>分享好友得1元红包</span>
+                    </span>
+                    <img src="./img/fxzq.png" style="height: 0.17rem;">
+                </div>
+            </div>
+            <div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>
+        </script>
+    </div>
+</div>
+
+<script src="./js/adInfo.js?v=10005"></script>
+<script>
+    var obj = {
+        title: '数字货币交易所还是一门好生意么？',
+        content: '<p class="ql-align-justify" style="">说起主持人李咏相信大家都非常熟悉了，他主持的《非常6+1》、《幸运52》可以说陪伴了一代人的成长，事业成功的李咏，还娶了央视导演哈文为妻，婚后两人还生有一女，无论事业还是家庭都非常的幸福美满。</p><p class="ql-align-center" style=""><img max-width="600" data-mz="1" src="https://mz-up.oss-cn-shanghai.aliyuncs.com/article_content/892705/Gd0AeeNslpyGrsXKvKmUTlXXXvYUmKxZEDJb0ZbO.jpeg" style=""/></p><p class="ql-align-justify" style="">不过在2016年之后，李咏的妻子哈文就鲜少出现在观众们面前，李咏主持的节目也越来越少，没多久就有网友爆料一家人已经前往美国，这也让李咏一家称为“众矢之中”，一时间关于他的骂声不断，甚至还有人批判李咏是“卖国贼”，赚了钱就抛弃美国去了，李咏一家人并没有出来做出回应，就在网友感觉这一切就该这样实锤了。</p><p class="ql-align-justify" style="">2018年10月25号凌晨，哈文一则微博让众人陷入了沉思哀悼之中，那个诙谐幽默的主持人李咏去世了。这则微博也让很多吃瓜群众明白了当年为何李咏一家人前往美国的真相，原来李咏早已身患癌症，前去美国只是为了治病，不幸的是李咏最终被病魔夺走了生命，经过了17个月的抗癌治疗，他离开了人世。</p><p class="ql-align-center" style=""><img max-width="600" data-mz="1" src="https://mz-up.oss-cn-shanghai.aliyuncs.com/article_content/892705/6d4I4ILTgCsO09kygumRkgf4TG7SDtvodBHKLnea.jpeg" style=""/></p><p class="ql-align-justify" style="">李咏的去世让整个娱乐圈都铺上了一层雾霾，李咏的去世让整个娱乐圈都铺上了一层雾霾，不光很多网友对他追思悼念，甚至很多明星也发文缅怀，可想而知哈文和女儿是多么的悲伤，可就在李咏去世没多久后，令人没想到是她的女儿法图麦李竟然遭遇了比癌症更恐怖的事情，而这个事情只是因为一组自拍导致，据悉这个自拍是在李咏去世的前两天，法图麦李发布了两张自拍照，并且配文好久不见，当时并没有引来多少反响。</p><p class="ql-align-center" style=""><img max-width="600" data-mz="1" src="https://mz-up.oss-cn-shanghai.aliyuncs.com/article_content/892705/WvhXGj05EQgBnQ0zb6uSKJPT9um0TRvx20xiq594.jpeg" style=""/></p><p class="ql-align-justify" style="">不过随着李咏去世之后，就有网友扒出这则消息，一瞬间此照片下方评论区被网络暴力围攻，有不少网友对其指责，甚至还有人对其人身攻击，还指责她你爹就要死了你还有心情发自拍，简直没有良心，评论区一瞬间恶语交加，对年仅16岁的女孩进行和最残忍的网络暴力，随后法图麦李删除了所有的微博说说，只留下与父亲和母亲的一张合照，不久后法图麦李更是直接注销了自己的社交平台，永远的退出了，真是让人唏嘘。</p><p class="ql-align-center" style=""><img max-width="600" data-mz="1" src="https://mz-up.oss-cn-shanghai.aliyuncs.com/article_content/892705/kjoPeb0oOSSpNah3irIDMDhR94h7fPt7DgkNOKxr.jpeg" style=""/></p><p class="ql-align-justify" style="">不得不说从法图麦李先后一系列举动可以看出，她遭受的网络暴力有多大的伤害，明明去世的是自己的至亲至爱，却被一些完全不认识的陌生人指责和教育，仅仅是发了一个微博就被一群网友骂得狗血淋头，而那些道貌岸然为李咏缅怀的人，却在他刚离世不久后对他的女儿进行了如此行为，这些又是一个什么行为，令人鄙视。</p><p class="ql-align-center" style=""><img max-width="600" data-mz="1" src="https://mz-up.oss-cn-shanghai.aliyuncs.com/article_content/892705/apsqiTU6KmS9RSTtkficDVqljutPpNoOOI2cTDTi.jpeg" style=""/></p><p class="ql-align-justify" style="">没有人能真正地换位思考，不处于那个位置，你永远无法明白当事人的心态，对于此事大家怎么看，欢迎在下方留言讨论。</p>'
+    }
+
+    $('#title').html(obj.title)
+    $('#content').html(obj.content)
+
+    getListData({num: 1, size: 40})
+
+
+
+    function openAll() {
+        $('#content').height('auto')
+        $('#contentParent').height($('#content').height())
+        $('#openAll').hide()
+    }
+
+    var adListIndex = 0;
+    var adList = [
+
+        {
+            pid: '1013103', //广告位id
+            templateId: 'ad-template-big', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+        },
+        {
+            pid: '1009955', //广告位id
+            templateId: 'ad-template', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
+        },
+        {
+            pid: '1013105', //广告位id
+            templateId: 'ad-template', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
+        },
+        {
+            pid: '1009965', //广告位id
+            templateId: 'ad-template-3img', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
+        },
+
+        {
+            pid: '1009957', //广告位id
+            templateId: 'ad-template', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
+        },
+        //   {
+        //         pid: '1009965', //广告位id
+        //         templateId: 'ad-template-3img', //模板script的id
+        //         wrapDomId: 'adList', //插入广告模板的父级id
+        //         adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
+        //     },
+
+        {
+            pid: '1009966', //广告位id
+            templateId: 'ad-template-big', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+        },
+
+        //   {
+        //     pid: '1009961', //广告位id
+        //     templateId: 'ad-template', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
+        // },
+        {
+            pid: '1009962', //广告位id
+            templateId: 'ad-template-3img', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
+        },
+        {
+            pid: '1009963', //广告位id
+            templateId: 'ad-template-big', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+        },
+
+        //     {
+        //     pid: '1009968', //广告位id
+        //     templateId: 'ad-template-3img', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
+        // },
+
+        {
+            pid: '1009960', //广告位id
+            templateId: 'ad-template-big', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+        },
+        //   {
+        //     pid: '1009950', //广告位id
+        //     templateId: 'ad-template-big', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+        // },
+        //   {
+        //     pid: '1009954', //广告位id
+        //     templateId: 'ad-template-big', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+        // },
+
+        //   {
+        //     pid: '1009951', //广告位id
+        //     templateId: 'ad-template', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
+        // },
+        //  {
+        //     pid: '1009947', //广告位id
+        //     templateId: 'ad-template-big', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+        // },
+        //  {
+        //     pid: '1009959', //广告位id
+        //     templateId: 'ad-template-3img', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
+        // },
+        {
+            pid: '1010288', //广告位id
+            templateId: 'ad-template-float', //模板script的id
+            wrapDomId: 'top-ad', //插入广告模板的父级id
+            adWrapClass: 'ad-wrap-float' //广告wrap的class 用于寻找被插入的广告
+        },
+        {
+            pid: '1009969', //广告位id
+            templateId: 'ad-template-big', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+        },
+    ];
+    var deny_cids = []; // 被禁止的创意广告id
+
+</script>
 </body>
 </html>

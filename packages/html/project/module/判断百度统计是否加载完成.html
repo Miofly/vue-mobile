@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+</head>
+<body>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f2e26ff6f09fa75b8494b36209a91e96";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+    function check_hm() {
+        setTimeout(function() {
+            for(var i in window) {
+                if(/^mini_tangram_log/.test(i)) {
+                    var t = window[i];
+                    if(t && t.tagName == 'IMG') {
+                        console.log(t)
+                        t.onload = function() {
+                            console.log(1)
+                        };
+                    }
+                } else {
+
+                }
+            }
+        }, 200);
+    }
+
+    function _asyncLoadScript(url, onload) {
+        var s = document.createElement("script");
+        s.type = 'text/javascript'; s.async = true; s.src = url; s.onload = onload;
+        var d = document.getElementsByTagName("script")[0];
+        d.parentNode.insertBefore(s, d);
+    }
+
+    var _gaq = _gaq || [], _is_ssl= document.location.protocol == 'https:';
+    // _gaq.push(['_setAccount', 'UA-xxxxxx-1']);
+    // _gaq.push(['_trackPageview', {hitCallback : check_ga}]);
+    // _gaq.push(['_trackPageLoadTime']);
+    // _asyncLoadScript((_is_ssl ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js');
+    _asyncLoadScript((_is_ssl ? 'https://' : 'http://') + 'hm.baidu.com/h.js?yyyyyyyyyyyyyyyyyyyyyyy', check_hm);
+</script>
+</body>
+</html>

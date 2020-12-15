@@ -13,7 +13,7 @@ function getParam(name, url) { // 获取地址栏参数
 function commonPost(url, data, success, fail) {
     $.ajax({
         type: 'POST',
-        url: url,
+        url: 'http://xx2-new-lb.52xiaoshuo.cn/api/' + url,
         // url: 'http://lb-manage-api.52xiaoshuo.cn/api/' + url,
         data: data,
         success: success,

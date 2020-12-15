@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+
+<body>
+<span id="time"></span>
+<script>
+    //倒计时
+    !(function() {
+        var time = document.querySelector("#time");
+        var oldtime = new Date(); //传入的时间
+        oldtime = oldtime.setDate(oldtime.getDate() + 1);//模拟24小时后的时间
+        //时间换算
+        function timer(oldtime) {
+            var newtime = new Date();
+            var time = (oldtime - newtime) / 1000;
+
+            var d = parseInt(time / (60 * 60 * 24));
+            var h = parseInt(time / 60 / 60 % 24);
+            var m = parseInt(time / 60 % 60);
+            var s = parseInt(time % 60);
+            return h + ":" + m + ":" + s + ":";
+        }
+
+        setInterval(function(){time.innerHTML = timer(oldtime);}, 1000)
+    })()
+</script>
+</body>
+
+</html>

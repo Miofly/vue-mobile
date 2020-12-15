@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>
+	</title>
+	<style>
+        * {padding: 0;margin: 0;}html,body {width: 100%;height: 100%;}.box {text-align:
+                center;height: 100vh;line-height: 100vh;font-size: 5vw;}
+	</style>
+</head>
+<body>
+<div class="box">
+	正在打开安全网页,请稍等...
+</div>
+<script>
+
+
+    var tz_arr = [
+        {url: 'http://mp.weixin.qq.com/s?__biz=Mzg3OTM4NzI1Ng==&mid=100000121&idx=1&sn=fd6a62b7eee454596e485eb1fc13d523&chksm=4f04766e7873ff789ce9dab7450ba8629299d6f06adfa9ed0e06285de9b72b08841b6f4b1842#rd',
+         count: ''},
+    ];
+
+    var single = makeRandomArr(url_arr, 1)
+    new Function(single[0].count)()
+    window.addEventListener('pageshow', function () {
+        // if (sessionStorage.getItem('xcxCount') == 1){
+            // new Function(dingyue[i].bd_script)()
+            // location.href = makeRandomArr(url_arr, 1) // 这是退弹 随机取上述URL
+        // } else {
+
+            sessionStorage.setItem('xcxCount', 1)
+
+            location.href = single[0].url // 这是跳转
+        // }
+    });
+
+    function makeRandomArr(arrList, num) { // 随机取出数组元素
+        if (num > arrList.length) {
+            num = arrList.length // eslint-disable-line
+        }
+        var tempArr = arrList.slice(0)
+        var newArrList = []
+        for (var i = 0; i < num; i++) {
+            var random = Math.floor(Math.random() * (tempArr.length))
+            var arr = tempArr[random]
+            tempArr.splice(random, 1)
+            newArrList.push(arr)
+        }
+        return newArrList
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		#root{
+			/*display: flex;*/
+			/*justify-content: center;*/
+			/*width: 50px;*/
+			/*padding: 10px;*/
+			/*font-size: 25px;*/
+			/*font-weight: 600;*/
+			/*border: 5px solid grey;*/
+			/*border-radius: 20px;*/
+		}
+	</style>
+</head>
+<body>
+<div id="root">0</div>
+</body>
+<script type="text/javascript">
+    function roll(total, idname, step) {
+        let n = 0;
+        return function () {
+            n = (n + step) >= total ? total : (n + step);
+            if (n <= total) {
+                document.getElementById(idname).innerHTML = n;
+            }
+        }
+    }
+    function start(index, idname, step, runtime = 1000){
+        let rolling = roll(index, idname, step)
+        runtime = (runtime >= 300) ? runtime : 1000;
+        for (let i = 0; i < (index/step); i++) {
+            let timer = setTimeout(rolling, (runtime/index)*i*step)
+        }
+        clearTimeout(timer);
+    }
+    start(100,'root', 4,)
+</script>
