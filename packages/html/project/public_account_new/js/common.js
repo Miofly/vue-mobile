@@ -29,3 +29,35 @@ function commonGet(url, success, fail) {
         fail: fail
     })
 }
+
+function countDown(time) {
+    var hour = parseInt(time / 60 / 60);
+    var minute = parseInt(time / 60) % 60;
+    var second = parseInt(time % 60);
+    // 对时间进行处理，1-9号在前面添加一个“0”
+    if (hour >= 0 && hour <= 9) {
+        hour = "0" + hour;
+    }
+    if (minute >= 0 && minute <= 9) {
+        minute = "0" + minute;
+    }
+    if (second >= 0 && second <= 9) {
+        second = "0" + second;
+    }
+    // console.log(hour + ":" + minute + ":" + second);
+    $("#Countdown").html(hour + ":" + minute + ":" + second);
+}
+
+function startcountDown(time) {
+    var set = setInterval(function () {
+        time--;
+        if (time === 0) {
+            clearInterval(set);
+        }
+        countDown(time);
+    }, 1000);
+}
+
+function randomNumDecimal (min, max) {
+    return ((Math.random() * (max - min + 1))+min).toFixed(2)
+}

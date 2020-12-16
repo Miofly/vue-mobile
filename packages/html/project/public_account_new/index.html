@@ -4,25 +4,17 @@
     <meta charset="UTF-8">
     <title>今日热点</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
-    <link href="./css/redbagNew.css" rel="stylesheet" type="text/css"/>
-    <script src="./js/jquery-1.7.2.min.js" type="text/javascript"></script>
-    <script src="./js/adaptiveNew.js" type="text/javascript"></script>
-    <script src="./js/common.js" type="text/javascript"></script>
-    <script charset="utf-8" src="./js/mescroll.min.js"></script>
-    <script src="./js/EventEmitter.min.js"></script>
-    <script src="./js/art-template.js"></script>
     <link href="./css/mescroll.min.css" rel="stylesheet">
     <link href="./css/index.css" rel="stylesheet" type="text/css"/>
-
-    <script src="./js/template.js"></script>
-    <style>
-        .mescroll {
-            position: fixed;
-            top: 0px;
-            bottom: 0.51rem;
-            height: auto; /*如设置bottom:50px,则需height:auto才能生效*/
-        }
-    </style>
+    <link href="./css/redbag1.css" rel="stylesheet" type="text/css"/>
+    <script src="./js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="./js/adaptive.js" type="text/javascript"></script>
+    <script src="./js/common.js" type="text/javascript"></script>
+<!--    <script src="./js/mescroll.min.js" type="text/javascript"></script>-->
+    <script src="./js/EventEmitter.min.js" type="text/javascript"></script>
+    <script src="./js/art-template.js" type="text/javascript"></script>
+    <script src="./js/jquery.qrcode.min.js" type="text/javascript"></script>
+    <script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.js"></script>
 </head>
 <body>
 <div id="indexPgae" style="display: none">
@@ -66,7 +58,7 @@
                 </div>
                 <div style="display: flex;justify-content: space-between;padding: 0 0.12rem;margin-top: 0.1rem">
                     {{ each srcUrls as value }}
-                    <img style="height: 0.8rem;border-radius: 4px;" src="{{value}}" alt="">
+                    <img style="height: 0.8rem;border-radius: 4px;width: 32%" src="{{value}}" alt="">
                     {{ /each  }}
                 </div>
                 <div style="display: flex;justify-content: space-between;margin-top: 0.14rem;padding: 0 0.12rem">
@@ -136,152 +128,260 @@
 </div>
 
 <div id="redEnvelopePage" style="display: block">
-    <!-- 遮罩层 -->
-    <div class="mask"></div>
-    <div class="redbag">
-        <div class="money">99.80</div>
-        <span>元</span>
+    <div id="redEnvelopeTwo" style="display: none">
+        <div class="mio-modal-mask" style="display: block"></div>
+        <div style="position: fixed;top: 50%;left: 50%;transform:translate(-50%,-50%);z-index: 999;background: url('./img/hbbj.png');background-repeat: no-repeat;background-size: 100%;background-position: center;width: 2.66rem;height: 3.42rem;">
+            <div style="position: fixed;left: 50%;width: 0.86rem;height: 0.86rem;bottom: 0.43rem;margin-left: -0.43rem;">
+                <img class="btnTwinkle" onclick="addTurnTwo()" src="./img/kai.png"
+                     style="width: 0.86rem;height: 0.86rem;display: block">
+            </div>
+        </div>
     </div>
-    <img alt="" class="btn" src="./img/lingqu@2x.png">
+    <div class="contain">
+        <!-- 遮罩层 -->
+        <div class="mask"></div>
+        <div class="redbag">
+            <div class="money">99.80</div>
+            <span>元</span>
+        </div>
+        <img alt="" class="btn" src="./img/lingqu@2x.png">
 
-    <div id="time">
-        红包失效倒计时:&nbsp;&nbsp;<span id="Countdown">23:59:59</span>
+        <div id="time">
+            红包失效倒计时:&nbsp;&nbsp;<span id="Countdown">23:59:59</span>
+        </div>
+
+        <div id="share_people"></div>
+        <div class="share">
+            <img alt="" class="fenxiang" src="./img/fenxiang@2x.png">
+        </div>
+
+        <div class="receive">
+            <div class="title">领取成功</div>
+            <div class="amount"><span>98.00</span>元已存入余额</div>
+            <div class="OK">好的</div>
+            <img alt="" class="close" src="./img/x@2x.png">
+        </div>
+
     </div>
+    <!--海报-->
+    <div id="poster" style="display: block;text-align: center;">
+        <div class="mio-modal-mask" style="display: block"></div>
+        <div style="position: fixed;top: 40%;left: 50%;transform:translate(-50%,-50%);z-index: 999;width: 2.66rem;height: 3.42rem;">
+            <div style="letter-spacing: 1px;position: fixed;left: 50%;width: 3.12rem;height: 0.41rem;top: -0.5rem;margin-left: -1.56rem;color: rgba(255, 226, 161, 1);font-size: 20px;">
+                <img alt="" class="top" src="./img/tou@2x.png">
+            </div>
+            <!---->
+            <div id="sharePoster" style="position: fixed;left: 50%;top: 0.2rem;margin-left: -1.61rem;width: 3.22rem;height: 4.38rem;">
+                <div style="color: rgba(255, 255, 255, 1);font-size: 16px;;">
+                    <img alt="" class="yaoqing" src="./img/yaoqing@2x.png" style="width: 3.12rem;height: 4.08rem">
+                </div>
+                <div style="position: fixed;z-index: 999;left: 50%;width: 1rem;height: 1rem;top: 2.48rem;margin-left: -0.48rem;background-color: white">
+                    <div id="qrcode" style="margin-top: 0.05rem"></div>
+                </div>
+            </div>
 
-    <div id="templete_list">
-        <!-- <div class = "list">
-          <img class="touxiang" src="./img/zhuli@2x.png" alt="">
-          <div class="title">待助力</div>
-        </div> -->
+            <img id="canvasPoster" style="position: fixed;left: 50%;width: 3.22rem;height: 3.08rem;top: 0.2rem;margin-left: -1.61rem;"/>
+
+            <div style="position: absolute;left: 50%;width: 0.38rem;height: 0.38rem;margin-left: -0.19rem;bottom: -1.38rem;z-index:99999">
+                <img onclick="hideSix()" src="./img/close.png" style="color: white;width: 0.38rem;height: 0.38rem;font-weight: bolder;"/>
+            </div>
+        </div>
     </div>
-    <div class="share">
-        <img alt="" class="fenxiang" src="./img/fenxiang@2x.png">
+    <!--提现失败-->
+    <div id="withdrawalFailed" style="display: none;text-align: center;">
+        <div class="mio-modal-mask" style="display: block"></div>
+        <div style="position: fixed;top: 40%;left: 50%;transform:translate(-50%,-50%);z-index: 999;background: url('./img/dt.png');background-repeat: no-repeat;background-size: 100%;background-position: center;width: 2.66rem;height: 3.42rem;">
+            <div style="letter-spacing: 1px;position: fixed;left: 50%;width: 0.86rem;height: 0.86rem;top: 0.2rem;margin-left: -0.43rem;color: rgba(255, 226, 161, 1);font-size: 20px;">
+                提现失败
+            </div>
+            <div style="position: fixed;left: 50%;width: 1.7rem;height: 0.48rem;top: 0.6rem;margin-left: -0.85rem;color: rgba(255, 255, 255, 1);font-size: 16px;;">
+                <div style="letter-spacing: 1px">再邀请<span id="num"></span>位好友</div>
+                <div style="letter-spacing: 1px">关注本公众号即可领取</div>
+            </div>
+            <div style="position: fixed;left: 50%;width:2rem;height: 0.48rem;top: 1.69rem;margin-left: -1rem;color: rgba(255, 255, 255, 1);font-size: 16px;letter-spacing: 1px;">
+                <div id="share_peopleTwo" style="display: flex;justify-content: center;flex-wrap: wrap">
+
+                </div>
+            </div>
+            <div onclick="partake()" style="border-radius: 8px;line-height: 0.48rem;color: #FFFFFF;font-size: 18px;background: linear-gradient(270deg, #FF8E4D 0%, #FF6565 100%);
+        position: absolute;left: 50%;width: 2.66rem;height: 0.48rem;bottom: -0.70rem;margin-left: -1.33rem;">
+                邀请
+            </div>
+            <div style="position: absolute;left: 50%;width: 0.38rem;height: 0.38rem;margin-left: -0.19rem;bottom: -1.28rem">
+                <img onclick="hideFour()" src="./img/close.png" style="color: white;width: 0.38rem;height: 0.38rem;font-weight: bolder;"/>
+            </div>
+        </div>
     </div>
-
-    <div class="receive">
-        <div class="title">领取成功</div>
-        <div class="amount"><span>98.00</span>元已存入余额</div>
-        <div class="OK">好的</div>
-        <img alt="" class="close" src="./img/x@2x.png">
-
+    <!--提现成功-->
+    <div id="withdrawalSuccess" style="display: none;text-align: center;">
+        <div class="mio-modal-mask" style="display: block"></div>
+        <div style="position: fixed;top: 40%;left: 50%;transform:translate(-50%,-50%);z-index: 999;width: 3.06rem;height: 1.76rem;background-color: white;border-radius: 8px">
+            <div style="letter-spacing: 1px;position: fixed;left: 50%;width: 0.86rem;height: 0.86rem;top: 0.2rem;margin-left: -0.43rem;color: rgba(255, 103, 54, 1);font-size: 18px;">
+                领取成功
+            </div>
+            <div style="position: fixed;left: 50%;width: 1.8rem;height: 0.48rem;top: 0.6rem;margin-left: -0.9rem;color: rgba(255, 255, 255, 1);font-size: 16px;;">
+                <div style="letter-spacing: 1px;color: rgba(51, 51, 51, 1);font-size: 16px"><span class="money" style="color: #FF6736;font-size: 26px;"></span>元已存入余额</div>
+                <div style="letter-spacing: 1px">关注本公众号即可领取</div>
+            </div>
+            <div onclick="hideFive()" style="border-radius: 8px;line-height: 0.48rem;color: #FFFFFF;font-size: 18px;background: linear-gradient(270deg, #FF8E4D 0%, #FF6565 100%);
+        position: absolute;left: 50%;width: 2.74rem;height: 0.48rem;top: 1.08rem;margin-left: -1.37rem;">
+                好的
+            </div>
+            <div style="position: absolute;left: 50%;width: 0.38rem;height: 0.38rem;margin-left: -0.19rem;bottom: -0.8rem">
+                <img onclick="hideFive()" src="./img/close.png" style="color: white;width: 0.38rem;height: 0.38rem;font-weight: bolder;"/>
+            </div>
+        </div>
     </div>
-
-    <div class="invite">
-        <img alt="" class="top" src="./img/tou@2x.png">
-        <img alt="" class="yaoqing" src="./img/yaoqing@2x.png">
-        <img alt="" class='close_btn' src="./img/x@2x.png">
-    </div>
-
+<!--    <div id="qrcode" style="display: none;width: 0.9rem;height: 0.9rem;top: 0.2rem;margin-left: -1.61rem;color: rgba(255, 255, 255, 1);font-size: 16px;"></div>-->
 </div>
 
+<div id="withDrawPage">
+
+</div>
 <!--底部栏-->
 <div style="position: fixed;bottom: 0;width: 100vw;text-align: center;box-shadow: 0px -2px 6px 0px rgba(0, 0, 0, 0.04);background: #FFFFFF;z-index: 9999">
     <div style="display: flex;justify-content: space-around;height: 0.51rem;width: 100vw;">
-        <div style="width: 33.33%;margin-top: 0.06rem">
+        <div id="huo" style="width: 33.33%;margin-top: 0.06rem">
             <img src="./img/huo.png" style="width: 0.22rem;height: 0.22rem;">
-            <div style="color: rgba(255, 114, 45, 1);font-size: 12px;">今日热点</div>
+            <div class="active" style=";font-size: 12px;">今日热点</div>
         </div>
-        <div style="width: 33.33%;margin-top: 0.06rem" onclick="goRedEnvelop()">
+        <div id="qian" style="width: 33.33%;margin-top: 0.06rem">
             <img src="./img/qian_grey.png" style="width: 0.22rem;height: 0.22rem;">
-            <div style="color: #999999;font-size: 12px;">红包大礼</div>
+            <div id="test" class="inactive" style="font-size: 12px;">红包大礼</div>
         </div>
-        <div style="width: 33.33%;margin-top: 0.06rem">
-            <img src="./img/qianOne_grey.png" style="width: 0.22rem;height: 0.22rem;">
-            <div style="color: #999999;font-size: 12px">提现</div>
+        <div id="qianOne" style="width: 33.33%;margin-top: 0.06rem">
+            <img src="./img/qianOne_grey.png" style="width: 0.22rem;height: 0.22rem;"/>
+            <div class="inactive" style="font-size: 12px">提现</div>
         </div>
     </div>
 </div>
 <script src="./js/ad.js?v=10005"></script>
-<script id="friend_list" type="text/html">
-    {{each arr}}
-    <div class="list">
-        <img class="touxiang" src={{$value.src}} alt="">
-        <div class="title">{{ $value.title }}</div>
-    </div>
-    {{/each}}
-
-</script>
 <script>
-    function goIndex () {
-        location.href = './index.html'
-    }
-    //发送请求返回的数组
-    var data = {
-        arr: [
+    var obj = {
+        isFirst: false,
+        remainTime: '86399',
+        amount: randomNumDecimal(97, 99),
+        peopleList: [
             {src: './img/zhuli@2x.png', title: '111'},
             {src: './img/zhuli@2x.png', title: '222'},
-            {src: './img/zhuli-1@2x.png', title: '待助力'},
-            {src: './img/zhuli-1@2x.png', title: '待助力'},
-            {src: './img/zhuli-1@2x.png', title: '待助力'},
-
-        ]
+        ],
+        url: 'http://www.baidu.com'
     }
 
-    var html = template('friend_list', data);
-    var container = document.querySelector('#templete_list');
-    container.innerHTML = html;
+    $('#qrcode').qrcode({
+        text: obj.url,
+        width: 90,
+        height: 90
+    });
 
-    /**
-     * 倒计时
-     */
-    function countDown(time) {
-        var hour = parseInt(time / 60 / 60);
-        var minute = parseInt(time / 60) % 60;
-        var second = parseInt(time % 60);
-        // 对时间进行处理，1-9号在前面添加一个“0”
-        if (hour >= 0 && hour <= 9) {
-            hour = "0" + hour;
+
+    setTimeout(() => {
+        html2canvas(document.querySelector('#sharePoster')).then(function (canvas) {
+            $('#sharePoster').remove()    //移除页面上的该元素
+            // $('#canvasPoster').append(canvas);    //像页面中添加转为canvas之后的元素
+            // var canvas = $('#qrcode').find('canvas').get(0);
+            $('#canvasPoster').attr('src', canvas.toDataURL('image/jpg'));
+        })
+    }, 1)
+
+    var num = 5 - Number(obj.peopleList.length)
+    $('#num').text(num)
+    // 填充人员
+    for (var i = 0; i < 5; i++) {
+        if (obj.peopleList.length < 5) {
+            obj.peopleList.push({src: './img/zhuli-1@2x.png', title: '待助力'})
         }
-        if (minute >= 0 && minute <= 9) {
-            minute = "0" + minute;
-        }
-        if (second >= 0 && second <= 9) {
-            second = "0" + second;
-        }
-        // console.log(hour + ":" + minute + ":" + second);
-        $("#Countdown").html(hour + ":" + minute + ":" + second);
     }
 
-    function startcountDown(time) {
-        var set = setInterval(function () {
-            time--;
-            if (time === 0) {
-                clearInterval(set);
-            }
-            countDown(time);
-        }, 1000);
+    // 是否首次进入
+    if (obj.isFirst) {
+        $('#redEnvelopeTwo').show()
+    } else {
+        startcountDown(obj.remainTime)
     }
 
-    startcountDown('86399'); //后台返回时间戳
+    $('.money').text(obj.amount) //后台返回钱数
 
-    $('.money').text('99.99') //后台返回钱数
 
+    var html = ''
+    var html1 = ''
+    $.each(obj.peopleList, function (key) {
+        html += '<div class="list"><img class="touxiang" src='+ obj.peopleList[key].src +' alt=""><div class="title">' +  obj.peopleList[key].title + '</div></div>'
+    })
+
+    $.each(obj.peopleList, function (key) {
+        html1 += '<div class="list" style="margin: 0px 0.1rem 0.1rem 0.1rem">' +
+            '<img class="touxiang" style="width: 0.44rem;height: 0.44rem" src='+ obj.peopleList[key].src +' alt="">' +
+            '<div class="title" style="font-size: 14px;color: white">' +  obj.peopleList[key].title + '</div></div>'
+    })
+    $('#share_people').append(html)
+    $('#share_peopleTwo').append(html1)
+
+    function goRedEnvelop () {
+    	$('#indexPgae').hide()
+    	$('#redEnvelopePage').show()
+    }
+    // 开红包
+    function addTurn() {
+        $('.btnTwinkle').addClass('overturn')
+        setTimeout(function () {
+            hideOne();
+            $('#redEnvelopeGet').show();
+        }, 2000)
+    }
+
+    // 红包界面开红包
+    function addTurnTwo() {
+        $('.btnTwinkle').addClass('overturn')
+        setTimeout(function () {
+            hideThree();
+            $('.contain').show();
+            startcountDown(obj.remainTime)
+        }, 2000)
+    }
+
+    // 领取红包
     $('.btn').click(function () {
-        $('.mask').show();
-        $('.receive').show();
-
+        if (num !== 0) {
+            $('#withdrawalFailed').show()
+        }
     })
 
-    $('.OK').click(function () {
-        $('.receive').hide();
-        $('.mask').hide();
-    })
-    $('.close').click(function () {
-        $('.receive').hide();
-        $('.mask').hide();
-    })
-
-    $('.share').click(function () {
-        $('.mask').show();
-        $('.invite').show();
+    $('#qian').click(function (){
+        $('#huo').children('div').removeClass('active').addClass('inactive')
+        $('#qianOne').children('div').removeClass('active').addClass('inactive')
+        $(this).children('div').removeClass('inactive').addClass('active')
+        $('#huo').children('img').attr('src', './img/huo_grey.png')
+        $('#qianOne').children('img').attr('src', './img/qianOne_grey.png')
+        $(this).children('img').attr('src', './img/qian.png')
+        $('#indexPgae').hide()
+        $('#redEnvelopePage').show()
+        $('#withDrawPage').hide()
     })
 
-    $('.close_btn').click(function () {
-        $('.mask').hide();
-        $('.invite').hide();
+    $('#huo').click(function (){
+        $('#qian').children('div').removeClass('active').addClass('inactive')
+        $('#qianOne').children('div').removeClass('active').addClass('inactive')
+        $(this).children('div').removeClass('inactive').addClass('active')
+        $('#qian').children('img').attr('src', './img/qian_grey.png')
+        $('#qianOne').children('img').attr('src', './img/qianOne_grey.png')
+        $(this).children('img').attr('src', './img/huo.png')
+        $('#indexPgae').show()
+        $('#redEnvelopePage').hide()
+        $('#withDrawPage').hide()
     })
 
-
+    $('#qianOne').click(function (){
+        $('#qian').children('div').removeClass('active').addClass('inactive')
+        $('#huo').children('div').removeClass('active').addClass('inactive')
+        $(this).children('div').removeClass('inactive').addClass('active')
+        $('#qian').children('img').attr('src', './img/qian_grey.png')
+        $('#huo').children('img').attr('src', './img/huo_grey.png')
+        $(this).children('img').attr('src', './img/qianOne.png')
+        $('#indexPgae').hide()
+        $('#redEnvelopePage').hide()
+        $('#withDrawPage').show()
+    })
 </script>
 <script>
     var adListIndex = 0;
@@ -408,20 +508,6 @@
         },
     ];
     var deny_cids = []; // 被禁止的创意广告id
-
-    function goRedEnvelop () {
-    	$('#indexPgae').hide()
-    	$('#redEnvelopePage').show()
-    }
-    // 开红包
-    function addTurn() {
-        $('.btnTwinkle').addClass('overturn')
-        setTimeout(function () {
-            hideOne();
-            $('#redEnvelopeGet').show();
-        }, 2000)
-    }
-
     function hideOne() {
         $('#redEnvelope').hide()
     }
@@ -429,6 +515,45 @@
     function hideTwo() {
         $('#redEnvelopeGet').hide()
     }
+
+    function hideThree() {
+        $('#redEnvelopeTwo').hide()
+    }
+
+    function hideFour() {
+        $('#withdrawalFailed').hide()
+    }
+
+    function hideFive () {
+        $('#withdrawalSuccess').hide()
+    }
+
+    function hideSix () {
+        $('#poster').hide()
+    }
+
+    $('.OK').click(function () {
+        $('.receive').hide();
+        $('.mask').hide();
+    })
+    $('.close').click(function () {
+        $('.receive').hide();
+        $('.mask').hide();
+    })
+
+    $('.share').click(function () {
+        $('#poster').show()
+    })
+
+    function partake () {
+        $('#poster').show()
+        hideFour()
+    }
+
+    $('.close_btn').click(function () {
+        $('.mask').hide();
+        $('.invite').hide();
+    })
 </script>
 </body>
 </html>
