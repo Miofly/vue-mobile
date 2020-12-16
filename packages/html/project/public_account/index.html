@@ -134,26 +134,25 @@
 
 <!--底部栏-->
 <div style="position: fixed;bottom: 0;width: 100vw;text-align: center;box-shadow: 0px -2px 6px 0px rgba(0, 0, 0, 0.04);background: #FFFFFF;z-index: 9999">
-    <div style="display: flex;justify-content: space-around;height: 0.51rem;width: 100vw;">
+    <div style="display: flex;justify-content: space-around;height: 7vh;width: 100vw;">
         <div style="width: 33.33%;">
-            <img src="./img/huo.png" style="width: 0.22rem;height: 0.22rem;margin-top: -0.12rem">
-            <div style="color: rgba(255, 114, 45, 1);font-size: 12px;margin-top: -0.08rem">今日热点</div>
+            <img src="./img/huo.png" style="width: 5vw;height: 5vw;margin-top:1vw">
+            <div style="color: rgba(255, 114, 45, 1);font-size: 12px;margin-top: 0">今日热点</div>
         </div>
-        <div style="width: 33.33%">
-            <img src="./img/qian_grey.png" style="width: 0.22rem;height: 0.22rem;margin-top: -0.12rem">
-            <div style="color: #999999;font-size: 12px;margin-top: -0.08rem">红包大礼</div>
-        </div>
-        <div style="width: 33.33%">
-            <img src="./img/qianOne_grey.png" style="width: 0.22rem;height: 0.22rem;margin-top: -0.12rem">
-            <div style="color: #999999;font-size: 12px;margin-top: -0.08rem">提现</div>
-        </div>
+<!--        <div style="width: 33.33%" onclick="goRedEnvelop()">-->
+<!--            <img src="./img/qian_grey.png" style="width: 0.22rem;height: 0.22rem;margin-top: -0.12rem">-->
+<!--            <div style="color: #999999;font-size: 12px;margin-top: -0.08rem">红包大礼</div>-->
+<!--        </div>-->
+<!--        <div style="width: 33.33%">-->
+<!--            <img src="./img/qianOne_grey.png" style="width: 0.22rem;height: 0.22rem;margin-top: -0.12rem">-->
+<!--            <div style="color: #999999;font-size: 12px;margin-top: -0.08rem">提现</div>-->
+<!--        </div>-->
     </div>
 </div>
 <script src="./js/ad.js?v=10005"></script>
 <script>
     var adListIndex = 0;
     var adList = [
-
         {
             pid: '1013103', //广告位id
             templateId: 'ad-template-big', //模板script的id
@@ -277,6 +276,9 @@
     ];
     var deny_cids = []; // 被禁止的创意广告id
 
+    function goRedEnvelop () {
+    	location.href = './redEnvelop.html'
+    }
     // 开红包
     function addTurn() {
         $('.btnTwinkle').addClass('overturn')

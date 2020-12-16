@@ -30,57 +30,57 @@ body .contain .mask {
 body .contain .redbag {
   display: flex;
   align-items: flex-end;
-  /*margin-top: 12rem;*/
-  /*margin-left: 4rem;*/
-  height: 2.4rem;
+  margin-top: 6rem;
+  margin-left: 2rem;
+  height: 1.2rem;
   color: #ff3838;
   background: linear-gradient(177deg, #ff9500 0%, #ff0028 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  /*vertical-align: middle;*/
+  vertical-align: middle;
 }
 body .contain .redbag .money {
-  width: 6.2rem;
-  height: 2.4rem;
-  font-size: 2.4rem;
+  width: 3.1rem;
+  height: 1.2rem;
+  font-size: 1.2rem;
   font-family: 'my_font';
   font-weight: bold;
 }
 body .contain .redbag span {
-  width: 1.2rem;
-  font-size: 1.2rem;
+  width: 0.6rem;
+  font-size: 0.6rem;
   font-family: PingFangSC-Semibold, PingFang SC;
   font-weight: 600;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.1rem;
 }
 body .contain .btn {
-  width: 11.2rem;
-  margin-top: 3.58rem;
-  margin-left: 1.92rem;
+  width: 5.6rem;
+  margin-top: 1.74rem;
+  margin-left: 0.96rem;
 }
 body .contain #time {
-  margin-top: 0.4rem;
-  margin-left: 3.6rem;
-  height: 0.56rem;
-  font-size: 0.56rem;
+  margin-top: 0.2rem;
+  margin-left: 1.8rem;
+  height: 0.28rem;
+  font-size: 0.28rem;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #f9e7e9;
-  line-height: 0.56rem;
+  line-height: 0.28rem;
 }
 body .contain #time #Countdown {
-  height: 0.8rem;
-  font-size: 0.8rem;
+  height: 0.4rem;
+  font-size: 0.4rem;
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 500;
   color: #ffffff;
-  line-height: 0.8rem;
+  line-height: 0.4rem;
 }
 body .contain #templete_list {
-  margin-top: 1.84rem;
+  margin-top: 0.92rem;
   display: flex;
   justify-content: space-around;
-  padding: 0 0.6rem;
+  padding: 0 0.3rem;
 }
 body .contain #templete_list .list {
   display: flex;
@@ -88,28 +88,28 @@ body .contain #templete_list .list {
   flex-flow: column;
 }
 body .contain #templete_list .list .touxiang {
-  width: 1.76rem;
-  margin-bottom: 0.2rem;
+  width: 0.88rem;
+  margin-bottom: 0.1rem;
 }
 body .contain #templete_list .list .title {
-  height: 0.48rem;
-  font-size: 0.48rem;
+  height: 0.24rem;
+  font-size: 0.24rem;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #ffffff;
-  line-height: 0.48rem;
+  line-height: 0.24rem;
 }
 body .contain .share {
-  margin-top: 1.2rem;
-  margin-left: 1rem;
-  margin-bottom: 2rem;
+  margin-top: 0.6rem;
+  margin-left: 0.5rem;
+  margin-bottom: 1rem;
 }
 body .contain .share .fenxiang {
-  width: 13.12rem;
+  width: 6.56rem;
 }
 body .contain .receive {
-  width: 12.24rem;
-  height: 7.04rem;
+  width: 6.12rem;
+  height: 3.52rem;
   background: #ffffff;
   border-radius: 8px;
   position: fixed;

@@ -28,59 +28,50 @@ body .contain .mask {
   display: none;
 }
 body .contain .redbag {
-  display: flex;
-  align-items: flex-end;
-  /*margin-top: 12rem;*/
-  /*margin-left: 4rem;*/
-  height: 2.4rem;
-  color: #ff3838;
-  background: linear-gradient(177deg, #ff9500 0%, #ff0028 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /*display: flex;*/
+  /*align-items: flex-end;*/
+  /*margin-top: 2.27rem;*/
+  /*margin-left: 1.2rem;*/
+  /*height: 0.6rem;*/
+
+  /*-webkit-background-clip: text;*/
+  /*-webkit-text-fill-color: transparent;*/
   /*vertical-align: middle;*/
 }
 body .contain .redbag .money {
-  width: 6.2rem;
-  height: 2.4rem;
-  font-size: 2.4rem;
-  font-family: 'my_font';
-  font-weight: bold;
+
 }
 body .contain .redbag span {
-  width: 1.2rem;
-  font-size: 1.2rem;
-  font-family: PingFangSC-Semibold, PingFang SC;
-  font-weight: 600;
-  margin-bottom: 0.2rem;
+
 }
 body .contain .btn {
-  width: 11.2rem;
-  margin-top: 3.58rem;
-  margin-left: 1.92rem;
+  width: 2.8rem;
+  margin-top: 0.87rem;
+  margin-left: 0.48rem;
 }
 body .contain #time {
-  margin-top: 0.4rem;
-  margin-left: 3.6rem;
-  height: 0.56rem;
-  font-size: 0.56rem;
+  margin-top: 0.1rem;
+  margin-left: 0.9rem;
+  height: 0.14rem;
+  font-size: 0.14rem;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #f9e7e9;
-  line-height: 0.56rem;
+  line-height: 0.14rem;
 }
 body .contain #time #Countdown {
-  height: 0.8rem;
-  font-size: 0.8rem;
+  height: 0.2rem;
+  font-size: 0.2rem;
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 500;
   color: #ffffff;
-  line-height: 0.8rem;
+  line-height: 0.2rem;
 }
 body .contain #templete_list {
-  margin-top: 1.84rem;
+  margin-top: 0.46rem;
   display: flex;
   justify-content: space-around;
-  padding: 0 0.6rem;
+  padding: 0 0.15rem;
 }
 body .contain #templete_list .list {
   display: flex;
@@ -88,82 +79,82 @@ body .contain #templete_list .list {
   flex-flow: column;
 }
 body .contain #templete_list .list .touxiang {
-  width: 1.76rem;
-  margin-bottom: 0.2rem;
+  width: 0.44rem;
+  margin-bottom: 0.05rem;
 }
 body .contain #templete_list .list .title {
-  height: 0.48rem;
-  font-size: 0.48rem;
+  height: 0.12rem;
+  font-size: 0.12rem;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #ffffff;
-  line-height: 0.48rem;
+  line-height: 0.12rem;
 }
 body .contain .share {
-  margin-top: 1.2rem;
-  margin-left: 1rem;
-  margin-bottom: 2rem;
+  margin-top: 0.3rem;
+  margin-left: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 body .contain .share .fenxiang {
-  width: 13.12rem;
+  width: 3.28rem;
 }
 body .contain .receive {
-  width: 12.24rem;
-  height: 7.04rem;
+  width: 3.06rem;
+  height: 1.76rem;
   background: #ffffff;
   border-radius: 8px;
   position: fixed;
   z-index: 3;
-  top: 5.8rem;
+  top: 2.9rem;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
   display: none;
 }
 body .contain .receive .title {
-  height: 0.36rem;
-  font-size: 0.36rem;
+  height: 0.18rem;
+  font-size: 0.18rem;
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 500;
   color: #ff6736;
-  line-height: 0.36rem;
-  margin-top: 0.48rem;
-  margin-bottom: 0.32rem;
+  line-height: 0.18rem;
+  margin-top: 0.24rem;
+  margin-bottom: 0.16rem;
 }
 body .contain .receive .amount {
   color: #333333;
-  font-size: 0.32rem;
-  margin-bottom: 0.52rem;
+  font-size: 0.16rem;
+  margin-bottom: 0.26rem;
 }
 body .contain .receive .amount span {
-  height: 0.48rem;
-  font-size: 0.52rem;
+  height: 0.24rem;
+  font-size: 0.26rem;
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 500;
   color: #ff6736;
-  line-height: 0.48rem;
-  letter-spacing: 0.02rem;
+  line-height: 0.24rem;
+  letter-spacing: 0.01rem;
 }
 body .contain .receive .OK {
-  width: 5.48rem;
-  height: 0.96rem;
+  width: 2.74em;
+  height: 0.48rem;
   background: linear-gradient(270deg, #ff782c 0%, #ff5757 100%);
   border-radius: 8px;
-  font-size: 0.36rem;
+  font-size: 0.18rem;
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 500;
   color: #ffffff;
-  line-height: 0.96rem;
+  line-height: 0.48rem;
   letter-spacing: 1px;
-  margin-left: 0.32rem;
+  margin-left: 0.16rem;
 }
 body .contain .receive .close {
-  width: 0.76rem;
-  margin-bottom: -1.8rem;
+  width: 0.38rem;
+  margin-bottom: -0.9rem;
 }
 body .contain .invite {
   position: absolute;
-  top: -2.7rem;
+  top: -1.35rem;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
@@ -171,13 +162,13 @@ body .contain .invite {
   z-index: 3;
 }
 body .contain .invite .top {
-  width: 6.44rem;
-  margin-bottom: 0.28rem;
+  width: 3.22rem;
+  margin-bottom: 0.14rem;
 }
 body .contain .invite .yaoqing {
-  width: 6.44rem;
-  margin-bottom: 0.8rem;
+  width: 3.22rem;
+  margin-bottom: 0.4rem;
 }
 body .contain .invite .close_btn {
-  width: 0.76rem;
+  width: 0.38rem;
 }
