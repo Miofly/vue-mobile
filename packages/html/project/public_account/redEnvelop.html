@@ -2,24 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
     <title>Document</title>
-    <link rel="stylesheet" href="./css/index.css">
-    <link rel="stylesheet" href="./css/redbag1.css">
+    <link href="./css/redbagNew.css" rel="stylesheet">
     <script src="./js/jquery-1.7.2.min.js"></script>
-    <script src="./js/adaptive.js"></script>
+    <script src="./js/adaptiveNew.js"></script>
     <script src="./js/template.js"></script>
 </head>
 <body>
 <div class="contain">
-    <div style="">
-        <div style="width: 1.4rem;font-size: 60px;font-family: 'my_font';letter-spacing: 1px;transform: scaleX(0.9);
-        background: linear-gradient(177deg, #FF9500 0%, #FF0028 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">
-            99.80
-        </div>
-        <span style="width: 0.3rem;font-size: 0.3rem;font-family: 'my_font';font-weight: 600;margin-bottom: 0.05rem;background: linear-gradient(177deg, #FF9500 0%, #FF0028 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">元</span>
+    <!-- 遮罩层 -->
+    <div class="mask"></div>
+    <div class="redbag">
+        <div class="money">99.80</div>
+        <span>元</span>
     </div>
-    <img class="btn" src="./img/lingqu@2x.png" alt="">
+    <img alt="" class="btn" src="./img/lingqu@2x.png">
 
     <div id="time">
         红包失效倒计时:&nbsp;&nbsp;<span id="Countdown">23:59:59</span>
@@ -32,67 +31,67 @@
         </div> -->
     </div>
     <div class="share">
-        <img class="fenxiang" src="./img/fenxiang@2x.png" alt="">
+        <img alt="" class="fenxiang" src="./img/fenxiang@2x.png">
     </div>
 
     <div class="receive">
         <div class="title">领取成功</div>
         <div class="amount"><span>98.00</span>元已存入余额</div>
         <div class="OK">好的</div>
-        <img class="close" src="./img/x@2x.png" alt="">
+        <img alt="" class="close" src="./img/x@2x.png">
 
     </div>
 
     <div class="invite">
-        <img class="top" src="./img/tou@2x.png" alt="">
-        <img class="yaoqing" src="./img/yaoqing@2x.png" alt="">
-        <img class = 'close_btn' src="./img/x@2x.png" alt="">
+        <img alt="" class="top" src="./img/tou@2x.png">
+        <img alt="" class="yaoqing" src="./img/yaoqing@2x.png">
+        <img alt="" class='close_btn' src="./img/x@2x.png">
     </div>
 
 </div>
-<!--底部栏-->
+
 <div style="position: fixed;bottom: 0;width: 100vw;text-align: center;box-shadow: 0px -2px 6px 0px rgba(0, 0, 0, 0.04);background: #FFFFFF;z-index: 9999">
-    <div style="display: flex;justify-content: space-around;height: 0.51rem;width: 100vw;">
-        <div style="width: 33.33%;" onclick="goIndex()">
-            <img src="./img/huo_grey.png" style="width: 0.22rem;height: 0.22rem;margin-top: -0.12rem">
-            <div style="color: ;font-size: 12px;margin-top: -0.08rem">今日热点</div>
+    <div style="display: flex;justify-content: space-around;height: 1.02rem;width: 100vw;">
+        <div style="width: 33.33%;margin-top: 0.12rem" onclick="goIndex()">
+            <img src="./img/huo_grey.png" style="width: 0.44rem;height: 0.44rem;">
+            <div style="color: #999999;font-size: 12px;">今日热点</div>
         </div>
-        <div style="width: 33.33%" >
-            <img src="./img/qian.png" style="width: 0.22rem;height: 0.22rem;margin-top: -0.12rem">
-            <div style="color: rgba(255, 114, 45, 1);font-size: 12px;margin-top: -0.08rem">红包大礼</div>
+        <div style="width: 33.33%;margin-top: 0.12rem">
+            <img src="./img/qian.png" style="width: 0.44rem;height: 0.44rem;">
+            <div style="color: rgba(255, 114, 45, 1);font-size: 12px;">红包大礼</div>
         </div>
-        <div style="width: 33.33%">
-            <img src="./img/qianOne_grey.png" style="width: 0.22rem;height: 0.22rem;margin-top: -0.12rem">
-            <div style="color: #999999;font-size: 12px;margin-top: -0.08rem">提现</div>
+        <div style="width: 33.33%;margin-top: 0.12rem">
+            <img src="./img/qianOne_grey.png" style="width: 0.44rem;height: 0.44rem;">
+            <div style="color: #999999;font-size: 12px">提现</div>
         </div>
     </div>
 </div>
-<script type="text/html" id="friend_list">
+<script id="friend_list" type="text/html">
     {{each arr}}
-    <div class = "list">
+    <div class="list">
         <img class="touxiang" src={{$value.src}} alt="">
-        <div class="title">{{$value.title}}</div>
+        <div class="title">{{ $value.title }}</div>
     </div>
     {{/each}}
+
 </script>
 <script>
     function goIndex () {
         location.href = './index.html'
     }
-
     //发送请求返回的数组
     var data = {
         arr: [
-            { src: './img/zhuli@2x.png', title:'111' },
-            { src: './img/zhuli@2x.png', title:'222' },
-            { src: './img/zhuli-1@2x.png', title:'待助力' },
-            { src: './img/zhuli-1@2x.png', title:'待助力' },
-            { src: './img/zhuli-1@2x.png', title:'待助力' },
+            {src: './img/zhuli@2x.png', title: '111'},
+            {src: './img/zhuli@2x.png', title: '222'},
+            {src: './img/zhuli-1@2x.png', title: '待助力'},
+            {src: './img/zhuli-1@2x.png', title: '待助力'},
+            {src: './img/zhuli-1@2x.png', title: '待助力'},
 
         ]
     }
 
-    var html = template('friend_list',data);
+    var html = template('friend_list', data);
     var container = document.querySelector('#templete_list');
     container.innerHTML = html;
 
@@ -116,6 +115,7 @@
         // console.log(hour + ":" + minute + ":" + second);
         $("#Countdown").html(hour + ":" + minute + ":" + second);
     }
+
     function startcountDown(time) {
         var set = setInterval(function () {
             time--;
@@ -130,31 +130,30 @@
 
     $('.money').text('99.99') //后台返回钱数
 
-    $('.btn').click(function(){
+    $('.btn').click(function () {
         $('.mask').show();
         $('.receive').show();
 
     })
 
-    $('.OK').click(function(){
+    $('.OK').click(function () {
         $('.receive').hide();
         $('.mask').hide();
     })
-    $('.close').click(function(){
+    $('.close').click(function () {
         $('.receive').hide();
         $('.mask').hide();
     })
 
-    $('.share').click(function(){
+    $('.share').click(function () {
         $('.mask').show();
         $('.invite').show();
     })
 
-    $('.close_btn').click(function(){
+    $('.close_btn').click(function () {
         $('.mask').hide();
         $('.invite').hide();
     })
-
 
 
 </script>

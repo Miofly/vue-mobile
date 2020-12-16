@@ -51,18 +51,18 @@
 </div>
 
 <div style="position: fixed;bottom: 0;width: 100vw;text-align: center;box-shadow: 0px -2px 6px 0px rgba(0, 0, 0, 0.04);background: #FFFFFF;z-index: 9999">
-    <div style="display: flex;justify-content: space-around;height: 7vh;width: 100vw;">
-        <div style="width: 33.33%;">
-            <img src="./img/huo.png" style="width: 5vw;height: 5vw;margin-top:1vw">
-            <div style="color: rgba(255, 114, 45, 1);font-size: 12px;margin-top: -0.08rem">今日热点</div>
+    <div style="display: flex;justify-content: space-around;height: 1.02rem;width: 100vw;">
+        <div style="width: 33.33%;margin-top: 0.12rem" onclick="goIndex()">
+            <img src="./img/huo_grey.png" style="width: 0.44rem;height: 0.44rem;">
+            <div style="color: rgba(255, 114, 45, 1);font-size: 12px;">今日热点</div>
         </div>
-        <div style="width: 33.33%" onclick="goRedEnvelop()">
-            <img src="./img/qian_grey.png" style="width: 0.22rem;height: 0.22rem;margin-top: -0.12rem">
-            <div style="color: #999999;font-size: 12px;margin-top: -0.08rem">红包大礼</div>
+        <div style="width: 33.33%;margin-top: 0.12rem">
+            <img src="./img/qian.png" style="width: 0.44rem;height: 0.44rem;">
+            <div style="color: #999999;font-size: 12px;">红包大礼</div>
         </div>
-        <div style="width: 33.33%">
-            <img src="./img/qianOne_grey.png" style="width: 0.22rem;height: 0.22rem;margin-top: -0.12rem">
-            <div style="color: #999999;font-size: 12px;margin-top: -0.08rem">提现</div>
+        <div style="width: 33.33%;margin-top: 0.12rem">
+            <img src="./img/qianOne_grey.png" style="width: 0.44rem;height: 0.44rem;">
+            <div style="color: #999999;font-size: 12px">提现</div>
         </div>
     </div>
 </div>
@@ -76,7 +76,9 @@
 
 </script>
 <script>
-
+    function goIndex () {
+    	location.href = './index.html'
+    }
     //发送请求返回的数组
     var data = {
         arr: [

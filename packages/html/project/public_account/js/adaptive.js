@@ -56,7 +56,7 @@ var adaptive = {};
 
     var tid;
     lib.desinWidth = 375;
-    lib.baseFont = 28;
+    lib.baseFont = 14;
     lib.reflow = function () {
         docEl.clientWidth
     };
@@ -116,7 +116,7 @@ if (typeof module != 'undefined' && module.exports) {
     window.adaptive = adaptive
 }
 window['adaptive'].desinWidth = 375;
-window['adaptive'].baseFont = 28;
+window['adaptive'].baseFont = 14;
 window['adaptive'].maxWidth = 375;
 window['adaptive'].scaleType = 1;
 window['adaptive'].init();
