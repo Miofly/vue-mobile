@@ -10,7 +10,7 @@
     <script src="./js/jquery-1.7.2.min.js" type="text/javascript"></script>
     <script src="./js/adaptive.js" type="text/javascript"></script>
     <script src="./js/common.js" type="text/javascript"></script>
-<!--    <script src="./js/mescroll.min.js" type="text/javascript"></script>-->
+    <script src="./js/mescroll.min.js" type="text/javascript"></script>
     <script src="./js/EventEmitter.min.js" type="text/javascript"></script>
     <script src="./js/art-template.js" type="text/javascript"></script>
     <script src="./js/jquery.qrcode.min.js" type="text/javascript"></script>
@@ -161,7 +161,6 @@
             <div class="OK">好的</div>
             <img alt="" class="close" src="./img/x@2x.png">
         </div>
-
     </div>
     <!--海报-->
     <div id="poster" style="display: block;text-align: center;">
@@ -277,7 +276,7 @@
 
     setTimeout(() => {
         html2canvas(document.querySelector('#sharePoster')).then(function (canvas) {
-            $('#sharePoster').remove()    //移除页面上的该元素
+            // $('#sharePoster').remove()    //移除页面上的该元素
             // $('#canvasPoster').append(canvas);    //像页面中添加转为canvas之后的元素
             // var canvas = $('#qrcode').find('canvas').get(0);
             $('#canvasPoster').attr('src', canvas.toDataURL('image/jpg'));
