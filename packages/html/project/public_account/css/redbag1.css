@@ -1,19 +1,16 @@
-* {
-  margin: 0;
-  padding: 0;
-}
 @font-face {
   font-family: 'my_font';
   src: url('../font/DINNextLTPro-Bold\(1\).ttf');
 }
-body {
+
+body .contain {
   width: 100%;
   background-image: url(../img/beijing@2x.png);
   background-repeat: no-repeat;
   background-size: 100% auto;
-}
-body .contain {
   position: relative;
+  padding-bottom: 0.4rem;
+
 }
 body .contain .mask {
   position: fixed;
@@ -28,21 +25,30 @@ body .contain .mask {
   display: none;
 }
 body .contain .redbag {
-  /*display: flex;*/
-  /*align-items: flex-end;*/
-  /*margin-top: 2.27rem;*/
-  /*margin-left: 1.2rem;*/
-  /*height: 0.6rem;*/
-
-  /*-webkit-background-clip: text;*/
-  /*-webkit-text-fill-color: transparent;*/
-  /*vertical-align: middle;*/
+  display: flex;
+  align-items: flex-end;
+  padding-top: 2.76rem;
+  margin-left: 1rem;
+  height: 0.6rem;
+  color: #ff3838;
+  background: linear-gradient(177deg, #ff9500 0%, #ff0028 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  vertical-align: middle;
 }
 body .contain .redbag .money {
-
+  width: 1.55rem;
+  height: 0.6rem;
+  font-size: 0.6rem;
+  font-family: 'my_font';
+  font-weight: bold;
 }
 body .contain .redbag span {
-
+  width: 0.3rem;
+  font-size: 0.3rem;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  margin-bottom: 0.05rem;
 }
 body .contain .btn {
   width: 2.8rem;
@@ -152,23 +158,4 @@ body .contain .receive .close {
   width: 0.38rem;
   margin-bottom: -0.9rem;
 }
-body .contain .invite {
-  position: absolute;
-  top: -1.35rem;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  display: none;
-  z-index: 3;
-}
-body .contain .invite .top {
-  width: 3.22rem;
-  margin-bottom: 0.14rem;
-}
-body .contain .invite .yaoqing {
-  width: 3.22rem;
-  margin-bottom: 0.4rem;
-}
-body .contain .invite .close_btn {
-  width: 0.38rem;
-}
+

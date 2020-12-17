@@ -8,6 +8,7 @@ var adaptive = {};
 
     function setViewport() {
         var isIPhone = /iphone/gi.test(win.navigator.appVersion);
+        console.log(isIPhone)
         if (lib.scaleType === 2 && isIPhone || lib.scaleType === 3) {
             dpr = devicePixelRatio
         }

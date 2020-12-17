@@ -4,17 +4,18 @@
     <meta charset="UTF-8">
     <title>今日热点</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <script src="./js/adaptive.js" type="text/javascript"></script>
     <link href="./css/mescroll.min.css" rel="stylesheet">
     <link href="./css/index.css" rel="stylesheet" type="text/css"/>
     <link href="./css/redbag1.css" rel="stylesheet" type="text/css"/>
     <script src="./js/jquery-1.7.2.min.js" type="text/javascript"></script>
-    <script src="./js/adaptive.js" type="text/javascript"></script>
     <script src="./js/common.js" type="text/javascript"></script>
     <script src="./js/mescroll.min.js" type="text/javascript"></script>
     <script src="./js/EventEmitter.min.js" type="text/javascript"></script>
     <script src="./js/art-template.js" type="text/javascript"></script>
     <script src="./js/jquery.qrcode.min.js" type="text/javascript"></script>
-    <script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.js"></script>
+    <script src="./js/canvas.js"></script>
+    <script src="./js/ewm.js"></script>
 </head>
 <body>
 <div id="indexPgae" style="display: none">
@@ -127,7 +128,7 @@
     </div>
 </div>
 
-<div id="redEnvelopePage" style="display: block">
+<div id="redEnvelopePage" style="display: none;background-color: #ff5959">
     <div id="redEnvelopeTwo" style="display: none">
         <div class="mio-modal-mask" style="display: block"></div>
         <div style="position: fixed;top: 50%;left: 50%;transform:translate(-50%,-50%);z-index: 999;background: url('./img/hbbj.png');background-repeat: no-repeat;background-size: 100%;background-position: center;width: 2.66rem;height: 3.42rem;">
@@ -162,11 +163,12 @@
             <img alt="" class="close" src="./img/x@2x.png">
         </div>
     </div>
+    <div id="newSharePoster" style="opacity: 0;position: fixed;top: 8%;z-index: 0"></div>
     <!--海报-->
-    <div id="poster" style="display: block;text-align: center;">
-        <div class="mio-modal-mask" style="display: block"></div>
-        <div style="position: fixed;top: 40%;left: 50%;transform:translate(-50%,-50%);z-index: 999;width: 2.66rem;height: 3.42rem;">
-            <div style="letter-spacing: 1px;position: fixed;left: 50%;width: 3.12rem;height: 0.41rem;top: -0.5rem;margin-left: -1.56rem;color: rgba(255, 226, 161, 1);font-size: 20px;">
+    <div id="poster" style="opacity: 0;text-align: center;z-index: 1">
+        <div id="posterMask" class="mio-modal-mask" style="z-index:1;display: block"></div>
+        <div style="position: fixed;top: 50%;left: 50%;transform:translate(-50%,-50%);z-index: 1;width: 3.22rem;height: 4.98rem;">
+            <div style="letter-spacing: 1px;position: fixed;left: 50%;width: 3.12rem;height: 0.41rem;top: -0.4rem;margin-left: -1.56rem;color: rgba(255, 226, 161, 1);font-size: 20px;">
                 <img alt="" class="top" src="./img/tou@2x.png">
             </div>
             <!---->
@@ -175,21 +177,20 @@
                     <img alt="" class="yaoqing" src="./img/yaoqing@2x.png" style="width: 3.12rem;height: 4.08rem">
                 </div>
                 <div style="position: fixed;z-index: 999;left: 50%;width: 1rem;height: 1rem;top: 2.48rem;margin-left: -0.48rem;background-color: white">
-                    <div id="qrcode" style="margin-top: 0.05rem"></div>
+                    <div id="qrcode" style="display: none;margin-top: 0.05rem"></div>
+                    <img id="imgOne" style="margin-top: 0.05rem"/>
                 </div>
             </div>
-
-            <img id="canvasPoster" style="position: fixed;left: 50%;width: 3.22rem;height: 3.08rem;top: 0.2rem;margin-left: -1.61rem;"/>
-
-            <div style="position: absolute;left: 50%;width: 0.38rem;height: 0.38rem;margin-left: -0.19rem;bottom: -1.38rem;z-index:99999">
+            <div style="position: absolute;left: 50%;width: 0.38rem;height: 0.38rem;margin-left: -0.19rem;bottom: -0.1rem;z-index:99999">
                 <img onclick="hideSix()" src="./img/close.png" style="color: white;width: 0.38rem;height: 0.38rem;font-weight: bolder;"/>
             </div>
         </div>
     </div>
     <!--提现失败-->
-    <div id="withdrawalFailed" style="display: none;text-align: center;">
+    <div id="withdrawalFailed" style="display: none;text-align: center;z-index: 5">
         <div class="mio-modal-mask" style="display: block"></div>
-        <div style="position: fixed;top: 40%;left: 50%;transform:translate(-50%,-50%);z-index: 999;background: url('./img/dt.png');background-repeat: no-repeat;background-size: 100%;background-position: center;width: 2.66rem;height: 3.42rem;">
+        <div style="position: fixed;top: 40%;left: 50%;transform:translate(-50%,-50%);z-index: 999;background: url('./img/dt.png');background-repeat: no-repeat;background-size: 100%;
+        background-position: center;width: 2.66rem;height: 3.42rem;">
             <div style="letter-spacing: 1px;position: fixed;left: 50%;width: 0.86rem;height: 0.86rem;top: 0.2rem;margin-left: -0.43rem;color: rgba(255, 226, 161, 1);font-size: 20px;">
                 提现失败
             </div>
@@ -212,7 +213,7 @@
         </div>
     </div>
     <!--提现成功-->
-    <div id="withdrawalSuccess" style="display: none;text-align: center;">
+    <div id="withdrawalSuccess" style="display: none;text-align: center;z-index: 5">
         <div class="mio-modal-mask" style="display: block"></div>
         <div style="position: fixed;top: 40%;left: 50%;transform:translate(-50%,-50%);z-index: 999;width: 3.06rem;height: 1.76rem;background-color: white;border-radius: 8px">
             <div style="letter-spacing: 1px;position: fixed;left: 50%;width: 0.86rem;height: 0.86rem;top: 0.2rem;margin-left: -0.43rem;color: rgba(255, 103, 54, 1);font-size: 18px;">
@@ -231,11 +232,43 @@
             </div>
         </div>
     </div>
-<!--    <div id="qrcode" style="display: none;width: 0.9rem;height: 0.9rem;top: 0.2rem;margin-left: -1.61rem;color: rgba(255, 255, 255, 1);font-size: 16px;"></div>-->
+    <!--    <div id="qrcode" style="display: none;width: 0.9rem;height: 0.9rem;top: 0.2rem;margin-left: -1.61rem;color: rgba(255, 255, 255, 1);font-size: 16px;"></div>-->
 </div>
 
-<div id="withDrawPage">
+<div id="withDrawPage" style="display: block;background-color: #F7F2F2;height: 100%">
+    <div style="position: relative">
+        <img src="./img/txbg.png" style="width: 100vw;height: 2.0rem" style="position: absolute;top: 0;left: 0">
+        <div style="position: absolute;top: 0.3rem;font-size: 16px;letter-spacing: 1px;color: white;left: 0.25rem">我得余额</div>
+        <div id="sumMoney" style="position: absolute;top: 0.52rem;left: 0.25rem;font-size: 60px;font-family: DINAlternate-Bold, DINAlternate;font-weight: bold;color: #FFFFFF;line-height: 60px;letter-spacing: 2px;"></div>
+        <div style="padding: 0.14rem 0.2rem;position: absolute;top: 1.46rem;left: 5%;width: 90%;height: 1.97rem;background: #FFFFFF;box-shadow: 0px 4px 10px 0px rgba(88, 21, 0, 0.1);border-radius: 8px;">
+            <div style="color: #333333;font-size: 16px">提现专区</div>
+            <div style="">
+                <div onclick="hundredChange()">
+                    <div style="position: absolute;top: 0.5rem;left: 0.21rem;width: 40%;height: 0.59rem;line-height: 0.59rem;text-align: center;border-radius: 4px;border: 1px solid #DEDEDE;">
+                        100
+                    </div>
+                    <img id="xzkOne" src="./img/xzk.png" style="position: absolute;top: 0.5rem;left: 0.21rem;width: 40%;height: 0.59rem;">
+                </div>
 
+                <div onclick="twoHundredChange()">
+                    <div style="position: absolute;top: 0.5rem;right: 0.21rem;width: 40%;height: 0.59rem;line-height: 0.59rem;text-align: center;border-radius: 4px;border: 1px solid #DEDEDE;">
+                        200
+                    </div>
+                    <img id="xzkTwo" src="./img/xzk.png" style="display: none;position: absolute;top: 0.5rem;right: 0.21rem;width: 40%;height: 0.59rem;">
+                </div>
+            </div>
+            <div onclick="partake()" style="border-radius: 8px;line-height: 0.48rem;color: #FFFFFF;font-size: 18px;background: linear-gradient(270deg, #FF8E4D 0%, #FF6565 100%);
+        position: absolute;left: 5%;width: 90%;height: 0.48rem;top: 1.29rem;text-align: center;">
+                提现
+            </div>
+        </div>
+    </div>
+    <div style="color: #333333;margin-top: 1.7rem;margin-left: 0.22rem;">
+        <div style="font-size: 16px;font-weight: bolder">提现需知</div>
+        <div style="font-size: 14px;margin-top: 0.16rem">1. 余额达到提现要求</div>
+        <div style="font-size: 14px;margin-top: 0.14rem">2. 邀请好友须达到200人</div>
+        <div style="font-size: 14px;margin-top: 0.14rem">3. 转发UV须达到2000个</div>
+    </div>
 </div>
 <!--底部栏-->
 <div style="position: fixed;bottom: 0;width: 100vw;text-align: center;box-shadow: 0px -2px 6px 0px rgba(0, 0, 0, 0.04);background: #FFFFFF;z-index: 9999">
@@ -261,27 +294,37 @@
         remainTime: '86399',
         amount: randomNumDecimal(97, 99),
         peopleList: [
-            {src: './img/zhuli@2x.png', title: '111'},
+            {src: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg', title: '111'},
+            {src: './img/zhuli@2x.png', title: '222'},
+            {src: './img/zhuli@2x.png', title: '222'},
+            // {src: './img/zhuli@2x.png', title: '222'},
             {src: './img/zhuli@2x.png', title: '222'},
         ],
         url: 'http://www.baidu.com'
     }
+
+    var imgLists = [
+        {src: './img/haibao.png', left: 0, top: 0, width: 644, height: 876},
+        {src: $('#imgOne').attr('src'), left: 232, top: 515, width: 180, height: 180},
+    ]
 
     $('#qrcode').qrcode({
         text: obj.url,
         width: 90,
         height: 90
     });
+    var canvas = $('#qrcode').find('canvas').get(0);
+    $('#imgOne').attr('src', canvas.toDataURL('image/jpg'));
 
+    var canvas = document.createElement('canvas')
+    canvas.width = 644;
+    canvas.height = 876; // 这是canvas的宽高
+    var ctx = canvas.getContext('2d')
+    ctx.fillStyle="black";
+    ctx.rect(0, 0, 644, 876); // 这是图片的宽高
+    ctx.fill();
 
-    setTimeout(() => {
-        html2canvas(document.querySelector('#sharePoster')).then(function (canvas) {
-            // $('#sharePoster').remove()    //移除页面上的该元素
-            // $('#canvasPoster').append(canvas);    //像页面中添加转为canvas之后的元素
-            // var canvas = $('#qrcode').find('canvas').get(0);
-            $('#canvasPoster').attr('src', canvas.toDataURL('image/jpg'));
-        })
-    }, 1)
+    drawing(0, $('#newSharePoster'), false, 100);
 
     var num = 5 - Number(obj.peopleList.length)
     $('#num').text(num)
@@ -300,6 +343,7 @@
     }
 
     $('.money').text(obj.amount) //后台返回钱数
+    $('#sumMoney').text(obj.amount) //后台返回钱数
 
 
     var html = ''
@@ -310,15 +354,25 @@
 
     $.each(obj.peopleList, function (key) {
         html1 += '<div class="list" style="margin: 0px 0.1rem 0.1rem 0.1rem">' +
-            '<img class="touxiang" style="width: 0.44rem;height: 0.44rem" src='+ obj.peopleList[key].src +' alt="">' +
+            '<img class="touxiang" style="width: 0.44rem;height: 0.44rem;border-radius: 50%" src='+ obj.peopleList[key].src +' alt="">' +
             '<div class="title" style="font-size: 14px;color: white">' +  obj.peopleList[key].title + '</div></div>'
     })
     $('#share_people').append(html)
     $('#share_peopleTwo').append(html1)
 
+    function hundredChange () {
+        $('#xzkOne').show()
+        $('#xzkTwo').hide()
+    }
+
+    function twoHundredChange () {
+        $('#xzkOne').hide()
+        $('#xzkTwo').show()
+    }
+
     function goRedEnvelop () {
-    	$('#indexPgae').hide()
-    	$('#redEnvelopePage').show()
+        $('#indexPgae').hide()
+        $('#redEnvelopePage').show()
     }
     // 开红包
     function addTurn() {
@@ -343,6 +397,8 @@
     $('.btn').click(function () {
         if (num !== 0) {
             $('#withdrawalFailed').show()
+        } else {
+            $('#withdrawalSuccess').show()
         }
     })
 
@@ -528,7 +584,9 @@
     }
 
     function hideSix () {
-        $('#poster').hide()
+        $('.contain').css('zIndex', '3')
+        $('#poster').css('opacity', '0')
+        $('#newSharePoster').css('zIndex', '0')
     }
 
     $('.OK').click(function () {
@@ -541,11 +599,15 @@
     })
 
     $('.share').click(function () {
-        $('#poster').show()
+        $('.contain').css('zIndex', '0')
+        $('#poster').css('opacity', '1')
+        $('#newSharePoster').css('zIndex', '88')
     })
 
     function partake () {
-        $('#poster').show()
+        $('.contain').css('zIndex', '0')
+        $('#poster').css('opacity', '1')
+        $('#newSharePoster').css('zIndex', '88')
         hideFour()
     }
 

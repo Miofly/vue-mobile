@@ -10,25 +10,16 @@ body .contain {
   background-size: 100% auto;
   position: relative;
   padding-bottom: 0.4rem;
+  text-align: center;
+  z-index: 3;
 
-}
-body .contain .mask {
-  position: fixed;
-  left: 0;
-  top: 0;
-  opacity: 0.7;
-  width: 100%;
-  height: 100%;
-  background: #000;
-  z-index: 2;
-  pointer-events: none;
-  display: none;
 }
 body .contain .redbag {
   display: flex;
   align-items: flex-end;
+  justify-content: center;
   padding-top: 2.76rem;
-  margin-left: 1rem;
+  /*margin-left: 1rem;*/
   height: 0.6rem;
   color: #ff3838;
   background: linear-gradient(177deg, #ff9500 0%, #ff0028 100%);
@@ -53,11 +44,11 @@ body .contain .redbag span {
 body .contain .btn {
   width: 2.8rem;
   margin-top: 0.87rem;
-  margin-left: 0.48rem;
+  /*margin-left: 0.48rem;*/
 }
 body .contain #time {
   margin-top: 0.1rem;
-  margin-left: 0.9rem;
+  /*margin-left: 0.9rem;*/
   height: 0.14rem;
   font-size: 0.14rem;
   font-family: PingFangSC-Regular, PingFang SC;
@@ -74,7 +65,7 @@ body .contain #time #Countdown {
   line-height: 0.2rem;
 }
 body .contain #share_people {
-  margin-top: 0.46rem;
+  margin-top: 0.56rem;
   display: flex;
   justify-content: space-around;
   padding: 0 0.15rem;
@@ -86,6 +77,8 @@ body .contain #share_people .list {
 }
 body .contain #share_people .list .touxiang {
   width: 0.44rem;
+  height: 0.44rem;
+  border-radius: 50%;
   margin-bottom: 0.05rem;
 }
 body .contain #share_people .list .title {
@@ -98,7 +91,7 @@ body .contain #share_people .list .title {
 }
 body .contain .share {
   margin-top: 0.3rem;
-  margin-left: 0.25rem;
+  /*margin-left: 0.25rem;*/
   margin-bottom: 0.5rem;
 }
 body .contain .share .fenxiang {
@@ -159,3 +152,17 @@ body .contain .receive .close {
   margin-bottom: -0.9rem;
 }
 
+/*iPhone6 Plus 和iPhone8 Plus*/
+@media only screen
+and (device-width : 414px)
+and (device-height : 736px)
+and (-webkit-device-pixel-ratio : 3) {
+  body .contain .redbag{
+    padding-top: 3.02rem;
+  }
+  body .contain .btn {
+    width: 2.8rem;
+    margin-top: 1rem;
+    /*margin-left: 0.48rem;*/
+  }
+}
