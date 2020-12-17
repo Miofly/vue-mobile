@@ -128,7 +128,7 @@
     </div>
 </div>
 
-<div id="redEnvelopePage" style="display: none;background-color: #ff5959">
+<div id="redEnvelopePage" style="display: block;background-color: #ff5959">
     <div id="redEnvelopeTwo" style="display: none">
         <div class="mio-modal-mask" style="display: block"></div>
         <div style="position: fixed;top: 50%;left: 50%;transform:translate(-50%,-50%);z-index: 999;background: url('./img/hbbj.png');background-repeat: no-repeat;background-size: 100%;background-position: center;width: 2.66rem;height: 3.42rem;">
@@ -235,9 +235,9 @@
     <!--    <div id="qrcode" style="display: none;width: 0.9rem;height: 0.9rem;top: 0.2rem;margin-left: -1.61rem;color: rgba(255, 255, 255, 1);font-size: 16px;"></div>-->
 </div>
 
-<div id="withDrawPage" style="display: block;background-color: #F7F2F2;height: 100%">
+<div id="withDrawPage" style="display: none;background-color: #F7F2F2;height: 100%">
     <div style="position: relative">
-        <img src="./img/txbg.png" style="width: 100vw;height: 2.0rem" style="position: absolute;top: 0;left: 0">
+        <img src="./img/txbg.png" style="width: 100vw;height: 2.0rem;">
         <div style="position: absolute;top: 0.3rem;font-size: 16px;letter-spacing: 1px;color: white;left: 0.25rem">我得余额</div>
         <div id="sumMoney" style="position: absolute;top: 0.52rem;left: 0.25rem;font-size: 60px;font-family: DINAlternate-Bold, DINAlternate;font-weight: bold;color: #FFFFFF;line-height: 60px;letter-spacing: 2px;"></div>
         <div style="padding: 0.14rem 0.2rem;position: absolute;top: 1.46rem;left: 5%;width: 90%;height: 1.97rem;background: #FFFFFF;box-shadow: 0px 4px 10px 0px rgba(88, 21, 0, 0.1);border-radius: 8px;">
@@ -289,6 +289,9 @@
 </div>
 <script src="./js/ad.js?v=10005"></script>
 <script>
+    // if (/iphone/gi.test(window.navigator.appVersion)) {
+        // $('.redbag').css('-webkit-text-fill-color', 'linear-gradient(177deg, #ff9500 0%, #ff0028 100%)!important')
+    // }
     var obj = {
         isFirst: false,
         remainTime: '86399',
@@ -303,18 +306,19 @@
         url: 'http://www.baidu.com'
     }
 
-    var imgLists = [
-        {src: './img/haibao.png', left: 0, top: 0, width: 644, height: 876},
-        {src: $('#imgOne').attr('src'), left: 232, top: 515, width: 180, height: 180},
-    ]
-
     $('#qrcode').qrcode({
         text: obj.url,
         width: 90,
         height: 90
     });
-    var canvas = $('#qrcode').find('canvas').get(0);
-    $('#imgOne').attr('src', canvas.toDataURL('image/jpg'));
+
+    var canvasNew = $('#qrcode').find('canvas').get(0);
+    $('#imgOne').attr('src', canvasNew.toDataURL('image/jpg'));
+
+    var imgLists = [
+        {src: './img/haibao.png', left: 0, top: 0, width: 644, height: 876},
+        {src: $('#imgOne').attr('src'), left: 232, top: 515, width: 180, height: 180},
+    ]
 
     var canvas = document.createElement('canvas')
     canvas.width = 644;
