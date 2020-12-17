@@ -272,14 +272,14 @@ function setListData(curPageData, page) {
         var pd = curPageData[i];
         var str = '<div style="display: flex;justify-content: space-between;height: 0.93rem;margin-top: 0.12rem;">\n' +
             '            <div style="width: 65%;">\n' +
-            '                <div style="font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.22rem;" class="line-two">' + pd.abstractContent + '</div>\n' +
+            '                <div style="font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.22rem;" class="line-two">' + pd.title + '</div>\n' +
             '                <div style="display: flex;justify-content: space-between;margin-top: 0.14rem">\n' +
             '                    <span style="color: rgba(255, 66, 55, 1);font-size: 14px;"><img src="./img/xhb.png" style="margin-top: -0.02rem;margin-right: 0.03rem;width: 0.14rem;height: 0.14rem"><span>分享好友得1元红包</span></span>\n' +
             '                    <img src="./img/fxzq.png" style="height: 0.17rem;">\n' +
             '                </div>\n' +
             '            </div>\n' +
             '            <div style="width: 1rem;height: 0.8rem;padding-right: 0.00rem;line-height: 0.7rem">\n' +
-            '                <img src="' + pd.imageURL + '"  style="height: 0.8rem;border-radius: 4px;">\n' +
+            '                <img src="'+ pd.cover[0].path +'"  style="height: 0.8rem;border-radius: 4px;">\n' +
             '            </div>\n' +
             '        </div><div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>';
         var liDom = document.createElement("div");
@@ -291,10 +291,10 @@ function setListData(curPageData, page) {
 
 /*联网加载列表数据  page = {num:1, size:10}; num:当前页 从1开始, size:每页数据条数 */
 function getListData(page) {
-    commonGet('http://192.168.11.149:8686/mock-api/v1/articles?page=' + page.num + '&limit=' + page.size + '',
+    commonGet('/articles?page=' + page.num + '&limit=' + page.size + '',
         function (res) {
-            var data = res.data.items
-            var total = res.data.total
+            var data = res.data
+            var total = res.meta.total
             setListData(data, page);
 
             if (trueIndex == 0) {

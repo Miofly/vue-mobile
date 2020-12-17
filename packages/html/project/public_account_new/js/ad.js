@@ -271,7 +271,7 @@ var mescroll = new MeScroll("mescroll", {
         use: false
     },
     up: {
-        page: {size: 40},//每次加载1条数据,模拟loadFull
+        page: {num:0, size:5},//每次加载1条数据,模拟loadFull
         callback: getListData, //上拉回调,此处可简写; 相当于 callback: function (page) { getListData(page); }
         isBounce: false, //此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
         clearEmptyId: "dataList", //1.下拉刷新时会自动先清空此列表,再加入数据; 2.无任何数据时会在此列表自动提示空
@@ -287,16 +287,16 @@ function setListData(curPageData, page) {
     var listDom = document.getElementById("dataList");
     for (var i = 0; i < curPageData.length; i++) {
         var pd = curPageData[i];
-        var str = '<div style="display: flex;justify-content: space-around;height: 0.93rem;margin-top: 0.12rem">\n' +
+        var str = '<div style="display: flex;justify-content: space-around;height: 0.93rem;margin-top: 0.12rem" onclick="test(' + pd.id + ')">\n' +
             '            <div style="width: 65%;padding-left: 0.03rem;">\n' +
-            '                <div style="font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.22rem;" class="line-two">' + pd.abstractContent + '</div>\n' +
+            '                <div style="font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.22rem;" class="line-two">' + pd.title + '</div>\n' +
             '                <div style="display: flex;justify-content: space-between;margin-top: 0.14rem">\n' +
             '                    <span style="color: rgba(255, 66, 55, 1);font-size: 14px;"><img src="./img/xhb.png" style="margin-top: -0.02rem;margin-right: 0.03rem;width: 0.14rem;height: 0.14rem"><span>分享好友得1元红包</span></span>\n' +
             '                    <img src="./img/fxzq.png" style="height: 0.17rem;">\n' +
             '                </div>\n' +
             '            </div>\n' +
             '            <div style="width: 1rem;height: 0.8rem;padding-right: 0.00rem;line-height: 0.7rem">\n' +
-            '                <img src="'+ pd.imageURL +'"  style="height: 0.8rem;border-radius: 4px;">\n' +
+            '                <img src="'+ pd.cover[0].path +'"  style="height: 0.8rem;border-radius: 4px;">\n' +
             '            </div>\n' +
             '        </div><div style="height: 1px;background: #EEEEEE;width: 94vw;margin-left: 3vw"></div>';
         var liDom = document.createElement("div");
@@ -306,12 +306,16 @@ function setListData(curPageData, page) {
     }
 }
 
+function test (id) {
+	location.href = 'news_info.html?id='+ id +'&from_user_id=2'
+}
+
 /*联网加载列表数据  page = {num:1, size:10}; num:当前页 从1开始, size:每页数据条数 */
 function getListData(page) {
-    commonGet('http://192.168.11.149:8686/mock-api/v1/articles?page=' + page.num + '&limit=' + page.size + '',
+    commonGet('/articles?page=' + page.num + '&per_page=' + page.size + '',
         function (res) {
-            var data = res.data.items
-            var total = res.data.total
+            var data = res.data
+            var total = res.meta.total
             mescroll.endSuccess(data.length, total);
             setListData(data, page);
 

@@ -18,7 +18,7 @@
     <script src="./js/ewm.js"></script>
 </head>
 <body>
-<div id="indexPgae" style="display: none">
+<div id="indexPgae" style="display: block">
     <!--列表数据-->
     <div id="mescroll" class="mescroll">
         <div id="dataList"></div>
@@ -128,7 +128,7 @@
     </div>
 </div>
 
-<div id="redEnvelopePage" style="display: block;background-color: #ff5959">
+<div id="redEnvelopePage" style="display: none;background-color: #ff5959;height: 100%;">
     <div id="redEnvelopeTwo" style="display: none">
         <div class="mio-modal-mask" style="display: block"></div>
         <div style="position: fixed;top: 50%;left: 50%;transform:translate(-50%,-50%);z-index: 999;background: url('./img/hbbj.png');background-repeat: no-repeat;background-size: 100%;background-position: center;width: 2.66rem;height: 3.42rem;">
@@ -244,20 +244,20 @@
             <div style="color: #333333;font-size: 16px">提现专区</div>
             <div style="">
                 <div onclick="hundredChange()">
-                    <div style="position: absolute;top: 0.5rem;left: 0.21rem;width: 40%;height: 0.59rem;line-height: 0.59rem;text-align: center;border-radius: 4px;border: 1px solid #DEDEDE;">
+                    <div id="numOne" style="position: absolute;top: 0.5rem;left: 0.21rem;width: 40%;height: 0.59rem;line-height: 0.59rem;text-align: center;border-radius: 4px;border: 1px solid #DEDEDE;">
                         100
                     </div>
                     <img id="xzkOne" src="./img/xzk.png" style="position: absolute;top: 0.5rem;left: 0.21rem;width: 40%;height: 0.59rem;">
                 </div>
 
                 <div onclick="twoHundredChange()">
-                    <div style="position: absolute;top: 0.5rem;right: 0.21rem;width: 40%;height: 0.59rem;line-height: 0.59rem;text-align: center;border-radius: 4px;border: 1px solid #DEDEDE;">
+                    <div id="numTwo" style="position: absolute;top: 0.5rem;right: 0.21rem;width: 40%;height: 0.59rem;line-height: 0.59rem;text-align: center;border-radius: 4px;border: 1px solid #DEDEDE;">
                         200
                     </div>
                     <img id="xzkTwo" src="./img/xzk.png" style="display: none;position: absolute;top: 0.5rem;right: 0.21rem;width: 40%;height: 0.59rem;">
                 </div>
             </div>
-            <div onclick="partake()" style="border-radius: 8px;line-height: 0.48rem;color: #FFFFFF;font-size: 18px;background: linear-gradient(270deg, #FF8E4D 0%, #FF6565 100%);
+            <div onclick="withdraw()" style="border-radius: 8px;line-height: 0.48rem;color: #FFFFFF;font-size: 18px;background: linear-gradient(270deg, #FF8E4D 0%, #FF6565 100%);
         position: absolute;left: 5%;width: 90%;height: 0.48rem;top: 1.29rem;text-align: center;">
                 提现
             </div>
@@ -289,89 +289,172 @@
 </div>
 <script src="./js/ad.js?v=10005"></script>
 <script>
-    // if (/iphone/gi.test(window.navigator.appVersion)) {
-        // $('.redbag').css('-webkit-text-fill-color', 'linear-gradient(177deg, #ff9500 0%, #ff0028 100%)!important')
-    // }
     var obj = {
-        isFirst: false,
+        newcomer_bonus: '',
+        packet_follower_num: '',
+        packet_valid_hours: '',
+        share_article_bonus: '',
+        withdrawal_amounts: '',
+        withdrawal_follower_num: '',
+        withdrawal_rule: '',
+        withdrawal_uv_num: '',
+        isFirst: true,
         remainTime: '86399',
         amount: randomNumDecimal(97, 99),
         peopleList: [
-            {src: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg', title: '111'},
-            {src: './img/zhuli@2x.png', title: '222'},
-            {src: './img/zhuli@2x.png', title: '222'},
+            // {src: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg', title: '111'},
             // {src: './img/zhuli@2x.png', title: '222'},
-            {src: './img/zhuli@2x.png', title: '222'},
+            // {src: './img/zhuli@2x.png', title: '222'},
+            // {src: './img/zhuli@2x.png', title: '222'},
+            // {src: './img/zhuli@2x.png', title: '222'},
         ],
-        url: 'http://www.baidu.com'
+        url: '',
+        userId: 3,
+        bigRed: 0,
+        invalid_at: '',
+
+        withdrawNum: 100
     }
 
-    $('#qrcode').qrcode({
-        text: obj.url,
-        width: 90,
-        height: 90
-    });
+    var userInfos = {
+        avatar: "",
+        balance: 0,
+        id: '',
+        newcomer: false,
+        nickname: "",
+        subscribed: false,
+    }
 
-    var canvasNew = $('#qrcode').find('canvas').get(0);
-    $('#imgOne').attr('src', canvasNew.toDataURL('image/jpg'));
-
-    var imgLists = [
-        {src: './img/haibao.png', left: 0, top: 0, width: 644, height: 876},
-        {src: $('#imgOne').attr('src'), left: 232, top: 515, width: 180, height: 180},
-    ]
-
-    var canvas = document.createElement('canvas')
-    canvas.width = 644;
-    canvas.height = 876; // 这是canvas的宽高
-    var ctx = canvas.getContext('2d')
-    ctx.fillStyle="black";
-    ctx.rect(0, 0, 644, 876); // 这是图片的宽高
-    ctx.fill();
-
-    drawing(0, $('#newSharePoster'), false, 100);
-
-    var num = 5 - Number(obj.peopleList.length)
-    $('#num').text(num)
-    // 填充人员
-    for (var i = 0; i < 5; i++) {
-        if (obj.peopleList.length < 5) {
-            obj.peopleList.push({src: './img/zhuli-1@2x.png', title: '待助力'})
+    commonGet('/user', function (res) {
+        if (res.code == 200) {
+            userInfos.avatar = res.data.avatar
+            userInfos.balance = res.data.balance
+            userInfos.id = res.data.id
+            userInfos.newcomer = res.data.newcomer
+            userInfos.nickname = res.data.nickname
+            userInfos.subscribed = res.data.subscribed
+            console.log(res.newcomer)
+            // 是否首次进入
+            if (userInfos.newcomer) {
+                $('#redEnvelope').show()
+            } else {
+                startcountDown(obj.remainTime)
+            }
         }
-    }
+    }, {'ACT-USER-ID': obj.userId})
 
-    // 是否首次进入
-    if (obj.isFirst) {
-        $('#redEnvelopeTwo').show()
-    } else {
-        startcountDown(obj.remainTime)
-    }
-
-    $('.money').text(obj.amount) //后台返回钱数
-    $('#sumMoney').text(obj.amount) //后台返回钱数
-
-
-    var html = ''
-    var html1 = ''
-    $.each(obj.peopleList, function (key) {
-        html += '<div class="list"><img class="touxiang" src='+ obj.peopleList[key].src +' alt=""><div class="title">' +  obj.peopleList[key].title + '</div></div>'
+    commonGet('/setting', function (res) {
+        obj.newcomer_bonus = res.data.newcomer_bonus
+        obj.packet_follower_num = res.data.packet_follower_num
+        obj.packet_valid_hours = res.data.packet_valid_hours
+        obj.share_article_bonus = res.data.share_article_bonus
+        obj.withdrawal_amounts = res.data.withdrawal_amounts
+        obj.withdrawal_follower_num = res.data.withdrawal_follower_num
+        obj.withdrawal_rule = res.data.withdrawal_rule
+        obj.withdrawal_uv_num = res.data.withdrawal_uv_num
     })
 
-    $.each(obj.peopleList, function (key) {
-        html1 += '<div class="list" style="margin: 0px 0.1rem 0.1rem 0.1rem">' +
-            '<img class="touxiang" style="width: 0.44rem;height: 0.44rem;border-radius: 50%" src='+ obj.peopleList[key].src +' alt="">' +
-            '<div class="title" style="font-size: 14px;color: white">' +  obj.peopleList[key].title + '</div></div>'
-    })
-    $('#share_people').append(html)
-    $('#share_peopleTwo').append(html1)
+    commonGet('/packets/show', function (res) {
+        obj.peopleList = res.data.invited_users
+        obj.bigRed = res.data.amount
+        obj.invalid_at = res.data.invalid_at
+
+        $('.money').text(obj.bigRed) //后台返回钱数
+        $('#sumMoney').text(obj.bigRed) //后台返回钱数
+
+        if (res.data.length == 0) {
+            $('#redEnvelopeTwo').show()
+        }
+        var num = 5 - Number(obj.peopleList.length)
+        $('#num').text(num)
+        // 填充人员
+        for (var i = 0; i < 5; i++) {
+            if (obj.peopleList.length < 5) {
+                obj.peopleList.push({avatar: './img/zhuli-1@2x.png', nickname: '待助力'})
+            }
+        }
+        var html = ''
+        var html1 = ''
+        $.each(obj.peopleList, function (key) {
+            html += '<div class="list"><img class="touxiang" src='+ obj.peopleList[key].avatar +' alt=""><div class="title">' +  obj.peopleList[key].nickname.slice(0, 4) + '</div></div>'
+        })
+
+        $.each(obj.peopleList, function (key) {
+            html1 += '<div class="list" style="margin: 0px 0.1rem 0.1rem 0.1rem">' +
+                '<img class="touxiang" style="width: 0.44rem;height: 0.44rem;border-radius: 50%" src='+ obj.peopleList[key].avatar +' alt="">' +
+                '<div class="title" style="font-size: 14px;color: white">' +  obj.peopleList[key].nickname.slice(0, 4) + '</div></div>'
+        })
+        $('#share_people').append(html)
+        $('#share_peopleTwo').append(html1)
+
+        // 领取红包
+        $('.btn').click(function () {
+            if (num !== 0) {
+                $('#withdrawalFailed').show()
+            } else {
+                $('#withdrawalSuccess').show()
+                commonPost('/packets/get', {}, function (res) {
+                    console.log(res)
+                    if (res.code == 200) {
+
+                    }
+                }, {'ACT-USER-ID': obj.userId})
+            }
+        })
+    }, {'ACT-USER-ID': obj.userId})
+
+    var imgLists = []
+    var canvas = ''
+    var ctx
+    commonGet('/qrcode', function (res) {
+        if (res.code == 200) {
+            obj.url = res.data.url
+            $('#qrcode').qrcode({
+                text: res.data.url,
+                width: 90,
+                height: 90
+            });
+
+            var canvasNew = $('#qrcode').find('canvas').get(0);
+            $('#imgOne').attr('src', canvasNew.toDataURL('image/jpg'));
+
+            imgLists = [
+                {src: './img/haibao.png', left: 0, top: 0, width: 644, height: 876},
+                {src: $('#imgOne').attr('src'), left: 232, top: 515, width: 180, height: 180},
+            ]
+
+            canvas = document.createElement('canvas')
+            canvas.width = 644;
+            canvas.height = 876; // 这是canvas的宽高
+            ctx = canvas.getContext('2d')
+            ctx.fillStyle="black";
+            ctx.rect(0, 0, 644, 876); // 这是图片的宽高
+            ctx.fill();
+
+            drawing(0, $('#newSharePoster'), false, 100);
+        }
+    }, {'ACT-USER-ID': obj.userId})
 
     function hundredChange () {
         $('#xzkOne').show()
         $('#xzkTwo').hide()
+        obj.withdrawNum = 100
     }
 
     function twoHundredChange () {
         $('#xzkOne').hide()
         $('#xzkTwo').show()
+        obj.withdrawNum = 200
+    }
+
+    function withdraw () {
+        console.log(obj.withdrawNum)
+        commonPost('/withdrawals', {amount: obj.withdrawNum}, function (res) {
+            console.log(res)
+            if (res.code == 200) {
+
+            }
+        }, {'ACT-USER-ID': obj.userId})
     }
 
     function goRedEnvelop () {
@@ -384,6 +467,12 @@
         setTimeout(function () {
             hideOne();
             $('#redEnvelopeGet').show();
+            commonGet('/newcomer', function (res) {
+                console.log(res)
+                if (res.code == 200) {
+
+                }
+            }, {'ACT-USER-ID': obj.userId})
         }, 2000)
     }
 
@@ -391,20 +480,16 @@
     function addTurnTwo() {
         $('.btnTwinkle').addClass('overturn')
         setTimeout(function () {
+            commonGet('/packets/open', function (res) {
+                console.log(res.data)
+                obj.bigRed = res.data.amount
+            }, {'ACT-USER-ID': obj.userId})
+
             hideThree();
             $('.contain').show();
             startcountDown(obj.remainTime)
         }, 2000)
     }
-
-    // 领取红包
-    $('.btn').click(function () {
-        if (num !== 0) {
-            $('#withdrawalFailed').show()
-        } else {
-            $('#withdrawalSuccess').show()
-        }
-    })
 
     $('#qian').click(function (){
         $('#huo').children('div').removeClass('active').addClass('inactive')
@@ -431,6 +516,13 @@
     })
 
     $('#qianOne').click(function (){
+        commonGet('/user', function (res) {
+            if (res.code == 200) {
+                userInfos.balance = res.data.balance
+                $('#sumMoney').text(res.data.balance) //后台返回钱数
+            }
+        }, {'ACT-USER-ID': obj.userId})
+
         $('#qian').children('div').removeClass('active').addClass('inactive')
         $('#huo').children('div').removeClass('active').addClass('inactive')
         $(this).children('div').removeClass('inactive').addClass('active')
