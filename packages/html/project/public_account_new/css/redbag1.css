@@ -34,6 +34,13 @@ body .contain .redbag .money {
   font-family: 'my_font';
   font-weight: bold;
 }
+#firstMoney{
+  width: 1.55rem;
+  height: 0.6rem;
+  font-size: 0.6rem;
+  font-family: 'my_font';
+  font-weight: bold;
+}
 body .contain .redbag span {
   width: 0.3rem;
   font-size: 0.3rem;
