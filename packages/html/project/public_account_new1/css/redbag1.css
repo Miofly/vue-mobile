@@ -1,0 +1,21 @@
+#share_people .list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+#share_people .list .touxiang {
+  width: 0.88rem;
+  height: 0.88rem;
+  border-radius: 50%;
+  margin-bottom: 0.1rem;
+}
+#share_people .list .title {
+  height: 0.24rem;
+  font-size: 0.24rem;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 0.24rem;
+}
+

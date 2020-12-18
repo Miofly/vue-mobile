@@ -1,175 +1,48 @@
-@font-face {
-  font-family: 'my_font';
-  src: url('../font/DINNextLTPro-Bold\(1\).ttf');
-}
-
-body .contain {
-  width: 100%;
-  background-image: url(../img/beijing@2x.png);
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-  position: relative;
-  padding-bottom: 0.4rem;
-  text-align: center;
-  z-index: 3;
-
-}
-body .contain .redbag {
+#share_people .list {
   display: flex;
-  align-items: flex-end;
   justify-content: center;
-  padding-top: 2.76rem;
-  /*margin-left: 1rem;*/
-  height: 0.6rem;
-  color: #ff3838;
-  background: linear-gradient(177deg, #ff9500 0%, #ff0028 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  vertical-align: middle;
-}
-body .contain .redbag .money {
-  width: 1.55rem;
-  height: 0.6rem;
-  font-size: 0.6rem;
-  font-family: 'my_font';
-  font-weight: bold;
-}
-#firstMoney{
-  width: 1.55rem;
-  height: 0.6rem;
-  font-size: 0.6rem;
-  font-family: 'my_font';
-  font-weight: bold;
-}
-body .contain .redbag span {
-  width: 0.3rem;
-  font-size: 0.3rem;
-  font-family: PingFangSC-Semibold, PingFang SC;
-  font-weight: 600;
-  margin-bottom: 0.05rem;
-}
-body .contain .btn {
-  width: 2.8rem;
-  margin-top: 0.87rem;
-  /*margin-left: 0.48rem;*/
-}
-body .contain #time {
-  margin-top: 0.1rem;
-  /*margin-left: 0.9rem;*/
-  height: 0.14rem;
-  font-size: 0.14rem;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
-  color: #f9e7e9;
-  line-height: 0.14rem;
-}
-body .contain #time #Countdown {
-  height: 0.2rem;
-  font-size: 0.2rem;
-  font-family: PingFangSC-Medium, PingFang SC;
-  font-weight: 500;
-  color: #ffffff;
-  line-height: 0.2rem;
-}
-body .contain #share_people {
-  margin-top: 0.56rem;
-  display: flex;
-  justify-content: space-around;
-  padding: 0 0.15rem;
-}
-body .contain #share_people .list {
-  display: flex;
   align-items: center;
   flex-flow: column;
 }
-body .contain #share_people .list .touxiang {
-  width: 0.44rem;
-  height: 0.44rem;
+#share_people .list .touxiang {
+  width: 0.88rem;
+  height: 0.88rem;
   border-radius: 50%;
-  margin-bottom: 0.05rem;
+  margin-bottom: 0.1rem;
 }
-body .contain #share_people .list .title {
-  height: 0.12rem;
-  font-size: 0.12rem;
+#share_people .list .title {
+  height: 0.24rem;
+  font-size: 0.24rem;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #ffffff;
-  line-height: 0.12rem;
-}
-body .contain .share {
-  margin-top: 0.3rem;
-  /*margin-left: 0.25rem;*/
-  margin-bottom: 0.5rem;
-}
-body .contain .share .fenxiang {
-  width: 3.28rem;
-}
-body .contain .receive {
-  width: 3.06rem;
-  height: 1.76rem;
-  background: #ffffff;
-  border-radius: 8px;
-  position: fixed;
-  z-index: 3;
-  top: 2.9rem;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  display: none;
-}
-body .contain .receive .title {
-  height: 0.18rem;
-  font-size: 0.18rem;
-  font-family: PingFangSC-Medium, PingFang SC;
-  font-weight: 500;
-  color: #ff6736;
-  line-height: 0.18rem;
-  margin-top: 0.24rem;
-  margin-bottom: 0.16rem;
-}
-body .contain .receive .amount {
-  color: #333333;
-  font-size: 0.16rem;
-  margin-bottom: 0.26rem;
-}
-body .contain .receive .amount span {
-  height: 0.24rem;
-  font-size: 0.26rem;
-  font-family: PingFangSC-Medium, PingFang SC;
-  font-weight: 500;
-  color: #ff6736;
   line-height: 0.24rem;
-  letter-spacing: 0.01rem;
-}
-body .contain .receive .OK {
-  width: 2.74em;
-  height: 0.48rem;
-  background: linear-gradient(270deg, #ff782c 0%, #ff5757 100%);
-  border-radius: 8px;
-  font-size: 0.18rem;
-  font-family: PingFangSC-Medium, PingFang SC;
-  font-weight: 500;
-  color: #ffffff;
-  line-height: 0.48rem;
-  letter-spacing: 1px;
-  margin-left: 0.16rem;
-}
-body .contain .receive .close {
-  width: 0.38rem;
-  margin-bottom: -0.9rem;
 }
 
-/*iPhone6 Plus 和iPhone8 Plus*/
-@media only screen
-and (device-width : 414px)
-and (device-height : 736px)
-and (-webkit-device-pixel-ratio : 3) {
-  body .contain .redbag{
-    padding-top: 3.02rem;
-  }
-  body .contain .btn {
-    width: 2.8rem;
-    margin-top: 1rem;
-    /*margin-left: 0.48rem;*/
-  }
-}
+/*!*iPhone6 Plus 和iPhone8 Plus*!*/
+/*@media only screen*/
+/*and (device-width : 414px)*/
+/*and (device-height : 736px)*/
+/*and (-webkit-device-pixel-ratio : 3) {*/
+/*  .redbag{*/
+/*    padding-top: 3.02rem;*/
+/*  }*/
+/*  .btn {*/
+/*    width: 2.8rem;*/
+/*    margin-top: 1rem;*/
+/*    !*margin-left: 0.48rem;*!*/
+/*  }*/
+/*}*/
+
+/*@media only screen*/
+/*and (device-width: 411px) {*/
+/*  body .contain .redbag{*/
+/*    padding-top: 3.02rem;*/
+/*  }*/
+/*  body .contain .btn {*/
+/*    width: 2.8rem;*/
+/*    margin-top: 1rem;*/
+/*    !*margin-left: 0.48rem;*!*/
+/*  }*/
+/*}*/
+

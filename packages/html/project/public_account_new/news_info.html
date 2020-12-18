@@ -148,12 +148,16 @@
     var anim = lottie.loadAnimation({
         container: document.getElementById("dynamicEffect"), // 容器
         renderer: "svg",
-        loop: false,
+        loop: true,
         autoplay: true,
         // animationData: {}, //如果使用的是JSON
         path:
-            "https://assets7.lottiefiles.com/packages/lf20_3vcciqbm.json" // the path to the animation json
+            "https://assets8.lottiefiles.com/packages/lf20_jq0sl1zi.json" // the path to the animation json
     });
+
+    $('#dynamicEffect').click(function () {
+        location.href = './partake.html'
+    })
 
     var adListIndex = 0;
     var adList = [

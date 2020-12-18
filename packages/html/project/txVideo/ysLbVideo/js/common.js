@@ -17,7 +17,12 @@ function commonPost(url, data, success, fail) {
         // url: 'http://lb-manage-api.52xiaoshuo.cn/api/' + url,
         data: data,
         success: success,
-        fail: fail
+        error: function (err) {
+            console.log(err)
+        },
+        complete: function (res) {
+            console.log(res)
+        }
     })
 }
 

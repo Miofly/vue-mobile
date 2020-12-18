@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>今日热点</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <script src="./js/adaptive.js" type="text/javascript"></script>
+    <link href="./css/mescroll.min.css" rel="stylesheet">
+    <link href="./css/index.css" rel="stylesheet" type="text/css"/>
+    <link href="./css/redbag1.css" rel="stylesheet" type="text/css"/>
+    <script src="./js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="./js/common.js" type="text/javascript"></script>
+    <script src="./js/mescroll.min.js" type="text/javascript"></script>
+    <script src="./js/art-template.js" type="text/javascript"></script>
+    <script src="./js/jquery.qrcode.min.js" type="text/javascript"></script>
+    <script src="./js/canvas.js"></script>
+    <script src="./js/ewm.js"></script>
+    <script src="./js/jf.js"></script>
+    <script src="./js/EventEmitter.min.js" type="text/javascript"></script>
+        <script src="./js/vconsole.js"></script>
+</head>
+<body>
+<div id="indexPgae" style="display: block">
+    <!--列表数据-->
+    <div id="mescroll" class="mescroll">
+        <div id="dataList"></div>
+    </div>
+    <!--广告-->
+    <div class="container" style="padding-bottom: 3%;margin-top:0vh">
+        <!--单图-->
+        <script id="ad-template" type="text/html">
+            <div class="ad-template-info"
+                 style="display: flex;justify-content: space-around;height: 0.93rem;margin-top: 0.12rem"
+                 onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},2,'<?=$uuid?>')">
+                <div style="width: 65%">
+                    <div class="line-two"
+                         style="font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.22rem;">
+                        {{ title }}
+                    </div>
+                    <div style="display: flex;justify-content: space-between;margin-top: 0.14rem">
+                        <span style="color: rgba(255, 66, 55, 1);font-size: 14px;">
+                            <img src="./img/xhb.png"
+                                 style="margin-top: -0.02rem;margin-right: 0.03rem;width: 0.14rem;height: 0.14rem"><span>分享好友得1元红包</span>
+                        </span>
+                        <img src="./img/fxzq.png" style="height: 0.17rem;">
+                    </div>
+                </div>
+                <div style="width: 1rem;height: 0.8rem;padding-right: 0rem;line-height: 0.7rem">
+                    <img src="{{srcUrls[0]}}" style="height: 0.8rem;border-radius: 4px;">
+                </div>
+            </div>
+            <div style="height: 1px;background: #EEEEEE;width: 94vw;margin-left: 3vw"></div>
+        </script>
+        <!--三图-->
+        <script id="ad-template-3img" type="text/html">
+            <div class="ad-template-3img" style="padding: 0.12rem 0"
+                 onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},3,'<?=$uuid?>')">
+                <div class="line-two"
+                     style="padding: 0 0.12rem;font-weight: bolder;line-height: 0.22rem;color: #333;font-size: 16px!important;">
+                    {{ title }}
+                </div>
+                <div style="display: flex;justify-content: space-between;padding: 0 0.12rem;margin-top: 0.1rem">
+                    {{ each srcUrls as value }}
+                    <img style="height: 0.8rem;border-radius: 4px;width: 32%" src="{{value}}" alt="">
+                    {{ /each  }}
+                </div>
+                <div style="display: flex;justify-content: space-between;margin-top: 0.14rem;padding: 0 0.12rem">
+                    <span style="color: rgba(255, 66, 55, 1);font-size: 14px;">
+                        <img src="./img/xhb.png"
+                             style="margin-top: -0.02rem;margin-right: 0.03rem;width: 0.14rem;height: 0.14rem"><span>分享好友得1元红包</span>
+                    </span>
+                    <img src="./img/fxzq.png" style="height: 0.17rem;">
+                </div>
+            </div>
+
+            <div style="height: 1px;background: #EEEEEE;width: 94vw;margin-left: 3vw"></div>
+        </script>
+        <!--大图-->
+        <script id="ad-template-big" type="text/html">
+            <div class="ad-template-info-big" style="padding: 0.12rem 0"
+                 onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},1,'14b98633-ef72-49e4-9427-8b76328ded6f')">
+                <div class="line-two"
+                     style="padding: 0 0.12rem;font-weight: bolder;line-height: 0.22rem;color: #333;font-size: 16px!important;">
+                    {{ title }}
+                </div>
+                <div style="display: flex;justify-content: space-between;padding: 0 0.12rem;margin-top: 0.1rem">
+                    <img style="height: 2.28rem;width: 100%;border-radius: 4px;" src="{{srcUrls[0]}}" alt="">
+                </div>
+                <div style="display: flex;justify-content: space-between;margin-top: 0.14rem;padding: 0 0.12rem">
+                    <span style="color: rgba(255, 66, 55, 1);font-size: 14px;">
+                        <img src="./img/xhb.png"
+                             style="margin-top: -0.02rem;margin-right: 0.03rem;width: 0.14rem;height: 0.14rem"><span>分享好友得1元红包</span>
+                    </span>
+                    <img src="./img/fxzq.png" style="height: 0.17rem;">
+                </div>
+            </div>
+            <div style="height: 1px;background: #EEEEEE;width: 94vw;margin-left: 3vw"></div>
+        </script>
+    </div>
+    <!--首页红包-->
+    <div id="redEnvelope" style="display: none">
+        <div class="mio-modal-mask" style="display: block"></div>
+        <div style="position: fixed;top: 50%;left: 50%;transform:translate(-50%,-50%);z-index: 999;background: url('./img/hbbj.png');background-repeat: no-repeat;background-size: 100%;background-position: center;width: 2.66rem;height: 3.42rem;">
+            <div style="position: fixed;left: 50%;width: 0.86rem;height: 0.86rem;bottom: 0.43rem;margin-left: -0.43rem;">
+                <img class="btnTwinkle" onclick="addTurn()" src="./img/kai.png"
+                     style="width: 0.86rem;height: 0.86rem;display: block">
+            </div>
+            <div style="position: absolute;left: 50%;width: 0.38rem;height: 0.38rem;margin-left: -0.19rem;bottom: -0.88rem">
+                <img onclick="hideOne()" src="./img/close.png"
+                     style="color: white;width: 0.38rem;height: 0.38rem;font-weight: bolder;"/>
+            </div>
+        </div>
+    </div>
+    <!--红包到账-->
+    <div id="redEnvelopeGet" style="display: none;text-align: center;">
+        <div class="mio-modal-mask" style="display: block"></div>
+        <div style="position: fixed;top: 50%;left: 50%;transform:translate(-50%,-50%);z-index: 999;background: url('./img/hbdz.png');background-repeat: no-repeat;background-size: 100%;background-position: center;width: 3.06rem;height: 3.34rem;">
+            <!--首次到账金额-->
+            <div id="firstMoney" style="position: fixed;left: 50%;top: 0.57rem;width: 1.5rem;height: 0.86rem;margin-left: -0.75rem;color:rgba(255, 246, 165, 1)">
+
+            </div>
+            <div onclick="hideTwo()" style="border-radius: 8px;line-height: 0.48rem;color: #FFFFFF;font-size: 18px;background: linear-gradient(270deg, #FF8E4D 0%, #FF6565 100%);
+        position: absolute;left: 50%;width: 2.74rem;height: 0.48rem;bottom: 0.20rem;margin-left: -1.37rem;">
+                马上体验
+            </div>
+            <div style="position: absolute;left: 50%;width: 0.38rem;height: 0.38rem;margin-left: -0.19rem;bottom: -0.88rem">
+                <img id="close" onclick="hideTwo()" src="./img/close.png"
+                     style="color: white;width: 0.38rem;height: 0.38rem;font-weight: bolder;"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="redEnvelopePage" style="display: none;background-color: #ff5959;    position: fixed;
+    top: 0px;    width: 100%;
+    overflow-y: scroll;
+    ">
+    <div style="height: 100vh; overflow-y: scroll;">
+        <div id="redEnvelopeTwo" style="display: none">
+            <div class="mio-modal-mask" style="display: block"></div>
+            <div style="position: fixed;top: 50%;left: 50%;transform:translate(-50%,-50%);z-index: 999;background: url('./img/hbbj.png');background-repeat: no-repeat;background-size: 100%;background-position: center;width: 2.66rem;height: 3.42rem;">
+                <div style="position: fixed;left: 50%;width: 0.86rem;height: 0.86rem;bottom: 0.43rem;margin-left: -0.43rem;">
+                    <img class="btnTwinkle" onclick="addTurnTwo()" src="./img/kai.png"
+                         style="width: 0.86rem;height: 0.86rem;display: block">
+                </div>
+            </div>
+        </div>
+        <div class="contain">
+            <!-- 遮罩层 -->
+            <div class="mask"></div>
+            <div class="redbag">
+                <div class="money"></div>
+                <span style="margin-left: 0.06rem;font-size: 0.25rem">元</span>
+            </div>
+            <img alt="" class="btn" src="./img/lingqu@2x.png">
+
+            <div id="time">
+                红包失效倒计时:&nbsp;&nbsp;<span id="Countdown">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </div>
+
+            <div id="share_people"></div>
+            <div class="share">
+                <img alt="" class="fenxiang" src="./img/fenxiang@2x.png">
+            </div>
+
+            <div class="receive">
+                <div class="title">领取成功</div>
+                <div class="amount"><span>98.00</span>元已存入余额</div>
+                <div class="OK">好的</div>
+                <img alt="" class="close" src="./img/x@2x.png">
+            </div>
+        </div>
+        <div id="newSharePoster" style="opacity: 0;position: fixed;top: 8%;z-index: 0"></div>
+        <!--海报-->
+        <div id="poster" style="opacity: 0;text-align: center;z-index: 1">
+            <div id="posterMask" class="mio-modal-mask" style="z-index:1;display: block"></div>
+            <div style="position: fixed;top: 50%;left: 50%;transform:translate(-50%,-50%);z-index: 1;width: 3.22rem;height: 4.98rem;">
+                <div style="letter-spacing: 1px;position: fixed;left: 50%;width: 3.12rem;height: 0.41rem;top: -0.4rem;margin-left: -1.56rem;color: rgba(255, 226, 161, 1);font-size: 20px;">
+                    <img alt="" class="top" src="./img/tou@2x.png">
+                </div>
+                <!---->
+                <div id="sharePoster" style="position: fixed;left: 50%;top: 0.2rem;margin-left: -1.61rem;width: 3.22rem;height: 4.38rem;">
+                    <div style="color: rgba(255, 255, 255, 1);font-size: 16px;;">
+                        <img alt="" class="yaoqing" src="./img/yaoqing@2x.png" style="width: 3.12rem;height: 4.08rem">
+                    </div>
+                    <div style="position: fixed;z-index: 999;left: 50%;width: 1rem;height: 1rem;top: 2.48rem;margin-left: -0.48rem;background-color: white">
+                        <div id="qrcode" style="display: none;margin-top: 0.05rem"></div>
+                        <img id="imgOne" style="margin-top: 0.05rem"/>
+                    </div>
+                </div>
+                <div style="position: absolute;left: 50%;width: 0.38rem;height: 0.38rem;margin-left: -0.19rem;bottom: -0.1rem;z-index:99999">
+                    <img onclick="hideSix()" src="./img/close.png" style="color: white;width: 0.38rem;height: 0.38rem;font-weight: bolder;"/>
+                </div>
+            </div>
+        </div>
+        <!--提现失败-->
+        <div id="withdrawalFailed" style="display: none;text-align: center;z-index: 5">
+            <div class="mio-modal-mask" style="display: block"></div>
+            <div style="position: fixed;top: 40%;left: 50%;transform:translate(-50%,-50%);z-index: 999;background: url('./img/dt.png');background-repeat: no-repeat;background-size: 100%;
+        background-position: center;width: 2.66rem;height: 3.42rem;">
+                <div style="letter-spacing: 1px;position: fixed;left: 50%;width: 0.86rem;height: 0.86rem;top: 0.2rem;margin-left: -0.43rem;color: rgba(255, 226, 161, 1);font-size: 20px;">
+                    提现失败
+                </div>
+                <div style="position: fixed;left: 50%;width: 1.7rem;height: 0.48rem;top: 0.6rem;margin-left: -0.85rem;color: rgba(255, 255, 255, 1);font-size: 16px;;">
+                    <div style="letter-spacing: 1px">再邀请<span id="num"></span>位好友</div>
+                    <div style="letter-spacing: 1px">关注本公众号即可领取</div>
+                </div>
+                <div style="position: fixed;left: 50%;width:2rem;height: 0.48rem;top: 1.69rem;margin-left: -1rem;color: rgba(255, 255, 255, 1);font-size: 16px;letter-spacing: 1px;">
+                    <div id="share_peopleTwo" style="display: flex;justify-content: center;flex-wrap: wrap">
+
+                    </div>
+                </div>
+                <div onclick="partake()" style="border-radius: 8px;line-height: 0.48rem;color: #FFFFFF;font-size: 18px;background: linear-gradient(270deg, #FF8E4D 0%, #FF6565 100%);
+        position: absolute;left: 50%;width: 2.66rem;height: 0.48rem;bottom: -0.70rem;margin-left: -1.33rem;">
+                    邀请
+                </div>
+                <div style="position: absolute;left: 50%;width: 0.38rem;height: 0.38rem;margin-left: -0.19rem;bottom: -1.28rem">
+                    <img onclick="hideFour()" src="./img/close.png" style="color: white;width: 0.38rem;height: 0.38rem;font-weight: bolder;"/>
+                </div>
+            </div>
+        </div>
+        <!--提现成功-->
+        <div id="withdrawalSuccess" style="display: none;text-align: center;z-index: 5">
+            <div class="mio-modal-mask" style="display: block"></div>
+            <div style="position: fixed;top: 40%;left: 50%;transform:translate(-50%,-50%);z-index: 999;width: 3.06rem;height: 1.76rem;background-color: white;border-radius: 8px">
+                <div style="letter-spacing: 1px;position: fixed;left: 50%;width: 0.86rem;height: 0.86rem;top: 0.2rem;margin-left: -0.43rem;color: rgba(255, 103, 54, 1);font-size: 18px;">
+                    领取成功
+                </div>
+                <div style="position: fixed;left: 50%;width: 1.8rem;height: 0.48rem;top: 0.6rem;margin-left: -0.9rem;color: rgba(255, 255, 255, 1);font-size: 16px;;">
+                    <div style="letter-spacing: 1px;color: rgba(51, 51, 51, 1);font-size: 16px"><span class="money" style="color: #FF6736;font-size: 26px;"></span>元已存入余额</div>
+                    <div style="letter-spacing: 1px">关注本公众号即可领取</div>
+                </div>
+                <div onclick="hideFive()" style="border-radius: 8px;line-height: 0.48rem;color: #FFFFFF;font-size: 18px;background: linear-gradient(270deg, #FF8E4D 0%, #FF6565 100%);
+        position: absolute;left: 50%;width: 2.74rem;height: 0.48rem;top: 1.08rem;margin-left: -1.37rem;">
+                    好的
+                </div>
+                <div style="position: absolute;left: 50%;width: 0.38rem;height: 0.38rem;margin-left: -0.19rem;bottom: -0.8rem">
+                    <img onclick="hideFive()" src="./img/close.png" style="color: white;width: 0.38rem;height: 0.38rem;font-weight: bolder;"/>
+                </div>
+            </div>
+        </div>
+        <!--    <div id="qrcode" style="display: none;width: 0.9rem;height: 0.9rem;top: 0.2rem;margin-left: -1.61rem;color: rgba(255, 255, 255, 1);font-size: 16px;"></div>-->
+    </div>
+
+</div>
+
+<div id="withDrawPage" style="display: none;background-color: #F7F2F2;height: 100%">
+    <div style="position: relative">
+        <img src="./img/txbg.png" style="width: 100vw;height: 2.0rem;">
+        <div style="position: absolute;top: 0.3rem;font-size: 16px;letter-spacing: 1px;color: white;left: 0.25rem">我得余额</div>
+        <div id="sumMoney" style="position: absolute;top: 0.52rem;left: 0.25rem;font-size: 60px;font-family: DINAlternate-Bold, DINAlternate;font-weight: bold;color: #FFFFFF;line-height: 60px;letter-spacing: 2px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        <div id="withDrawHeight" style="padding: 0.14rem 0.2rem 0.8rem 0.14rem;position: absolute;top: 1.46rem;left: 5%;width: 90%;height: auto;background: #FFFFFF;box-shadow: 0px 4px 10px 0px rgba(88, 21, 0, 0.1);border-radius: 8px;">
+            <div style="color: #333333;font-size: 16px">提现专区</div>
+            <div style="display: flex;justify-content: space-between;width: 100%;flex-wrap: wrap" id="moneySetting">
+
+            </div>
+            <div onclick="withdraw()" style="border-radius: 8px;line-height: 0.48rem;color: #FFFFFF;font-size: 18px;background: linear-gradient(270deg, #FF8E4D 0%, #FF6565 100%);
+        position: absolute;left: 5%;width: 90%;height: 0.48rem;bottom: 0.2rem;text-align: center;
+box-shadow: 0px 4px 10px 0px rgba(88, 21, 0, 0.3);">
+                提现
+            </div>
+        </div>
+    </div>
+    <div id="withDrawRequire" style="color: #333333;margin-left: 0.22rem;position: absolute;">
+        <div style="font-size: 16px;font-weight: bolder">提现需知</div>
+        <div style="font-size: 14px;margin-top: 0.16rem">1. 余额达到提现要求</div>
+        <div id="requireOne" style="font-size: 14px;margin-top: 0.14rem"></div>
+        <div id="requireTwo" style="font-size: 14px;margin-top: 0.14rem"></div>
+    </div>
+
+    <!--提现提示-->
+    <div id="whthDrawToast" style="display: none;text-align: center;z-index: 5">
+        <div class="mio-modal-mask" style="display: block"></div>
+        <div style="position: fixed;top: 40%;left: 50%;transform:translate(-50%,-50%);z-index: 999;width: 3.26rem;height: 1.86rem;padding: 0.05rem;background-color: white;border-radius: 8px">
+            <div style="letter-spacing: 1px;position: fixed;left: 50%;width: 1.66rem;height: auto;top: 0.2rem;margin-left: -0.83rem;color: rgba(255, 103, 54, 1);font-size: 18px;">
+                未满足提现资格
+            </div>
+            <div id="message" style="position: fixed;top: 0.7rem;color: rgba(0, 0, 0, 1);font-size: 16px;text-align: center;width: 100%">
+<!--                <div style="letter-spacing: 1px;color: rgba(51, 51, 51, 1);font-size: 16px"><span class="money" style="color: #FF6736;font-size: 26px;"></span>元已存入余额</div>-->
+<!--                <div style="letter-spacing: 1px">关注本公众号即可领取</div>-->
+            </div>
+            <div onclick="goIndex()" style="border-radius: 8px;line-height: 0.48rem;color: #FFFFFF;font-size: 18px;background: linear-gradient(270deg, #FF8E4D 0%, #FF6565 100%);
+        position: absolute;left: 50%;width: 2.74rem;height: 0.48rem;bottom: 0.1rem;margin-left: -1.37rem;">
+                继续去分享
+            </div>
+            <div style="position: absolute;left: 50%;width: 0.38rem;height: 0.38rem;margin-left: -0.19rem;bottom: -0.8rem">
+                <img onclick="hideSeven()" src="./img/close.png" style="color: white;width: 0.38rem;height: 0.38rem;font-weight: bolder;"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="showToast" style="display: none;position: fixed;top: 50%;left: 50%;transform:translate(-50%,-50%);z-index: 999;width: 50%;height: 0.34rem;
+text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height: 0.34rem;border-radius: 0.5rem">
+
+</div>
+<!--底部栏-->
+<div style="position: fixed;bottom: 0;width: 100vw;text-align: center;box-shadow: 0px -2px 6px 0px rgba(0, 0, 0, 0.04);background: #FFFFFF;z-index: 9999">
+    <div style="display: flex;justify-content: space-around;height: 0.51rem;width: 100vw;">
+        <div id="huo" style="width: 33.33%;margin-top: 0.06rem">
+            <img src="./img/huo.png" style="width: 0.22rem;height: 0.22rem;">
+            <div class="active" style=";font-size: 12px;">今日热点</div>
+        </div>
+        <div id="qian" style="width: 33.33%;margin-top: 0.06rem">
+            <img src="./img/qian_grey.png" style="width: 0.22rem;height: 0.22rem;">
+            <div id="test" class="inactive" style="font-size: 12px;">红包大礼</div>
+        </div>
+        <div id="qianOne" style="width: 33.33%;margin-top: 0.06rem">
+            <img src="./img/qianOne_grey.png" style="width: 0.22rem;height: 0.22rem;"/>
+            <div class="inactive" style="font-size: 12px">提现</div>
+        </div>
+    </div>
+</div>
+<script src="./js/ad.js?v=10005"></script>
+<script>
+    var obj = {
+        newcomer_bonus: '',
+        packet_follower_num: '',
+        packet_valid_hours: '',
+        share_article_bonus: '',
+        withdrawal_amounts: '',
+        withdrawal_follower_num: '',
+        withdrawal_rule: '',
+        withdrawal_uv_num: '',
+        isFirst: true,
+        remainTime: '',
+        amount: 0,
+        peopleList: [],
+        url: '',
+        userId: 2,
+        bigRed: 0,
+        invalid_at: '',
+        withdrawNum: 100,
+        moneyIndex: 0
+    }
+
+    var userInfos = {
+        avatar: "",
+        balance: 0,
+        id: '',
+        newcomer: false,
+        nickname: "",
+        subscribed: false,
+    }
+
+    getUserInfo()
+    // 获取用户信息 判断是否首次进入
+    function getUserInfo () {
+        commonGet('/user', function (res) {
+            if (res.code == 200) {
+                userInfos.avatar = res.data.avatar
+                userInfos.balance = res.data.balance
+                userInfos.id = res.data.id
+                userInfos.newcomer = res.data.newcomer
+                userInfos.nickname = res.data.nickname
+                userInfos.subscribed = res.data.subscribed
+                // 是否首次进入
+                if (userInfos.newcomer) {
+                    $('#redEnvelope').show()
+                } else {
+                    //
+                }
+            }
+        }, {'ACT-USER-ID': obj.userId})
+    }
+
+    // 首次进入的红包金额配置 倒计时时间 金额配置 提现需知
+    commonGet('/setting', function (res) {
+        obj.newcomer_bonus = res.data.newcomer_bonus
+        obj.packet_follower_num = res.data.packet_follower_num
+        obj.packet_valid_hours = res.data.packet_valid_hours * 60 * 60 -1
+        obj.share_article_bonus = res.data.share_article_bonus
+        obj.withdrawal_amounts = res.data.withdrawal_amounts
+        obj.withdrawal_follower_num = res.data.withdrawal_follower_num
+        obj.withdrawal_rule = res.data.withdrawal_rule
+        obj.withdrawal_uv_num = res.data.withdrawal_uv_num
+
+        $('#firstMoney').html(res.data.newcomer_bonus + '<span style="vertical-align: middle;font-size: 0.3rem;margin-left: 0.1rem">元</span>')
+
+        $('#requireOne').html('2. 邀请好友须达到' + res.data.withdrawal_follower_num + '人')
+        $('#requireTwo').html('3. 转发UV须达到' + res.data.withdrawal_uv_num + '个')
+
+        var html = ''
+        $.each(res.data.withdrawal_amounts, function (key) {
+            html += ' <div onclick="changeIndex('+ key +')" style="width: 35vw;margin-top: 0.2rem;position: relative;" onclick="hundredChange()">' +
+                '<div id="numOne" style="color: rgba(255, 114, 45, 1);font-size: 26px;width: 35vw;height: 0.59rem;line-height: 0.59rem;text-align: center;border-radius: 4px;border: 1px solid #DEDEDE;">' +
+                '' + res.data.withdrawal_amounts[key] +' <img id="wd_img'+ key +'" src="./img/xzk.png" style="display: none;width: 35vw;height: 0.59rem;position: absolute;left: 0;top: 0"></div>' +
+                '</div>'
+        })
+
+        console.log('#wd_img'+ obj.moneyIndex +'')
+
+        $('#moneySetting').append(html)
+        $('#wd_img'+ obj.moneyIndex +'').show()
+
+        console.log( $('#withDrawHeight').height())
+
+        $('#withDrawRequire').css('top', 65 + '%')
+
+        // 红包界面 是否之前领过红包 领取红包的人数
+        commonGet('/packets/show', function (res) {
+            if (res.data.length == 0) { // 之前没领过红包
+                $('#redEnvelopeTwo').show()
+            } else {
+                obj.peopleList = res.data.invited_users
+                obj.bigRed = res.data.amount
+                obj.invalid_at = res.data.invalid_at
+                startcountDown(Math.ceil((new Date(res.data.invalid_at.replace(/-/g, '/')).getTime() - new Date().getTime()) / 1000))
+                $('.money').text(obj.bigRed) //后台返回钱数
+                // $('#sumMoney').text(obj.bigRed) //后台返回钱数
+                redGift()
+            }
+        }, {'ACT-USER-ID': obj.userId})
+    })
+
+    // 提现金额选择
+    function changeIndex (key) {
+        for (var i = 0; i < obj.withdrawal_amounts.length; i++) {
+            if (i != key) {
+                $('#wd_img'+ i +'').hide()
+            }
+        }
+        $('#wd_img'+ key +'').show()
+        this.obj.moneyIndex = key
+    }
+
+    // 提现
+    function withdraw () {
+        if (userInfos.balance < obj.withdrawal_amounts[this.obj.moneyIndex]) {
+            $('#whthDrawToast').show()
+            $('#message').html('当前余额不足')
+            return
+        }
+        commonPost('/withdrawals', {amount: obj.withdrawal_amounts[this.obj.moneyIndex]}, function (res) {
+            console.log(res)
+            if (res.status == 'error') {
+                $('#whthDrawToast').show()
+                $('#message').html(res.message)
+            } else {
+
+            }
+        }, {'ACT-USER-ID': obj.userId}, function (err) {
+            console.log(err)
+        })
+    }
+
+    // 如果首次进入开红包
+    function addTurn() {
+        $('.btnTwinkle').addClass('overturn')
+        setTimeout(function () {
+            $('#redEnvelopeGet').show();
+            hideOne();
+            commonGet('/newcomer', function (res) {
+                console.log(res)
+                if (res.code == 200) {
+
+                }
+            }, {'ACT-USER-ID': obj.userId})
+        }, 2000)
+    }
+
+    // 红包大礼首次进入开红包 24小时倒计时
+    function addTurnTwo() {
+        $('.btnTwinkle').addClass('overturn')
+        setTimeout(function () {
+            commonGet('/packets/open', function (res) {
+                console.log(res.data)
+                obj.bigRed = res.data.amount
+                $('.money').html(res.data.amount)
+                hideThree();
+                $('.contain').show();
+                redGift()
+                startcountDown(obj.packet_valid_hours)
+            }, {'ACT-USER-ID': obj.userId})
+        }, 2000)
+    }
+
+    // 红包人员配置
+    function redGift () {
+        var num = 5 - Number(obj.peopleList.length)
+        $('#num').text(num)
+        // 填充人员
+        for (var i = 0; i < 5; i++) {
+            if (obj.peopleList.length < 5) {
+                obj.peopleList.push({avatar: './img/zhuli-1@2x.png', nickname: '待助力'})
+            }
+        }
+        var html = ''
+        var html1 = ''
+        $.each(obj.peopleList, function (key) {
+            html += '<div class="list"><img class="touxiang" src='+ obj.peopleList[key].avatar +' alt=""><div class="title">' +  obj.peopleList[key].nickname.slice(0, 4) + '</div></div>'
+        })
+
+        $.each(obj.peopleList, function (key) {
+            html1 += '<div class="list" style="margin: 0px 0.1rem 0.1rem 0.1rem">' +
+                '<img class="touxiang" style="width: 0.44rem;height: 0.44rem;border-radius: 50%" src='+ obj.peopleList[key].avatar +' alt="">' +
+                '<div class="title" style="font-size: 14px;color: white">' +  obj.peopleList[key].nickname.slice(0, 4) + '</div></div>'
+        })
+        $('#share_people').append(html)
+        $('#share_peopleTwo').append(html1)
+
+        // 领取红包
+        $('.btn').click(function () {
+            if (num !== 0) {
+                $('#withdrawalFailed').show()
+            } else {
+                $('#withdrawalSuccess').show()
+                commonPost('/packets/get', {}, function (res) {
+                    console.log(res)
+                    if (res.code == 200) {
+
+                    }
+                }, {'ACT-USER-ID': obj.userId})
+            }
+        })
+    }
+
+    // 二维码合成
+    var imgLists = []
+    var canvas = ''
+    var ctx
+
+
+    function goRedEnvelop () {
+        $('#indexPgae').hide()
+        $('#redEnvelopePage').show()
+    }
+
+
+    $('#qian').click(function (){
+
+        // if ($('#imgOne').attr('src') == undefined) {
+        //     commonGet('/qrcode', function (res) {
+        //         if (res.code == 200) {
+        //             obj.url = res.data.url
+        //             $('#qrcode').qrcode({
+        //                 text: res.data.url,
+        //                 width: 90,
+        //                 height: 90
+        //             });
+        //
+        //             var canvasNew = $('#qrcode').find('canvas').get(0);
+        //             $('#imgOne').attr('src', canvasNew.toDataURL('image/jpg'));
+        //
+        //             imgLists = [
+        //                 {src: './img/haibao.png', left: 0, top: 0, width: 644, height: 876},
+        //                 {src: $('#imgOne').attr('src'), left: 232, top: 515, width: 180, height: 180},
+        //             ]
+        //
+        //             canvas = document.createElement('canvas')
+        //             canvas.width = 644;
+        //             canvas.height = 876; // 这是canvas的宽高
+        //             ctx = canvas.getContext('2d')
+        //             ctx.fillStyle="black";
+        //             ctx.rect(0, 0, 644, 876); // 这是图片的宽高
+        //             ctx.fill();
+        //
+        //             drawing(0, $('#newSharePoster'), false, 100);
+        //         }
+        //     }, {'ACT-USER-ID': obj.userId})
+        // }
+
+        $('#huo').children('div').removeClass('active').addClass('inactive')
+        $('#qianOne').children('div').removeClass('active').addClass('inactive')
+        $(this).children('div').removeClass('inactive').addClass('active')
+        $('#huo').children('img').attr('src', './img/huo_grey.png')
+        $('#qianOne').children('img').attr('src', './img/qianOne_grey.png')
+        $(this).children('img').attr('src', './img/qian.png')
+        $('#indexPgae').hide()
+        $('#redEnvelopePage').show()
+        $('#withDrawPage').hide()
+    })
+
+    $('#huo').click(function (){
+        $('#qian').children('div').removeClass('active').addClass('inactive')
+        $('#qianOne').children('div').removeClass('active').addClass('inactive')
+        $(this).children('div').removeClass('inactive').addClass('active')
+        $('#qian').children('img').attr('src', './img/qian_grey.png')
+        $('#qianOne').children('img').attr('src', './img/qianOne_grey.png')
+        $(this).children('img').attr('src', './img/huo.png')
+        $('#indexPgae').show()
+        $('#redEnvelopePage').hide()
+        $('#withDrawPage').hide()
+    })
+
+    $('#qianOne').click(function (){
+        console.log( $('#withDrawHeight').height())
+
+        commonGet('/user', function (res) {
+            if (res.code == 200) {
+                userInfos.balance = res.data.balance
+                $('#sumMoney').html(res.data.balance + '<span style="vertical-align: middle;font-size: 0.3rem;color: #FFFFFF;margin-left: 0.1rem;font-weight: bold">元</span>') //后台返回钱数
+            }
+        }, {'ACT-USER-ID': obj.userId})
+
+        $('#qian').children('div').removeClass('active').addClass('inactive')
+        $('#huo').children('div').removeClass('active').addClass('inactive')
+        $(this).children('div').removeClass('inactive').addClass('active')
+        $('#qian').children('img').attr('src', './img/qian_grey.png')
+        $('#huo').children('img').attr('src', './img/huo_grey.png')
+        $(this).children('img').attr('src', './img/qianOne.png')
+        $('#indexPgae').hide()
+        $('#redEnvelopePage').hide()
+        $('#withDrawPage').show()
+    })
+
+
+    function goIndex () {
+        $('#whthDrawToast').hide()
+        $('#qian').children('div').removeClass('active').addClass('inactive')
+        $('#qianOne').children('div').removeClass('active').addClass('inactive')
+        $('#huo').children('div').removeClass('inactive').addClass('active')
+        $('#qian').children('img').attr('src', './img/qian_grey.png')
+        $('#qianOne').children('img').attr('src', './img/qianOne_grey.png')
+        $('#huo').children('img').attr('src', './img/huo.png')
+        $('#indexPgae').show()
+        $('#redEnvelopePage').hide()
+        $('#withDrawPage').hide()
+    }
+</script>
+<script>
+    var adListIndex = 0;
+    var adList = [
+        {
+            pid: '1013103', //广告位id
+            templateId: 'ad-template-big', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+        },
+        // {
+        //     pid: '1009955', //广告位id
+        //     templateId: 'ad-template', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
+        // },
+        // {
+        //     pid: '1013105', //广告位id
+        //     templateId: 'ad-template', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
+        // },
+        // {
+        //     pid: '1009965', //广告位id
+        //     templateId: 'ad-template-3img', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
+        // },
+        //
+        // {
+        //     pid: '1009957', //广告位id
+        //     templateId: 'ad-template', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
+        // },
+        //   {
+        //         pid: '1009965', //广告位id
+        //         templateId: 'ad-template-3img', //模板script的id
+        //         wrapDomId: 'adList', //插入广告模板的父级id
+        //         adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
+        //     },
+
+        // {
+        //     pid: '1009966', //广告位id
+        //     templateId: 'ad-template-big', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+        // },
+
+        //   {
+        //     pid: '1009961', //广告位id
+        //     templateId: 'ad-template', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
+        // },
+        // {
+        //     pid: '1009962', //广告位id
+        //     templateId: 'ad-template-3img', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
+        // },
+        // {
+        //     pid: '1009963', //广告位id
+        //     templateId: 'ad-template-big', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+        // },
+
+        //     {
+        //     pid: '1009968', //广告位id
+        //     templateId: 'ad-template-3img', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
+        // },
+
+        // {
+        //     pid: '1009960', //广告位id
+        //     templateId: 'ad-template-big', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+        // },
+        //   {
+        //     pid: '1009950', //广告位id
+        //     templateId: 'ad-template-big', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+        // },
+        //   {
+        //     pid: '1009954', //广告位id
+        //     templateId: 'ad-template-big', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+        // },
+
+        //   {
+        //     pid: '1009951', //广告位id
+        //     templateId: 'ad-template', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
+        // },
+        //  {
+        //     pid: '1009947', //广告位id
+        //     templateId: 'ad-template-big', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+        // },
+        //  {
+        //     pid: '1009959', //广告位id
+        //     templateId: 'ad-template-3img', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
+        // },
+        // {
+        //     pid: '1010288', //广告位id
+        //     templateId: 'ad-template-float', //模板script的id
+        //     wrapDomId: 'top-ad', //插入广告模板的父级id
+        //     adWrapClass: 'ad-wrap-float' //广告wrap的class 用于寻找被插入的广告
+        // },
+        // {
+        //     pid: '1009969', //广告位id
+        //     templateId: 'ad-template-big', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+        // },
+    ];
+    var deny_cids = []; // 被禁止的创意广告id
+    function hideOne() {
+        $('#redEnvelope').hide()
+    }
+
+    function hideTwo() {
+        $('#redEnvelopeGet').hide()
+    }
+
+    function hideThree() {
+        $('#redEnvelopeTwo').hide()
+    }
+
+    function hideFour() {
+        $('#withdrawalFailed').hide()
+    }
+
+    function hideFive () {
+        $('#withdrawalSuccess').hide()
+    }
+
+    function hideSix () {
+        $('.contain').css('zIndex', '3')
+        $('#poster').css('opacity', '0')
+        $('#newSharePoster').css('zIndex', '0')
+    }
+
+    function hideSeven () {
+        $('#whthDrawToast').hide()
+    }
+
+
+
+    $('.OK').click(function () {
+        $('.receive').hide();
+        $('.mask').hide();
+    })
+    $('.close').click(function () {
+        $('.receive').hide();
+        $('.mask').hide();
+    })
+
+    $('.share').click(function () {
+        $('.contain').css('zIndex', '0')
+        $('#poster').css('opacity', '1')
+        $('#newSharePoster').css('zIndex', '88')
+    })
+
+    function partake () {
+        $('.contain').css('zIndex', '0')
+        $('#poster').css('opacity', '1')
+        $('#newSharePoster').css('zIndex', '88')
+        hideFour()
+    }
+
+    $('.close_btn').click(function () {
+        $('.mask').hide();
+        $('.invite').hide();
+    })
+</script>
+</body>
+</html>
