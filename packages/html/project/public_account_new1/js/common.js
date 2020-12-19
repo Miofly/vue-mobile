@@ -5,7 +5,7 @@ function getParam(name, url) { // 获取地址栏参数
     name = name.replace(/[\[\]]/g, '\\$&')
     var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)')
     var results = regex.exec(url)
-    if (!results) return null
+    if (!results) return ''
     if (!results[2]) return ''
     return decodeURIComponent(results[2].replace(/\+/g, ' '))
 }

@@ -268,7 +268,7 @@ export default {
 			})
 		},
 		async goWithDraw () {
-			const {code, data} = await commonPost('/my/apply_withdraw', {index: this.moneyIndex})
+			const {code, data} = await commonPost('/my/apply_withdraw', {index: this.allow_money[this.moneyIndex].index})
 			if (code == 200) {
 				uni.showToast({title:`提现成功`, duration: 2000, icon: 'none'})
 				this.balance = this.balance - this.allow_money[this.moneyIndex].value

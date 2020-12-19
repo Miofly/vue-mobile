@@ -31,7 +31,7 @@ function getIpAddress () { // 获取真实IP地址
 
 const mockServerPort = 8686
 
-process.env.VUE_APP_BASE_API = `http://${getIpAddress()}:8686/mock-api/v1`
+// process.env.VUE_APP_BASE_API = `http://${getIpAddress()}:8686/mock-api/v1`
 /**
  *  publicPath 不支持，如果需要配置，请在 manifest.json->h5->router->base 中配置，
  *  outputDir 不支持

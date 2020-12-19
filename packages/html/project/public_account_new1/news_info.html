@@ -128,13 +128,13 @@
 <script src="./js/adInfo.js"></script>
 <script>
 
-    commonGet('/articles/' + getParam('id') + '?from_user_id=2', function (res) {
+    commonGet('/articles/' + getParam('article_id') + '?from_user_id=' + getParam('from_user_id') +'', function (res) {
         console.log(res)
         if (res.code == 200) {
             $('#title').html(res.data.title)
             $('#content').html(res.data.content)
         }
-    }, {'ACT-USER-ID': 1, 'UV-ID': 'abcdefg'})
+    }, {'ACT-USER-ID': getParam('user_id')})
 
     getListData({num: 1, size: 40})
 

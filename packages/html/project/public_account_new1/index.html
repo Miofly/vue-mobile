@@ -355,7 +355,7 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
                     //
                 }
             }
-        }, {'ACT-USER-ID': obj.userId})
+        }, {'ACT-USER-ID': getParam('user_id')})
     }
 
     // 首次进入的红包金额配置 倒计时时间 金额配置 提现需知
@@ -404,7 +404,7 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
                 // $('#sumMoney').text(obj.bigRed) //后台返回钱数
                 redGift()
             }
-        }, {'ACT-USER-ID': obj.userId})
+        }, {'ACT-USER-ID': getParam('user_id')})
     })
 
     // 提现金额选择
@@ -433,7 +433,7 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
             } else {
 
             }
-        }, {'ACT-USER-ID': obj.userId}, function (err) {
+        }, {'ACT-USER-ID': getParam('user_id')}, function (err) {
             console.log(err)
         })
     }
@@ -449,7 +449,7 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
                 if (res.code == 200) {
 
                 }
-            }, {'ACT-USER-ID': obj.userId})
+            }, {'ACT-USER-ID': getParam('user_id')})
         }, 2000)
     }
 
@@ -465,7 +465,7 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
                 $('.contain').show();
                 redGift()
                 startcountDown(obj.packet_valid_hours)
-            }, {'ACT-USER-ID': obj.userId})
+            }, {'ACT-USER-ID': getParam('user_id')})
         }, 2000)
     }
 
@@ -504,7 +504,7 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
                     if (res.code == 200) {
 
                     }
-                }, {'ACT-USER-ID': obj.userId})
+                }, {'ACT-USER-ID': getParam('user_id')})
             }
         })
     }
@@ -551,7 +551,7 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
 
                     drawing(0, $('#newSharePoster'), false, 100);
                 }
-            }, {'ACT-USER-ID': obj.userId})
+            }, {'ACT-USER-ID': getParam('user_id')})
         }
 
         $('#huo').children('div').removeClass('active').addClass('inactive')
@@ -585,7 +585,7 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
                 userInfos.balance = res.data.balance
                 $('#sumMoney').html(res.data.balance + '<span style="vertical-align: middle;font-size: 0.6rem;color: #FFFFFF;margin-left: 0.2rem;font-weight: bold">元</span>') //后台返回钱数
             }
-        }, {'ACT-USER-ID': obj.userId})
+        }, {'ACT-USER-ID': getParam('user_id')})
 
         $('#qian').children('div').removeClass('active').addClass('inactive')
         $('#huo').children('div').removeClass('active').addClass('inactive')

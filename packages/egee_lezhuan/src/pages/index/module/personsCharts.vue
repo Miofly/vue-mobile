@@ -56,12 +56,12 @@
 
             for (let i = 0; i < this.dataOneList.length; i++) {
                 this.dataOneHour.push(this.dataOneList[i].trans_hour)
-                this.dataOneClick.push(this.dataOneList[i].effective_click_total)
+                this.dataOneClick.push(Number(this.dataOneList[i].effective_click_total))
             }
 
             for (let i = 0; i < this.dataTwoList.length; i++) {
                 this.dataTwoHour.push(this.dataTwoList[i].stat_date)
-                this.dataTwoClick.push(parseInt(this.dataTwoList[i].effective_click_total))
+                this.dataTwoClick.push(Number(this.dataTwoList[i].effective_click_total))
             }
 			// console.log(this.dataTwoHour)
 			// console.log(this.dataTwoClick)

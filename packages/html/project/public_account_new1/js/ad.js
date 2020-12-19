@@ -287,7 +287,7 @@ function setListData(curPageData, page) {
     var listDom = document.getElementById("dataList");
     for (var i = 0; i < curPageData.length; i++) {
         var pd = curPageData[i];
-        var str = '<div style="display: flex;justify-content: space-around;height: 1.86rem;margin-top: 0.24rem" onclick="test(' + pd.id + ')">\n' +
+        var str = '<div style="display: flex;justify-content: space-around;height: 1.86rem;margin-top: 0.24rem" onclick="goInfo(' + pd.id + ')">\n' +
             '            <div style="width: 65%;padding-left: 0.06rem;">\n' +
             '                <div style="font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.44rem;" class="line-two">' + pd.title + '</div>\n' +
             '                <div style="display: flex;justify-content: space-between;margin-top: 0.28rem">\n' +
@@ -306,8 +306,8 @@ function setListData(curPageData, page) {
     }
 }
 
-function test (id) {
-	location.href = 'news_info.html?id='+ id +'&from_user_id=2'
+function goInfo (id) {
+	location.href = 'news_info.html?article_id='+ id +'&from_user_id=' + getParam('from_user_id') + '&user_id='+ getParam('user_id') +''
 }
 
 /*联网加载列表数据  page = {num:1, size:10}; num:当前页 从1开始, size:每页数据条数 */
@@ -362,7 +362,7 @@ function getParam(name, url) { // 获取地址栏参数
     name = name.replace(/[\[\]]/g, '\\$&')
     var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)')
     var results = regex.exec(url)
-    if (!results) return null
+    if (!results) return ''
     if (!results[2]) return ''
     return decodeURIComponent(results[2].replace(/\+/g, ' '))
 }

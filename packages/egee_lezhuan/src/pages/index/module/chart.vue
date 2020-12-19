@@ -74,7 +74,7 @@
             this.total_click = data.data.total_click
             for (let i = 0; i < dataList.length; i++) {
                 this.xData.push(dataList[i].tarns_hour)
-                this.yData.push(dataList[i].effective_click_total)
+                this.yData.push(Number(dataList[i].effective_click_total))
             }
             console.log(dataTwo)
 
@@ -82,7 +82,7 @@
             this.total_clickTwo = dataTwo.data.total_click
             for (let i = 0; i < dataListTwo.length; i++) {
                 this.xDataTwo.push(dataListTwo[i].stat_date.slice(5))
-                this.yDataTwo.push(parseInt(dataListTwo[i].effective_click_total))
+                this.yDataTwo.push(Number(dataListTwo[i].effective_click_total))
             }
         },
         methods: {
