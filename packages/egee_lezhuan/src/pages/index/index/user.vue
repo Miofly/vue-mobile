@@ -160,7 +160,7 @@
 		        this.balance = data.balance
 			    this.todayProfit = data.todayProfit
 			    this.totalProfit = data.totalProfit
-			    this.yesterdayProfit = data.totalProfit
+			    this.yesterdayProfit = data.yesterdayProfit
 		        localStorage.setItem('realName', data.true_name)
 	        },
             async handClick (e) {

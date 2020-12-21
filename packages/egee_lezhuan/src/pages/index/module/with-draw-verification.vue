@@ -27,7 +27,7 @@
 					<text class=""><text class="text-red margin-right" style="vertical-align: text-top">*</text>手机号</text>
 				</view>
 				<view v-if="true" class="action">
-					<input :disabled="isReadOnly" class="margin-top text-right" v-model="mobile" placeholder="请输入手机号" :focus="false" :password=false  maxlength="-1" confirm-type="完成"/>
+					<input :disabled="isReadOnly" class="margin-top text-right" v-model="mobile" placeholder="请输入手机号" :focus="false" :password=false  maxlength="11" confirm-type="完成"/>
 				</view>
 			</view>
 			<view class="cu-item">
@@ -35,7 +35,7 @@
 					<text class=""><text class="text-red margin-right" style="vertical-align: text-top">*</text>身份证号码</text>
 				</view>
 				<view v-if="true" class="action">
-					<input :disabled="isReadOnly" style="width: 200px" class="margin-top text-right" v-model="license" placeholder="请输入身份证号码" :focus="false" :password=false  maxlength="-1" confirm-type="完成"/>
+					<input :disabled="isReadOnly" style="width: 200px" class="margin-top text-right" v-model="license" placeholder="请输入身份证号码" :focus="false" :password=false  maxlength="18" confirm-type="完成"/>
 				</view>
 			</view>
 			<view class="cu-item">
@@ -43,7 +43,7 @@
 					<text class="">银行卡号</text>
 				</view>
 				<view v-if="true" class="action">
-					<input :disabled="isReadOnly" style="width: 270px" class="margin-top text-right" v-model="bank" placeholder="请输入银行卡号" :focus="false" :password=false  maxlength="-1" confirm-type="完成"/>
+					<input :disabled="isReadOnly" style="width: 270px" class="margin-top text-right" v-model="bank" placeholder="请输入银行卡号" :focus="false" :password=false  maxlength="19" confirm-type="完成"/>
 				</view>
 			</view>
 		</view>
