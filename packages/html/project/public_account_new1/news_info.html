@@ -8,6 +8,7 @@
     <script src="./js/common.js" type="text/javascript"></script>
     <script src="./js/EventEmitter.min.js"></script>
     <script src="./js/art-template.js"></script>
+    <script src="./js/jf.js"></script>
     <script src="https://gw.alipayobjects.com/os/lib/lottie-web/5.5.6/build/player/lottie.min.js"></script>
     <link href="./css/index.css" rel="stylesheet" type="text/css"/>
     <style>
@@ -33,7 +34,7 @@
 <div style="height: 0.38rem;">
     <img src="./img/hbts.png" style="height: 0.38rem;width: 100vw;padding:0;margin: 0;vertical-align: sub">
 </div>
-<div style="padding: 0.16rem">
+<div style="padding: 0.16rem;padding-bottom: 0.6rem">
     <div id="title" style="color: #333333;font-size: 24px;font-weight: bolder;text-align: justify"></div>
     <!--文章内容-->
     <div id="contentParent" style="margin-top: 0.03rem;position: relative;height: 1.4rem;">
@@ -50,15 +51,15 @@
 
     <div id="dataList" style="padding-bottom: 0.5rem"></div>
 
-    <div id="dynamicEffect" style="position: fixed;bottom: 0.2rem;width: 100%;left: 0;text-align: center">
+    <div id="dynamicEffect" style="position: fixed;bottom: 0rem;width: 100%;left: 0;text-align: center">
     </div>
     <!--广告-->
     <div class="container" style="padding-bottom: 3%;margin-top:0vh">
         <!--单图-->
-        <script id="ad-template" type="text/html">
+        <script id="ad-template-info" type="text/html">
             <div class="ad-template-info"
                  style="display: flex;justify-content: space-between;height: 0.93rem;margin-top: 0.12rem"
-                 onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},2,'<?=$uuid?>')">
+                 onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},1,getParam('from_user_id'))">
                 <div style="width: 65%">
                     <div class="line-two"
                          style="font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.22rem;">
@@ -81,7 +82,7 @@
         <!--三图-->
         <script id="ad-template-3img" type="text/html">
             <div class="ad-template-3img" style="padding: 0.12rem 0"
-                 onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},3,'<?=$uuid?>')">
+                 onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},2,getParam('from_user_id')))">
                 <div class="line-two"
                      style="padding: 0 0rem;font-weight: bolder;line-height: 0.22rem;color: #333;font-size: 16px!important;">
                     {{ title }}
@@ -103,9 +104,9 @@
             <div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>
         </script>
         <!--大图-->
-        <script id="ad-template-big" type="text/html">
+        <script id="ad-template-info-big" type="text/html">
             <div class="ad-template-info-big" style="padding: 0.12rem 0"
-                 onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},1,'14b98633-ef72-49e4-9427-8b76328ded6f')">
+                 onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},3,getParam('from_user_id'))">
                 <div class="line-two"
                      style="padding: 0 0rem;font-weight: bolder;line-height: 0.22rem;color: #333;font-size: 16px!important;">
                     {{ title }}
@@ -136,8 +137,6 @@
         }
     }, {'ACT-USER-ID': getParam('user_id')})
 
-    getListData({num: 1, size: 40})
-
     function openAll() {
         $('#content').height('auto')
         $('#contentParent').height($('#content').height())
@@ -155,134 +154,58 @@
     });
 
     $('#dynamicEffect').click(function () {
-        location.href = './partake.html'
+        location.href = './partake.html'+ location.search +''
     })
 
     var adListIndex = 0;
     var adList = [
-        {
-            pid: '1013103', //广告位id
-            templateId: 'ad-template-big', //模板script的id
-            wrapDomId: 'adList', //插入广告模板的父级id
-            adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
-        },
-        {
-            pid: '1009955', //广告位id
-            templateId: 'ad-template', //模板script的id
-            wrapDomId: 'adList', //插入广告模板的父级id
-            adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
-        },
-        {
-            pid: '1013105', //广告位id
-            templateId: 'ad-template', //模板script的id
-            wrapDomId: 'adList', //插入广告模板的父级id
-            adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
-        },
-        {
-            pid: '1009965', //广告位id
-            templateId: 'ad-template-3img', //模板script的id
-            wrapDomId: 'adList', //插入广告模板的父级id
-            adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
-        },
-
-        {
-            pid: '1009957', //广告位id
-            templateId: 'ad-template', //模板script的id
-            wrapDomId: 'adList', //插入广告模板的父级id
-            adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
-        },
-        //   {
-        //         pid: '1009965', //广告位id
-        //         templateId: 'ad-template-3img', //模板script的id
-        //         wrapDomId: 'adList', //插入广告模板的父级id
-        //         adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
-        //     },
-
-        {
-            pid: '1009966', //广告位id
-            templateId: 'ad-template-big', //模板script的id
-            wrapDomId: 'adList', //插入广告模板的父级id
-            adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
-        },
-
-        //   {
-        //     pid: '1009961', //广告位id
-        //     templateId: 'ad-template', //模板script的id
-        //     wrapDomId: 'adList', //插入广告模板的父级id
-        //     adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
-        // },
-        {
-            pid: '1009962', //广告位id
-            templateId: 'ad-template-3img', //模板script的id
-            wrapDomId: 'adList', //插入广告模板的父级id
-            adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
-        },
-        {
-            pid: '1009963', //广告位id
-            templateId: 'ad-template-big', //模板script的id
-            wrapDomId: 'adList', //插入广告模板的父级id
-            adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
-        },
-
-        //     {
-        //     pid: '1009968', //广告位id
-        //     templateId: 'ad-template-3img', //模板script的id
-        //     wrapDomId: 'adList', //插入广告模板的父级id
-        //     adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
-        // },
-
-        {
-            pid: '1009960', //广告位id
-            templateId: 'ad-template-big', //模板script的id
-            wrapDomId: 'adList', //插入广告模板的父级id
-            adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
-        },
-        //   {
-        //     pid: '1009950', //广告位id
-        //     templateId: 'ad-template-big', //模板script的id
-        //     wrapDomId: 'adList', //插入广告模板的父级id
-        //     adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
-        // },
-        //   {
-        //     pid: '1009954', //广告位id
-        //     templateId: 'ad-template-big', //模板script的id
-        //     wrapDomId: 'adList', //插入广告模板的父级id
-        //     adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
-        // },
-
-        //   {
-        //     pid: '1009951', //广告位id
-        //     templateId: 'ad-template', //模板script的id
-        //     wrapDomId: 'adList', //插入广告模板的父级id
-        //     adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
-        // },
-        //  {
-        //     pid: '1009947', //广告位id
-        //     templateId: 'ad-template-big', //模板script的id
-        //     wrapDomId: 'adList', //插入广告模板的父级id
-        //     adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
-        // },
-        //  {
-        //     pid: '1009959', //广告位id
-        //     templateId: 'ad-template-3img', //模板script的id
-        //     wrapDomId: 'adList', //插入广告模板的父级id
-        //     adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
-        // },
         {
             pid: '1010288', //广告位id
             templateId: 'ad-template-float', //模板script的id
             wrapDomId: 'top-ad', //插入广告模板的父级id
             adWrapClass: 'ad-wrap-float' //广告wrap的class 用于寻找被插入的广告
         },
-        {
-            pid: '1009969', //广告位id
-            templateId: 'ad-template-big', //模板script的id
-            wrapDomId: 'adList', //插入广告模板的父级id
-            adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
-        },
     ];
     var deny_cids = []; // 被禁止的创意广告id
 
+    commonGet('/adverts', function (res) {
+        // console.log(res)
+        if (res.code == 200) {
+            adList = res.data
+        }
+
+         ee.addListener('fetch-jj-ad', function() {
+             // console.log(adList)
+             var curData = adList[adListIndex];
+             //请求并渲染广告
+             Ad.singleAd(
+                 $.extend(curData, {
+                     data: {
+                         //   app_id:101918,
+                         app_id: 101918,
+                         deny_cids: deny_cids.join(',')
+                     }
+                 }),
+                 function(res) {
+                     if (res!=undefined) {
+                         trueIndex++
+                     }
+                     if (adListIndex === adList.length - 1) return;
+                     if (res && deny_cids.indexOf(res.cid) == -1) {
+                         /* 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复 */
+                         deny_cids.push(res.cid); //插入创意id 用于广告位被重复广告占用
+                     }
+
+                     adListIndex++;
+
+
+                     /* 请求下个广告 */
+                     ee.emitEvent('fetch-jj-ad');
+                 }
+             );
+         });
+         ee.emitEvent('fetch-jj-ad');
+    }, {'ACT-USER-ID': getParam('user_id')})
 </script>
 </body>
 </html>

@@ -32,8 +32,7 @@
 <script>
     setTimeout(() => {
         $('#dynamicEffectDiv').css('opacity', 1)
-
-    }, 500)
+    }, 800)
     var anim = lottie.loadAnimation({
         container: document.getElementById("dynamicEffect"), // 容器
         renderer: "svg",
@@ -41,6 +40,12 @@
         autoplay: true,
         path: "https://assets3.lottiefiles.com/packages/lf20_4moaibyf/data.json" // the path to the animation json
     });
+
+    commonPost('/open/jssdk', {url: encodeURIComponent(location.href.split('#')[0]), article_id: getParam('article_id'), from_user_id: getParam('from_user_id') == '' ? getParam('user_id') : getParam('from_user_id'), oa_id: getParam('oa_id')}, function (res) {
+        if (res.code == 200) {
+
+        }
+    })
 
 </script>
 </body>

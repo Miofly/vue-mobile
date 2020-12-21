@@ -241,8 +241,8 @@ var Ad = {
      */
     singleAd: function(params, callback) {
         var pid = params.pid,
-            templateId = params.templateId,
-            wrapDomId = params.wrapDomId,
+            templateId = params.adWrapClass,
+            // wrapDomId = params.wrapDomId,
             adWrapClass = params.adWrapClass,
             data = params.data || {};
 
@@ -250,6 +250,7 @@ var Ad = {
             callback && callback(res);
             if (err) return;
             //获取模板生成的html
+            // console.log(templateId)
             var html = template(
                 templateId,
                 $.extend(res, {
@@ -257,11 +258,16 @@ var Ad = {
                     readNum: Ad.random(100000, 500000) //阅读数
                 })
             );
+
             $('#adIndex' + trueIndex*2 + '').append(html)
             // 查询被插入的广告 用于曝光监测
-            var currAd = $('#adIndex' + trueIndex*2 + ' .' + adWrapClass + ':last')[0];
+            // var currAd = $('.'+ adWrapClass);
+            var currAd = $('#dataList' + trueIndex*2 + ' .' + adWrapClass + ':last')[0];
+            console.log()
             //启动广告曝光监测
-            Ad.checkMonitor(currAd, res.monitorUrl);
+            if (currAd != undefined) {
+                Ad.checkMonitor(currAd, res.monitorUrl);
+            }
         });
     }
 };
@@ -271,7 +277,8 @@ var mescroll = new MeScroll("mescroll", {
         use: false
     },
     up: {
-        page: {num:0, size:5},//每次加载1条数据,模拟loadFull
+        auto: true,
+        page: {num:0, size:40},//每次加载1条数据,模拟loadFull
         callback: getListData, //上拉回调,此处可简写; 相当于 callback: function (page) { getListData(page); }
         isBounce: false, //此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
         clearEmptyId: "dataList", //1.下拉刷新时会自动先清空此列表,再加入数据; 2.无任何数据时会在此列表自动提示空
@@ -304,55 +311,75 @@ function setListData(curPageData, page) {
         liDom.innerHTML = str;
         listDom.appendChild(liDom);
     }
+
 }
 
 function goInfo (id) {
 	location.href = 'news_info.html?article_id='+ id +'&from_user_id=' + getParam('from_user_id') + '&user_id='+ getParam('user_id') +''
 }
 
+// $(function () {
+
+// })
 /*联网加载列表数据  page = {num:1, size:10}; num:当前页 从1开始, size:每页数据条数 */
+var adListIndex = 0;
+var adList = [
+
+];
+var deny_cids = []; // 被禁止的创意广告id
+var tempIndex = 0
+// getListData({num:0, size:10})
 function getListData(page) {
-    commonGet('/articles?page=' + page.num + '&per_page=' + page.size + '',
-        function (res) {
-            var data = res.data
-            var total = res.meta.total
-            mescroll.endSuccess(data.length, total);
-            setListData(data, page);
+    tempIndex++
+    if (tempIndex == 0 ) {
 
-            if (trueIndex == 0) {
-                ee.addListener('fetch-jj-ad', function() {
-                    var curData = adList[adListIndex];
-                    //请求并渲染广告
-                    Ad.singleAd(
-                        $.extend(curData, {
-                            data: {
-                                //   app_id:101918,
-                                app_id: 101918,
-                                deny_cids: deny_cids.join(',')
-                            }
-                        }),
-                        function(res) {
-                            if (res!=undefined) {
-                                trueIndex++
-                            }
-                            if (adListIndex === adList.length - 1) return;
-                            if (res && deny_cids.indexOf(res.cid) == -1) {
-                                /* 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复 */
-                                deny_cids.push(res.cid); //插入创意id 用于广告位被重复广告占用
-                            }
-
-                            adListIndex++;
-
-                            /* 请求下个广告 */
-                            ee.emitEvent('fetch-jj-ad');
-                        }
-                    );
-                });
-                ee.emitEvent('fetch-jj-ad');
-            }
-
+    }
+    commonGet('/adverts', function (res) {
+        // console.log(res)
+        if (res.code == 200) {
+            adList = res.data
         }
-    )
+        commonGet('/articles?page=' + page.num + '&per_page=' + page.size + '',
+            function (res) {
+                var data = res.data
+                var total = res.meta.total
+                mescroll.endSuccess(data.length, total);
+                setListData(data, page);
+                if (trueIndex == 0) {
+                    ee.addListener('fetch-jj-ad', function() {
+                        // console.log(adList)
+                        var curData = adList[adListIndex];
+                        //请求并渲染广告
+                        Ad.singleAd(
+                            $.extend(curData, {
+                                data: {
+                                    //   app_id:101918,
+                                    app_id: 101918,
+                                    deny_cids: deny_cids.join(',')
+                                }
+                            }),
+                            function(res) {
+                                if (res!=undefined) {
+                                    trueIndex++
+                                }
+                                if (adListIndex === adList.length - 1) return;
+                                if (res && deny_cids.indexOf(res.cid) == -1) {
+                                    /* 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复 */
+                                    deny_cids.push(res.cid); //插入创意id 用于广告位被重复广告占用
+                                }
+
+                                adListIndex++;
+
+                                /* 请求下个广告 */
+                                ee.emitEvent('fetch-jj-ad');
+                            }
+                        );
+                    });
+                    ee.emitEvent('fetch-jj-ad');
+                }
+
+            }, {'ACT-USER-ID': getParam('user_id')})
+    }, {'ACT-USER-ID': getParam('user_id')})
 }
 
 function getParam(name, url) { // 获取地址栏参数

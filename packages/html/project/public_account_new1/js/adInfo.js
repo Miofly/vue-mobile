@@ -72,39 +72,25 @@ var Ad = {
      * clickUrl 点击率接口
      * dUrl 广告落地页url
      */
-    adClick: function(clickUrl, dUrl, pid,ad_type,uuid) {
-        ad_type = ad_type || 0;
-        uuid = uuid || '';
+    adClick: function(clickUrl, dUrl, pid,type,user_id) {
+        console.log(clickUrl, dUrl, pid,type,user_id)
         var ua = navigator.userAgent;
-        var data = data || {};
-        if(uuid != ''){
-            $.ajax({
-                type: 'post',
-                headers: {
-                    'User-Agent': ua
-                },
-                url: 'http://start_up.qd2020.cn/api/monitor-advert',
-                data: $.extend(
-                    {
-                        user_agent:ua,
-                        uuid:uuid,
-                        ad_pid:pid,
-                        ad_type:ad_type,
-                        is_click:1,
-                    },
-                    data
-                ),
-                dataType: 'json', //jsonp格式访问
-                success: function(res) {
-                },
-                error: function(err) {
-                },
-                complete: function() {
+        if(user_id != ''){
+            commonPost('/adClickStat', {
+                ua: ua,
+                pid:pid,
+                type:type,
+                user_id:user_id,
+                sign:'bFwbxLAzwd5F4DOPS2hO',
+            }, function (res) {
+                console.log(res)
+                if (res.code == 200) {
+
                 }
-            });
+            }, {'ACT-USER-ID': getParam('user_id')})
         }
 
-        //Ad.clickCallback(pid);
+        Ad.clickCallback(pid);
 
         clickUrl.forEach(function(url) {
             Ad.send(url);
@@ -145,7 +131,6 @@ var Ad = {
         if (typeof jQuery === 'function' && el instanceof jQuery) {
             el = el[0];
         }
-
 
         var rect = el.getBoundingClientRect();
 
@@ -241,8 +226,7 @@ var Ad = {
      */
     singleAd: function(params, callback) {
         var pid = params.pid,
-            templateId = params.templateId,
-            wrapDomId = params.wrapDomId,
+            templateId = params.adWrapClass,
             adWrapClass = params.adWrapClass,
             data = params.data || {};
 
@@ -257,81 +241,14 @@ var Ad = {
                     readNum: Ad.random(100000, 500000) //阅读数
                 })
             );
-            $('#adIndex' + trueIndex*2 + '').append(html)
+            $('#dataList').append(html)
             // 查询被插入的广告 用于曝光监测
-            var currAd = $('#adIndex' + trueIndex*2 + ' .' + adWrapClass + ':last')[0];
+            var currAd = $('#dataList' + ' .' + adWrapClass + ':last')[0];
             //启动广告曝光监测
             Ad.checkMonitor(currAd, res.monitorUrl);
         });
     }
 };
-
-function setListData(curPageData, page) {
-    var listDom = document.getElementById("dataList");
-    for (var i = 0; i < curPageData.length; i++) {
-        var pd = curPageData[i];
-        var str = '<div style="display: flex;justify-content: space-between;height: 0.93rem;margin-top: 0.12rem;">\n' +
-            '            <div style="width: 65%;">\n' +
-            '                <div style="font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.22rem;" class="line-two">' + pd.title + '</div>\n' +
-            '                <div style="display: flex;justify-content: space-between;margin-top: 0.14rem">\n' +
-            '                    <span style="color: rgba(255, 66, 55, 1);font-size: 14px;"><img src="./img/xhb.png" style="margin-top: -0.02rem;margin-right: 0.03rem;width: 0.14rem;height: 0.14rem"><span>分享好友得1元红包</span></span>\n' +
-            '                    <img src="./img/fxzq.png" style="height: 0.17rem;">\n' +
-            '                </div>\n' +
-            '            </div>\n' +
-            '            <div style="width: 1rem;height: 0.8rem;padding-right: 0.00rem;line-height: 0.7rem">\n' +
-            '                <img src="'+ pd.cover[0].path +'"  style="height: 0.8rem;border-radius: 4px;">\n' +
-            '            </div>\n' +
-            '        </div><div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>';
-        var liDom = document.createElement("div");
-        liDom.setAttribute('id', 'adIndex' + (i + 1 + (page.num - 1) * page.size) + '')
-        liDom.innerHTML = str;
-        listDom.appendChild(liDom);
-    }
-}
-
-/*联网加载列表数据  page = {num:1, size:10}; num:当前页 从1开始, size:每页数据条数 */
-function getListData(page) {
-    commonGet('/articles?page=' + page.num + '&limit=' + page.size + '',
-        function (res) {
-            var data = res.data
-            var total = res.meta.total
-            setListData(data, page);
-
-            if (trueIndex == 0) {
-                ee.addListener('fetch-jj-ad', function() {
-                    var curData = adList[adListIndex];
-                    //请求并渲染广告
-                    Ad.singleAd(
-                        $.extend(curData, {
-                            data: {
-                                //   app_id:101918,
-                                app_id: 101918,
-                                deny_cids: deny_cids.join(',')
-                            }
-                        }),
-                        function(res) {
-                            if (res!=undefined) {
-                                trueIndex++
-                            }
-                            if (adListIndex === adList.length - 1) return;
-                            if (res && deny_cids.indexOf(res.cid) == -1) {
-                                /* 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复 */
-                                deny_cids.push(res.cid); //插入创意id 用于广告位被重复广告占用
-                            }
-
-                            adListIndex++;
-
-                            /* 请求下个广告 */
-                            ee.emitEvent('fetch-jj-ad');
-                        }
-                    );
-                });
-                ee.emitEvent('fetch-jj-ad');
-            }
-
-        }
-    )
-}
 
 
 
