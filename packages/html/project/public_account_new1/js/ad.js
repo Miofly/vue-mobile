@@ -260,6 +260,7 @@ var Ad = {
                 })
             );
 
+            console.log(trueIndex*2)
             $('#adIndex' + trueIndex*2 + '').append(html)
             // 查询被插入的广告 用于曝光监测
             // var currAd = $('.'+ adWrapClass);
@@ -334,50 +335,49 @@ var tempIndex = 0
 
 function getListData(page) {
     tempIndex++
-
-    commonGet('/adverts', function (res) {
+    adListIndex = 0
+    commonGet('/adverts?page=' + page.num + '&per_page=' + page.size/2 + '', function (res) {
         // console.log(res)
         if (res.code == 200) {
             adList = res.data
+            console.log(adList)
             commonGet('/articles?page=' + page.num + '&per_page=' + page.size + '',
                 function (res) {
                     var data = res.data
                     var total = res.meta.total
                     mescroll.endSuccess(data.length, total);
                     setListData(data, page);
-                    if (trueIndex == 0) {
-                        ee.addListener('fetch-jj-ad', function() {
-                            // console.log(adList)
-                            var curData = adList[adListIndex];
-                            //请求并渲染广告
-                            Ad.singleAd(
-                                $.extend(curData, {
-                                    data: {
-                                        //   app_id:101918,
-                                        app_id: 103019,
-                                        deny_cids: deny_cids.join(',')
-                                    }
-                                }),
-                                function(res) {
-                                    if (res!=undefined) {
-                                        trueIndex++
-                                    }
-                                    if (adListIndex === adList.length - 1) return;
-                                    if (res && deny_cids.indexOf(res.cid) == -1) {
-                                        /* 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复 */
-                                        deny_cids.push(res.cid); //插入创意id 用于广告位被重复广告占用
-                                    }
+                    ee.addListener('fetch-jj-ad', function() {
+                        console.log('adListIndex', adListIndex)
 
-                                    adListIndex++;
-
-                                    /* 请求下个广告 */
-                                    ee.emitEvent('fetch-jj-ad');
+                        var curData = adList[adListIndex];
+                        //请求并渲染广告
+                        Ad.singleAd(
+                            $.extend(curData, {
+                                data: {
+                                    //   app_id:101918,
+                                    app_id: 103019,
+                                    deny_cids: deny_cids.join(',')
                                 }
-                            );
-                        });
-                        ee.emitEvent('fetch-jj-ad');
-                    }
+                            }),
+                            function(res) {
+                                if (res!=undefined) {
+                                    trueIndex++
+                                }
+                                if (adListIndex === adList.length - 1) return;
+                                if (res && deny_cids.indexOf(res.cid) == -1) {
+                                    /* 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复 */
+                                    deny_cids.push(res.cid); //插入创意id 用于广告位被重复广告占用
+                                }
 
+                                adListIndex++;
+
+                                /* 请求下个广告 */
+                                ee.emitEvent('fetch-jj-ad');
+                            }
+                        );
+                    });
+                    ee.emitEvent('fetch-jj-ad');
                 }, {'ACT-USER-ID': getParam('user_id')})
 
             if (tempIndex == 1 ) {
