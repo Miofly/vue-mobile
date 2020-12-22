@@ -11,102 +11,118 @@
     <script src="./js/jf.js"></script>
     <script src="https://gw.alipayobjects.com/os/lib/lottie-web/5.5.6/build/player/lottie.min.js"></script>
     <link href="./css/index.css" rel="stylesheet" type="text/css"/>
+    <style>
+        #content p {
+            color: #222;
+            text-align: justify;
+            font-size: 18px;
+            line-height: 0.28rem;
+            margin-top: 0.17rem;;
+            text-indent: 2em;
+            word-wrap: break-word;
+            list-style-position: inside;
+            list-style-type: square
+        }
+
+        #content img {
+            display: block;
+            width: 100%
+        }
+    </style>
 </head>
 <body>
-<div>
-    <div style="height: 0.76rem;">
-        <img src="./img/hbts.png" style="height: 0.76rem;width: 100vw;padding:0;margin: 0;vertical-align: sub">
+<div style="height: 0.38rem;">
+    <img src="./img/hbts.png" style="height: 0.38rem;width: 100vw;padding:0;margin: 0;vertical-align: sub">
+</div>
+<div style="padding: 0.16rem;padding-bottom: 0.6rem">
+    <div id="title" style="color: #333333;font-size: 24px;font-weight: bolder;text-align: justify"></div>
+    <!--文章内容-->
+    <div id="contentParent" style="margin-top: 0.03rem;position: relative;height: 1.4rem;">
+        <div id="content" style="position: absolute;top: 0;left: 0;overflow-y: hidden;height: 1.4rem;
+        font-size: 18px;text-indent: 2em;line-height: 1.28rem;text-align:justify"></div>
+        <div id="openAll" onclick="openAll()" style="position: absolute;top: 0.58rem;left: 0">
+            <img src="./img/ckqw.png">
+        </div>
     </div>
-    <div style="padding: 0.32rem;padding-bottom: 1.2rem">
-        <div id="title" style="color: #333333;font-size: 24px;font-weight: bolder;text-align: justify"></div>
-        <!--文章内容-->
-        <div id="contentParent" style="margin-top: 0.06rem;position: relative;height: 2.8rem;">
-            <div id="content" style="position: absolute;top: 0;left: 0;overflow-y: hidden;height: 2.8rem;
-        font-size: 18px;text-indent: 4em;line-height: 2.56rem;text-align:justify"></div>
-            <div id="openAll" onclick="openAll()" style="position: absolute;top: 1.16rem;left: 0">
-                <img src="./img/ckqw.png">
-            </div>
-        </div>
 
-        <div style="margin-top: 0.36rem">
-            <img src="./img/rmtj.png" style="height: 0.34rem">
-        </div>
+    <div style="margin-top: 0.18rem">
+        <img src="./img/rmtj.png" style="height: 0.17rem">
+    </div>
 
-        <div id="dataList" style="padding-bottom: 1rem"></div>
+    <div id="dataList" style="padding-bottom: 0.5rem"></div>
 
-        <div id="dynamicEffect" style="position: fixed;bottom: 0rem;width: 100%;left: 0;text-align: center">
-        </div>
-        <!--广告-->
-        <div class="container" style="padding-bottom: 3%;margin-top:0vh">
-            <!--单图-->
-            <script id="ad-template-info" type="text/html">
-                <div class="ad-template-info"
-                     style="display: flex;justify-content: space-between;height: 1.86rem;margin-top: 0.24rem"
-                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},1,getParam('from_user_id'))">
-                    <div style="width: 65%">
-                        <div class="line-two"
-                             style="font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.44rem;">
-                            {{ title }}
-                        </div>
-                        <div style="display: flex;justify-content: space-between;margin-top: 0.28rem">
+    <div id="dynamicEffect" style="position: fixed;bottom: 0rem;width: 100%;left: 0;text-align: center">
+    </div>
+    <!--广告-->
+    <div class="container" style="padding-bottom: 3%;margin-top:0vh">
+        <!--单图-->
+        <script id="ad-template-info" type="text/html">
+            <div class="ad-template-info"
+                 style="display: flex;justify-content: space-between;height: 0.93rem;margin-top: 0.12rem"
+                 onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},1,getParam('from_user_id'))">
+                <div style="width: 65%">
+                    <div class="line-two"
+                         style="font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.22rem;">
+                        {{ title }}
+                    </div>
+                    <div style="display: flex;justify-content: space-between;margin-top: 0.14rem">
                         <span style="color: rgba(255, 66, 55, 1);font-size: 14px;">
                             <img src="./img/xhb.png"
-                                 style="margin-top: -0.04rem;margin-right: 0.06rem;width: 0.28rem;height: 0.28rem"><span>分享好友得1元红包</span>
+                                 style="margin-top: -0.02rem;margin-right: 0.03rem;width: 0.14rem;height: 0.14rem"><span>分享好友得1元红包</span>
                         </span>
-                            <img src="./img/fxzq.png" style="height: 0.34rem;">
-                        </div>
-                    </div>
-                    <div style="width: 2rem;height: 1.6rem;padding-right: 0rem;line-height: 1.4rem">
-                        <img src="{{srcUrls[0]}}" style="height: 1.6rem;border-radius: 4px;">
+                        <img src="./img/fxzq.png" style="height: 0.17rem;">
                     </div>
                 </div>
-                <div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>
-            </script>
-            <!--三图-->
-            <script id="ad-template-3img" type="text/html">
-                <div class="ad-template-3img" style="padding: 0.24rem 0"
-                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},2,getParam('from_user_id')))">
-                    <div class="line-two"
-                         style="padding: 0 0rem;font-weight: bolder;line-height: 0.44rem;color: #333;font-size: 16px!important;">
-                        {{ title }}
-                    </div>
-                    <div style="display: flex;justify-content: space-between;padding: 0 0rem;margin-top: 0.2rem">
-                        {{ each srcUrls as value }}
-                        <img style="height: 1.4rem;border-radius: 4px;" src="{{value}}" alt="">
-                        {{ /each   }}
-                    </div>
-                    <div style="display: flex;justify-content: space-between;margin-top: 0.14rem;padding: 0 0rem">
+                <div style="width: 1rem;height: 0.8rem;padding-right: 0rem;line-height: 0.7rem">
+                    <img src="{{srcUrls[0]}}" style="height: 0.8rem;border-radius: 4px;">
+                </div>
+            </div>
+            <div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>
+        </script>
+        <!--三图-->
+        <script id="ad-template-3img" type="text/html">
+            <div class="ad-template-3img" style="padding: 0.12rem 0"
+                 onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},2,getParam('from_user_id')))">
+                <div class="line-two"
+                     style="padding: 0 0rem;font-weight: bolder;line-height: 0.22rem;color: #333;font-size: 16px!important;">
+                    {{ title }}
+                </div>
+                <div style="display: flex;justify-content: space-between;padding: 0 0rem;margin-top: 0.1rem">
+                    {{ each srcUrls as value }}
+                    <img style="height: 0.7rem;border-radius: 4px;" src="{{value}}" alt="">
+                    {{ /each   }}
+                </div>
+                <div style="display: flex;justify-content: space-between;margin-top: 0.14rem;padding: 0 0rem">
                     <span style="color: rgba(255, 66, 55, 1);font-size: 14px;">
                         <img src="./img/xhb.png"
-                             style="margin-top: 0rem;margin-right: 0rem;width: 0.28rem;height: 0.28rem"><span>分享好友得1元红包</span>
+                             style="margin-top: 0rem;margin-right: 0rem;width: 0.14rem;height: 0.14rem"><span>分享好友得1元红包</span>
                     </span>
-                        <img src="./img/fxzq.png" style="height: 0.34rem;">
-                    </div>
+                    <img src="./img/fxzq.png" style="height: 0.17rem;">
                 </div>
+            </div>
 
-                <div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>
-            </script>
-            <!--大图-->
-            <script id="ad-template-info-big" type="text/html">
-                <div class="ad-template-info-big" style="padding: 0.24rem 0"
-                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},3,getParam('from_user_id'))">
-                    <div class="line-two"
-                         style="padding: 0 0rem;font-weight: bolder;line-height: 0.44rem;color: #333;font-size: 16px!important;">
-                        {{ title }}
-                    </div>
-                    <div style="display: flex;justify-content: space-between;padding: 0 0rem;margin-top: 0.2rem">
-                        <img style="height: 4.56rem;width: 100%;border-radius: 4px;" src="{{srcUrls[0]}}" alt="">
-                    </div>
-                    <div style="display: flex;justify-content: space-between;margin-top: 0.28rem;padding: 0 0rem">
-                    <span style="color: rgba(255, 66, 55, 1);font-size: 14px;">
-                        <img src="./img/xhb.png" style="margin-top: -0.05rem;margin-right: 0.08rem;width: 0.28rem;height: 0.28rem"><span>分享好友得1元红包</span>
-                    </span>
-                        <img src="./img/fxzq.png" style="height: 0.34rem;">
-                    </div>
+            <div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>
+        </script>
+        <!--大图-->
+        <script id="ad-template-info-big" type="text/html">
+            <div class="ad-template-info-big" style="padding: 0.12rem 0"
+                 onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},3,getParam('from_user_id'))">
+                <div class="line-two"
+                     style="padding: 0 0rem;font-weight: bolder;line-height: 0.22rem;color: #333;font-size: 16px!important;">
+                    {{ title }}
                 </div>
-                <div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>
-            </script>
-        </div>
+                <div style="display: flex;justify-content: space-between;padding: 0 0rem;margin-top: 0.1rem">
+                    <img style="height: 2.28rem;width: 100%;border-radius: 4px;" src="{{srcUrls[0]}}" alt="">
+                </div>
+                <div style="display: flex;justify-content: space-between;margin-top: 0.14rem;padding: 0 0rem">
+                    <span style="color: rgba(255, 66, 55, 1);font-size: 14px;">
+                        <img src="./img/xhb.png" style="margin-top: -0.02rem;margin-right: 0.04rem;width: 0.14rem;height: 0.14rem"><span>分享好友得1元红包</span>
+                    </span>
+                    <img src="./img/fxzq.png" style="height: 0.17rem;">
+                </div>
+            </div>
+            <div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>
+        </script>
     </div>
 </div>
 
@@ -140,14 +156,24 @@
             "https://assets8.lottiefiles.com/packages/lf20_jq0sl1zi.json" // the path to the animation json
     });
 
+
     var adListIndex = 0;
-    var adList = [];
+    var adList = [
+        {
+            pid: '1010288', //广告位id
+            templateId: 'ad-template-float', //模板script的id
+            wrapDomId: 'top-ad', //插入广告模板的父级id
+            adWrapClass: 'ad-wrap-float' //广告wrap的class 用于寻找被插入的广告
+        },
+    ];
     var deny_cids = []; // 被禁止的创意广告id
 
     commonGet('/adverts', function (res) {
+        // console.log(res)
         if (res.code == 200) {
             adList = res.data
         }
+
          ee.addListener('fetch-jj-ad', function() {
              // console.log(adList)
              var curData = adList[adListIndex];

@@ -173,3 +173,19 @@ td, tr {
 .inactive {color: #999999}
 .news_active {background-color: rgb(245, 245, 245)!important;}
 
+#content p {
+    color: #222;
+    text-align: justify;
+    font-size: 18px;
+    line-height: 0.56rem;
+    margin-top: 0.34rem;;
+    text-indent: 4em;
+    word-wrap: break-word;
+    list-style-position: inside;
+    list-style-type: square
+}
+
+#content img {
+    display: block;
+    width: 100%
+}

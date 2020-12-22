@@ -279,7 +279,7 @@ var mescroll = new MeScroll("mescroll", {
     },
     up: {
         auto: true,
-        page: {num:0, size:40},//每次加载1条数据,模拟loadFull
+        page: {num:0, size:10},//每次加载1条数据,模拟loadFull
         callback: getListData, //上拉回调,此处可简写; 相当于 callback: function (page) { getListData(page); }
         isBounce: false, //此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
         clearEmptyId: "dataList", //1.下拉刷新时会自动先清空此列表,再加入数据; 2.无任何数据时会在此列表自动提示空
@@ -331,7 +331,7 @@ var adList = [
 ];
 var deny_cids = []; // 被禁止的创意广告id
 var tempIndex = 0
-// getListData({num:0, size:10})
+
 function getListData(page) {
     tempIndex++
 
@@ -354,7 +354,7 @@ function getListData(page) {
                                 $.extend(curData, {
                                     data: {
                                         //   app_id:101918,
-                                        app_id: 101918,
+                                        app_id: 103019,
                                         deny_cids: deny_cids.join(',')
                                     }
                                 }),
