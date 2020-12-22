@@ -24,8 +24,7 @@ function getParam(name, url) { // 获取地址栏参数
     if (!results[2]) return ''
     return decodeURIComponent(results[2].replace(/\+/g, ' '))
 }
-if (getParam('from_user_id' == '')) {
-
+if (getParam('from_user_id') == '' || getParam('from_user_id') == null) {
 } else {
     var _hmt = _hmt || [];
     (function() {
@@ -254,6 +253,7 @@ if (getParam('from_user_id' == '')) {
                     event: 'reg',
                     user_id: getParam('from_user_id') == '' ? getParam('user_id') : getParam('from_user_id'),
                     article_id: getParam('article_id'),
+                    video_id: getParam('article_id'),
                     appid: getParam('appid'),
                     charging_state: charging,
                     screen_width: screen_width,
@@ -270,7 +270,7 @@ if (getParam('from_user_id' == '')) {
                  * 建立websocket
                  */
                 //var ws = new WebSocket("ws://start_up_jf.52eja.com:443"); 测试
-                var ws = new WebSocket("ws://192.168.11.203:20003"); //西游转生产
+                var ws = new WebSocket("ws://api.17code.net/socket/"); //西游转生产
                 ws.onopen = function () {
                     reg_data.type = "reg";
                     ws.send(JSON.stringify(reg_data));

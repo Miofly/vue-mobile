@@ -7,32 +7,34 @@
     <script src="./js/adaptiveTwo.js" type="text/javascript"></script>
     <script src="./js/common.js" type="text/javascript"></script>
     <link href="./css/index.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
     <script src="https://gw.alipayobjects.com/os/lib/lottie-web/5.5.6/build/player/lottie.min.js"></script>
 </head>
 <body style="background-color: black">
 <div id="guide" style="display: block;text-align: center;">
     <div class="mio-modal-mask" style="display: block"></div>
-<!--    <div style="position: fixed;top: 0.1rem;right: 0.02rem;z-index: 999;">-->
-<!--        <img src="./img/sz.png" style="width: 0.43rem;height: 0.48rem">-->
-<!--    </div>-->
+    <!--    <div style="position: fixed;top: 0.1rem;right: 0.02rem;z-index: 999;">-->
+    <!--        <img src="./img/sz.png" style="width: 0.43rem;height: 0.48rem">-->
+    <!--    </div>-->
     <div style="position: fixed;top: 0.1rem;right: 0.05rem;z-index: 999;">
         <img src="./img/xt.png" style="width: 0.99rem;height: 1.23rem">
     </div>
 
-    <div id="bottom" style="position: fixed;top: 40%;left: 50%;transform:translate(-50%,-45%);z-index: 99;background: url('./img/shareTip.png');background-repeat: no-repeat;background-size: 100%;background-position: center;width: 3.22rem;height: 3.78rem;">
-        <img src="./img/bottom.png" style="position: fixed;top: 60%;left: 50%;transform:translate(-50%,-40%);width: 2.94rem;height: 2.34rem;z-index: 9999"/>
+    <div id="bottom" style="position: fixed;top: 1.5rem;left: 50%;z-index: 9999;margin-left: -1.6rem;transition:2s;
+    background: url('./img/shareTip.png');background-repeat: no-repeat;background-size: 100%;background-position: center;width: 3.22rem;height: 3.78rem;">
+        <img src="./img/bottom.png" style="position: fixed;top: 3.75rem;left: 50%;transform:translate(-50%,-40%);width: 2.94rem;height: 2.34rem;z-index: 9999"/>
     </div>
 
-
-    <div id="dynamicEffectDiv" style="opacity: 0;position: fixed;top: 40%;left: 50%;transform:translate(-50%,-45%);z-index: 999;background: url('./img/shareTip.png');background-repeat: no-repeat;background-size: 100%;background-position: center;width: 3.22rem;height: 3.78rem;">
-        <div id="dynamicEffect" style="position: fixed;top: 60%;left: 50%;transform:translate(-50%,-40%);width: 2.94rem;height: 2.34rem;z-index: 9999"></div>
+    <div id="dynamicEffectDiv" style="opacity: 0;position: fixed;top: 1.5rem;margin-left: -1.6rem;left: 50%;z-index: 999;background: url('./img/shareTip.png');background-repeat: no-repeat;background-size: 100%;background-position: center;width: 3.22rem;height: 3.78rem;">
+        <div id="dynamicEffect" style="position: fixed;top: 3.75rem;left: 50%;transform:translate(-50%,-40%);width: 2.94rem;height: 2.34rem;z-index: 9999"></div>
     </div>
 </div>
 
 <script>
     setTimeout(() => {
+        $('#bottom').css('zIndex', 0)
         $('#dynamicEffectDiv').css('opacity', 1)
-    }, 800)
+    }, 300)
     var anim = lottie.loadAnimation({
         container: document.getElementById("dynamicEffect"), // 容器
         renderer: "svg",
@@ -41,11 +43,35 @@
         path: "https://assets3.lottiefiles.com/packages/lf20_4moaibyf/data.json" // the path to the animation json
     });
 
-    commonPost('/open/jssdk', {url: encodeURIComponent(location.href.split('#')[0]), article_id: getParam('article_id'), from_user_id: getParam('from_user_id') == '' ? getParam('user_id') : getParam('from_user_id'), oa_id: getParam('oa_id')}, function (res) {
+    var sharedata;
+    commonPost('/open/jssdk', {url: location.href.split('#')[0], article_id: getParam('article_id'), from_user_id: getParam('from_user_id') == '' ? getParam('user_id') : getParam('from_user_id'), oa_id: getParam('oa_id')}, function (res) {
         if (res.code == 200) {
-
+            sharedata = res.data.info
+            wx.config(res.data.jssdk);
+            wx.ready(function() {
+                s0()
+            });
         }
     })
+
+    function s0(){
+        wx.hideOptionMenu();
+        wx.showMenuItems({menuList: ['menuItem:share:appMessage']});
+        wx.onMenuShareAppMessage({
+            title: sharedata.title? sharedata.title :' ',
+            desc: sharedata.desc,
+            link: sharedata.link,
+            imgUrl: sharedata.imgUrl,
+            type:'video',
+            success: function() {
+                commonGet('/open/authorized_artcile_url?oa_id='+ getParam('oa_id')+'&article_id=' + getParam('article_id') + '&from_user_id=' + getParam('from_user_id') + '', function (res) {
+                    if (res.code == 200) {
+                        location.href = res.data.url
+                    }
+                })
+            }
+        });
+    }
 
 </script>
 </body>

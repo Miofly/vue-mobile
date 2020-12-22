@@ -73,7 +73,7 @@ var Ad = {
      * dUrl 广告落地页url
      */
     adClick: function(clickUrl, dUrl, pid,type,user_id) {
-        console.log(clickUrl, dUrl, pid,type,user_id)
+        event.currentTarget.className = 'news_active'
         var ua = navigator.userAgent;
         if(user_id != ''){
             commonPost('/adClickStat', {

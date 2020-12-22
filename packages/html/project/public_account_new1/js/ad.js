@@ -73,38 +73,39 @@ var Ad = {
      * dUrl 广告落地页url
      */
     adClick: function(clickUrl, dUrl, pid,ad_type,uuid) {
+        event.currentTarget.className = 'news_active'
         ad_type = ad_type || 0;
         uuid = uuid || '';
         var ua = navigator.userAgent;
         var data = data || {};
-        if(uuid != ''){
-            $.ajax({
-                type: 'post',
-                headers: {
-                    'User-Agent': ua
-                },
-                url: 'http://start_up.qd2020.cn/api/monitor-advert',
-                data: $.extend(
-                    {
-                        user_agent:ua,
-                        uuid:uuid,
-                        ad_pid:pid,
-                        ad_type:ad_type,
-                        is_click:1,
-                    },
-                    data
-                ),
-                dataType: 'json', //jsonp格式访问
-                success: function(res) {
-                },
-                error: function(err) {
-                },
-                complete: function() {
-                }
-            });
-        }
+        // if(uuid != ''){
+        //     $.ajax({
+        //         type: 'post',
+        //         headers: {
+        //             'User-Agent': ua
+        //         },
+        //         url: 'http://start_up.qd2020.cn/api/monitor-advert',
+        //         data: $.extend(
+        //             {
+        //                 user_agent:ua,
+        //                 uuid:uuid,
+        //                 ad_pid:pid,
+        //                 ad_type:ad_type,
+        //                 is_click:1,
+        //             },
+        //             data
+        //         ),
+        //         dataType: 'json', //jsonp格式访问
+        //         success: function(res) {
+        //         },
+        //         error: function(err) {
+        //         },
+        //         complete: function() {
+        //         }
+        //     });
+        // }
 
-        //Ad.clickCallback(pid);
+        Ad.clickCallback(pid);
 
         clickUrl.forEach(function(url) {
             Ad.send(url);
@@ -294,7 +295,7 @@ function setListData(curPageData, page) {
     var listDom = document.getElementById("dataList");
     for (var i = 0; i < curPageData.length; i++) {
         var pd = curPageData[i];
-        var str = '<div style="display: flex;justify-content: space-around;height: 1.86rem;margin-top: 0.24rem" onclick="goInfo(' + pd.id + ')">\n' +
+        var str = '<div id="news'+ i +'" style="display: flex;justify-content: space-around;height: 1.86rem;padding-top: 0.24rem" onclick="goInfo(' + pd.id + ', ' + i + ')">\n' +
             '            <div style="width: 65%;padding-left: 0.06rem;">\n' +
             '                <div style="font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.44rem;" class="line-two">' + pd.title + '</div>\n' +
             '                <div style="display: flex;justify-content: space-between;margin-top: 0.28rem">\n' +
@@ -314,8 +315,10 @@ function setListData(curPageData, page) {
 
 }
 
-function goInfo (id) {
-	location.href = 'news_info.html?article_id='+ id +'&from_user_id=' + getParam('from_user_id') + '&user_id='+ getParam('user_id') +''
+function goInfo (id, newId) {
+    console.log($('#news' + newId))
+    $('#news' + newId).addClass('news_active')
+	location.href = 'news_info.html'+ location.search +'&article_id='+ id +''
 }
 
 // $(function () {
@@ -331,55 +334,61 @@ var tempIndex = 0
 // getListData({num:0, size:10})
 function getListData(page) {
     tempIndex++
-    if (tempIndex == 0 ) {
 
-    }
     commonGet('/adverts', function (res) {
         // console.log(res)
         if (res.code == 200) {
             adList = res.data
+            commonGet('/articles?page=' + page.num + '&per_page=' + page.size + '',
+                function (res) {
+                    var data = res.data
+                    var total = res.meta.total
+                    mescroll.endSuccess(data.length, total);
+                    setListData(data, page);
+                    if (trueIndex == 0) {
+                        ee.addListener('fetch-jj-ad', function() {
+                            // console.log(adList)
+                            var curData = adList[adListIndex];
+                            //请求并渲染广告
+                            Ad.singleAd(
+                                $.extend(curData, {
+                                    data: {
+                                        //   app_id:101918,
+                                        app_id: 101918,
+                                        deny_cids: deny_cids.join(',')
+                                    }
+                                }),
+                                function(res) {
+                                    if (res!=undefined) {
+                                        trueIndex++
+                                    }
+                                    if (adListIndex === adList.length - 1) return;
+                                    if (res && deny_cids.indexOf(res.cid) == -1) {
+                                        /* 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复 */
+                                        deny_cids.push(res.cid); //插入创意id 用于广告位被重复广告占用
+                                    }
+
+                                    adListIndex++;
+
+                                    /* 请求下个广告 */
+                                    ee.emitEvent('fetch-jj-ad');
+                                }
+                            );
+                        });
+                        ee.emitEvent('fetch-jj-ad');
+                    }
+
+                }, {'ACT-USER-ID': getParam('user_id')})
+
+            if (tempIndex == 1 ) {
+                getUserInfo()
+                setting()
+            }
+
         }
-        commonGet('/articles?page=' + page.num + '&per_page=' + page.size + '',
-            function (res) {
-                var data = res.data
-                var total = res.meta.total
-                mescroll.endSuccess(data.length, total);
-                setListData(data, page);
-                if (trueIndex == 0) {
-                    ee.addListener('fetch-jj-ad', function() {
-                        // console.log(adList)
-                        var curData = adList[adListIndex];
-                        //请求并渲染广告
-                        Ad.singleAd(
-                            $.extend(curData, {
-                                data: {
-                                    //   app_id:101918,
-                                    app_id: 101918,
-                                    deny_cids: deny_cids.join(',')
-                                }
-                            }),
-                            function(res) {
-                                if (res!=undefined) {
-                                    trueIndex++
-                                }
-                                if (adListIndex === adList.length - 1) return;
-                                if (res && deny_cids.indexOf(res.cid) == -1) {
-                                    /* 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复 */
-                                    deny_cids.push(res.cid); //插入创意id 用于广告位被重复广告占用
-                                }
 
-                                adListIndex++;
-
-                                /* 请求下个广告 */
-                                ee.emitEvent('fetch-jj-ad');
-                            }
-                        );
-                    });
-                    ee.emitEvent('fetch-jj-ad');
-                }
-
-            }, {'ACT-USER-ID': getParam('user_id')})
-    }, {'ACT-USER-ID': getParam('user_id')})
+    }, {'ACT-USER-ID': getParam('user_id')}
+    )
 }
 
 function getParam(name, url) { // 获取地址栏参数

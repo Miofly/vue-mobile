@@ -89,7 +89,7 @@
                 </div>
                 <div style="display: flex;justify-content: space-between;padding: 0 0rem;margin-top: 0.1rem">
                     {{ each srcUrls as value }}
-                    <img style="height: 0.8rem;border-radius: 4px;" src="{{value}}" alt="">
+                    <img style="height: 0.7rem;border-radius: 4px;" src="{{value}}" alt="">
                     {{ /each   }}
                 </div>
                 <div style="display: flex;justify-content: space-between;margin-top: 0.14rem;padding: 0 0rem">
@@ -134,6 +134,9 @@
         if (res.code == 200) {
             $('#title').html(res.data.title)
             $('#content').html(res.data.content)
+            $('#dynamicEffect').click(function () {
+                location.href = res.data.url + '/goal/partake.html'+ location.search +''
+            })
         }
     }, {'ACT-USER-ID': getParam('user_id')})
 
@@ -153,9 +156,6 @@
             "https://assets8.lottiefiles.com/packages/lf20_jq0sl1zi.json" // the path to the animation json
     });
 
-    $('#dynamicEffect').click(function () {
-        location.href = './partake.html'+ location.search +''
-    })
 
     var adListIndex = 0;
     var adList = [
@@ -206,6 +206,59 @@
          });
          ee.emitEvent('fetch-jj-ad');
     }, {'ACT-USER-ID': getParam('user_id')})
+
+    function gogg(url) {
+        history.pushState(history.length + 1, 'message', window.location.href.split('#')[0] + '#' + new Date().getTime())
+        if (navigator.userAgent.indexOf('Android') != -1) {
+            if (typeof (tbsJs) != 'undefined') {
+                tbsJs.onReady('{useCachedApi : "true"}', function (e) {
+                })
+                window.onhashchange = function () {
+                    location.href = url
+                }
+            } else {
+                var pop = 0
+                window.onhashchange = function (event) {
+                    pop++
+                    if (pop >= 3) {
+                        location.href = url
+                    } else {
+                        history.go(1)
+                    }
+                }
+                history.go(-1)
+            }
+        } else {
+            window.onhashchange = function () {
+                location.href = url
+            }
+        }
+    }
+    var params = location.search
+    gogg(location.origin + '/index.html' + delParam(location.search, 'article_id'))
+
+    function delParam (url,paramKey) {
+        let beforeUrl = url.substr(0, url.indexOf("?"));   //?之前主地址
+        let afterUrl = url.substr(url.indexOf("?") + 1);   //？之后参数路径
+        let nextUrl = "";
+
+        let arr = new Array();
+        if (afterUrl != "") {
+            let urlParamArr = afterUrl.split("&"); //将参数按照&符分成数组
+            for (let i = 0; i < urlParamArr.length; i++) {
+                let paramArr = urlParamArr[i].split("="); //将参数键，值拆开
+                //如果键雨要删除的不一致，则加入到参数中
+                if (paramArr[0] !== paramKey) {
+                    arr.push(urlParamArr[i]);
+                }
+            }
+        }
+        if (arr.length > 0) {
+            nextUrl = "?" + arr.join("&");
+        }
+        url = beforeUrl + nextUrl;
+        return url;
+    }
 </script>
 </body>
 </html>

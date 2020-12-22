@@ -13,7 +13,7 @@ function getParam(name, url) { // 获取地址栏参数
 function commonPost(url, data, success, headers, fail) {
     $.ajax({
         type: 'POST',
-        url: 'http://192.168.11.203/h5' + url,
+        url: 'http://api.17code.net/h5' + url,
         // url: 'http://lb-manage-api.52xiaoshuo.cn/api/' + url,
         data: data,
         success: success,
@@ -25,7 +25,7 @@ function commonPost(url, data, success, headers, fail) {
 function commonPostTwo(url, data, success, headers, fail) {
     $.ajax({
         type: 'POST',
-        url: 'http://192.168.11.203/' + url,
+        url: 'http://api.17code.net/' + url,
         // url: 'http://lb-manage-api.52xiaoshuo.cn/api/' + url,
         data: data,
         success: success,
@@ -37,7 +37,7 @@ function commonPostTwo(url, data, success, headers, fail) {
 function commonGet(url, success, headers,fail) {
     $.ajax({
         type: 'GET',
-        url: 'http://192.168.11.203/h5' + url,
+        url: 'http://api.17code.net/h5' + url,
         success: success,
         fail: fail,
         headers: headers

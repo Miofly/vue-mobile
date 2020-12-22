@@ -169,5 +169,7 @@ td, tr {
     height: auto; /*如设置bottom:50px,则需height:auto才能生效*/
 }
 
-.active {color: rgba(255, 114, 45, 1)}
+.active {color: rgba(255, 114, 45, 1);}
 .inactive {color: #999999}
+.news_active {background-color: rgb(245, 245, 245)!important;}
+
