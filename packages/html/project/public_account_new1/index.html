@@ -95,7 +95,7 @@
     <!--首页红包-->
     <div id="redEnvelope" style="display: none">
         <div class="mio-modal-mask" style="display: block"></div>
-        <div style="position: fixed;top: 50%;left: 50%;transform:translate(-50%,-50%);z-index: 999;background: url('./img/hbbj.png');background-repeat: no-repeat;background-size: 100%;background-position: center;width: 5.32rem;height: 6.84rem;">
+        <div style="position: fixed;top: 45%;left: 50%;transform:translate(-50%,-50%);z-index: 999;background: url('./img/hbbj.png');background-repeat: no-repeat;background-size: 100%;background-position: center;width: 5.32rem;height: 6.84rem;">
             <div style="position: fixed;left: 50%;width: 1.72rem;height: 1.72rem;bottom: 0.86rem;margin-left: -0.86rem;">
                 <img class="btnTwinkle" onclick="addTurn()" src="./img/kai.png"
                      style="width: 1.72rem;height: 1.72rem;display: block">
@@ -109,7 +109,7 @@
     <!--红包到账-->
     <div id="redEnvelopeGet" style="display: none;text-align: center;">
         <div class="mio-modal-mask" style="display: block"></div>
-        <div style="position: fixed;top: 50%;left: 50%;transform:translate(-50%,-50%);z-index: 999;background: url('./img/hbdz.png');background-repeat: no-repeat;background-size: 100%;background-position: center;width: 6.12rem;height: 6.68rem;">
+        <div style="position: fixed;top: 45%;left: 50%;transform:translate(-50%,-50%);z-index: 999;background: url('./img/hbdz.png');background-repeat: no-repeat;background-size: 100%;background-position: center;width: 6.12rem;height: 6.68rem;">
             <!--首次到账金额-->
             <div id="firstMoney" style="position: fixed;top: 1.0rem;width: 100%;text-align: center;color:rgba(255, 246, 165, 1);font-size: 1rem">
 
@@ -177,10 +177,10 @@
                         <img id="imgOne" style="margin-top: 0.1rem"/>
                     </div>
                 </div>
-                <div style="position: absolute;left: 50%;width: 0.76rem;height: 0.76rem;margin-left: -0.38rem;bottom: -0.2rem;z-index:99999!important;">
-                    <img onclick="hideSix()" src="./img/close.png" style="color: white;width: 0.76rem;height: 0.76rem;font-weight: bolder;z-index:99999!important;"/>
-                </div>
             </div>
+        </div>
+        <div id="closeSix" style="display: none;position: fixed;left: 50%;width: 0.76rem;height: 0.76rem;margin-left: -0.38rem;bottom:1.5rem;z-index:99999!important;">
+            <img onclick="hideSix()" src="./img/close.png" style="color: white;width: 0.76rem;height: 0.76rem;font-weight: bolder;z-index:99999!important;"/>
         </div>
         <!--提现失败-->
         <div id="withdrawalFailed" style="display: none;text-align: center;z-index: 5">
@@ -634,6 +634,7 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
     function hideSix () {
         $('.contain').css('zIndex', '3')
         $('#poster').css('opacity', '0')
+        $('#closeSix').css('display', 'none')
         $('#newSharePoster').css('zIndex', '0')
     }
 
@@ -653,12 +654,15 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
     $('.share').click(function () {
         $('.contain').css('zIndex', '0')
         $('#poster').css('opacity', '1')
+        $('#closeSix').css('display', 'block')
         $('#newSharePoster').css('zIndex', '88')
     })
 
     function partake () {
+        console.log(123123)
         $('.contain').css('zIndex', '0')
         $('#poster').css('opacity', '1')
+        $('#closeSix').css('display', 'block')
         $('#newSharePoster').css('zIndex', '88')
         hideFour()
     }
