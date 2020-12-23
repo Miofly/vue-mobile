@@ -205,10 +205,10 @@
     }
 
     var params = location.search
-    if (getParam('from_user_id') != '' || getParam('from_user_id') != null) {
-        gogg(location.origin + '/news.html')
-    } else {
+    if (getParam('from_user_id') == '' ||  getParam('from_user_id') == null) {
         gogg(location.origin + '/index.html' + delParam(location.search, 'article_id'))
+    } else {
+        gogg(location.origin + '/news.html')
     }
 
 
