@@ -123,7 +123,7 @@
                 location.href = res.data.url + '/goal/partake.html' + location.search + ''
             })
         }
-    }, {'ACT-USER-ID': getParam('user_id')})
+    })
 
     function openAll() {
         $('#content').height('auto')
@@ -205,9 +205,10 @@
     }
 
     var params = location.search
-    if (getParam('from_user_id') == '') {
+    if (getParam('from_user_id') != '' || getParam('from_user_id') != null) {
+        gogg(location.origin + '/news.html')
+    } else {
         gogg(location.origin + '/index.html' + delParam(location.search, 'article_id'))
-
     }
 
 

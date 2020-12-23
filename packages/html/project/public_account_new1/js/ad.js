@@ -316,7 +316,6 @@ function setListData(curPageData, page) {
 }
 
 function goInfo (id, newId) {
-    console.log($('#news' + newId))
     $('#news' + newId).addClass('news_active')
 	location.href = 'news_info.html'+ location.search +'&article_id='+ id +''
 }
