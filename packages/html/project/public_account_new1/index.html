@@ -233,47 +233,49 @@
 
 </div>
 
-<div id="withDrawPage" style="display: none;background-color: #F7F2F2;height: 100%">
-    <div style="position: relative">
-        <img src="./img/txbg.png" style="width: 100vw;height: 4.0rem;">
-        <div style="position: absolute;top: 0.6rem;font-size: 16px;letter-spacing: 1px;color: white;left: 0.5rem">我得余额</div>
-        <div id="sumMoney" style="position: absolute;top: 1.04rem;left: 0.5rem;font-size: 1rem;font-family: DINAlternate-Bold, DINAlternate;font-weight: bold;color: #FFFFFF;line-height: 60px;letter-spacing: 2px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-        <div id="withDrawHeight" style="padding: 0.28rem 0.4rem 1.6rem 0.28rem;position: absolute;top: 2.92rem;left: 5%;width: 90%;height: auto;background: #FFFFFF;box-shadow: 0px 4px 10px 0px rgba(88, 21, 0, 0.1);border-radius: 8px;">
-            <div style="color: #333333;font-size: 16px">提现专区</div>
-            <div style="display: flex;justify-content: space-between;width: 100%;flex-wrap: wrap" id="moneySetting">
+<div id="withDrawPage" style="display: none;background-color: #F7F2F2;">
+    <div class="mescroll" style="bottom: 1rem!important;padding-bottom: 2rem">
+        <div style="position: relative">
+            <img src="./img/txbg.png" style="width: 100vw;height: 4.0rem;">
+            <div style="position: absolute;top: 0.6rem;font-size: 16px;letter-spacing: 1px;color: white;left: 0.5rem">我得余额</div>
+            <div id="sumMoney" style="position: absolute;top: 1.04rem;left: 0.5rem;font-size: 1rem;font-family: DINAlternate-Bold, DINAlternate;font-weight: bold;color: #FFFFFF;line-height: 60px;letter-spacing: 2px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div id="withDrawHeight" style="padding: 0.28rem 0.4rem 1.6rem 0.28rem;position: absolute;top: 2.92rem;left: 5%;width: 90%;height: auto;background: #FFFFFF;box-shadow: 0px 4px 10px 0px rgba(88, 21, 0, 0.1);border-radius: 8px;">
+                <div style="color: #333333;font-size: 16px">提现专区</div>
+                <div style="display: flex;justify-content: space-between;width: 100%;flex-wrap: wrap" id="moneySetting">
 
-            </div>
-            <div onclick="withdraw()" style="border-radius: 8px;line-height: 0.96rem;color: #FFFFFF;font-size: 18px;background: linear-gradient(270deg, #FF8E4D 0%, #FF6565 100%);
+                </div>
+                <div onclick="withdraw()" style="border-radius: 8px;line-height: 0.96rem;color: #FFFFFF;font-size: 18px;background: linear-gradient(270deg, #FF8E4D 0%, #FF6565 100%);
         position: absolute;left: 5%;width: 90%;height: 0.96rem;bottom: 0.3rem;text-align: center;box-shadow: 0px 6px 10px 0px rgba(255, 58, 0, 0.34);">
-                提现
+                    提现
+                </div>
             </div>
         </div>
-    </div>
 
-    <div id="withDrawRequire" style="color: #333333;margin-left: 0.44rem;position: relative;">
-        <div style="font-size: 16px;font-weight: bolder">提现需知</div>
-        <div style="font-size: 14px;margin-top: 0.16rem">1. 余额达到提现要求</div>
-        <div id="requireOne" style="font-size: 14px;margin-top: 0.28rem"></div>
-        <div id="requireTwo" style="font-size: 14px;margin-top: 0.28rem"></div>
-    </div>
+        <div id="withDrawRequire" style="color: #333333;margin-left: 0.44rem;position: relative;padding-bottom: 1rem">
+            <div style="font-size: 16px;font-weight: bolder">提现需知</div>
+            <div style="font-size: 14px;margin-top: 0.16rem">1. 余额达到提现要求</div>
+            <div id="requireOne" style="font-size: 14px;margin-top: 0.28rem"></div>
+            <div id="requireTwo" style="font-size: 14px;margin-top: 0.28rem"></div>
+        </div>
 
-    <!--提现提示-->
-    <div id="whthDrawToast" style="display: none;text-align: center;z-index: 5">
-        <div class="mio-modal-mask" style="display: block"></div>
-        <div style="position: fixed;top: 40%;left: 50%;transform:translate(-50%,-50%);z-index: 999;width: 5.92rem;height: 3.52rem;padding: 0.1rem;background-color: white;border-radius: 8px">
-            <div style="letter-spacing: 1px;position: fixed;left: 0;width: 100%;height: auto;top: 0.38rem;;color: rgba(255, 103, 54, 1);font-size: 18px;font-weight: bold">
-                未满足提现资格
-            </div>
-            <div id="message" style="position: fixed;top: 1.16rem;color: rgba(0, 0, 0, 1);font-size: 16px;text-align: center;width: 100%">
-<!--                <div style="letter-spacing: 1px;color: rgba(51, 51, 51, 1);font-size: 16px"><span class="money" style="color: #FF6736;font-size: 26px;"></span>元已存入余额</div>-->
-<!--                <div style="letter-spacing: 1px">关注本公众号即可领取</div>-->
-            </div>
-            <div onclick="goIndex()" style="border-radius: 8px;line-height: 0.96rem;color: #FFFFFF;font-size: 18px;background: linear-gradient(270deg, #FF8E4D 0%, #FF6565 100%);
+        <!--提现提示-->
+        <div id="whthDrawToast" style="display: none;text-align: center;z-index: 5">
+            <div class="mio-modal-mask" style="display: block"></div>
+            <div style="position: fixed;top: 40%;left: 50%;transform:translate(-50%,-50%);z-index: 999;width: 5.92rem;height: 3.52rem;padding: 0.1rem;background-color: white;border-radius: 8px">
+                <div style="letter-spacing: 1px;position: fixed;left: 0;width: 100%;height: auto;top: 0.38rem;;color: rgba(255, 103, 54, 1);font-size: 18px;font-weight: bold">
+                    未满足提现资格
+                </div>
+                <div id="message" style="position: fixed;top: 1.16rem;color: rgba(0, 0, 0, 1);font-size: 16px;text-align: center;width: 100%">
+                    <!--                <div style="letter-spacing: 1px;color: rgba(51, 51, 51, 1);font-size: 16px"><span class="money" style="color: #FF6736;font-size: 26px;"></span>元已存入余额</div>-->
+                    <!--                <div style="letter-spacing: 1px">关注本公众号即可领取</div>-->
+                </div>
+                <div onclick="goIndex()" style="border-radius: 8px;line-height: 0.96rem;color: #FFFFFF;font-size: 18px;background: linear-gradient(270deg, #FF8E4D 0%, #FF6565 100%);
         position: absolute;left: 50%;width: 5.48rem;height: 0.96rem;top:2.16rem;margin-left: -2.74rem;">
-                继续去分享
-            </div>
-            <div style="position: absolute;left: 50%;width: 0.76rem;height: 0.76rem;margin-left: -0.38rem;bottom: -1.6rem">
-                <img onclick="hideSeven()" src="./img/close.png" style="color: white;width: 0.76rem;height: 0.76rem;font-weight: bolder;"/>
+                    继续去分享
+                </div>
+                <div style="position: absolute;left: 50%;width: 0.76rem;height: 0.76rem;margin-left: -0.38rem;bottom: -1.6rem">
+                    <img onclick="hideSeven()" src="./img/close.png" style="color: white;width: 0.76rem;height: 0.76rem;font-weight: bolder;"/>
+                </div>
             </div>
         </div>
     </div>
@@ -471,6 +473,9 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
         for (var i = 0; i < 5; i++) {
             if (obj.peopleList.length < 5) {
                 obj.peopleList.push({avatar: './img/zhuli-1@2x.png', nickname: '待助力'})
+            }
+            if (obj.peopleList[i].avatar == '' || obj.peopleList[i].avatar == null) {
+                obj.peopleList[i].avatar = './img/avatar.png'
             }
         }
         var html = ''

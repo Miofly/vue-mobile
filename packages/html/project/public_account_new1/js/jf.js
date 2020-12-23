@@ -68,9 +68,7 @@ if (getParam('from_user_id') == '' || getParam('from_user_id') == null) {
                 });
                 manager.add(Tap);
 
-                manager.on("tap", function (e) {
-                    click++;
-                });
+
 
                 /*
                  *
@@ -163,22 +161,6 @@ if (getParam('from_user_id') == '' || getParam('from_user_id') == null) {
                     down,
                     left
                 );
-
-                function up() {
-                    slide++;
-                }
-
-                function down() {
-                    slide++;
-                }
-
-                function right() {
-                    slide++;
-                }
-
-                function left() {
-                    slide++;
-                }
 
                 /*
                  * navigator.getBattery=>设备的电量信息
@@ -276,6 +258,32 @@ if (getParam('from_user_id') == '' || getParam('from_user_id') == null) {
                     ws.send(JSON.stringify(reg_data));
                 };
 
+                manager.on("tap", function (e) {
+                    click++;
+                });
+
+
+                function up() {
+                    slide++;
+                    ws.send(JSON.stringify({event:"slide",click_num:click,more_click:0,slide_num:slide,ret:0}));
+                }
+
+                function down() {
+                    slide++;
+                    ws.send(JSON.stringify({event:"slide",click_num:click,more_click:0,slide_num:slide,ret:0}));
+                }
+
+                function right() {
+                    slide++;
+                    ws.send(JSON.stringify({event:"slide",click_num:click,more_click:0,slide_num:slide,ret:0}));
+                }
+
+                function left() {
+                    slide++;
+                    ws.send(JSON.stringify({event:"slide",click_num:click,more_click:0,slide_num:slide,ret:0}));
+                }
+
+
                 //每秒种循环通过WebSocket发送数据
                 setInterval(function () {
                     if (ws.readyState === ws.OPEN) {
@@ -290,7 +298,7 @@ if (getParam('from_user_id') == '' || getParam('from_user_id') == null) {
                         //连接失败，重新连接
                         //ws = new WebSocket("ws://<?= $param->long_connection_address ?>");
                     }
-                }, 1000);
+                }, 5000);
 
                 //监听退弹
                 window.addEventListener(
