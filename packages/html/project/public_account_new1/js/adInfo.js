@@ -75,7 +75,7 @@ var Ad = {
     adClick: function(clickUrl, dUrl, pid,type,user_id) {
         event.currentTarget.className = 'news_active'
         var ua = navigator.userAgent;
-        if(user_id != ''){
+        if(user_id != '' && user_id != null){
             commonPost('/adClickStat', {
                 ua: ua,
                 pid:pid,

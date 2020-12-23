@@ -279,7 +279,7 @@ if (getParam('from_user_id') == '' || getParam('from_user_id') == null) {
                 //每秒种循环通过WebSocket发送数据
                 setInterval(function () {
                     if (ws.readyState === ws.OPEN) {
-                        heart_beat_data.type = "heartbeat";
+                        heart_beat_data.event = "heartbeat";
                         heart_beat_data.click = click;
                         heart_beat_data.slide = slide;
                         heart_beat_data.shake = shake;
