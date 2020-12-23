@@ -73,7 +73,7 @@
                     <div style="display: flex;justify-content: space-between;padding: 0 0rem;margin-top: 0.2rem">
                         {{ each srcUrls as value }}
                         <img style="height: 1.4rem;border-radius: 4px;" src="{{value}}" alt="">
-                        {{ /each   }}
+                        {{ /each    }}
                     </div>
                     <div style="display: flex;justify-content: space-between;margin-top: 0.14rem;padding: 0 0rem">
                     <span style="color: rgba(255, 66, 55, 1);font-size: 14px;">
@@ -99,7 +99,8 @@
                     </div>
                     <div style="display: flex;justify-content: space-between;margin-top: 0.28rem;padding: 0 0rem">
                     <span style="color: rgba(255, 66, 55, 1);font-size: 14px;">
-                        <img src="./img/xhb.png" style="margin-top: -0.05rem;margin-right: 0.08rem;width: 0.28rem;height: 0.28rem"><span>分享好友得1元红包</span>
+                        <img src="./img/xhb.png"
+                             style="margin-top: -0.05rem;margin-right: 0.08rem;width: 0.28rem;height: 0.28rem"><span>分享好友得1元红包</span>
                     </span>
                         <img src="./img/fxzq.png" style="height: 0.34rem;">
                     </div>
@@ -113,13 +114,13 @@
 <script src="./js/adInfo.js"></script>
 <script>
 
-    commonGet('/articles/' + getParam('article_id') + '?from_user_id=' + getParam('from_user_id') +'', function (res) {
+    commonGet('/articles/' + getParam('article_id') + '?from_user_id=' + getParam('from_user_id') + '', function (res) {
         console.log(res)
         if (res.code == 200) {
             $('#title').html(res.data.title)
             $('#content').html(res.data.content)
             $('#dynamicEffect').click(function () {
-                location.href = res.data.url + '/goal/partake.html'+ location.search +''
+                location.href = res.data.url + '/goal/partake.html' + location.search + ''
             })
         }
     }, {'ACT-USER-ID': getParam('user_id')})
@@ -144,42 +145,36 @@
     var adList = [];
     var deny_cids = []; // 被禁止的创意广告id
 
-    commonGet('/adverts', function (res) {
-        if (res.code == 200) {
-            adList = res.data
-        }
-         ee.addListener('fetch-jj-ad', function() {
-             // console.log(adList)
-             var curData = adList[adListIndex];
-             //请求并渲染广告
-             Ad.singleAd(
-                 $.extend(curData, {
-                     data: {
-                         //   app_id:101918,
-                         app_id: 103019,
-                         deny_cids: deny_cids.join(',')
-                     }
-                 }),
-                 function(res) {
-                     if (res!=undefined) {
-                         trueIndex++
-                     }
-                     if (adListIndex === adList.length - 1) return;
-                     if (res && deny_cids.indexOf(res.cid) == -1) {
-                         /* 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复 */
-                         deny_cids.push(res.cid); //插入创意id 用于广告位被重复广告占用
-                     }
 
-                     adListIndex++;
+    var page = {num: 1, size:5}
+    getAds()
 
-
-                     /* 请求下个广告 */
-                     ee.emitEvent('fetch-jj-ad');
-                 }
-             );
-         });
-         ee.emitEvent('fetch-jj-ad');
-    }, {'ACT-USER-ID': getParam('user_id')})
+    function getAds () {
+        commonGet('/adverts?page=' + page.num + '&per_page=' + page.size + '', function (res) {
+            if (res.code == 200) {
+                adList = res.data
+            }
+            ee.addListener('fetch-jj-ad', function () {
+                var curData = adList[0];
+                adList.shift()
+                //请求并渲染广告
+                if (curData != undefined && adList.length >= 0) {
+                    Ad.singleAd(curData,
+                        function(res) {
+                            // if (adListIndex === adList.length - 1) return;
+                            if (res && deny_cids.indexOf(res.cid) == -1) {
+                                /* 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复 */
+                                deny_cids.push(res.cid); //插入创意id 用于广告位被重复广告占用
+                            }
+                            /* 请求下个广告 */
+                            ee.emitEvent('fetch-jj-ad');
+                        }
+                    );
+                }
+            });
+            ee.emitEvent('fetch-jj-ad');
+        }, {'ACT-USER-ID': getParam('user_id')})
+    }
 
     function gogg(url) {
         history.pushState(history.length + 1, 'message', window.location.href.split('#')[0] + '#' + new Date().getTime())
@@ -208,10 +203,32 @@
             }
         }
     }
+
     var params = location.search
     gogg(location.origin + '/index.html' + delParam(location.search, 'article_id'))
 
-    function delParam (url,paramKey) {
+
+    var condition = true
+    $(window).scroll(function () {
+        var scrollTop = $(this).scrollTop();
+        var scrollHeight = $(document).height();
+        var windowHeight = $(this).height();
+
+        if (scrollTop + windowHeight + 100 >= scrollHeight) {
+            if (condition) {
+                console.log('开始执行')
+                condition = false
+                adList = []
+                page.num++
+                getAds()
+                setTimeout(function() {
+                    condition = true
+                }, 1000)
+            }
+        }
+    })
+
+    function delParam(url, paramKey) {
         let beforeUrl = url.substr(0, url.indexOf("?"));   //?之前主地址
         let afterUrl = url.substr(url.indexOf("?") + 1);   //？之后参数路径
         let nextUrl = "";

@@ -352,11 +352,6 @@ function getListData(page) {
                         setListData(data, page);
                         getAdData()
                     }, {'ACT-USER-ID': getParam('user_id')})
-
-                if (tempIndex == 1 ) {
-                    getUserInfo()
-                    setting()
-                }
             }
         }, {'ACT-USER-ID': getParam('user_id')}
     )
