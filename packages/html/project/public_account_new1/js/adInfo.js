@@ -75,20 +75,18 @@ var Ad = {
     adClick: function(clickUrl, dUrl, pid,type,user_id) {
         event.currentTarget.className = 'news_active'
         var ua = navigator.userAgent;
-        if(user_id != '' && user_id != null){
-            commonPost('/adClickStat', {
-                ua: ua,
-                pid:pid,
-                type:type,
-                user_id:user_id,
-                sign:'bFwbxLAzwd5F4DOPS2hO',
-            }, function (res) {
-                console.log(res)
-                if (res.code == 200) {
+        commonPost('/adClickStat', {
+            ua: ua,
+            pid:pid,
+            type:type,
+            user_id:user_id,
+            sign:'bFwbxLAzwd5F4DOPS2hO',
+        }, function (res) {
+            console.log(res)
+            if (res.code == 200) {
 
-                }
-            }, {'ACT-USER-ID': getParam('user_id')})
-        }
+            }
+        }, {'ACT-USER-ID': getParam('user_id')})
 
         Ad.clickCallback(pid);
 
