@@ -64,7 +64,7 @@
             imgUrl: sharedata.imgUrl,
             type:'video',
             success: function() {
-                commonGet('/open/authorized_artcile_url?oa_id='+ getParam('oa_id')+'&article_id=' + getParam('article_id') + '&from_user_id=' + getParam('from_user_id') + '', function (res) {
+                commonGet('/open/authorized_artcile_url' + location.search +'', function (res) {
                     if (res.code == 200) {
                         location.href = res.data.url
                     }

@@ -205,7 +205,10 @@
     }
 
     var params = location.search
-    gogg(location.origin + '/index.html' + delParam(location.search, 'article_id'))
+    if (getParam('from_user_id') == '') {
+        gogg(location.origin + '/index.html' + delParam(location.search, 'article_id'))
+
+    }
 
 
     var condition = true
