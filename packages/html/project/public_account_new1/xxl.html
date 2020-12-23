@@ -14,28 +14,8 @@
 </head>
 <body>
 <div>
-    <div style="height: 0.76rem;">
-        <img src="./img/hbts.png" style="height: 0.76rem;width: 100vw;padding:0;margin: 0;vertical-align: sub">
-    </div>
-    <div style="padding: 0.32rem;padding-bottom: 1.2rem">
-        <div id="title" style="color: #333333;font-size: 24px;font-weight: bolder;text-align: justify"></div>
-        <!--文章内容-->
-        <div id="contentParent" style="margin-top: 0.06rem;position: relative;height: 2.8rem;">
-            <div id="content" style="position: absolute;top: 0;left: 0;overflow-y: hidden;height: 2.8rem;
-        font-size: 18px;text-indent: 4em;line-height: 2.56rem;text-align:justify"></div>
-            <div id="openAll" onclick="openAll()" style="position: absolute;top: 1.16rem;left: 0">
-                <img src="./img/ckqw.png">
-            </div>
-        </div>
-
-        <div style="margin-top: 0.36rem">
-            <img src="./img/rmtj.png" style="height: 0.34rem">
-        </div>
-
-        <div id="dataList" style="padding-bottom: 1rem"></div>
-
-        <div id="dynamicEffect" style="position: fixed;bottom: 0rem;width: 100%;left: 0;text-align: center">
-        </div>
+    <div style="padding: 0.32rem;">
+        <div id="dataList"></div>
         <!--广告-->
         <div class="container" style="padding-bottom: 3%;margin-top:0vh">
             <!--单图-->
@@ -113,34 +93,6 @@
 
 <script src="./js/adInfo.js"></script>
 <script>
-
-    commonGet('/articles/' + getParam('article_id') + '?from_user_id=' + getParam('from_user_id') + '', function (res) {
-        console.log(res)
-        if (res.code == 200) {
-            $('#title').html(res.data.title)
-            $('#content').html(res.data.content)
-            $('#dynamicEffect').click(function () {
-                location.href = res.data.url + '/goal/partake.html' + location.search + ''
-            })
-        }
-    })
-
-    function openAll() {
-        $('#content').height('auto')
-        $('#contentParent').height($('#content').height())
-        $('#openAll').hide()
-    }
-
-    var anim = lottie.loadAnimation({
-        container: document.getElementById("dynamicEffect"), // 容器
-        renderer: "svg",
-        loop: true,
-        autoplay: true,
-        // animationData: {}, //如果使用的是JSON
-        path:
-            "https://assets6.lottiefiles.com/packages/lf20_qbxtcy2r.json" // the path to the animation json
-    });
-
     var adListIndex = 0;
     var adList = [];
     var deny_cids = []; // 被禁止的创意广告id
@@ -205,14 +157,6 @@
             }
         }
     }
-
-    var params = location.search
-    if (getParam('from_user_id') == '' ||  getParam('from_user_id') == null) {
-        gogg(location.origin + '/index.html' + delParam(location.search, 'article_id'))
-    } else {
-        gogg(location.origin + '/xxl.html')
-    }
-
 
     var condition = true
     $(window).scroll(function () {
