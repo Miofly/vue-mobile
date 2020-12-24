@@ -14,9 +14,9 @@
 </head>
 <body>
 <div>
-    <div style="height: 0.76rem;position: relative">
+    <div style="height: 0.76rem;position: relative;line-height: 0.76rem">
         <img src="./img/hbts.png" style="height: 0.76rem;width: 100vw;padding:0;margin: 0;vertical-align: sub;position: absolute;top: 0;left: 0">
-        <span id="tsText" style="position: absolute;left: 0.82rem;top: 0.15rem;color: rgba(255, 56, 56, 1);font-size: 16px"></span>
+        <span id="tsText" style="position: absolute;left: 0.82rem;color: rgba(255, 56, 56, 1);font-size: 16px"></span>
     </div>
     <div style="padding: 0.32rem;padding-bottom: 1.2rem">
         <div id="title" style="color: #333333;font-size: 24px;font-weight: bolder;text-align: justify"></div>
@@ -43,7 +43,7 @@
             <script id="ad-template-info" type="text/html">
                 <div class="ad-template-info"
                      style="display: flex;justify-content: space-between;height: 1.86rem;margin-top: 0.24rem"
-                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},1,getParam('from_user_id'))">
+                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},1,getParam('from_user_id'),{{page}})">
                     <div style="width: 65%">
                         <div class="line-two"
                              style="font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.44rem;">
@@ -66,7 +66,7 @@
             <!--三图-->
             <script id="ad-template-3img" type="text/html">
                 <div class="ad-template-3img" style="padding: 0.24rem 0"
-                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},2,getParam('from_user_id'))">
+                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},2,getParam('from_user_id'),{{page}})">
                     <div class="line-two"
                          style="padding: 0 0rem;font-weight: bolder;line-height: 0.44rem;color: #333;font-size: 16px!important;">
                         {{ title }}
@@ -79,7 +79,7 @@
                     <div style="display: flex;justify-content: space-between;margin-top: 0.14rem;padding: 0 0rem">
                     <span style="color: rgba(255, 66, 55, 1);font-size: 14px;">
                         <img src="./img/xhb.png"
-                             style="margin-top: 0rem;margin-right: 0rem;width: 0.28rem;height: 0.28rem"><span>分享好友得1元红包</span>
+                             style="margin-top: -0.04rem;margin-right: 0.06rem;;width: 0.28rem;height: 0.28rem"><span>分享好友得1元红包</span>
                     </span>
                         <img src="./img/fxzq.png" style="height: 0.34rem;">
                     </div>
@@ -90,7 +90,7 @@
             <!--大图-->
             <script id="ad-template-info-big" type="text/html">
                 <div class="ad-template-info-big" style="padding: 0.24rem 0"
-                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},3,getParam('from_user_id'))">
+                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},3,getParam('from_user_id'),{{page}})">
                     <div class="line-two"
                          style="padding: 0 0rem;font-weight: bolder;line-height: 0.44rem;color: #333;font-size: 16px!important;">
                         {{ title }}
@@ -116,7 +116,6 @@
 <script>
 
     commonGet('/articles/' + getParam('article_id') + '?from_user_id=' + getParam('from_user_id') + '', function (res) {
-        console.log(res)
         if (res.code == 200) {
             $('#title').html(res.data.title)
             $('#content').html(res.data.content)

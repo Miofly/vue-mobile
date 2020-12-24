@@ -83,7 +83,6 @@ var Ad = {
             page:page,
             sign:'bFwbxLAzwd5F4DOPS2hO',
         }, function (res) {
-            console.log(res)
             if (res.code == 200) {
 
             }
@@ -224,7 +223,6 @@ var Ad = {
      * @param {*} params
      */
     singleAd: function(params, callback) {
-        console.log(params)
         var pid = params.pid,
             templateId = params.adWrapClass,
             // wrapDomId = params.wrapDomId,

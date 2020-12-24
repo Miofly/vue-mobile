@@ -72,13 +72,14 @@ var Ad = {
      * clickUrl 点击率接口
      * dUrl 广告落地页url
      */
-    adClick: function(clickUrl, dUrl, pid,type,user_id) {
+    adClick: function(clickUrl, dUrl, pid,type,user_id, page) {
         event.currentTarget.className = 'news_active'
         var ua = navigator.userAgent;
         commonPost('/adClickStat', {
             ua: ua,
             pid:pid,
             type:type,
+            page:page,
             user_id:user_id,
             sign:'bFwbxLAzwd5F4DOPS2hO',
         }, function (res) {
@@ -236,6 +237,7 @@ var Ad = {
                 templateId,
                 $.extend(res, {
                     date: Ad.getDate(), //日期
+                    page: params.page, //日期
                     readNum: Ad.random(100000, 500000) //阅读数
                 })
             );

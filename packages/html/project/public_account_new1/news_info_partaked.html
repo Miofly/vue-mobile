@@ -9,14 +9,10 @@
     <script src="./js/EventEmitter.min.js"></script>
     <script src="./js/art-template.js"></script>
     <script src="./js/jf.js"></script>
-    <script src="https://gw.alipayobjects.com/os/lib/lottie-web/5.5.6/build/player/lottie.min.js"></script>
     <link href="./css/index.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div>
-    <div style="height: 0.76rem;">
-        <img src="./img/hbts.png" style="height: 0.76rem;width: 100vw;padding:0;margin: 0;vertical-align: sub">
-    </div>
     <div style="padding: 0.32rem;padding-bottom: 1.2rem">
         <div id="title" style="color: #333333;font-size: 24px;font-weight: bolder;text-align: justify"></div>
         <!--文章内容-->
@@ -34,26 +30,25 @@
 
         <div id="dataList" style="padding-bottom: 1rem"></div>
 
-        <div id="dynamicEffect" style="position: fixed;bottom: 0rem;width: 100%;left: 0;text-align: center">
-        </div>
+
         <!--广告-->
         <div class="container" style="padding-bottom: 3%;margin-top:0vh">
             <!--单图-->
             <script id="ad-template-info" type="text/html">
                 <div class="ad-template-info"
                      style="display: flex;justify-content: space-between;height: 1.86rem;margin-top: 0.24rem"
-                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},1,getParam('from_user_id'))">
+                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},1,getParam('from_user_id'),{{page}})">
                     <div style="width: 65%">
                         <div class="line-two"
                              style="font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.44rem;">
                             {{ title }}
                         </div>
-                        <div style="display: flex;justify-content: space-between;margin-top: 0.28rem">
-                        <span style="color: rgba(255, 66, 55, 1);font-size: 14px;">
-                            <img src="./img/xhb.png"
-                                 style="margin-top: -0.04rem;margin-right: 0.06rem;width: 0.28rem;height: 0.28rem"><span>分享好友得1元红包</span>
+                        <div style="display: flex;justify-content: space-between;margin-top: 0.28rem;color: rgba(153, 153, 153, 1)">
+                        <span style="color: rgba(153, 153, 153, 1)!important;font-size: 14px;">
+                            <img src="./img/eye.png"
+                                 style="margin-top: -0.04rem;margin-right: 0.06rem;width: 0.28rem;height: 0.28rem;"><span>{{ readNum }}次观看</span>
                         </span>
-                            <img src="./img/fxzq.png" style="height: 0.34rem;">
+                            {{date}}
                         </div>
                     </div>
                     <div style="width: 2rem;height: 1.6rem;padding-right: 0rem;line-height: 1.4rem">
@@ -65,7 +60,7 @@
             <!--三图-->
             <script id="ad-template-3img" type="text/html">
                 <div class="ad-template-3img" style="padding: 0.24rem 0"
-                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},2,getParam('from_user_id'))">
+                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},2,getParam('from_user_id'),{{page}})">
                     <div class="line-two"
                          style="padding: 0 0rem;font-weight: bolder;line-height: 0.44rem;color: #333;font-size: 16px!important;">
                         {{ title }}
@@ -75,12 +70,12 @@
                         <img style="height: 1.4rem;border-radius: 4px;" src="{{value}}" alt="">
                         {{ /each    }}
                     </div>
-                    <div style="display: flex;justify-content: space-between;margin-top: 0.14rem;padding: 0 0rem">
-                    <span style="color: rgba(255, 66, 55, 1);font-size: 14px;">
-                        <img src="./img/xhb.png"
-                             style="margin-top: 0rem;margin-right: 0rem;width: 0.28rem;height: 0.28rem"><span>分享好友得1元红包</span>
+                    <div style="display: flex;justify-content: space-between;margin-top: 0.14rem;padding: 0 0rem;color: rgba(153, 153, 153, 1)">
+                    <span style="color: rgba(153, 153, 153, 1);font-size: 14px;">
+                        <img src="./img/eye.png"
+                             style="margin-top: -0.04rem;margin-right: 0.06rem;width: 0.28rem;height: 0.28rem"><span>{{ readNum }}次观看</span>
                     </span>
-                        <img src="./img/fxzq.png" style="height: 0.34rem;">
+                        {{date}}
                     </div>
                 </div>
 
@@ -89,7 +84,7 @@
             <!--大图-->
             <script id="ad-template-info-big" type="text/html">
                 <div class="ad-template-info-big" style="padding: 0.24rem 0"
-                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},3,getParam('from_user_id'))">
+                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},3,getParam('from_user_id'),{{page}})">
                     <div class="line-two"
                          style="padding: 0 0rem;font-weight: bolder;line-height: 0.44rem;color: #333;font-size: 16px!important;">
                         {{ title }}
@@ -97,12 +92,12 @@
                     <div style="display: flex;justify-content: space-between;padding: 0 0rem;margin-top: 0.2rem">
                         <img style="height: 4.56rem;width: 100%;border-radius: 4px;" src="{{srcUrls[0]}}" alt="">
                     </div>
-                    <div style="display: flex;justify-content: space-between;margin-top: 0.28rem;padding: 0 0rem">
-                    <span style="color: rgba(255, 66, 55, 1);font-size: 14px;">
-                        <img src="./img/xhb.png"
-                             style="margin-top: -0.05rem;margin-right: 0.08rem;width: 0.28rem;height: 0.28rem"><span>分享好友得1元红包</span>
+                    <div style="display: flex;justify-content: space-between;margin-top: 0.28rem;padding: 0 0rem;color: rgba(153, 153, 153, 1)">
+                    <span style="color: rgba(153, 153, 153, 1);font-size: 14px;">
+                        <img src="./img/eye.png"
+                             style="margin-top: -0.05rem;margin-right: 0.08rem;width: 0.28rem;height: 0.28rem"><span>{{ readNum }}次观看</span>
                     </span>
-                        <img src="./img/fxzq.png" style="height: 0.34rem;">
+                        {{date}}
                     </div>
                 </div>
                 <div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>
@@ -131,16 +126,6 @@
         $('#openAll').hide()
     }
 
-    var anim = lottie.loadAnimation({
-        container: document.getElementById("dynamicEffect"), // 容器
-        renderer: "svg",
-        loop: true,
-        autoplay: true,
-        // animationData: {}, //如果使用的是JSON
-        path:
-            "https://assets6.lottiefiles.com/packages/lf20_qbxtcy2r.json" // the path to the animation json
-    });
-
     var adListIndex = 0;
     var adList = [];
     var deny_cids = []; // 被禁止的创意广告id
@@ -151,7 +136,7 @@
     getAds()
 
     function getAds () {
-        commonGet('/adverts?page=' + page.num + '&per_page=' + page.size + '', function (res) {
+        commonGet('/adverts?page_type=7&page=' + page.num + '&per_page=' + page.size + '', function (res) {
             if (res.code == 200) {
                 adList = res.data
                 maxPgae = res.meta.last_page

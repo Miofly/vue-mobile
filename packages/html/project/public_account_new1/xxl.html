@@ -20,18 +20,18 @@
             <script id="ad-template-info" type="text/html">
                 <div class="ad-template-info"
                      style="display: flex;justify-content: space-between;height: 1.86rem;margin-top: 0.24rem"
-                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},1,getParam('from_user_id'))">
+                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},1,getParam('from_user_id'),{{page}})">
                     <div style="width: 65%">
                         <div class="line-two"
                              style="font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.44rem;">
                             {{ title }}
                         </div>
-                        <div style="display: flex;justify-content: space-between;margin-top: 0.28rem">
-                        <span style="color: rgba(255, 66, 55, 1);font-size: 14px;">
-                            <img src="./img/xhb.png"
-                                 style="margin-top: -0.04rem;margin-right: 0.06rem;width: 0.28rem;height: 0.28rem"><span>分享好友得1元红包</span>
+                        <div style="display: flex;justify-content: space-between;margin-top: 0.28rem;color: rgba(153, 153, 153, 1)">
+                        <span style="color: rgba(153, 153, 153, 1)!important;font-size: 14px;">
+                            <img src="./img/eye.png"
+                                 style="margin-top: -0.04rem;margin-right: 0.06rem;width: 0.28rem;height: 0.28rem;"><span>{{ readNum }}次观看</span>
                         </span>
-                            <img src="./img/fxzq.png" style="height: 0.34rem;">
+                            {{date}}
                         </div>
                     </div>
                     <div style="width: 2rem;height: 1.6rem;padding-right: 0rem;line-height: 1.4rem">
@@ -43,7 +43,7 @@
             <!--三图-->
             <script id="ad-template-3img" type="text/html">
                 <div class="ad-template-3img" style="padding: 0.24rem 0"
-                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},2,getParam('from_user_id'))">
+                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},2,getParam('from_user_id'),{{page}})">
                     <div class="line-two"
                          style="padding: 0 0rem;font-weight: bolder;line-height: 0.44rem;color: #333;font-size: 16px!important;">
                         {{ title }}
@@ -53,12 +53,12 @@
                         <img style="height: 1.4rem;border-radius: 4px;" src="{{value}}" alt="">
                         {{ /each    }}
                     </div>
-                    <div style="display: flex;justify-content: space-between;margin-top: 0.14rem;padding: 0 0rem">
-                    <span style="color: rgba(255, 66, 55, 1);font-size: 14px;">
-                        <img src="./img/xhb.png"
-                             style="margin-top: 0rem;margin-right: 0rem;width: 0.28rem;height: 0.28rem"><span>分享好友得1元红包</span>
+                    <div style="display: flex;justify-content: space-between;margin-top: 0.14rem;padding: 0 0rem;color: rgba(153, 153, 153, 1)">
+                    <span style="color: rgba(153, 153, 153, 1);font-size: 14px;">
+                        <img src="./img/eye.png"
+                             style="margin-top: -0.04rem;margin-right: 0.06rem;width: 0.28rem;height: 0.28rem"><span>{{ readNum }}次观看</span>
                     </span>
-                        <img src="./img/fxzq.png" style="height: 0.34rem;">
+                        {{date}}
                     </div>
                 </div>
 
@@ -67,7 +67,7 @@
             <!--大图-->
             <script id="ad-template-info-big" type="text/html">
                 <div class="ad-template-info-big" style="padding: 0.24rem 0"
-                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},3,getParam('from_user_id'))">
+                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},3,getParam('from_user_id'),{{page}})">
                     <div class="line-two"
                          style="padding: 0 0rem;font-weight: bolder;line-height: 0.44rem;color: #333;font-size: 16px!important;">
                         {{ title }}
@@ -75,12 +75,12 @@
                     <div style="display: flex;justify-content: space-between;padding: 0 0rem;margin-top: 0.2rem">
                         <img style="height: 4.56rem;width: 100%;border-radius: 4px;" src="{{srcUrls[0]}}" alt="">
                     </div>
-                    <div style="display: flex;justify-content: space-between;margin-top: 0.28rem;padding: 0 0rem">
-                    <span style="color: rgba(255, 66, 55, 1);font-size: 14px;">
-                        <img src="./img/xhb.png"
-                             style="margin-top: -0.05rem;margin-right: 0.08rem;width: 0.28rem;height: 0.28rem"><span>分享好友得1元红包</span>
+                    <div style="display: flex;justify-content: space-between;margin-top: 0.28rem;padding: 0 0rem;color: rgba(153, 153, 153, 1)">
+                    <span style="color: rgba(153, 153, 153, 1);font-size: 14px;">
+                        <img src="./img/eye.png"
+                             style="margin-top: -0.05rem;margin-right: 0.08rem;width: 0.28rem;height: 0.28rem"><span>{{ readNum }}次观看</span>
                     </span>
-                        <img src="./img/fxzq.png" style="height: 0.34rem;">
+                        {{date}}
                     </div>
                 </div>
                 <div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>
@@ -101,7 +101,7 @@
     getAds()
 
     function getAds () {
-        commonGet('/adverts?page=' + page.num + '&per_page=' + page.size + '', function (res) {
+        commonGet('/adverts?page_type=1&page=' + page.num + '&per_page=' + page.size + '', function (res) {
             if (res.code == 200) {
                 adList = res.data
                 maxPgae = res.meta.last_page
