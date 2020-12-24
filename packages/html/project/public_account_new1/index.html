@@ -280,7 +280,7 @@
             </div>
         </div>
 
-        <div id="whthDrawSuccess " style="display: none;text-align: center;z-index: 5">
+        <div id="whthDrawSuccess" style="display: none;text-align: center;z-index: 5">
             <div class="mio-modal-mask" style="display: block"></div>
             <div style="position: fixed;top: 35%;left: 50%;transform:translate(-50%,-50%);z-index: 999;background: url('./img/txcg.png');background-repeat: no-repeat;background-size: 100%;
         background-position: center;width: 95vw;height: 7.74rem;">
@@ -437,11 +437,13 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
             return
         }
         commonPost('/withdrawals', {amount: obj.withdrawal_amounts[this.obj.moneyIndex]}, function (res) {
+            console.log(res)
             if (res.status == 'error') {
                 $('#whthDrawToast').show()
                 $('#message').html(res.message)
             } else {
-
+                console.log('执行了吗')
+                $('#whthDrawSuccess').show()
             }
         }, {'ACT-USER-ID': getParam('user_id')}, function (err) {
             console.log(err)
