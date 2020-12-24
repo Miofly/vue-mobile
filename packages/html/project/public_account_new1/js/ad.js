@@ -285,7 +285,7 @@ function setListData(curPageData, page) {
             '                <div style="font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.44rem;" class="line-two">' + pd.title + '</div>\n' +
             '                <div style="display: flex;justify-content: space-between;margin-top: 0.28rem">\n' +
             '                    <span style="color: rgba(255, 66, 55, 1);font-size: 14px;"><img src="./img/xhb.png" style="margin-top: -0.08rem;margin-right: 0.12rem;width: 0.28rem;height: 0.28rem">' +
-            '<span>分享好友得'+ pd.price.split('.')[0]/10 +'元红包</span></span>\n' +
+            '<span>分享好友得'+ pd.price/10 +'元红包</span></span>\n' +
             '                    <img src="./img/fxzq.png" style="height: 0.34rem;">\n' +
             '                </div>\n' +
             '            </div>\n' +

@@ -14,8 +14,9 @@
 </head>
 <body>
 <div>
-    <div style="height: 0.76rem;">
-        <img src="./img/hbts.png" style="height: 0.76rem;width: 100vw;padding:0;margin: 0;vertical-align: sub">
+    <div style="height: 0.76rem;position: relative">
+        <img src="./img/hbts.png" style="height: 0.76rem;width: 100vw;padding:0;margin: 0;vertical-align: sub;position: absolute;top: 0;left: 0">
+        <span id="tsText" style="position: absolute;left: 0.82rem;top: 0.15rem;color: rgba(255, 56, 56, 1);font-size: 16px"></span>
     </div>
     <div style="padding: 0.32rem;padding-bottom: 1.2rem">
         <div id="title" style="color: #333333;font-size: 24px;font-weight: bolder;text-align: justify"></div>
@@ -119,6 +120,7 @@
         if (res.code == 200) {
             $('#title').html(res.data.title)
             $('#content').html(res.data.content)
+            $('#tsText').html('分享新闻给好友，每人阅读得' + res.data.price/10 + '元红包奖励')
             $('#dynamicEffect').click(function () {
                 location.href = res.data.url + '/goal/partake.html' + location.search + ''
             })
@@ -138,7 +140,7 @@
         autoplay: true,
         // animationData: {}, //如果使用的是JSON
         path:
-            "https://assets6.lottiefiles.com/packages/lf20_qbxtcy2r.json" // the path to the animation json
+            "https://assets2.lottiefiles.com/packages/lf20_zivk5lyq.json" // the path to the animation json
     });
 
     var adListIndex = 0;

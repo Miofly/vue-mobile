@@ -155,7 +155,7 @@
             <div style="position: absolute;top: 9.8rem;width: 100%">
                 <div id="share_people" style=" display: flex;justify-content: space-evenly;padding: 0 0.3rem;width:100%"></div>
             </div>
-            <div class="share" style="position: absolute;top: 11.76rem;width: 6.56rem;height: 1.12rem;left: 50%;margin-left: -3.38rem">
+            <div class="share" style="position: absolute;top: 11.76rem;width: 6.56rem;height: 1.12rem;left: 50%;margin-left: -3.28rem">
                 <img alt="" class="fenxiang" src="./img/fenxiang@2x.png">
             </div>
         </div>
@@ -253,9 +253,10 @@
 
         <div id="withDrawRequire" style="color: #333333;margin-left: 0.44rem;position: relative;padding-bottom: 1rem">
             <div style="font-size: 16px;font-weight: bolder">提现需知</div>
-            <div style="font-size: 14px;margin-top: 0.16rem">1. 余额达到提现要求</div>
-            <div id="requireOne" style="font-size: 14px;margin-top: 0.28rem"></div>
-            <div id="requireTwo" style="font-size: 14px;margin-top: 0.28rem"></div>
+<!--            <div style="font-size: 14px;margin-top: 0.16rem">1. 余额达到提现要求</div>-->
+            <div id="requireOne" style="font-size: 14px;margin-top: 0.28rem;line-height: 0.5rem;">
+
+            </div>
         </div>
 
         <!--提现提示-->
@@ -275,6 +276,17 @@
                 </div>
                 <div style="position: absolute;left: 50%;width: 0.76rem;height: 0.76rem;margin-left: -0.38rem;bottom: -1.6rem">
                     <img onclick="hideSeven()" src="./img/close.png" style="color: white;width: 0.76rem;height: 0.76rem;font-weight: bolder;"/>
+                </div>
+            </div>
+        </div>
+
+        <div id="whthDrawSuccess " style="display: none;text-align: center;z-index: 5">
+            <div class="mio-modal-mask" style="display: block"></div>
+            <div style="position: fixed;top: 35%;left: 50%;transform:translate(-50%,-50%);z-index: 999;background: url('./img/txcg.png');background-repeat: no-repeat;background-size: 100%;
+        background-position: center;width: 95vw;height: 7.46rem;">
+                <div onclick="success()" style="border-radius: 8px;line-height: 0.96rem;color: #FFFFFF;font-size: 18px;background: linear-gradient(270deg, #FF8E4D 0%, #FF6565 100%);
+        position: absolute;left: 50%;width: 5.48rem;height: 0.96rem;top:6.28rem;margin-left: -2.74rem;">
+                    朕知道了
                 </div>
             </div>
         </div>
@@ -367,8 +379,8 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
 
             $('#firstMoney').html(res.data.newcomer_bonus + '<span style="font-size: 0.6rem;margin-left: 0.2rem;vertical-align: middle">元</span>')
 
-            $('#requireOne').html('2. 邀请好友须达到' + res.data.withdrawal_follower_num + '人')
-            $('#requireTwo').html('3. 转发UV须达到' + res.data.withdrawal_uv_num + '个')
+            $('#requireOne').html(res.data.withdrawal_rule)
+            // $('#requireTwo').html('3. 转发UV须达到' + res.data.withdrawal_uv_num + '个')
 
             var html = ''
             $.each(res.data.withdrawal_amounts, function (key) {
@@ -616,6 +628,20 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
         $('#indexPgae').show()
         $('#redEnvelopePage').hide()
         $('#withDrawPage').hide()
+    }
+
+    function success() {
+        $('#whthDrawSuccess').hide()
+        setTimeout(() => {
+            $('#withDrawRequire').css('top', $('#withDrawHeight').outerHeight())
+        }, 1)
+
+        commonGet('/user', function (res) {
+            if (res.code == 200) {
+                userInfos.balance = res.data.balance
+                $('#sumMoney').html(res.data.balance + '<span style="vertical-align: middle;font-size: 0.6rem;color: #FFFFFF;margin-left: 0.2rem;font-weight: bold">元</span>') //后台返回钱数
+            }
+        }, {'ACT-USER-ID': getParam('user_id')})
     }
 </script>
 <script src="./js/ad.js"></script>
