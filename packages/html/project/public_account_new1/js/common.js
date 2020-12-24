@@ -57,6 +57,7 @@ function startcountDown(time) {
         time--;
         if (time === 0) {
             clearInterval(set);
+            location.reload()
         }
         countDown(time);
     }, 1000);
