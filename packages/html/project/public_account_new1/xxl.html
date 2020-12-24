@@ -105,6 +105,9 @@
             if (res.code == 200) {
                 adList = res.data
                 maxPgae = res.meta.last_page
+                for (var i = 0; i < adList.length; i++) {
+                    adList[i].data = {app_id: 103019, deny_cids: deny_cids.join(',')}
+                }
             }
             ee.addListener('fetch-jj-ad', function () {
                 var curData = adList[0];
