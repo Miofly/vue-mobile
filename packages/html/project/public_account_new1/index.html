@@ -28,7 +28,7 @@
         <!--单图-->
         <script id="ad-template-info" type="text/html">
             <div class="ad-template-info"
-                 style="display: flex;justify-content: space-around;height: 1.86rem;margin-top: 0.24rem"  onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},1,getParam('from_user_id'))">
+                 style="display: flex;justify-content: space-around;height: 1.86rem;margin-top: 0.24rem"  onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},1,getParam('from_user_id'),{{page}})">
                 <div style="width: 65%">
                     <div class="line-two"
                          style="font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.44rem;">
@@ -50,7 +50,7 @@
         </script>
         <!--三图-->
         <script id="ad-template-3img" type="text/html">
-            <div class="ad-template-3img" style="padding: 0.12rem 0"  onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},2,getParam('from_user_id'))">
+            <div class="ad-template-3img" style="padding: 0.12rem 0"  onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},2,getParam('from_user_id'),{{page}})">
                 <div class="line-two"
                      style="padding: 0 0.24rem;font-weight: bolder;line-height: 0.44rem;color: #333;font-size: 16px!important;">
                     {{ title }}
@@ -73,7 +73,7 @@
         </script>
         <!--大图-->
         <script id="ad-template-info-big" type="text/html">
-            <div class="ad-template-info-big" style="padding: 0.12rem 0"  onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},3,getParam('from_user_id'))">
+            <div class="ad-template-info-big" style="padding: 0.12rem 0"  onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},3,getParam('from_user_id'),{{page}})">
                 <div class="line-two"
                      style="padding: 0 0.24rem;font-weight: bolder;line-height: 0.44rem;color: #333;font-size: 16px!important;">
                     {{ title }}
@@ -337,7 +337,7 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
     function getUserInfo () {
         commonGet('/user', function (res) {
             if (res.code == 200) {
-                userInfos.avatar = res.data.avatar
+                // userInfos.avatar = res.data.avatar
                 userInfos.balance = res.data.balance
                 userInfos.id = res.data.id
                 userInfos.newcomer = res.data.newcomer
@@ -354,7 +354,6 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
     }
 
     // 首次进入的红包金额配置 倒计时时间 金额配置 提现需知
-
     function setting () {
         commonGet('/setting', function (res) {
             obj.newcomer_bonus = res.data.newcomer_bonus
@@ -386,21 +385,25 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
 
             // 红包界面 是否之前领过红包 领取红包的人数
             setTimeout(function () {
-                commonGet('/packets/show', function (res) {
-                    if (res.data.length == 0) { // 之前没领过红包
-                        $('#redEnvelopeTwo').show()
-                    } else {
-                        obj.peopleList = res.data.invited_users
-                        obj.bigRed = res.data.amount
-                        obj.invalid_at = res.data.invalid_at
-                        startcountDown(Math.ceil((new Date(res.data.invalid_at.replace(/-/g, '/')).getTime() - new Date().getTime()) / 1000))
-                        $('.money').text(obj.bigRed) //后台返回钱数
-                        // $('#sumMoney').text(obj.bigRed) //后台返回钱数
-                        redGift()
-                    }
-                }, {'ACT-USER-ID': getParam('user_id')})
+                getRedEnvelopInfos()
             }, 1000)
         })
+    }
+
+    function getRedEnvelopInfos() {
+        commonGet('/packets/show', function (res) {
+            if (res.data.length == 0) { // 之前没领过红包
+                $('#redEnvelopeTwo').show()
+            } else {
+                obj.peopleList = res.data.invited_users
+                obj.bigRed = res.data.amount
+                obj.invalid_at = res.data.invalid_at
+                startcountDown(Math.ceil((new Date(res.data.invalid_at.replace(/-/g, '/')).getTime() - new Date().getTime()) / 1000))
+                $('.money').text(obj.bigRed) //后台返回钱数
+                // $('#sumMoney').text(obj.bigRed) //后台返回钱数
+                redGift()
+            }
+        }, {'ACT-USER-ID': getParam('user_id')})
     }
 
     // 提现金额选择
@@ -478,6 +481,9 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
                 obj.peopleList[i].avatar = './img/avatar.png'
             }
         }
+
+        $('#share_people').html('')
+        $('#share_peopleTwo').html('')
         var html = ''
         var html1 = ''
         $.each(obj.peopleList, function (key) {
@@ -519,7 +525,7 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
     }
 
     $('#qian').click(function (){
-
+        getRedEnvelopInfos()
         if ($('#imgOne').attr('src') == undefined) {
             commonGet('/qrcode', function (res) {
                 if (res.code == 200) {
@@ -633,6 +639,7 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
     }
 
     function hideFive () {
+        goIndex()
         $('#withdrawalSuccess').hide()
     }
 

@@ -14,18 +14,7 @@ function commonPost(url, data, success, headers, fail) {
     $.ajax({
         type: 'POST',
         url: 'http://api.17code.net/h5' + url,
-        // url: 'http://lb-manage-api.52xiaoshuo.cn/api/' + url,
-        data: data,
-        success: success,
-        fail: fail,
-        headers: headers
-    })
-}
-
-function commonPostTwo(url, data, success, headers, fail) {
-    $.ajax({
-        type: 'POST',
-        url: 'http://api.17code.net/' + url,
+        // url: 'http://api.17code.net/h5' + url,
         // url: 'http://lb-manage-api.52xiaoshuo.cn/api/' + url,
         data: data,
         success: success,
@@ -38,6 +27,7 @@ function commonGet(url, success, headers,fail) {
     $.ajax({
         type: 'GET',
         url: 'http://api.17code.net/h5' + url,
+        // url: 'http://api.17code.net/h5' + url,
         success: success,
         fail: fail,
         headers: headers

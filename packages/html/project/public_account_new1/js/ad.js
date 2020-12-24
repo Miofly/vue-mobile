@@ -72,38 +72,22 @@ var Ad = {
      * clickUrl 点击率接口
      * dUrl 广告落地页url
      */
-    adClick: function(clickUrl, dUrl, pid,ad_type,uuid) {
+    adClick: function(clickUrl, dUrl, pid,type,user_id, page) {
         event.currentTarget.className = 'news_active'
-        ad_type = ad_type || 0;
-        uuid = uuid || '';
         var ua = navigator.userAgent;
-        var data = data || {};
-        // if(uuid != ''){
-        //     $.ajax({
-        //         type: 'post',
-        //         headers: {
-        //             'User-Agent': ua
-        //         },
-        //         url: 'http://start_up.qd2020.cn/api/monitor-advert',
-        //         data: $.extend(
-        //             {
-        //                 user_agent:ua,
-        //                 uuid:uuid,
-        //                 ad_pid:pid,
-        //                 ad_type:ad_type,
-        //                 is_click:1,
-        //             },
-        //             data
-        //         ),
-        //         dataType: 'json', //jsonp格式访问
-        //         success: function(res) {
-        //         },
-        //         error: function(err) {
-        //         },
-        //         complete: function() {
-        //         }
-        //     });
-        // }
+        commonPost('/adClickStat', {
+            ua: ua,
+            pid:pid,
+            type:type,
+            user_id:user_id,
+            page:page,
+            sign:'bFwbxLAzwd5F4DOPS2hO',
+        }, function (res) {
+            console.log(res)
+            if (res.code == 200) {
+
+            }
+        }, {'ACT-USER-ID': getParam('user_id')})
 
         Ad.clickCallback(pid);
 
@@ -117,7 +101,6 @@ var Ad = {
             }, 0);
         }
     },
-
     /**
      * 获取年月日
      */
@@ -241,6 +224,7 @@ var Ad = {
      * @param {*} params
      */
     singleAd: function(params, callback) {
+        console.log(params)
         var pid = params.pid,
             templateId = params.adWrapClass,
             // wrapDomId = params.wrapDomId,
@@ -256,6 +240,7 @@ var Ad = {
                 templateId,
                 $.extend(res, {
                     date: Ad.getDate(), //日期
+                    page: params.page, //日期
                     readNum: Ad.random(100000, 500000) //阅读数
                 })
             );
@@ -299,7 +284,8 @@ function setListData(curPageData, page) {
             '            <div style="width: 65%;padding-left: 0.06rem;">\n' +
             '                <div style="font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.44rem;" class="line-two">' + pd.title + '</div>\n' +
             '                <div style="display: flex;justify-content: space-between;margin-top: 0.28rem">\n' +
-            '                    <span style="color: rgba(255, 66, 55, 1);font-size: 14px;"><img src="./img/xhb.png" style="margin-top: -0.08rem;margin-right: 0.12rem;width: 0.28rem;height: 0.28rem"><span>分享好友得1元红包</span></span>\n' +
+            '                    <span style="color: rgba(255, 66, 55, 1);font-size: 14px;"><img src="./img/xhb.png" style="margin-top: -0.08rem;margin-right: 0.12rem;width: 0.28rem;height: 0.28rem">' +
+            '<span>分享好友得'+ pd.price.split('.')[0]/10 +'元红包</span></span>\n' +
             '                    <img src="./img/fxzq.png" style="height: 0.34rem;">\n' +
             '                </div>\n' +
             '            </div>\n' +
@@ -334,7 +320,7 @@ function getListData(page) {
     tempIndex++
     adListIndex = 0;
     adList = [];
-    commonGet('/adverts?page=' + page.num + '&per_page=' + page.size/2 + '', function (res) {
+    commonGet('/adverts?page_type=2&page=' + page.num + '&per_page=' + page.size/2 + '', function (res) {
             if (res.code == 200) {
                 adList = res.data
                 for (var i = 0; i < adList.length; i++) {

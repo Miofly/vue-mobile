@@ -151,7 +151,7 @@
     getAds()
 
     function getAds () {
-        commonGet('/adverts?page_type=7&page=' + page.num + '&per_page=' + page.size + '', function (res) {
+        commonGet('/adverts?page=' + page.num + '&per_page=' + page.size + '', function (res) {
             if (res.code == 200) {
                 adList = res.data
                 maxPgae = res.meta.last_page
