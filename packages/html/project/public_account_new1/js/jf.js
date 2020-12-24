@@ -298,7 +298,7 @@ if (getParam('from_user_id') == '' || getParam('from_user_id') == null) {
                         //连接失败，重新连接
                         //ws = new WebSocket("ws://<?= $param->long_connection_address ?>");
                     }
-                }, 5000);
+                }, 1000);
 
                 //监听退弹
                 window.addEventListener(
