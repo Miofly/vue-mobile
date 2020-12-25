@@ -2,7 +2,7 @@
  * Ad对象 仅用于竞价广告
  */
 var ee = new EventEmitter();
-var trueIndex = -1;
+var trueIndex = 0;
 var Ad = {
     clickCallback: function() {},
     /**
@@ -244,18 +244,11 @@ var Ad = {
             );
 
             //  console.log('#adIndex' + Number(trueIndex*2+1)+ '')
-            if (trueIndex <= 2) {
-                $('#adIndex' + Number(trueIndex*2+1)+ '').prepend(html)
-            } else {
-                $('#adIndex' + Number(trueIndex*2)+ '').append(html)
-            }
-
-
+            $('#adIndex' + trueIndex*2 + '').append(html)
 
             // 查询被插入的广告 用于曝光监测
             // var currAd = $('.'+ adWrapClass);
-            var currAd = $('#dataList' + trueIndex*2 + ' .' + adWrapClass + ':last')[0];
-            console.log()
+            var currAd = $('#adIndex' + trueIndex*2 + ' .' + adWrapClass + ':last')[0];
             //启动广告曝光监测
             if (currAd != undefined) {
                 Ad.checkMonitor(currAd, res.monitorUrl);
@@ -271,7 +264,7 @@ var mescroll = new MeScroll("mescroll", {
     up: {
         offset: 200,
         auto: true,
-        page: {num:0, size:4},//每次加载1条数据,模拟loadFull
+        page: {num:0, size:6},//每次加载1条数据,模拟loadFull
         callback: getListData, //上拉回调,此处可简写; 相当于 callback: function (page) { getListData(page); }
         isBounce: false, //此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
         clearEmptyId: "dataList", //1.下拉刷新时会自动先清空此列表,再加入数据; 2.无任何数据时会在此列表自动提示空

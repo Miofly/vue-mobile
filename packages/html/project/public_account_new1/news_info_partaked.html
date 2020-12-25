@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>今日热点</title>
+    <script>
+        var ua = navigator.userAgent.toLowerCase();
+        if (ua.match(/MicroMessenger/i) != "micromessenger") {
+            location.href="/404"
+        }
+    </script>
     <script src="./js/jquery-1.7.2.min.js" type="text/javascript"></script>
     <script src="./js/adaptive.js" type="text/javascript"></script>
     <script src="./js/common.js" type="text/javascript"></script>
@@ -18,7 +24,7 @@
         <!--文章内容-->
         <div id="contentParent" style="margin-top: 0.06rem;position: relative;height: 2.8rem;">
             <div id="content" style="position: absolute;top: 0;left: 0;overflow-y: hidden;height: 2.8rem;
-        font-size: 18px;text-indent: 4em;line-height: 2.56rem;text-align:justify;width: 100%"></div>
+        font-size: 18px;text-indent: 4em;line-height: 0.5rem;text-align:justify;width: 100%"></div>
             <div id="openAll" onclick="openAll()" style="position: absolute;top: 1.16rem;left: 0">
                 <img src="./img/ckqw.png">
             </div>

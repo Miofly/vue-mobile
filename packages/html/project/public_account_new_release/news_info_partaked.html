@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>今日热点</title>
+    <script src="./js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="./js/adaptive.js" type="text/javascript"></script>
+    <script src="./js/common.js" type="text/javascript"></script>
+    <script src="./js/EventEmitter.min.js"></script>
+    <script src="./js/art-template.js"></script>
+    <script src="./js/jf.js"></script>
+    <link href="./css/index.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div>
+    <div style="padding: 0.32rem;padding-bottom: 1.2rem">
+        <div id="title" style="color: #333333;font-size: 24px;font-weight: bolder;text-align: justify"></div>
+        <!--文章内容-->
+        <div id="contentParent" style="margin-top: 0.06rem;position: relative;height: 2.8rem;">
+            <div id="content" style="position: absolute;top: 0;left: 0;overflow-y: hidden;height: 2.8rem;
+        font-size: 18px;text-indent: 4em;line-height: 2.56rem;text-align:justify;width: 100%"></div>
+            <div id="openAll" onclick="openAll()" style="position: absolute;top: 1.16rem;left: 0">
+                <img src="./img/ckqw.png">
+            </div>
+        </div>
+
+        <div style="margin-top: 0.36rem">
+            <img src="./img/rmtj.png" style="height: 0.34rem">
+        </div>
+
+        <div id="dataList" style="padding-bottom: 1rem"></div>
+
+
+        <!--广告-->
+        <div class="container" style="padding-bottom: 3%;margin-top:0vh">
+            <!--单图-->
+            <script id="ad-template-info" type="text/html">
+                <div class="ad-template-info"
+                     style="display: flex;justify-content: space-between;height: 1.86rem;margin-top: 0.24rem"
+                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},1,getParam('from_user_id'),{{page}})">
+                    <div style="width: 65%">
+                        <div class="line-two"
+                             style="font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.44rem;">
+                            {{ title }}
+                        </div>
+                        <div style="display: flex;justify-content: space-between;margin-top: 0.28rem;color: rgba(153, 153, 153, 1)">
+                        <span style="color: rgba(153, 153, 153, 1)!important;font-size: 14px;">
+                            <img src="./img/eye.png"
+                                 style="margin-top: -0.04rem;margin-right: 0.06rem;width: 0.28rem;height: 0.28rem;"><span>{{ readNum }}次观看</span>
+                        </span>
+                            {{date}}
+                        </div>
+                    </div>
+                    <div style="width: 2rem;height: 1.6rem;padding-right: 0rem;line-height: 1.4rem">
+                        <img src="{{srcUrls[0]}}" style="height: 1.6rem;border-radius: 4px;">
+                    </div>
+                </div>
+                <div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>
+            </script>
+            <!--三图-->
+            <script id="ad-template-3img" type="text/html">
+                <div class="ad-template-3img" style="padding: 0.24rem 0"
+                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},2,getParam('from_user_id'),{{page}})">
+                    <div class="line-two"
+                         style="padding: 0 0rem;font-weight: bolder;line-height: 0.44rem;color: #333;font-size: 16px!important;">
+                        {{ title }}
+                    </div>
+                    <div style="display: flex;justify-content: space-between;padding: 0 0rem;margin-top: 0.2rem">
+                        {{ each srcUrls as value }}
+                        <img style="height: 1.4rem;border-radius: 4px;" src="{{value}}" alt="">
+                        {{ /each    }}
+                    </div>
+                    <div style="display: flex;justify-content: space-between;margin-top: 0.14rem;padding: 0 0rem;color: rgba(153, 153, 153, 1)">
+                    <span style="color: rgba(153, 153, 153, 1);font-size: 14px;">
+                        <img src="./img/eye.png"
+                             style="margin-top: -0.04rem;margin-right: 0.06rem;width: 0.28rem;height: 0.28rem"><span>{{ readNum }}次观看</span>
+                    </span>
+                        {{date}}
+                    </div>
+                </div>
+
+                <div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>
+            </script>
+            <!--大图-->
+            <script id="ad-template-info-big" type="text/html">
+                <div class="ad-template-info-big" style="padding: 0.24rem 0"
+                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},3,getParam('from_user_id'),{{page}})">
+                    <div class="line-two"
+                         style="padding: 0 0rem;font-weight: bolder;line-height: 0.44rem;color: #333;font-size: 16px!important;">
+                        {{ title }}
+                    </div>
+                    <div style="display: flex;justify-content: space-between;padding: 0 0rem;margin-top: 0.2rem">
+                        <img style="height: 4.56rem;width: 100%;border-radius: 4px;" src="{{srcUrls[0]}}" alt="">
+                    </div>
+                    <div style="display: flex;justify-content: space-between;margin-top: 0.28rem;padding: 0 0rem;color: rgba(153, 153, 153, 1)">
+                    <span style="color: rgba(153, 153, 153, 1);font-size: 14px;">
+                        <img src="./img/eye.png"
+                             style="margin-top: -0.05rem;margin-right: 0.08rem;width: 0.28rem;height: 0.28rem"><span>{{ readNum }}次观看</span>
+                    </span>
+                        {{date}}
+                    </div>
+                </div>
+                <div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>
+            </script>
+        </div>
+    </div>
+</div>
+
+<script src="./js/adInfo.js"></script>
+<script>
+
+    commonGet('/articles/' + getParam('article_id') + '?from_user_id=' + getParam('from_user_id') + '', function (res) {
+        console.log(res)
+        if (res.code == 200) {
+            $('#title').html(res.data.title)
+            $('#content').html(res.data.content)
+            $('#dynamicEffect').click(function () {
+                location.href = res.data.url + '/goal/partake.html' + location.search + ''
+            })
+        }
+    })
+
+    function openAll() {
+        $('#content').height('auto')
+        $('#contentParent').height($('#content').height())
+        $('#openAll').hide()
+    }
+
+    var adListIndex = 0;
+    var adList = [];
+    var deny_cids = []; // 被禁止的创意广告id
+
+
+    var page = {num: 1, size:3}
+    var maxPgae = 0
+    getAds()
+
+    function getAds () {
+        commonGet('/adverts?page_type=7&page=' + page.num + '&per_page=' + page.size + '', function (res) {
+            if (res.code == 200) {
+                adList = res.data
+                maxPgae = res.meta.last_page
+                for (var i = 0; i < adList.length; i++) {
+                    adList[i].data = {app_id: 103019, deny_cids: deny_cids.join(',')}
+                }
+            }
+            ee.addListener('fetch-jj-ad', function () {
+                var curData = adList[0];
+                adList.shift()
+                //请求并渲染广告
+                if (curData != undefined && adList.length >= 0) {
+                    Ad.singleAd(curData,
+                        function(res) {
+                            // if (adListIndex === adList.length - 1) return;
+                            if (res && deny_cids.indexOf(res.cid) == -1) {
+                                /* 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复 */
+                                deny_cids.push(res.cid); //插入创意id 用于广告位被重复广告占用
+                            }
+                            /* 请求下个广告 */
+                            ee.emitEvent('fetch-jj-ad');
+                        }
+                    );
+                }
+            });
+            ee.emitEvent('fetch-jj-ad');
+        }, {'ACT-USER-ID': getParam('user_id')})
+    }
+
+    function gogg(url) {
+        history.pushState(history.length + 1, 'message', window.location.href.split('#')[0] + '#' + new Date().getTime())
+        if (navigator.userAgent.indexOf('Android') != -1) {
+            if (typeof (tbsJs) != 'undefined') {
+                tbsJs.onReady('{useCachedApi : "true"}', function (e) {
+                })
+                window.onhashchange = function () {
+                    location.href = url
+                }
+            } else {
+                var pop = 0
+                window.onhashchange = function (event) {
+                    pop++
+                    if (pop >= 3) {
+                        location.href = url
+                    } else {
+                        history.go(1)
+                    }
+                }
+                history.go(-1)
+            }
+        } else {
+            window.onhashchange = function () {
+                location.href = url
+            }
+        }
+    }
+
+    var params = location.search
+    if (getParam('from_user_id') == '' ||  getParam('from_user_id') == null) {
+        gogg(location.origin + '/index.html' + delParam(location.search, 'article_id'))
+    } else {
+        gogg(location.origin + '/xxl.html')
+    }
+
+
+    var condition = true
+    $(window).scroll(function () {
+        var scrollTop = $(this).scrollTop();
+        var scrollHeight = $(document).height();
+        var windowHeight = $(this).height();
+
+        if (scrollTop + windowHeight + 150 >= scrollHeight && page.num < maxPgae) {
+            if (condition) {
+                condition = false
+                adList = []
+                page.num++
+                getAds()
+                setTimeout(function() {
+                    condition = true
+                }, 1000)
+            }
+        }
+    })
+
+    function delParam(url, paramKey) {
+        let beforeUrl = url.substr(0, url.indexOf("?"));   //?之前主地址
+        let afterUrl = url.substr(url.indexOf("?") + 1);   //？之后参数路径
+        let nextUrl = "";
+
+        let arr = new Array();
+        if (afterUrl != "") {
+            let urlParamArr = afterUrl.split("&"); //将参数按照&符分成数组
+            for (let i = 0; i < urlParamArr.length; i++) {
+                let paramArr = urlParamArr[i].split("="); //将参数键，值拆开
+                //如果键雨要删除的不一致，则加入到参数中
+                if (paramArr[0] !== paramKey) {
+                    arr.push(urlParamArr[i]);
+                }
+            }
+        }
+        if (arr.length > 0) {
+            nextUrl = "?" + arr.join("&");
+        }
+        url = beforeUrl + nextUrl;
+        return url;
+    }
+</script>
+</body>
+</html>

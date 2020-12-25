@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <title>今日热点</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <script>
+        // var ua = navigator.userAgent.toLowerCase();
+        // if (ua.match(/MicroMessenger/i) != "micromessenger") {
+        //     location.href="/404"
+        // }
+    </script>
     <script src="./js/adaptive.js" type="text/javascript"></script>
     <link href="./css/mescroll.min.css" rel="stylesheet">
     <link href="./css/index.css" rel="stylesheet" type="text/css"/>
@@ -528,7 +534,7 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
     // 领取红包
     $('.btn').click(function () {
 
-        if ($('#num').text() !== 0) {
+        if ($('#num').text() != 0) {
             $('#withdrawalFailed').show()
         } else {
             $('#withdrawalSuccess').show()
