@@ -405,9 +405,17 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
     function getRedEnvelopInfos() {
         commonGet('/packets/show', function (res) {
             if (res.data.length == 0) { // 之前没领过红包
+                $('#share_people').html('')
+                obj.peopleList = []
+                $('#share_peopleTwo').html('')
                 $('#redEnvelopeTwo').show()
             } else {
                 obj.peopleList = res.data.invited_users
+                // obj.peopleList = [{avatar: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg', nickname: '待助力'},
+                //     {avatar: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/2.jpg', nickname: '待助力'},
+                //     {avatar: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/3.jpg', nickname: '待助力'},
+                //     {avatar: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/4.jpg', nickname: '待助力'},
+                //     {avatar: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/5.jpg', nickname: '待助力'}]
                 obj.bigRed = res.data.amount
                 obj.invalid_at = res.data.invalid_at
                 startcountDown(Math.ceil((new Date(res.data.invalid_at.replace(/-/g, '/')).getTime() - new Date().getTime()) / 1000))
@@ -608,10 +616,10 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
 
         $('#qian').children('div').removeClass('active').addClass('inactive')
         $('#huo').children('div').removeClass('active').addClass('inactive')
-        $(this).children('div').removeClass('inactive').addClass('active')
+        $('#qianOne').children('div').removeClass('inactive').addClass('active')
         $('#qian').children('img').attr('src', './img/qian_grey.png')
         $('#huo').children('img').attr('src', './img/huo_grey.png')
-        $(this).children('img').attr('src', './img/qianOne.png')
+        $('#qianOne').children('img').attr('src', './img/qianOne.png')
         $('#indexPgae').hide()
         $('#redEnvelopePage').hide()
         $('#withDrawPage').show()
@@ -629,6 +637,30 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
         $('#indexPgae').show()
         $('#redEnvelopePage').hide()
         $('#withDrawPage').hide()
+    }
+
+    function goUser () {
+        setTimeout(() => {
+            $('#withDrawRequire').css('top', $('#withDrawHeight').outerHeight())
+        }, 1)
+
+
+        commonGet('/user', function (res) {
+            if (res.code == 200) {
+                userInfos.balance = res.data.balance
+                $('#sumMoney').html(res.data.balance + '<span style="vertical-align: middle;font-size: 0.6rem;color: #FFFFFF;margin-left: 0.2rem;font-weight: bold">元</span>') //后台返回钱数
+            }
+        }, {'ACT-USER-ID': getParam('user_id')})
+
+        $('#qian').children('div').removeClass('active').addClass('inactive')
+        $('#huo').children('div').removeClass('active').addClass('inactive')
+        $('#qianOne').children('div').removeClass('inactive').addClass('active')
+        $('#qian').children('img').attr('src', './img/qian_grey.png')
+        $('#huo').children('img').attr('src', './img/huo_grey.png')
+        $('#qianOne').children('img').attr('src', './img/qianOne.png')
+        $('#indexPgae').hide()
+        $('#redEnvelopePage').hide()
+        $('#withDrawPage').show()
     }
 
     function success() {
@@ -665,7 +697,7 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
     }
 
     function hideFive () {
-        goIndex()
+        goUser()
         $('#withdrawalSuccess').hide()
     }
 

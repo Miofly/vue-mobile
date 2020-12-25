@@ -96,7 +96,7 @@
     var deny_cids = []; // 被禁止的创意广告id
 
 
-    var page = {num: 1, size:5}
+    var page = {num: 1, size:4}
     var maxPgae = 0
     getAds()
 
@@ -170,7 +170,7 @@
         var scrollHeight = $(document).height();
         var windowHeight = $(this).height();
 
-        if (scrollTop + windowHeight + 100 >= scrollHeight && page.num < maxPgae) {
+        if (scrollTop + windowHeight + 200 >= scrollHeight && page.num < maxPgae) {
             if (condition) {
                 condition = false
                 adList = []
