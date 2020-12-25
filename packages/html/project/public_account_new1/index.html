@@ -132,7 +132,7 @@
             <div class="mio-modal-mask" style="display: block"></div>
             <div style="position: fixed;top: 50%;left: 50%;transform:translate(-50%,-50%);z-index: 999;background: url('./img/hbbj.png');background-repeat: no-repeat;background-size: 100%;background-position: center;width: 5.32rem;height: 6.84rem;">
                 <div style="position: fixed;left: 50%;width: 1.72rem;height: 1.72rem;bottom: 0.86rem;margin-left: -0.86rem;">
-                    <img class="btnTwinkle" onclick="addTurnTwo()" src="./img/kai.png"
+                    <img class="btnTwinkleTwo" onclick="addTurnTwo()" src="./img/kai.png"
                          style="width: 1.72rem;height: 1.72rem;display: block">
                 </div>
             </div>
@@ -480,7 +480,7 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
 
     // 红包大礼首次进入开红包 24小时倒计时
     function addTurnTwo() {
-        $('.btnTwinkle').addClass('overturn')
+        $('.btnTwinkleTwo').addClass('overturn')
         setTimeout(function () {
             commonGet('/packets/open', function (res) {
                 console.log(res.data)
