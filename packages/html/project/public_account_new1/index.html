@@ -315,6 +315,8 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
     </div>
 </div>
 <script>
+    var userFirst = true
+
     var obj = {
         newcomer_bonus: '',
         packet_follower_num: '',
@@ -409,6 +411,7 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
                 obj.peopleList = []
                 $('#share_peopleTwo').html('')
                 $('#redEnvelopeTwo').show()
+                userFirst = false
             } else {
                 obj.peopleList = res.data.invited_users
                 // obj.peopleList = [{avatar: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg', nickname: '待助力'},
@@ -418,7 +421,9 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
                 //     {avatar: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/5.jpg', nickname: '待助力'}]
                 obj.bigRed = res.data.amount
                 obj.invalid_at = res.data.invalid_at
-                startcountDown(Math.ceil((new Date(res.data.invalid_at.replace(/-/g, '/')).getTime() - new Date().getTime()) / 1000))
+                if (userFirst) {
+                    startcountDown(Math.ceil((new Date(res.data.invalid_at.replace(/-/g, '/')).getTime() - new Date().getTime()) / 1000))
+                }
                 $('.money').text(obj.bigRed) //后台返回钱数
                 // $('#sumMoney').text(obj.bigRed) //后台返回钱数
                 redGift()
@@ -518,22 +523,23 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
         })
         $('#share_people').append(html)
         $('#share_peopleTwo').append(html1)
-
-        // 领取红包
-        $('.btn').click(function () {
-            if (num !== 0) {
-                $('#withdrawalFailed').show()
-            } else {
-                $('#withdrawalSuccess').show()
-                commonPost('/packets/get', {}, function (res) {
-                    console.log(res)
-                    if (res.code == 200) {
-
-                    }
-                }, {'ACT-USER-ID': getParam('user_id')})
-            }
-        })
     }
+
+    // 领取红包
+    $('.btn').click(function () {
+
+        if ($('#num').text() !== 0) {
+            $('#withdrawalFailed').show()
+        } else {
+            $('#withdrawalSuccess').show()
+            commonPost('/packets/get', {}, function (res) {
+                console.log(res)
+                if (res.code == 200) {
+
+                }
+            }, {'ACT-USER-ID': getParam('user_id')})
+        }
+    })
 
     // 二维码合成
     var imgLists = []
@@ -697,7 +703,7 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
     }
 
     function hideFive () {
-        goUser()
+        location.reload()
         $('#withdrawalSuccess').hide()
     }
 

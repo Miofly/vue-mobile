@@ -51,12 +51,11 @@ function countDown(time) {
     // console.log(hour + ":" + minute + ":" + second);
     $("#Countdown").html(hour + ":" + minute + ":" + second);
 }
-
 function startcountDown(time) {
-    var set = setInterval(function () {
+    var timerCount = setInterval(function () {
         time--;
         if (time === 0) {
-            clearInterval(set);
+            clearInterval(timerCount);
             location.reload()
         }
         countDown(time);
