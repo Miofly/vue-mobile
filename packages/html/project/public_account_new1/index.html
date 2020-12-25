@@ -276,7 +276,7 @@
                     <!--                <div style="letter-spacing: 1px;color: rgba(51, 51, 51, 1);font-size: 16px"><span class="money" style="color: #FF6736;font-size: 26px;"></span>元已存入余额</div>-->
                     <!--                <div style="letter-spacing: 1px">关注本公众号即可领取</div>-->
                 </div>
-                <div onclick="goIndex()" style="border-radius: 8px;line-height: 0.96rem;color: #FFFFFF;font-size: 18px;background: linear-gradient(270deg, #FF8E4D 0%, #FF6565 100%);
+                <div onclick="goRed()" style="border-radius: 8px;line-height: 0.96rem;color: #FFFFFF;font-size: 18px;background: linear-gradient(270deg, #FF8E4D 0%, #FF6565 100%);
         position: absolute;left: 50%;width: 5.48rem;height: 0.96rem;top:2.16rem;margin-left: -2.74rem;">
                     继续去分享
                 </div>
@@ -636,6 +636,50 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
         $('#redEnvelopePage').hide()
         $('#withDrawPage').show()
     })
+
+    function goRed () {
+        getRedEnvelopInfos()
+        if ($('#imgOne').attr('src') == undefined) {
+            commonGet('/qrcode', function (res) {
+                if (res.code == 200) {
+                    obj.url = res.data.url
+                    $('#qrcode').qrcode({
+                        text: res.data.url,
+                        width: 90,
+                        height: 90
+                    });
+
+                    var canvasNew = $('#qrcode').find('canvas').get(0);
+                    $('#imgOne').attr('src', canvasNew.toDataURL('image/jpg'));
+
+                    imgLists = [
+                        {src: './img/haibao.png', left: 0, top: 0, width: 644, height: 876},
+                        {src: $('#imgOne').attr('src'), left: 232, top: 515, width: 180, height: 180},
+                    ]
+
+                    canvas = document.createElement('canvas')
+                    canvas.width = 644;
+                    canvas.height = 876; // 这是canvas的宽高
+                    ctx = canvas.getContext('2d')
+                    ctx.fillStyle="black";
+                    ctx.rect(0, 0, 644, 876); // 这是图片的宽高
+                    ctx.fill();
+
+                    drawing(0, $('#newSharePoster'), false, 100);
+                }
+            }, {'ACT-USER-ID': getParam('user_id')})
+        }
+
+        $('#huo').children('div').removeClass('active').addClass('inactive')
+        $('#qianOne').children('div').removeClass('active').addClass('inactive')
+        $('#qian').children('div').removeClass('inactive').addClass('active')
+        $('#huo').children('img').attr('src', './img/huo_grey.png')
+        $('#qianOne').children('img').attr('src', './img/qianOne_grey.png')
+        $('#qian').children('img').attr('src', './img/qian.png')
+        $('#indexPgae').hide()
+        $('#redEnvelopePage').show()
+        $('#withDrawPage').hide()
+    }
 
 
     function goIndex () {
