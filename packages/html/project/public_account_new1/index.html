@@ -5,10 +5,10 @@
     <title>今日热点</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
     <script>
-        var ua = navigator.userAgent.toLowerCase();
-        if (ua.match(/MicroMessenger/i) != "micromessenger") {
-            location.href="/404"
-        }
+        // var ua = navigator.userAgent.toLowerCase();
+        // if (ua.match(/MicroMessenger/i) != "micromessenger") {
+        //     location.href="/404"
+        // }
     </script>
     <script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/adaptive.js" type="text/javascript"></script>
     <link href="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/css/mescroll.min.css" rel="stylesheet">
@@ -24,7 +24,7 @@
     <script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/EventEmitter.min.js" type="text/javascript"></script>
 </head>
 <body>
-<div id="indexPgae" style="display: block">
+<div id="indexPgae" style="display: none">
     <!--列表数据-->
     <div id="mescroll" class="mescroll">
         <div id="dataList"></div>
@@ -317,6 +317,21 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
     </div>
 </div>
 <script>
+    if (getParam('type') == 0) {
+        goIndex()
+        $('#indexPgae').show()
+    }
+    if (getParam('type') == 1) {
+        goRed()
+        $('#redEnvelopePage').show()
+    }
+    if (getParam('type') == 2) {
+        setTimeout(() => {
+            goUser()
+            $('#withDrawPage').show()
+        }, 500)
+    }
+
     var userFirst = true
 
     var obj = {
@@ -610,6 +625,7 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
     })
 
     $('#qianOne').click(function (){
+        console.log($('#withDrawHeight').outerHeight())
         setTimeout(() => {
             $('#withDrawRequire').css('top', $('#withDrawHeight').outerHeight())
         }, 1)
@@ -633,7 +649,7 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
         $('#withDrawPage').show()
     })
 
-    function goRed () {
+    function goRed() {
         getRedEnvelopInfos()
         if ($('#imgOne').attr('src') == undefined) {
             commonGet('/qrcode', function (res) {
@@ -677,8 +693,7 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
         $('#withDrawPage').hide()
     }
 
-
-    function goIndex () {
+    function goIndex() {
         $('#whthDrawToast').hide()
         $('#qian').children('div').removeClass('active').addClass('inactive')
         $('#qianOne').children('div').removeClass('active').addClass('inactive')
@@ -691,10 +706,11 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
         $('#withDrawPage').hide()
     }
 
-    function goUser () {
+    function goUser() {
+        console.log($('#withDrawHeight').outerHeight())
         setTimeout(() => {
             $('#withDrawRequire').css('top', $('#withDrawHeight').outerHeight())
-        }, 1)
+        }, 100)
 
 
         commonGet('/user', function (res) {
