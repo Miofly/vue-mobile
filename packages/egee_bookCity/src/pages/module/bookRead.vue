@@ -1,5 +1,5 @@
 <template>
-    <view>
+    <scroll-view scroll-y @scroll="adScroll" class="full-width-height">
         <view v-for="(item, index) in adDetail" :key="index" :class="['ad' + (index+1)]">
             <view>{{ item.title }}</view>
             <view v-for="(subItem, index) in item.srcUrls" :key="index">
@@ -161,7 +161,7 @@
                 </view>
             </view>
         </m-popup>
-    </view>
+    </scroll-view>
 </template>
 
 <script lang="ts">
@@ -180,6 +180,7 @@ export default class home extends Vue {
     adList: any = []
     adDetail: any = []
     deny_cids: any = []
+    adMonitor: any = []
     adListIndex: number = 0
 
     show: boolean = false
@@ -246,7 +247,7 @@ export default class home extends Vue {
     }
 
     async getAdRes () {
-        const { data } = await commonGet('http://api.lc918.cn/h5/adverts?page_type=2&page=1&per_page=3')
+        const { data } = await commonGet('http://api.lc918.cn/h5/adverts?page_type=2&page=1&per_page=10')
         this.adList = data
         this.fetchAd(this.adList[this.adListIndex].pid)
     }
@@ -296,30 +297,44 @@ export default class home extends Vue {
     }
 
     isElementInViewport (el: any, monitorUrl) {
+    	console.log(el, monitorUrl)
         this.$nextTick(() => {
             // eslint-disable-next-line no-unused-expressions
             uni.createSelectorQuery().select(el).boundingClientRect(rect => {
                 const isInViewport = rect.top >= 0 && rect.left >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-                console.log(el, isInViewport)
                 if (isInViewport) {
-                    monitorUrl.forEach((url) => {
+					console.log('检测成功：', el, isInViewport)
+					const delIndex = this.adMonitor.findIndex((item: any) => {
+						return item.el == el
+					})
+					this.adMonitor.splice(delIndex, 1)
+					monitorUrl.forEach((url) => {
                         this.send(url)
                     })
-                    return
-                }
-
-                const checkFun = this.throttle(() => {
-                    if (this.isElementInViewport(el)) {
-                        window.removeEventListener('scroll', checkFun, true)
-                        monitorUrl.forEach((url) => {
-                            this.send(url)
-                        })
-                    }
-                }, 5000)
-                window.addEventListener('scroll', checkFun, true)
+                } else {
+					this.$nextTick(() => {
+						const delIndex = this.adMonitor.findIndex((item: any) => {
+							return item.el == el
+						})
+						if (delIndex == -1) {
+							this.adMonitor.push({ el, monitorUrl })
+							console.log('检测失败插入：', el, isInViewport, delIndex, this.adMonitor)
+						}
+                	})
+				}
             }).exec()
         })
     }
+
+	adScroll () {
+		this.throttle(() => {
+			if (this.adMonitor.length != 0) {
+				for (const item of this.adMonitor) {
+					this.isElementInViewport(item.el, item.monitorUrl)
+				}
+			}
+		}, 1000)
+	}
 
     throttle (func, wait = 500, immediate = true) {
         if (immediate) {
@@ -346,62 +361,6 @@ export default class home extends Vue {
         img.src = url
         img.style.display = 'none'
         document.body.appendChild(img)
-    }
-
-
-    checkMonitor (div, monitorUrl) {
-        const isInViewport = this.isElementInViewport(div)
-        if (isInViewport) {
-            monitorUrl.forEach((url) => {
-                this.send(url)
-            })
-            return
-        }
-
-        var checkFun = this.throttle(() => {
-            if (this.isElementInViewport(div)) {
-                window.removeEventListener('scroll', checkFun, true)
-                monitorUrl.forEach((url) => {
-                    this.send(url)
-                })
-            }
-        }, 200)
-
-        window.addEventListener('scroll', checkFun, true)
-    }
-
-    throttle (func, wait, options) {
-        let args, context, result
-        let timeout = null
-        let previous = 0
-        if (!options) options = {}
-        const later = function () {
-            previous = options.leading === false ? 0 : new Date().getTime()
-            timeout = null
-            result = func.apply(context, args)
-            if (!timeout) context = args = null
-        }
-        return function () {
-            const now = new Date().getTime()
-            if (!previous && options.leading === false) previous = now
-            // 计算剩余时间
-            const remaining = wait - (now - previous)
-            context = this
-            args = arguments
-            if (remaining <= 0 || remaining > wait) {
-                if (timeout) {
-                    clearTimeout(timeout)
-                    timeout = null
-                }
-                previous = now
-                result = func.apply(context, args)
-                if (!timeout) context = args = null
-            } else if (!timeout && options.trailing !== false) {
-                // options.trailing=true时，延时执行func函数
-                timeout = setTimeout(later, remaining)
-            }
-            return result
-        }
     }
 }
 </script>

@@ -343,60 +343,60 @@ export default class home extends Vue {
     }
 
 
-    checkMonitor (div, monitorUrl) {
-        const isInViewport = this.isElementInViewport(div)
-        if (isInViewport) {
-            monitorUrl.forEach((url) => {
-                this.send(url)
-            })
-            return
-        }
-
-        var checkFun = this.throttle(() => {
-            if (this.isElementInViewport(div)) {
-                window.removeEventListener('scroll', checkFun, true)
-                monitorUrl.forEach((url) => {
-                    this.send(url)
-                })
-            }
-        }, 200)
-
-        window.addEventListener('scroll', checkFun, true)
-    }
-
-    throttle (func, wait, options) {
-        let args, context, result
-        let timeout = null
-        let previous = 0
-        if (!options) options = {}
-        const later = function () {
-            previous = options.leading === false ? 0 : new Date().getTime()
-            timeout = null
-            result = func.apply(context, args)
-            if (!timeout) context = args = null
-        }
-        return function () {
-            const now = new Date().getTime()
-            if (!previous && options.leading === false) previous = now
-            // 计算剩余时间
-            const remaining = wait - (now - previous)
-            context = this
-            args = arguments
-            if (remaining <= 0 || remaining > wait) {
-                if (timeout) {
-                    clearTimeout(timeout)
-                    timeout = null
-                }
-                previous = now
-                result = func.apply(context, args)
-                if (!timeout) context = args = null
-            } else if (!timeout && options.trailing !== false) {
-                // options.trailing=true时，延时执行func函数
-                timeout = setTimeout(later, remaining)
-            }
-            return result
-        }
-    }
+    // checkMonitor (div, monitorUrl) {
+    //     const isInViewport = this.isElementInViewport(div)
+    //     if (isInViewport) {
+    //         monitorUrl.forEach((url) => {
+    //             this.send(url)
+    //         })
+    //         return
+    //     }
+	//
+    //     var checkFun = this.throttle(() => {
+    //         if (this.isElementInViewport(div)) {
+    //             window.removeEventListener('scroll', checkFun, true)
+    //             monitorUrl.forEach((url) => {
+    //                 this.send(url)
+    //             })
+    //         }
+    //     }, 200)
+	//
+    //     window.addEventListener('scroll', checkFun, true)
+    // }
+	//
+    // throttle (func, wait, options) {
+    //     let args, context, result
+    //     let timeout = null
+    //     let previous = 0
+    //     if (!options) options = {}
+    //     const later = function () {
+    //         previous = options.leading === false ? 0 : new Date().getTime()
+    //         timeout = null
+    //         result = func.apply(context, args)
+    //         if (!timeout) context = args = null
+    //     }
+    //     return function () {
+    //         const now = new Date().getTime()
+    //         if (!previous && options.leading === false) previous = now
+    //         // 计算剩余时间
+    //         const remaining = wait - (now - previous)
+    //         context = this
+    //         args = arguments
+    //         if (remaining <= 0 || remaining > wait) {
+    //             if (timeout) {
+    //                 clearTimeout(timeout)
+    //                 timeout = null
+    //             }
+    //             previous = now
+    //             result = func.apply(context, args)
+    //             if (!timeout) context = args = null
+    //         } else if (!timeout && options.trailing !== false) {
+    //             // options.trailing=true时，延时执行func函数
+    //             timeout = setTimeout(later, remaining)
+    //         }
+    //         return result
+    //     }
+    // }
 }
 </script>
 
