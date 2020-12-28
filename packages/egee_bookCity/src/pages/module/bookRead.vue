@@ -41,6 +41,10 @@
 
 <script lang="ts">
 import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator'
+import {
+    commonGet
+} from '@/api'
+import { VueJsonp } from 'vue-jsonp'
 
 @Component({})
 export default class home extends Vue {
@@ -59,6 +63,10 @@ export default class home extends Vue {
 		{ img: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/4.jpg', icon: 'weixin', color: 'olive', badge: 22, name: '窗口' },
 	]
 
+    created () {
+    	this.fetchAd()
+    }
+
 	addTextSize () {
 		if (this.book.textSize < 30) {
 			this.book.textSize += 2
@@ -76,6 +84,22 @@ export default class home extends Vue {
 		    this.show = true
 		}
 	}
+
+	async getAdRes () {
+        const { data } = await commonGet('http://api.lc918.cn/h5/adverts?page_type=2&page=1&per_page=3')
+        // this.fetchAd
+	}
+
+    fetchAd () {
+        this.$jsonp('http://ssp.1rtb.com/client/req_ad', {
+            device_ua: 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Mobile Safari/537.36',
+            // type: 'api',
+            pid: '1017759',
+            app_id: '103019',
+        }).then((res) => {
+
+        })
+    }
 }
 </script>
 

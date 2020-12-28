@@ -1,6 +1,7 @@
 /**
  * Ad对象 仅用于竞价广告
  */
+localStorage.removeItem('deny_cids')
 var ee = new EventEmitter();
 var trueIndex = 0;
 var Ad = {
@@ -21,12 +22,10 @@ var Ad = {
                 'User-Agent': ua
             },
             url: 'http://ssp.1rtb.com/client/req_ad',
-            data: $.extend(
-                {
+            data: $.extend({
                     device_ua: ua,
                     type: 'api'
-                },
-                data
+                },data
             ),
             dataType: 'jsonp', //jsonp格式访问
             success: function(res) {
@@ -40,33 +39,6 @@ var Ad = {
             }
         });
     },
-
-    /**
-     * 反弹
-     * @param {*} backUrl
-     * @returns
-     */
-    back: function(backUrl) {
-        if (!backUrl) {
-            return false;
-        }
-        var fn = arguments.callee;
-        if (fn.hasInit) {
-            return false;
-        }
-        fn.hasInit = true;
-        setTimeout(function() {
-            history.pushState(
-                history.length + 1,
-                'back',
-                location.href + '#' + new Date().getTime()
-            );
-        }, 100);
-        window.onhashchange = function() {
-            location.href = backUrl;
-        };
-    },
-
     /**
      * 广告被点击时
      * clickUrl 点击率接口
@@ -100,26 +72,6 @@ var Ad = {
             }, 0);
         }
     },
-    /**
-     * 获取年月日
-     */
-    getDate: function() {
-        var date = new Date();
-        var year = date.getFullYear();
-        var month = date.getMonth() + 1;
-        var strDate = date.getDate();
-        month = month < 10 ? '0' + month : month;
-        strDate = strDate < 10 ? '0' + strDate : strDate;
-        return year + '-' + month + '-' + strDate;
-    },
-
-    /**
-     * 获取范围随机数
-     */
-    random: function(min, max) {
-        return Math.floor(Math.random() * (max - min + 1) + min);
-    },
-
     /**
      * 判断元素是否在可视区
      * 用于广告曝光率
@@ -242,10 +194,7 @@ var Ad = {
                     readNum: Ad.random(100000, 500000) //阅读数
                 })
             );
-
-            //  console.log('#adIndex' + Number(trueIndex*2+1)+ '')
             $('#adIndex' + trueIndex*2 + '').append(html)
-
             // 查询被插入的广告 用于曝光监测
             // var currAd = $('.'+ adWrapClass);
             var currAd = $('#adIndex' + trueIndex*2 + ' .' + adWrapClass + ':last')[0];
@@ -253,8 +202,26 @@ var Ad = {
             if (currAd != undefined) {
                 Ad.checkMonitor(currAd, res.monitorUrl);
             }
-        });
-    }
+        })
+    },
+    /**
+     * 获取年月日
+     */
+    getDate: function() {
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        month = month < 10 ? '0' + month : month;
+        strDate = strDate < 10 ? '0' + strDate : strDate;
+        return year + '-' + month + '-' + strDate;
+    },
+    /**
+     * 获取范围随机数
+     */
+    random: function(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    },
 };
 
 var mescroll = new MeScroll("mescroll", {
@@ -306,16 +273,11 @@ function goInfo (id, newId) {
 	location.href = 'news_info.html'+ location.search +'&article_id='+ id +''
 }
 
-// $(function () {
-
-// })
 /*联网加载列表数据  page = {num:1, size:10}; num:当前页 从1开始, size:每页数据条数 */
-var adListIndex = 0;
 var adList = [];
 var deny_cids = []; // 被禁止的创意广告id
 var tempIndex = 0
-var newTempIndex = 0
-
+var adListIndex = 0;
 function getListData(page) {
     tempIndex++
     adListIndex = 0;
@@ -323,21 +285,15 @@ function getListData(page) {
     commonGet('/adverts?page_type=2&page=' + page.num + '&per_page=' + page.size/2 + '', function (res) {
             if (res.code == 200) {
                 adList = res.data
-                for (var i = 0; i < adList.length; i++) {
-                    adList[i].data = {app_id: 103019, deny_cids: deny_cids.join(',')}
-                }
                 // console.log(adList)
                 commonGet('/articles?page=' + page.num + '&per_page=' + page.size + '',
                     function (res) {
                         var data = res.data
                         var total = res.meta.total
                         mescroll.endSuccess(data.length, total);
-
-
                         setListData(data, page);
-                        getAdData()
+                        ee.emitEvent('fetch-jj-ad');
                     }, {'ACT-USER-ID': getParam('user_id')})
-
                 if (tempIndex == 1 ) {
                     getUserInfo()
                     setting()
@@ -347,41 +303,29 @@ function getListData(page) {
     )
 }
 
-function getAdData () {
-    ee.addListener('fetch-jj-ad', function() {
-
-        // console.log('newTempIndex', newTempIndex)
-        var curData = adList[0];
-        adList.shift()
-        if (curData != undefined) {
-            newTempIndex++
+ee.addListener('fetch-jj-ad', function() {
+    var curData = adList[adListIndex];
+    Ad.singleAd(
+        $.extend(curData, {
+            data: {
+                app_id: 103019,
+                deny_cids: deny_cids.join(',')
+            }
+        }),
+        function(res) {
+            trueIndex++
+            if (res && deny_cids.indexOf(res.cid) == -1) {
+                /* 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复 */
+                deny_cids.push(res.cid); //插入创意id 用于广告位被重复广告占用
+            }
+            if (adListIndex === adList.length - 1) return;
+            adListIndex++;
+            /* 请求下个广告 */
+            ee.emitEvent('fetch-jj-ad');
         }
-        // console.log('newTempIndex', newTempIndex)
-        // console.log('adList.length', adList.length)
-        // console.log('curData', curData)
-        //请求并渲染广告
-        if (curData != undefined && adList.length >= 0) {
-            Ad.singleAd(curData,
-                function(res) {
-                    // console.log('adList', adList)
-                    if (res!=undefined) {
-                        trueIndex++
-                    }
-                    // if (adListIndex === adList.length - 1) return;
-                    if (res && deny_cids.indexOf(res.cid) == -1) {
-                        /* 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复 */
-                        deny_cids.push(res.cid); //插入创意id 用于广告位被重复广告占用
-                    }
-                    adListIndex++;
-                    /* 请求下个广告 */
-                    ee.emitEvent('fetch-jj-ad');
-                }
-            );
-        }
+    );
+});
 
-    })
-    ee.emitEvent('fetch-jj-ad');
-}
 
 function getParam(name, url) { // 获取地址栏参数
     if (typeof name !== 'string') return false

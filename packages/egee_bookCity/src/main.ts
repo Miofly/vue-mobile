@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
 import mio from '../../modules/common'
+import { VueJsonp } from 'vue-jsonp'
 Vue.use(mio)
-
+Vue.use(VueJsonp)
 Vue.config.productionTip = false
 
 // new App().$mount()

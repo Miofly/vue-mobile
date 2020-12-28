@@ -72,34 +72,52 @@ var Ad = {
      * clickUrl 点击率接口
      * dUrl 广告落地页url
      */
-    adClick: function(clickUrl, dUrl, pid,type,user_id, page) {
-        event.currentTarget.className = 'news_active'
-        var ua = navigator.userAgent;
-        commonPost('/adClickStat', {
-            ua: ua,
-            pid:pid,
-            type:type,
-            page:page,
-            user_id:user_id,
-            sign:'bFwbxLAzwd5F4DOPS2hO',
-        }, function (res) {
-            console.log(res)
-            if (res.code == 200) {
-
-            }
-        }, {'ACT-USER-ID': getParam('user_id')})
-
-        Ad.clickCallback(pid);
-
-        clickUrl.forEach(function(url) {
-            Ad.send(url);
-        });
-
-        if (dUrl) {
-            setTimeout(() => {
-                location.href = dUrl[0];
-            }, 0);
-        }
+    // adClick: function(clickUrl, dUrl, pid,type,user_id, page) {
+    //     event.currentTarget.className = 'news_active'
+    //     var ua = navigator.userAgent;
+    //     // commonPost('/adClickStat', {
+    //     //     ua: ua,
+    //     //     pid:pid,
+    //     //     type:type,
+    //     //     page:page,
+    //     //     user_id:user_id,
+    //     //     sign:'bFwbxLAzwd5F4DOPS2hO',
+    //     // }, function (res) {
+    //     //     console.log(res)
+    //     //     if (res.code == 200) {
+    //     //
+    //     //     }
+    //     // }, {'ACT-USER-ID': getParam('user_id')})
+    //
+    //     Ad.clickCallback(pid);
+    //
+    //     clickUrl.forEach(function(url) {
+    //         Ad.send(url);
+    //     });
+    //
+    //     setTimeout(function () {
+    //         var e = document.createElement("a");
+    //         (e.href = dUrl[0]),
+    //             (e.rel = "noreferrer"),
+    //             document.body.appendChild(e),
+    //             e.click();
+    //     }, 0);
+    // },
+    adClick: function (e, t, n) {
+        console.log(t)
+        console.log(e)
+        Ad.clickCallback(n),
+            e.forEach(function (e) {
+                Ad.send(e);
+            }),
+        t &&
+        setTimeout(function () {
+            var e = document.createElement("a");
+            (e.href = t[0]),
+                (e.rel = "noreferrer"),
+                document.body.appendChild(e),
+                e.click();
+        }, 0);
     },
 
     /**
