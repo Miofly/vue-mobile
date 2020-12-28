@@ -1,5 +1,6 @@
 const path = require('path')
 const os = require('os');
+const webpack = require('webpack')
 
 // 解决内存溢出问题 MaxListenersExceededWarning: Possible EventEmitter memory leak detected.
 // 11 upgrade listeners added. Use emitter.setMaxListeners() to increase limit
@@ -51,10 +52,15 @@ module.exports = {
 
         }
         config.resolve.extensions = ['.js', '.vue', '.json', '.ts', '.tsx']
-
     },
     // 配置没有export导出的js
     chainWebpack: (config) => {
+        config.plugin('provide').use(webpack.ProvidePlugin, [{
+            $: 'jquery',
+            jquery: 'jquery',
+            jQuery: 'jquery',
+            'window.jQuery': 'jquery'
+        }])
         // config.module
         //     .rule('zepto')
         //     .test(require.resolve('./src/common/plugin/zepto.min.js'))

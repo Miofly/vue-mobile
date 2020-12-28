@@ -7034,6 +7034,11 @@ jest@^25.4.0:
     import-local "^3.0.2"
     jest-cli "^25.5.4"
 
+jquery@^3.5.1:
+  version "3.5.1"
+  resolved "https://registry.npm.taobao.org/jquery/download/jquery-3.5.1.tgz#d7b4d08e1bfdb86ad2f1a3d039ea17304717abb5"
+  integrity sha1-17TQjhv9uGrS8aPQOeoXMEcXq7U=
+
 js-base64@^2.1.8:
   version "2.6.4"
   resolved "https://registry.npm.taobao.org/js-base64/download/js-base64-2.6.4.tgz?cache=0&sync_timestamp=1604448575022&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fjs-base64%2Fdownload%2Fjs-base64-2.6.4.tgz#f4e686c5de1ea1f867dbcad3d46d969428df98c4"

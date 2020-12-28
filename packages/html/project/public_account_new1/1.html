@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js"></script>
+</head>
+<body>
+
+<script>
+    function loadJS (src) {
+        const s = document.createElement('script')
+        s.setAttribute('src', src)
+        s.setAttribute('charset', 'utf-8')
+        document.body.appendChild(s)
+    }
+
+    loadJS(`${location.href}/1231123`)
+</script>
+</body>
+</html>

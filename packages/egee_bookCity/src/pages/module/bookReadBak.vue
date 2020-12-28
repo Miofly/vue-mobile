@@ -169,8 +169,6 @@ import { Component, Vue } from 'vue-property-decorator'
 import { commonGet } from '@/api'
 import $ from 'jquery'
 
-let flag = null
-let timer = null
 @Component({})
 export default class home extends Vue {
     book: any = {
@@ -293,6 +291,33 @@ export default class home extends Vue {
                 // complete && complete()
             }
         })
+
+        // this.$jsonp('http://ssp.1rtb.com/client/req_ad', {
+        //     device_ua: ua,
+        //     type: 'api',
+        //     pid,
+        //     deny_cids: this.deny_cids.join(','),
+        //     app_id: '103019',
+        // }, 0).then((res) => {
+        //     if (res != undefined && res != '') {
+        //         this.adDetail.push(res)
+        //         this.$forceUpdate()
+        //         if (res && this.deny_cids.indexOf(res.cid) == -1) { // 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复
+        //             this.deny_cids.push(res.cid) // 插入创意id 用于广告位被重复广告占用
+        //         }
+        //         if (this.adListIndex === this.adList.length - 1) return
+        //     }
+        //     this.adListIndex++
+        //     this.fetchAd(this.adList[this.adListIndex].pid)
+        //     this.$nextTick(() => {
+        //         this.isElementInViewport(`.ad${this.adDetail.length}`, res.monitorUrl)
+        //     })
+        // }).catch((err) => {
+        //     if (this.adListIndex === this.adList.length - 1) return
+        //     this.adListIndex++
+        //     this.fetchAd(this.adList[this.adListIndex].pid)
+        //     throw err
+        // })
     }
 
     isElementInViewport (el: any, monitorUrl) {
@@ -305,40 +330,9 @@ export default class home extends Vue {
                     monitorUrl.forEach((url) => {
                         this.send(url)
                     })
-                    return
                 }
-
-                const checkFun = this.throttle(() => {
-                    if (this.isElementInViewport(el)) {
-                        window.removeEventListener('scroll', checkFun, true)
-                        monitorUrl.forEach((url) => {
-                            this.send(url)
-                        })
-                    }
-                }, 5000)
-                window.addEventListener('scroll', checkFun, true)
             }).exec()
         })
-    }
-
-    throttle (func, wait = 500, immediate = true) {
-        if (immediate) {
-            if (!flag) {
-                flag = true
-                // 如果是立即执行，则在wait毫秒内开始时执行
-                typeof func === 'function' && func()
-                timer = setTimeout(() => {
-                    flag = false
-                }, wait)
-            }
-        } else if (!flag) {
-            flag = true
-            // 如果是非立即执行，则在wait毫秒内的结束处执行
-            timer = setTimeout(() => {
-                flag = false
-                typeof func === 'function' && func()
-            }, wait)
-        }
     }
 
     send (url) {

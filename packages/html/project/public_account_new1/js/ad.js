@@ -198,6 +198,7 @@ var Ad = {
             // 查询被插入的广告 用于曝光监测
             // var currAd = $('.'+ adWrapClass);
             var currAd = $('#adIndex' + trueIndex*2 + ' .' + adWrapClass + ':last')[0];
+            console.log(currAd)
             //启动广告曝光监测
             if (currAd != undefined) {
                 Ad.checkMonitor(currAd, res.monitorUrl);
