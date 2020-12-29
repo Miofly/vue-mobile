@@ -22,24 +22,13 @@
 				       :src="`/static/images/${endNum}.png`" style="width: 120rpx"></image>
 			</view>
 			<!--点击按钮-->
-			<view style="width: 100%;margin-top: 134rpx;text-align: center">
-				<m-image v-show="imgChange" :borderRadius="10" :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" :shape="['square', 'circle'][0]" :showLoading="false"
-				         :src="infoConfig.clickSrc"
-				         bgColor="rgba(0, 0, 0, 1)" height="186"
-				         bgColorError="rgba(0, 0, 0, 1)"
-				         duration="0" style="" @click="addNum">
-					<view slot="error" class="text-white" style="font-size: 24rpx;">加载失败</view>
-				</m-image>
-				<m-image v-show="!imgChange" :borderRadius="10" :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" :shape="['square', 'circle'][0]" :showLoading="false"
-				         :src="infoConfig.clickSrcTwo"
-				         bgColor="rgba(0, 0, 0, 1)" height="186"
-				         bgColorError="rgba(0, 0, 0, 1)"
-				         duration="0" style="" @click="addNum">
-					<view slot="error" class="text-white" style="font-size: 24rpx;">加载失败</view>
-				</m-image>
+			<view style="width: 100%;margin-top: 134rpx;text-align: center;position: relative;">
+                <view style="position: absolute;left: 0;text-align: center;width: 100%;z-index: 10">
+                    <canvas @click="addNum" id="canvas" style="display: inline-block;" type="2d"></canvas>
+                </view>
 			</view>
+            <!--            <view class="text-18" style="color: #D3D5DE;margin-top: 80rpx">还有{{ chanceNum }}次机会</view>-->
 
-			<view class="text-18" style="color: #D3D5DE;margin-top: 80rpx">还有{{ chanceNum }}次机会</view>
 		</view>
 	</view>
 </template>
@@ -49,6 +38,10 @@ import { Component, Vue } from 'vue-property-decorator'
 import {
     commonPost
 } from '@/api'
+import lottie from 'lottie-miniprogram'
+
+let lottieInstance: any = ''
+
 @Component({})
 export default class extends Vue {
 	infoConfig: any = {
@@ -71,6 +64,24 @@ export default class extends Vue {
 	imgChange: boolean = true
 	tempStatus: boolean = false
 
+    created () {
+        lottieInstance = wx.createSelectorQuery().select('#canvas').node(res => {
+            const canvas = res.node
+            canvas.width = 300 // 设置宽高，也可以放到wxml中的canvas标签的style中
+            canvas.hight = 300
+            const context = canvas.getContext('2d')
+            lottie.setup(canvas)
+            lottieInstance = lottie.loadAnimation({ // 微信小程序给的接口，调用就完事了，原理不太懂
+                loop: false, // 是否循环播放（选填）
+                autoplay: false, // 是否自动播放（选填）
+                animationData: require('./test.json'),
+                // path: './test.json', // lottie json包的网络链接，可以防止小程序的体积过大，要注意请求域名要添加到小程序的合法域名中
+                rendererSettings: { context }
+            })
+            lottieInstance.setSpeed(1)
+            lottieInstance.setDirection(1)
+        }).exec()
+    }
 
 	addNum () {
 		if (this.tempStatus) {
@@ -81,7 +92,11 @@ export default class extends Vue {
 		    this.firstNum = '0'
 		    this.endNum = '0'
 		}
-
+		console.log('点击了嘛')
+        lottieInstance.play()
+        setTimeout(() => {
+            lottieInstance.stop()
+        }, 100)
 		this.imgChange = !this.imgChange
 		this.gameStatus = true
 		if (this.num == 0) {

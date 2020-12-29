@@ -107,7 +107,8 @@
         "vuex-module-decorators": "^0.17.0",
         "ts-node-dev": "^1.0.0",
         "swagger-routes-express": "^3.2.1",
-        "concurrently": "^5.3.0"
+        "concurrently": "^5.3.0",
+        "stylus-loader": "^4.3.1"
     },
     "browserslist": [
         "Android >= 4",

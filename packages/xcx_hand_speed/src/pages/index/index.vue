@@ -1,6 +1,7 @@
 <template>
 	<view class="padding-xl full-width-height bg"
 	      style="background-repeat:no-repeat;background-size: 100vw 100vh;background-position:bottom left;overflow-x: hidden!important;">
+
 		<view class="full-width text-white">
 			<view class="full-width bg1"
 			      style="position: relative;background-repeat:no-repeat;background-size: 87% 164rpx;height: 164rpx;overflow-x: hidden!important;">
@@ -31,7 +32,7 @@
 				</m-image>
 			</button>
 			<!--群挑战-->
-			<button class="fr" open-type="getUserInfo" @getuserinfo="getUserInfoGroup"  style="width: 48%;padding-left: 1%">
+			<button class="fr" open-type="getUserInfo" @getuserinfo="getUserInfoGroup" style="width: 48%;padding-left: 1%">
 				<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" style=""
 						:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
 						:shape="['square', 'circle'][0]" :src="infoConfig.groupImg" bgColor="rgba(0, 0, 0, 1)">
@@ -107,6 +108,18 @@ export default class extends Vue {
 		this.getTrueUserInfo()
 	}
 
+    subscribeMess () {
+        wx.requestSubscribeMessage({
+            tmplIds: ['gK4InUVJLEgqYDsVagxK5jkvcRLJa0bXwQXH4UH_CuM'],
+            success: (res) => {
+                console.log(res)
+            },
+            fail: err => {
+                 console.log(err)
+            }
+        })
+    }
+
 	async created () {
 		wx.getUserInfo({
 			success: (res) => {
@@ -133,7 +146,7 @@ export default class extends Vue {
 				success: async (res) => {
 					if (res.code) {
 						// const data= await commonOtherGet(`https://api.weixin.qq.com/sns/jscode2session?appid=${this.wx.appid}&secret=${this.wx.secret}&js_code=${res.code}&grant_type=authorization_code`)
-						const {data} = await commonPost('/mina/wx_auth/login', {code: res.code})
+						const { data } = await commonPost('/mina/wx_auth/login', { code: res.code })
 						this.wx.openid = data.openid
 						this.wx.session_key = data.session_key
 						this.$mio.mioRoot.setStorage('hand_open_id', data.openid)
@@ -147,7 +160,7 @@ export default class extends Vue {
 	}
 
 	async getTrueUserInfo () {
-		const { data } = await commonGet('/api/user/user_info', false, {'AUTH-TOKEN': this.$store.state.center.open_id})
+		const { data } = await commonGet('/api/user/user_info', false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
         this.is_first = false
         this.$store.state.center.score = data.score
         this.$store.state.center.name = data.nickname
@@ -156,7 +169,7 @@ export default class extends Vue {
 	}
 
 	async putUserInfo (encryptedData, iv) {
-		const data = await commonPost('/mina/wx_auth/decrypt_data', {encryptedData: encryptedData, iv: iv, sessionKey: this.$mio.mioRoot.getStorageSync('hand_session_key'), type: 2})
+		const data = await commonPost('/mina/wx_auth/decrypt_data', { encryptedData, iv, sessionKey: this.$mio.mioRoot.getStorageSync('hand_session_key'), type: 2 })
 	}
 
 	getUserInfoRank (e) {

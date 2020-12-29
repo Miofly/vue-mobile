@@ -24,14 +24,14 @@
         "@dcloudio/vue-cli-plugin-uni-optimize": "^2.0.0-29820201110001",
         "@dcloudio/webpack-uni-mp-loader": "^2.0.0-29820201110001",
         "@dcloudio/webpack-uni-pages-loader": "^2.0.0-29820201110001",
-        "@vue/eslint-config-standard": "^5.1.2",
-        "@vue/eslint-config-typescript": "^5.0.2",
         "@types/html5plus": "^1.0.1",
         "@vue/cli-plugin-babel": "~4.5.0",
         "@vue/cli-plugin-router": "~4.4.0",
         "@vue/cli-plugin-typescript": "*",
         "@vue/cli-plugin-vuex": "~4.4.0",
         "@vue/cli-service": "~4.5.0",
+        "@vue/eslint-config-standard": "^5.1.2",
+        "@vue/eslint-config-typescript": "^5.0.2",
         "postcss-comment": "^2.0.0",
         "postcss-loader": "^3.0.0",
         "purgecss-webpack-plugin": "^2.1.2",
@@ -42,5 +42,8 @@
         "typescript": "~3.9.3",
         "vue-template-compiler": "^2.6.11",
         "vuex-module-decorators": "^0.17.0"
+    },
+    "dependencies": {
+        "stylus-loader": "^4.3.1"
     }
 }
