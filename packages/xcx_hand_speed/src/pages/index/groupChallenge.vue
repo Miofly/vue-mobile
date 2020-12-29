@@ -24,7 +24,7 @@
 					</view>
 				</view>
 				<view style="margin-top: 128rpx">
-					<view style="color: #FF5555" class="text-20 text-bold">{{baseConfig.rank}}</view>
+					<view style="color: #FF5555" class="text-20 text-bold">{{level}}</view>
 					<view class="text-14" style="margin-top: 28rpx">全国排名</view>
 				</view>
 			</view>
@@ -36,14 +36,24 @@
 			         :shape="['square', 'circle'][0]" :src="baseConfig.introduceImg" bgColor="rgba(0, 0, 0, 1)">
 				<view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
 			</m-image>
-			<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)"
-					:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
-					 style="position: absolute;bottom: 50rpx;left: 20%;width: 60%"
-					:shape="['square', 'circle'][0]" :src="baseConfig.captureImg" bgColor="rgba(0, 0, 0, 1)">
-				<view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
-			</m-image>
+
+            <button style="width: 460rpx;height: 100rpx;background: transparent;position: absolute;bottom: 50rpx;left: 20%;"
+                    open-type="share">
+                <image :src="baseConfig.captureImg" style="width: 100%;height: 100%"
+                       :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]">
+                </image>
+            </button>
+<!--            <button open-type="share" style="width: 48%">-->
+<!--                <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)"-->
+<!--                         :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]"-->
+<!--                         style="" height="50"-->
+<!--                         :shape="['square', 'circle'][0]" :src="" bgColor="rgba(0, 0, 0, 1)">-->
+<!--                    <view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>-->
+<!--                </m-image>-->
+<!--            </button>-->
 		</view>
 
+        <ad v-if="ptgg" ad-intervals="30" :unit-id="ptgg" style="margin-top: 28rpx"></ad>
 
 		<view v-if="rankLists.length == 0" style="position: relative;margin-top: 40rpx">
 			<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="678"
@@ -96,6 +106,10 @@ export default class extends Vue {
 	@State('name', { namespace: 'center' }) name
 	@State('avatar', { namespace: 'center' }) avatar
 	@State('score', { namespace: 'center' }) score
+    @State('level', { namespace: 'center' }) level
+    @State('spgg', { namespace: 'root' }) spgg
+    @State('ptgg', { namespace: 'root' }) ptgg
+
 
 	baseConfig: any = {
 		bg: '/static/images/bg.png',

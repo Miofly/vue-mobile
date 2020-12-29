@@ -3,22 +3,23 @@
         <!-- 遮罩层 -->
         <view class="canvas-mask"></view>
         <canvas canvas-id="myCanvas" class="canvas"></canvas><!-- 海报 -->
-        <view class="flex justify-around" style="position: fixed;bottom: 50rpx;width: 100%;z-index: 99">
-            <button class="fl" style="width: 48%;" open-type="share">
-                <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" style="width: 48%"
+        <view class="flex justify-around" style="position: fixed;top: 1050rpx;width: 100%;z-index: 99">
+            <button style="height: 100rpx;width: 334rpx" class="fl" open-type="share">
+                <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)"
                          :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
                          :shape="['square', 'circle'][0]" :src="baseConfig.shareSrc" bgColor="rgba(0, 0, 0, 1)">
                     <view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
                 </m-image>
             </button>
-
-            <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" class="fr" style="width: 48%"
-                     :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]" @click="handleSaveCanvasImage"
-                     :shape="['square', 'circle'][0]" :src="baseConfig.saverSrc" bgColor="rgba(0, 0, 0, 1)">
-                <view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
-            </m-image>
+            <button style="height: 100rpx;width: 334rpx" class="fr">
+                <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)"
+                         :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
+                         @click="handleSaveCanvasImage"
+                         :shape="['square', 'circle'][0]" :src="baseConfig.saverSrc" bgColor="rgba(0, 0, 0, 1)">
+                    <view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
+                </m-image>
+            </button>
         </view>
-
     </view>
 </template>
 
@@ -48,8 +49,8 @@ export default {
                 codeWidth: 0.15,
                 codeRatio: 1,
                 codeRadius: 0.5,
-                codeMT: 180,
-                posterBgUrl: 'https://e-static.oss-cn-shanghai.aliyuncs.com/img/wfd/haibao@2x.png',
+                codeMT: 185,
+                posterBgUrl: 'https://e-static.oss-cn-shanghai.aliyuncs.com/img/wfd/haibaoMin.jpg',
                 codeML: -100,
                 desTextMT: 70,
                 desTextML: 240,
@@ -174,7 +175,7 @@ export default {
             ctx.fillStyle= "rgba(255, 52, 52, 1)";
             let metrics = ctx.measureText(title);
             let testWidth = metrics.width;
-            ctx.setFontSize(40)
+            ctx.setFontSize(20)
             let textY = this.drawText(ctx, title, (this.system.w - testWidth) / 2, (this.system.w - 2 * canvasAttr.marginLR - 2 * canvasAttr.innerLR) / canvasAttr.posterRatio + 2 * canvasAttr.innerLR + canvasAttr.marginTB, this.system.w - 2 * canvasAttr.marginLR - 2 * canvasAttr.innerLR, canvasAttr.titleLineHeight)
             ctx.draw(true)
             return textY
@@ -186,8 +187,8 @@ export default {
             ctx.fillStyle= "rgba(0,0,0,1)";
             let metrics = ctx.measureText(title);
             let testWidth = metrics.width;
-            ctx.setFontSize(26)
-            let textY = this.drawText(ctx, title, (this.system.w - testWidth) / 2, (this.system.w - 2 * canvasAttr.marginLR - 2 * canvasAttr.innerLR - 50) / canvasAttr.posterRatio + 2 * canvasAttr.innerLR + canvasAttr.marginTB, this.system.w - 2 * canvasAttr.marginLR - 2 * canvasAttr.innerLR, canvasAttr.titleLineHeight)
+            ctx.setFontSize(20)
+            let textY = this.drawText(ctx, title, (this.system.w - testWidth) / 2, (this.system.w - 2 * canvasAttr.marginLR - 2 * canvasAttr.innerLR - 200) / canvasAttr.posterRatio + 2 * canvasAttr.innerLR + canvasAttr.marginTB, this.system.w - 2 * canvasAttr.marginLR - 2 * canvasAttr.innerLR, canvasAttr.titleLineHeight)
             ctx.draw(true)
             return textY
         },
@@ -246,9 +247,9 @@ export default {
                 success(res) {
                     ctx.restore()
                     ctx.draw(true)
-                    _this.roundRect(ctx, (_this.system.w - _this.system.w * canvasAttr.codeWidth) / 2 - 90, textY + canvasAttr.codeMT, _this.system.w * canvasAttr.codeWidth,
+                    _this.roundRect(ctx, (_this.system.w - _this.system.w * canvasAttr.codeWidth) / 2 - 82, textY + canvasAttr.codeMT, _this.system.w * canvasAttr.codeWidth,
                         _this.system.w * canvasAttr.codeWidth * canvasAttr.codeRatio, (_this.system.w * canvasAttr.codeWidth * canvasAttr.codeRatio) * canvasAttr.codeRadius);
-                    ctx.drawImage(res.path, (_this.system.w - _this.system.w * canvasAttr.codeWidth) / 2  - 90,
+                    ctx.drawImage(res.path, (_this.system.w - _this.system.w * canvasAttr.codeWidth) / 2  - 82,
                         textY + canvasAttr.codeMT,
                         _this.system.w * canvasAttr.codeWidth,
                         _this.system.w * canvasAttr.codeWidth * canvasAttr.codeRatio)
@@ -327,6 +328,9 @@ export default {
     z-index: 10;
 }
 button {
-    border: 0 !important;padding: 0!important;background-color: transparent!important;line-height: 0!important;
+    border: 0 !important;padding: 0!important;background-color: rgba(241, 241, 241, 1)!important;line-height: 0!important;
+}
+button:after {
+    border: 0 !important;padding: 0!important;
 }
 </style>

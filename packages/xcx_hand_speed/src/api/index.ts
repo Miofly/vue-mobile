@@ -1,6 +1,6 @@
 import ajax from './ajax'
 // const defaultUrl = process.env.VUE_APP_BASE_API
-const defaultUrl = 'http://192.168.11.37'
+const defaultUrl = 'http://xcx.shortl.cn:443'
 
 const commonPost = (url, data = {}, showLoading = true, contentType) => ajax({
 	url: defaultUrl + url,

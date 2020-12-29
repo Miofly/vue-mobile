@@ -51,7 +51,7 @@ axios.interceptors.response.use(response => {
 	return response
 }, (error) => {
 	console.log(error)
-	root.showToast('请求出错')
+	// root.showToast('请求出错')
 })
 
 function ajax (config: AxiosRequestConfig): any {
@@ -92,7 +92,7 @@ function ajax (config: AxiosRequestConfig): any {
 			}
 			if (!errHandle) { // 全局错误的提示
 				console.log('请求出错')
-				root.showToast('请求出错')
+				// root.showToast('请求出错')
 			}
 			reject(err)
 		})

@@ -36,6 +36,9 @@
 				</m-image>
 			</view>
 		</view>
+
+        <ad v-if="spgg" :unit-id="spgg" ad-type="video" ad-theme="white" style="margin-top: 28rpx"></ad>
+
 		<view style="color: #D3D5DE;margin-top: 60rpx" class="text-18">
 			共 <text style="color: #FF5555" class="text-22">{{infoConfig.sumPerson}}</text>人正在挑战
 		</view>
@@ -91,6 +94,7 @@
 					<view style="height: 30rpx;padding: 60rpx 0;width: 100%;background-color: rgb(0, 15, 84);color: #D3D5DE;;position: absolute;line-height: 0rpx">
 						榜单仅显示前100名
 					</view>
+
 				</view>
 
 			</view>
@@ -104,6 +108,7 @@
 				<view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
 			</m-image>
 		</view>
+
 
 
 	</view>
@@ -121,6 +126,8 @@ export default class extends Vue {
 	@State('avatar', { namespace: 'center' }) avatar
 	@State('score', { namespace: 'center' }) score
 	@State('level', { namespace: 'center' }) level
+    @State('spgg', { namespace: 'root' }) spgg
+    @State('ptgg', { namespace: 'root' }) ptgg
 
     onShareAppMessage (res) {
         return {

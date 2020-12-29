@@ -57,10 +57,10 @@ export default class extends Vue {
 
 	handleShowPoster () {
 		// this.canvasFlag = false
-		this.$refs.hchPoster.posterShow()
+		;(this.$refs.hchPoster as any).posterShow()
 	}
 
-
+``
 	saveImg (imgSrc) {
 		wx.authorize({
 			scope: 'scope.writePhotosAlbum',

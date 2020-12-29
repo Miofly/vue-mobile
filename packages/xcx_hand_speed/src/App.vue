@@ -138,17 +138,30 @@ export default {
             wx.onAppRoute(res => {
                 const pages = getCurrentPages()
                 const view = pages[pages.length - 1]
+                console.log()
                 wx.showShareMenu({
                     withShareTicket: true
                 });
-                view.onShareAppMessage = function (res) {
-                    console.log(res)
-                    return {
-                        title: '让你的手机111一尘不染！',
-                        path: `pages/index/index?open_id=${that.$store.state.center.open_id}`,
-                        imageUrl: '/static/images/fengxiang@2x.png'
+                if (view.route == 'pages/index/groupChallenge') {
+                    view.onShareAppMessage = function (res) {
+                        console.log(res)
+                        return {
+                            title: that.$mio.mioRoot.makeRandomArr(['我，10秒98次，将成为群内手速王，谁来应战？', '10秒98次，不好意思，手速快就是可以为所欲为！', '@群主，不服来战', '@所有人，在座的各位都是垃圾'], 1)[0],
+                            path: `pages/index/index?open_id=${that.$store.state.center.open_id}`,
+                            imageUrl: that.$mio.mioRoot.makeRandomArr(['/static/images/share1.png', '/static/images/share2.png', '/static/images/share3.png'], 1)[0],
+                        }
+                    }
+                } else {
+                    view.onShareAppMessage = function (res) {
+                        console.log(res)
+                        return {
+                            title: that.$mio.mioRoot.makeRandomArr(['在这里，做王者只要10秒！', '10秒98次，不好意思，手速快就是可以为所欲为！', '不服来战！', '有胆就来挑战！', '真男人就来挑战！'], 1)[0],
+                            path: `pages/index/index?open_id=${that.$store.state.center.open_id}`,
+                            imageUrl: that.$mio.mioRoot.makeRandomArr(['/static/images/share1.png', '/static/images/share2.png', '/static/images/share3.png'], 1)[0],
+                        }
                     }
                 }
+
             })
         }
         // #endif

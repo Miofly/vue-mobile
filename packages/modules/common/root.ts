@@ -9,7 +9,7 @@ const roots = {
 		// @ts-ignore
 		uni.showToast({ title, icon, duration, mask })
 	},
-	
+
 	// loading设置
 	showLoading (title: string = '正在加载', mask: boolean = true): void {
 		uni.showLoading({
@@ -46,12 +46,12 @@ const roots = {
 		const birthYear = strBirthdayArr[0] // eslint-disable-line
 		const birthMonth = strBirthdayArr[1] // eslint-disable-line
 		const birthDay = strBirthdayArr[2] // eslint-disable-line
-		
+
 		const d = new Date()
 		const nowYear = d.getFullYear()
 		const nowMonth = d.getMonth() + 1
 		const nowDay = d.getDate()
-		
+
 		if (nowYear == birthYear) {
 			returnAge = 0// 同年 则为0岁
 		} else {
@@ -76,14 +76,14 @@ const roots = {
 				returnAge = -1// 返回-1 表示出生日期输入错误 晚于今天
 			}
 		}
-		
+
 		return returnAge// 返回周岁年龄
 	},
 	// 字符串过长截取+省略号
 	strEllipsis (str: any, length: number): string {
 		return String(str).length > length ? `${str.slice(0, length)}...` : str
 	},
-	
+
 	// 复制文本
 	copyText (data: string, callback = (res) => {
 		if (res) {
@@ -165,7 +165,7 @@ const roots = {
 		t = new DataView(new Uint32Array(m).buffer)
 		// @ts-ignore
 		for (var i = 0; i < 5; i++) m[i] = t.getUint32(i << 2) // eslint-disable-line
-		
+
 		const hex = Array.prototype.map.call(new Uint8Array(new Uint32Array(m).buffer), (e) => (e < 16 ? '0' : '') + e.toString(16)).join('')
 		return hex
 	},
@@ -193,7 +193,7 @@ const roots = {
 		} else {
 			rev = (rev) ? 1 : -1
 		}
-		
+
 		return function (a, b) {
 			a = a[attr]
 			b = b[attr]
@@ -212,38 +212,38 @@ const roots = {
 		// @ts-ignore
 		uni.previewImage({ urls: [url], current: 0 })
 	},
-	
+
 	// 普通路由跳转
 	push (url: string): void {
 		uni.navigateTo({ url })
 	},
-	
+
 	// 路由替换跳转
 	replace (url: string): void {
 		uni.redirectTo({ url })
 	},
-	
+
 	// 跳转到 tabBar 页面，并关闭其他所有非 tabBar 页面。路径后不能带参数
 	switchTab (url: string): void {
 		uni.switchTab({ url })
 	},
-	
+
 	// 关闭所有页面，打开到应用内的某个页面。
 	reLaunch (url: string): void {
 		uni.reLaunch({ url })
 	},
-	
+
 	// 返回
 	back () {
 		window.history.back()
 	},
-	
+
 	addUnit (value = 'auto', unit = 'rpx') {
 		value = String(value)
 		// 用uView内置验证规则中的number判断是否为数值
 		return test.number(value) ? `${value}${unit}` : value
 	},
-	
+
 	// 去除空格
 	trim (str, pos = 'both') {
 		if (pos == 'both') {
@@ -257,12 +257,12 @@ const roots = {
 		}
 		return str
 	},
-	
+
 	// 格式化对象
 	gsh (str: any): void {
 		return JSON.parse(JSON.stringify(str))
 	},
-	
+
 	// 获取父组件的参数，因为支付宝小程序不支持provide/inject的写法
 	// this.$parent在非H5中，可以准确获取到父组件，但是在H5中，需要多次this.$parent.$parent.xxx
 	// 这里默认值等于undefined有它的含义，因为最顶层元素(组件)的$parent就是undefined，意味着不传name
@@ -281,20 +281,20 @@ const roots = {
 		}
 		return false
 	},
-	
+
 	// 得到 localStorage 数据
 	getLocalData (str): any {
 		return localStorage.getItem(str)
 	},
-	
+
 	emptyPaading (str, sign): any {
 		return str || sign
 	},
-	
+
 	jumpWX () {
 		window.location.replace('weixin://')
 	},
-	
+
 	route (options = {}, params = false) { // 路由跳转 注意:本方法没有对跳转的回调函数进行封装
 		let config = {
 			type: 'navigateTo',
@@ -373,7 +373,7 @@ const roots = {
 			})
 		}
 	},
-	
+
 	// 对象转url参数 isPrefix,是否自动加上"?"
 	queryParams (data = {}, isPrefix = true, arrayFormat = 'brackets') {
 		const prefix = isPrefix ? '?' : ''
@@ -426,7 +426,7 @@ const roots = {
 		}
 		return _result.length ? prefix + _result.join('&') : ''
 	},
-	
+
 	/**
 	 * 本算法来源于简书开源代码，详见：https://www.jianshu.com/p/fdbf293d0a85
 	 * 全局唯一标识符（uuid，Globally Unique Identifier）,也称作 uuid(Universally Unique IDentifier)
@@ -441,7 +441,7 @@ const roots = {
 		const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('')
 		const uuid = []
 		radix = radix || chars.length
-		
+
 		if (len) {
 			// 如果指定uuid长度,只是取随机的字符,0|x为位运算,能去掉x的小数位,返回整数位
 			for (let i = 0; i < len; i++) uuid[i] = chars[0 | Math.random() * radix]
@@ -450,7 +450,7 @@ const roots = {
 			// rfc4122标准要求返回的uuid中,某些位为固定的字符
 			uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-'
 			uuid[14] = '4'
-			
+
 			for (let i = 0; i < 36; i++) {
 				if (!uuid[i]) {
 					r = 0 | Math.random() * 16
@@ -529,6 +529,20 @@ const roots = {
 	},
 	randomNum (min, max) {
 		return Math.floor(Math.random() * (max - min + 1)) + min
+	},
+	makeRandomArr (arrList, num) {
+		if (num > arrList.length) {
+			num = arrList.length // eslint-disable-line
+		}
+		const tempArr = arrList.slice(0)
+		const newArrList = []
+		for (let i = 0; i < num; i++) {
+			const random = Math.floor(Math.random() * (tempArr.length))
+			const arr = tempArr[random]
+			tempArr.splice(random, 1)
+			newArrList.push(arr)
+		}
+		return newArrList
 	}
 }
 

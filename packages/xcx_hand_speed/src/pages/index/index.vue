@@ -94,8 +94,6 @@ export default class extends Vue {
 		customerServiceImg: '/static/images/qun.png',
 		bg: '/static/images/bg.png',
 		bg1: '/static/images/bg1.png',
-
-		ptgg: 'adunit-60f954ce26ce0f92'
 	}
 
 	wx:any = {
@@ -103,6 +101,10 @@ export default class extends Vue {
 		secret: '683fecc3c4e99c632b25fefb46480b93',
 		session_key: '',
 		openid: ''
+	}
+
+	onShow () {
+		this.getTrueUserInfo()
 	}
 
 	async created () {
@@ -145,8 +147,8 @@ export default class extends Vue {
 	}
 
 	async getTrueUserInfo () {
-        this.is_first = false
 		const { data } = await commonGet('/api/user/user_info', false, {'AUTH-TOKEN': this.$store.state.center.open_id})
+        this.is_first = false
         this.$store.state.center.score = data.score
         this.$store.state.center.name = data.nickname
         this.$store.state.center.avatar = data.avatar

@@ -1,13 +1,42 @@
 <template>
-    <scroll-view scroll-y @scroll="adScroll" class="full-width-height">
-        <view v-for="(item, index) in adDetail" :key="index" :class="['ad' + (index+1)]">
-            <view>{{ item.title }}</view>
-            <view>{{ item.adType }}</view>
-            <view v-for="(subItem, index) in item.srcUrls" :key="index">
-                <image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
-                       :src="subItem" style="width: 120rpx"></image>
+    <scroll-view class="full-width-height bg-white" scroll-y @scroll="adScroll">
+        <view v-for="(item, index) in adDetail" :key="index" :class="['ad' + (index+1)]" class="full-width padding-left-right">
+            <view v-if="item.adType == 'ad-template-info'" class="flex justify-around margin-top">
+                <view class="line-two" style="height: 70rpx">{{ item.title }}</view>
+                <view v-for="(subItem, index) in item.srcUrls" :key="index" class="padding-left">
+                    <m-image :borderRadius="10" :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" :shape="['square', 'circle'][0]" :showLoading="false"
+                             :src="subItem"
+                             bgColor="rgba(0, 0, 0, 1)"
+                             bgColorError="rgba(0, 0, 0, 1)" duration="0" height="160">
+                        <view slot="error" class="text-white" style="font-size: 24rpx;">加载失败</view>
+                    </m-image>
+                </view>
             </view>
-            <view></view>
+            <view v-if="item.adType == 'ad-template-3img'" class="margin-top">
+                <view class="line-two" style="height: 70rpx">{{ item.title }}</view>
+                <view class="flex justify-between margin-top">
+                    <view v-for="(subItem, index) in item.srcUrls" :key="index">
+                        <m-image :borderRadius="10" :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" :shape="['square', 'circle'][0]" :showLoading="false"
+                                 :src="subItem" bgColor="rgba(0, 0, 0, 1)" bgColorError="rgba(0, 0, 0, 1)" duration="0" height="140">
+                            <view slot="error" class="text-white" style="font-size: 24rpx;">加载失败</view>
+                        </m-image>
+                    </view>
+                </view>
+            </view>
+
+            <view v-if="item.adType == 'ad-template-info-big'" class="margin-top">
+                <view class="line-two">{{ item.title }}</view>
+                <view class="flex justify-between margin-top">
+                    <view v-for="(subItem, index) in item.srcUrls" :key="index" class="full-width">
+                        <m-image :borderRadius="10" :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]" :shape="['square', 'circle'][0]" :showLoading="false"
+                                 :src="subItem" bgColor="rgba(0, 0, 0, 1)" bgColorError="rgba(0, 0, 0, 1)" duration="0" style="width: 100%">
+                            <view slot="error" class="text-white" style="font-size: 24rpx;">加载失败</view>
+                        </m-image>
+                    </view>
+                </view>
+            </view>
+
+            <view style="height: 1px;background-color: #eee" class="margin-top"></view>
         </view>
         <view id="test" class="bg-white" style="position: fixed;bottom: 0;left: 0;width: 100%;">
             <view class="flex text-center flex-wrap align-center">
@@ -274,7 +303,7 @@ export default class home extends Vue {
             dataType: 'jsonp', // jsonp格式访问
             success (res) {
                 if (res != undefined && res != '') {
-                	res.adType = adType
+                    res.adType = adType
                     that.adDetail.push(res)
                     if (res && that.deny_cids.indexOf(res.cid) == -1) { // 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复
                         that.deny_cids.push(res.cid) // 插入创意id 用于广告位被重复广告占用
@@ -283,14 +312,14 @@ export default class home extends Vue {
                         that.isElementInViewport(`.ad${that.adDetail.length}`, res.monitorUrl)
                     })
                     if (that.adListIndex === that.adList.length - 1) {
-						setTimeout(() => {
-							console.log('当前广告拉取结束！重新检测一次曝光')
-							that.$nextTick(() => {
-								that.adScroll()
-							})
-						}, 1000)
-						return
-					}
+                        setTimeout(() => {
+                            console.log('当前广告拉取结束！重新检测一次曝光')
+                            that.$nextTick(() => {
+                                that.adScroll()
+                            })
+                        }, 1000)
+                        return
+                    }
                 }
                 that.adListIndex++
                 that.fetchAd(that.adList[that.adListIndex].pid, that.adList[that.adListIndex].adWrapClass)
@@ -312,39 +341,39 @@ export default class home extends Vue {
             uni.createSelectorQuery().select(el).boundingClientRect(rect => {
                 const isInViewport = rect.top >= 0 && rect.left >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && rect.right <= (window.innerWidth || document.documentElement.clientWidth)
                 if (isInViewport) {
-					console.log('检测曝光成功：', el, isInViewport)
-					// 再次检测如果成功从未成功数组this.adMonitor中移除
-					const delIndex = this.adMonitor.findIndex((item: any) => item.el == el)
-					if (delIndex != -1) {
-						this.adMonitor.splice(delIndex, 1)
-					}
-					monitorUrl.forEach((url) => {
+                    console.log('检测曝光成功：', el, isInViewport)
+                    // 再次检测如果成功从未成功数组this.adMonitor中移除
+                    const delIndex = this.adMonitor.findIndex((item: any) => item.el == el)
+                    if (delIndex != -1) {
+                        this.adMonitor.splice(delIndex, 1)
+                    }
+                    monitorUrl.forEach((url) => {
                         this.send(url)
                     })
                 } else {
-                	// 首次检测失败插入到 this.adMonitor 数组中
-					this.$nextTick(() => {
-						const delIndex = this.adMonitor.findIndex((item: any) => item.el == el)
-						if (delIndex == -1) { // 防止同一元素插入
-							this.adMonitor.push({ el, monitorUrl })
-							console.log('检测曝光失败：', el, isInViewport)
-						}
-                	})
-				}
+                    // 首次检测失败插入到 this.adMonitor 数组中
+                    this.$nextTick(() => {
+                        const delIndex = this.adMonitor.findIndex((item: any) => item.el == el)
+                        if (delIndex == -1) { // 防止同一元素插入
+                            this.adMonitor.push({ el, monitorUrl })
+                            console.log('检测曝光失败：', el, isInViewport)
+                        }
+                    })
+                }
             }).exec()
         })
     }
 
     // 滚动监控广告曝光
-	adScroll () {
-		this.throttle(() => {
-			if (this.adMonitor.length != 0) {
-				for (const item of this.adMonitor) {
-					this.isElementInViewport(item.el, item.monitorUrl)
-				}
-			}
-		}, 1000, true)
-	}
+    adScroll () {
+        this.throttle(() => {
+            if (this.adMonitor.length != 0) {
+                for (const item of this.adMonitor) {
+                    this.isElementInViewport(item.el, item.monitorUrl)
+                }
+            }
+        }, 1000, true)
+    }
 
     throttle (func, wait = 500, immediate = true) {
         if (immediate) {
