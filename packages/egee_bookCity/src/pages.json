@@ -1,8 +1,8 @@
 {
     "pages": [
-        {
-            "path": "pages/module/bookRead"
-        },
+//        {
+//            "path": "pages/module/bookRead"
+//        },
         {
             "path": "pages/home",
             "style": {

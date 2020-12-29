@@ -1,7 +1,7 @@
 <template>
     <scroll-view class="full-width-height bg-white" scroll-y @scroll="adScroll">
         <view v-for="(item, index) in adDetail" :key="index" :class="['ad' + (index+1)]" class="full-width padding-left-right">
-            <view v-if="item.adType == 'ad-template-info'" class="flex justify-around margin-top">
+            <view @click="goAd(item.clickUrl, item.dUrl[0])" v-if="item.adType == 'ad-template-info'" class="flex justify-around margin-top">
                 <view class="line-two" style="height: 70rpx">{{ item.title }}</view>
                 <view v-for="(subItem, index) in item.srcUrls" :key="index" class="padding-left">
                     <m-image :borderRadius="10" :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" :shape="['square', 'circle'][0]" :showLoading="false"
@@ -12,7 +12,7 @@
                     </m-image>
                 </view>
             </view>
-            <view v-if="item.adType == 'ad-template-3img'" class="margin-top">
+            <view @click="goAd(item.clickUrl, item.dUrl[0])" v-if="item.adType == 'ad-template-3img'" class="margin-top">
                 <view class="line-two" style="height: 70rpx">{{ item.title }}</view>
                 <view class="flex justify-between margin-top">
                     <view v-for="(subItem, index) in item.srcUrls" :key="index">
@@ -24,7 +24,7 @@
                 </view>
             </view>
 
-            <view v-if="item.adType == 'ad-template-info-big'" class="margin-top">
+            <view @click="goAd(item.clickUrl, item.dUrl[0])" v-if="item.adType == 'ad-template-info-big'" class="margin-top">
                 <view class="line-two">{{ item.title }}</view>
                 <view class="flex justify-between margin-top">
                     <view v-for="(subItem, index) in item.srcUrls" :key="index" class="full-width">
@@ -207,6 +207,10 @@ export default class home extends Vue {
         textSize: 12
     }
 
+    socket: any = ''
+    path: any = 'ws://api.lc918.cn/socket/'
+
+
     adList: any = []
     adDetail: any = []
     deny_cids: any = []
@@ -255,8 +259,43 @@ export default class home extends Vue {
     ]
 
     created () {
+		this.socket = new WebSocket(this.path)
+		// 监听socket连接
+		this.socket.onopen = this.socketOpen
+		// 监听socket错误信息
+		this.socket.onerror = this.socketError
+		// 监听socket消息
+		this.socket.onmessage = this.socketMessage
         this.getAdRes()
     }
+
+	socketOpen () {
+		console.log('socket连接成功')
+	}
+
+	socketError () {
+		console.log('连接错误')
+	}
+
+	socketMessage (msg) {
+		console.log(msg.data)
+	}
+
+	socketSend () {
+		// this.socket.send(params)
+	}
+
+	socketClose () {
+		console.log('socket已经关闭')
+	}
+
+	goAd (clickUrl, dUrl) {
+    	console.log(clickUrl)
+		clickUrl.forEach(url => {
+			this.send(url)
+		})
+		location.href = dUrl
+	}
 
     addTextSize () {
         if (this.book.textSize < 30) {
@@ -339,7 +378,10 @@ export default class home extends Vue {
     isElementInViewport (el: any, monitorUrl) {
         this.$nextTick(() => {
             uni.createSelectorQuery().select(el).boundingClientRect(rect => {
-                const isInViewport = rect.top >= 0 && rect.left >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            	// 元素完全展示
+                // const isInViewport = rect.top >= 0 && rect.left >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+				// 元素漏出头部就算曝光
+                const isInViewport = rect.top <= (window.innerHeight || document.documentElement.clientHeight) && rect.top + rect.height >= 0
                 if (isInViewport) {
                     console.log('检测曝光成功：', el, isInViewport)
                     // 再次检测如果成功从未成功数组this.adMonitor中移除
@@ -370,9 +412,9 @@ export default class home extends Vue {
             if (this.adMonitor.length != 0) {
                 for (const item of this.adMonitor) {
                     this.isElementInViewport(item.el, item.monitorUrl)
-                }
+				}
             }
-        }, 1000, true)
+        }, 500, true)
     }
 
     throttle (func, wait = 500, immediate = true) {

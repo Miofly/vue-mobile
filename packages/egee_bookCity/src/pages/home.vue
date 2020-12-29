@@ -125,6 +125,37 @@ export default class home extends Vue {
 	isSticky: boolean = true
 
 	scrollTop: number = 0
+
+	socket: any = ''
+	path: any = 'ws://api.lc918.cn/socket/'
+
+	created () {
+		this.socket = new WebSocket(this.path)
+		// 监听socket连接
+		this.socket.onopen = this.socketOpen
+		// 监听socket错误信息
+		this.socket.onerror = this.socketError
+		// 监听socket消息
+		this.socket.onmessage = this.socketMessage
+	}
+
+	socketOpen () {
+		console.log('socket连接成功')
+		this.socket.send('params')
+	}
+
+	socketError () {
+		console.log('连接错误')
+	}
+
+	socketMessage (msg) {
+		console.log(msg.data)
+	}
+
+	socketClose () {
+		console.log('socket已经关闭')
+	}
+
 	imgLists: any = [
 		{ image: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg', title: '昨夜星辰昨夜风，画楼西畔桂堂东' },
 		{ image: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/2.jpg', title: '身无彩凤双飞翼，心有灵犀一点通' },

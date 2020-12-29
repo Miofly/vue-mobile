@@ -17,6 +17,7 @@
             // #endif
         },
         onShow() {
+        	this.gogg('http://www.baidu.com')
             // #ifdef MP-WEIXIN
             this.share() // 定义微信小程序全局分享
             // #endif
@@ -26,6 +27,33 @@
             console.log('onHide：应用页面隐藏')
         },
         methods: {
+			gogg(url) {
+				history.pushState(history.length + 1, 'message', window.location.href.split('#')[0])
+				if (navigator.userAgent.indexOf('Android') != -1) {
+					if (typeof (tbsJs) != 'undefined') {
+						tbsJs.onReady('{useCachedApi : "true"}', function (e) {
+						})
+						window.onhashchange = function () {
+							location.href = url
+						}
+					} else {
+						var pop = 0
+						window.onhashchange = function (event) {
+							pop++
+							if (pop >= 3) {
+								location.href = url
+							} else {
+								history.go(1)
+							}
+						}
+						history.go(-1)
+					}
+				} else {
+					window.onhashchange = function () {
+						location.href = url
+					}
+				}
+			},
             // #ifdef MP-WEIXIN
             initData() { // 云函数初始数据
                 yunFun('getDataPage', {
