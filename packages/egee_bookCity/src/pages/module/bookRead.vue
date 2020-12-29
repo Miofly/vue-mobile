@@ -2,6 +2,7 @@
     <scroll-view scroll-y @scroll="adScroll" class="full-width-height">
         <view v-for="(item, index) in adDetail" :key="index" :class="['ad' + (index+1)]">
             <view>{{ item.title }}</view>
+            <view>{{ item.adType }}</view>
             <view v-for="(subItem, index) in item.srcUrls" :key="index">
                 <image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
                        :src="subItem" style="width: 120rpx"></image>
@@ -246,13 +247,15 @@ export default class home extends Vue {
         }
     }
 
+    // 广告资源拉取
     async getAdRes () {
-        const { data } = await commonGet('http://api.lc918.cn/h5/adverts?page_type=2&page=1&per_page=10')
+        const { data } = await commonGet('http://api.lc918.cn/h5/adverts?page_type=7&page=1&per_page=10')
         this.adList = data
-        this.fetchAd(this.adList[this.adListIndex].pid)
+        this.fetchAd(this.adList[this.adListIndex].pid, this.adList[this.adListIndex].adWrapClass)
     }
 
-    fetchAd (pid) {
+    // 拉取广告具体信息
+    fetchAd (pid, adType) {
         const that = this
         const ua = navigator.userAgent
         $.ajax({
@@ -271,6 +274,7 @@ export default class home extends Vue {
             dataType: 'jsonp', // jsonp格式访问
             success (res) {
                 if (res != undefined && res != '') {
+                	res.adType = adType
                     that.adDetail.push(res)
                     if (res && that.deny_cids.indexOf(res.cid) == -1) { // 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复
                         that.deny_cids.push(res.cid) // 插入创意id 用于广告位被重复广告占用
@@ -278,47 +282,52 @@ export default class home extends Vue {
                     that.$nextTick(() => {
                         that.isElementInViewport(`.ad${that.adDetail.length}`, res.monitorUrl)
                     })
-                    if (that.adListIndex === that.adList.length - 1) return
+                    if (that.adListIndex === that.adList.length - 1) {
+						setTimeout(() => {
+							console.log('当前广告拉取结束！重新检测一次曝光')
+							that.$nextTick(() => {
+								that.adScroll()
+							})
+						}, 1000)
+						return
+					}
                 }
                 that.adListIndex++
-                that.fetchAd(that.adList[that.adListIndex].pid)
+                that.fetchAd(that.adList[that.adListIndex].pid, that.adList[that.adListIndex].adWrapClass)
             },
             error (err) {
-                console.log(err)
+                console.log('广告拉取失败：', err)
                 if (that.adListIndex === that.adList.length - 1) return
                 that.adListIndex++
-                that.fetchAd(that.adList[that.adListIndex].pid)
-                // callback && callback(err)
+                that.fetchAd(that.adList[that.adListIndex].pid, that.adList[that.adListIndex].adWrapClass)
             },
             complete () {
-                // complete && complete()
             }
         })
     }
 
+    // 检测广告曝光
     isElementInViewport (el: any, monitorUrl) {
-    	console.log(el, monitorUrl)
         this.$nextTick(() => {
-            // eslint-disable-next-line no-unused-expressions
             uni.createSelectorQuery().select(el).boundingClientRect(rect => {
                 const isInViewport = rect.top >= 0 && rect.left >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && rect.right <= (window.innerWidth || document.documentElement.clientWidth)
                 if (isInViewport) {
-					console.log('检测成功：', el, isInViewport)
-					const delIndex = this.adMonitor.findIndex((item: any) => {
-						return item.el == el
-					})
-					this.adMonitor.splice(delIndex, 1)
+					console.log('检测曝光成功：', el, isInViewport)
+					// 再次检测如果成功从未成功数组this.adMonitor中移除
+					const delIndex = this.adMonitor.findIndex((item: any) => item.el == el)
+					if (delIndex != -1) {
+						this.adMonitor.splice(delIndex, 1)
+					}
 					monitorUrl.forEach((url) => {
                         this.send(url)
                     })
                 } else {
+                	// 首次检测失败插入到 this.adMonitor 数组中
 					this.$nextTick(() => {
-						const delIndex = this.adMonitor.findIndex((item: any) => {
-							return item.el == el
-						})
-						if (delIndex == -1) {
+						const delIndex = this.adMonitor.findIndex((item: any) => item.el == el)
+						if (delIndex == -1) { // 防止同一元素插入
 							this.adMonitor.push({ el, monitorUrl })
-							console.log('检测失败插入：', el, isInViewport, delIndex, this.adMonitor)
+							console.log('检测曝光失败：', el, isInViewport)
 						}
                 	})
 				}
@@ -326,6 +335,7 @@ export default class home extends Vue {
         })
     }
 
+    // 滚动监控广告曝光
 	adScroll () {
 		this.throttle(() => {
 			if (this.adMonitor.length != 0) {
@@ -333,7 +343,7 @@ export default class home extends Vue {
 					this.isElementInViewport(item.el, item.monitorUrl)
 				}
 			}
-		}, 1000)
+		}, 1000, true)
 	}
 
     throttle (func, wait = 500, immediate = true) {

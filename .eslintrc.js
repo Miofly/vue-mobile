@@ -95,6 +95,7 @@ module.exports = {
         '@typescript-eslint/no-unused-vars': 0,
         '@typescript-eslint/explicit-module-boundary-types': 0,
         '@typescript-eslint/no-empty-function': 0, // 允许空函数
+        '@typescript-eslint/no-this-alias': 0, //
         // love
 		'import/no-duplicates': 0,
         'consistent-return': 0, // 不要求 return 语句要么总是指定返回的值，要么不指定
