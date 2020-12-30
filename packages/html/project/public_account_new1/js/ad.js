@@ -1,6 +1,7 @@
 /**
  * Ad对象 仅用于竞价广告
  */
+
 localStorage.removeItem('deny_cids')
 var ee = new EventEmitter();
 var trueIndex = 0;
@@ -69,7 +70,7 @@ var Ad = {
         if (dUrl) {
             setTimeout(() => {
                 location.href = dUrl[0];
-            }, 0);
+            }, 300);
         }
     },
     /**

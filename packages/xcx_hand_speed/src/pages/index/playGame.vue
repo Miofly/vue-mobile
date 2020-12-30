@@ -7,7 +7,7 @@
 				<text>倒计时：</text>
 				<m-count-down v-show="gameStatus" ref="count_down" :autoplay="autoPlay" :fontSize="44"
 				              :separator="['colon', 'zh'][0]" :showBorder="false" :showDays="false" :showHours="false"
-				              :showMinutes="false" :timestamp="['60', '86400', '983272', '9'][3]"
+				              :showMinutes="false" :timestamp="['60', '86400', '983272', '2'][3]"
 				              bg-color="transparent" border-color="#303133" class="" color="#FF5555"
 				              separator-color="#303133" @end="end"></m-count-down>
 				<text v-show="!gameStatus">10</text>
@@ -33,6 +33,16 @@
 
             <ad v-if="ptgg" ad-intervals="30" :unit-id="ptgg" style="margin-top: 28rpx;position: fixed;bottom: 0"></ad>
 		</view>
+
+        <m-modal :closeShow="true" closeColor="black" bgColor="white" :closeSize="40" :descSize="30" :maskClosable="true" :status="status"
+        	   title="这是标题" desc="这是描述" modalTop="0rpx" :titleSize="40" descColor="#999d9c" titleColor="black"
+        	   width="90vw" padding="20" radius="30rpx" :showTitle="false" :showContent="true">
+        	<view class="text-center margin-top-xxl">
+        		<view>
+        			再来一次
+        		</view>
+        	</view>
+        </m-modal>
 	</view>
 </template>
 
@@ -59,6 +69,7 @@ export default class extends Vue {
 		againSrc: '/static/images/zailai@2x.png',
 	}
 
+	status: boolean = false
 	millisecond: number = 0
 	num: number = 0
 	chanceNum: number | string = this.$mio.mioRoot.getStorageSync('chance_num')
@@ -170,7 +181,6 @@ export default class extends Vue {
             setTimeout(() => {
                 lottieInstance.stop()
             }, 100)
-            this.imgChange = !this.imgChange
             this.gameStatus = true
             if (this.num == 0) {
                 this.startCountDown()
@@ -178,11 +188,6 @@ export default class extends Vue {
             this.sumCount++
             if (!this.gameOut) {
                 this.num++
-                // if (this.num % 2 == 0) {
-                // 	this.infoConfig.clickSrc = '/static/images/click_me@2x.png'
-                // } else {
-                // 	this.infoConfig.clickSrc = '/static/images/click_me2.png'
-                // }
                 if (this.num < 10) {
                     this.firstNum = '0'
                     this.endNum = String(this.num)
@@ -215,15 +220,16 @@ export default class extends Vue {
 	}
 
 	end () {
-		clearInterval(this.millisecondTimer)
         this.interstitialAd.show().catch(() => {
             // 失败重试
             this.interstitialAd.load()
                 .then(() => this.interstitialAd.show())
                 .catch(err => {
-                    console.log(err)
+                    this.status = true
                 })
         })
+		clearInterval(this.millisecondTimer)
+
         if (this.chanceNum > 0) {
             this.chanceNum--
             this.$mio.mioRoot.setStorage('chance_num', this.chanceNum)
@@ -233,7 +239,6 @@ export default class extends Vue {
 		const tempTimer = setInterval(() => {
 			this.millisecond -= 1
 			if (this.millisecond < 5) {
-				console.log('执行')
 				this.millisecond = 0
 				clearInterval(tempTimer)
 				this.gameOut = true
@@ -243,8 +248,6 @@ export default class extends Vue {
                 } else {
 
                 }
-				// this.infoConfig.clickSrc = '/static/images/zailai@2x.png'
-				// this.infoConfig.clickSrcTwo = '/static/images/zailai@2x.png'
                 this.putScore({ type: this.$store.state.center.type, openGid: this.$store.state.center.openGid, score: this.num, openId: this.$store.state.center.firend_openId })
 			}
 		}, 10)

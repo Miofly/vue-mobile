@@ -160,7 +160,6 @@ export default class extends Vue {
     async getTrueUserInfo () {
         const { data, code } = await commonGet('/api/user/user_info', false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
         if (code == 200) {
-            this.is_first = false
             this.$store.state.center.score = data.score
             this.$store.state.center.name = data.nickname
             this.$store.state.center.avatar = data.avatar

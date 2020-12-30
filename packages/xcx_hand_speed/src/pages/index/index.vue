@@ -16,7 +16,7 @@
 		</view>
 
 		<!--玩游戏-->
-		<button class="margin-top" open-type="getUserInfo" @getuserinfo="getUserInfo">
+		<button :disabled="btnDisabled" class="margin-top" open-type="getUserInfo" @getuserinfo="getUserInfo">
 			<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)"
 					:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
 					:shape="['square', 'circle'][0]" :src="infoConfig.tzImg" bgColor="rgba(0, 0, 0, 1)">
@@ -26,7 +26,7 @@
 
 		<view class="margin-top">
 			<!--排行-->
-			<button class="fl" open-type="getUserInfo" @getuserinfo="getUserInfoRank" style="width: 48%;padding-right: 1%">
+			<button :disabled="btnDisabled" class="fl" open-type="getUserInfo" @getuserinfo="getUserInfoRank" style="width: 48%;padding-right: 1%">
 				<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" style=""
 						:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
 						:shape="['square', 'circle'][0]" :src="infoConfig.heroImg" bgColor="rgba(0, 0, 0, 1)">
@@ -34,7 +34,7 @@
 				</m-image>
 			</button>
 			<!--群挑战-->
-			<button class="fr" open-type="getUserInfo" @getuserinfo="getUserInfoGroup" style="width: 48%;padding-left: 1%">
+			<button :disabled="btnDisabled" class="fr" open-type="getUserInfo" @getuserinfo="getUserInfoGroup" style="width: 48%;padding-left: 1%">
 				<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" style=""
 						:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
 						:shape="['square', 'circle'][0]" :src="infoConfig.groupImg" bgColor="rgba(0, 0, 0, 1)">
@@ -105,6 +105,8 @@ export default class extends Vue {
 		session_key: '',
 		openid: ''
 	}
+
+    btnDisabled: boolean = false
 
 	onShow () {
 		this.getTrueUserInfo()
@@ -180,31 +182,47 @@ export default class extends Vue {
 	}
 
 	getUserInfoRank (e) {
-		if (e.detail.userInfo != undefined) {
+        this.goRank()
+        this.btnDisabled = true
+        setTimeout(() => {
+            this.btnDisabled = false
+        }, 1000)
+        if (e.detail.userInfo != undefined) {
 			this.is_first = false
 			this.$store.state.center.name = e.detail.userInfo.nickName
 			this.$store.state.center.avatar = e.detail.userInfo.avatarUrl
-			this.goRank()
             this.putUserInfo(e.detail.encryptedData, e.detail.iv)
 		}
 	}
 
 	getUserInfoGroup (e) {
+        if (this.$store.state.center.type == 3) {
+            this.goGroupTwo()
+        } else {
+            this.goGroup()
+        }
+        this.btnDisabled = true
+        setTimeout(() => {
+            this.btnDisabled = false
+        }, 1000)
 		if (e.detail.userInfo != undefined) {
 			this.is_first = false
 			this.$store.state.center.name = e.detail.userInfo.nickName
 			this.$store.state.center.avatar = e.detail.userInfo.avatarUrl
-			this.goGroup()
             this.putUserInfo(e.detail.encryptedData, e.detail.iv)
 		}
 	}
 
 	getUserInfo (e) {
-		if (e.detail.userInfo != undefined) {
+        this.goPlay()
+        this.btnDisabled = true
+        setTimeout(() => {
+            this.btnDisabled = false
+        }, 1000)
+        if (e.detail.userInfo != undefined) {
 			this.is_first = false
 			this.$store.state.center.name = e.detail.userInfo.nickName
 			this.$store.state.center.avatar = e.detail.userInfo.avatarUrl
-		    this.goPlay()
             this.putUserInfo(e.detail.encryptedData, e.detail.iv)
 		}
 	}
@@ -224,6 +242,10 @@ export default class extends Vue {
 	goGroup () {
 		this.$mio.mioRoot.push('/pages/index/groupChallenge')
 	}
+
+    goGroupTwo () {
+        this.$mio.mioRoot.push('/pages/index/rankBefore')
+    }
 }
 </script>
 
