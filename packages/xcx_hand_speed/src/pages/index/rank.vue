@@ -117,6 +117,7 @@
 <script lang="ts">
 import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator'
 import {
+    commonGet,
     commonPost
 } from '@/api'
 import { State } from 'vuex-class'
@@ -137,6 +138,10 @@ export default class extends Vue {
         }
     }
 
+    onShow () {
+    	this.getTrueUserInfo()
+    }
+
 	status: boolean = true
     person: any = {}
 	infoConfig: any = {
@@ -151,6 +156,17 @@ export default class extends Vue {
 		sumPerson: this.$mio.mioRoot.randomNum(100000, 30),
 		time: '3:00',
 	}
+
+    async getTrueUserInfo () {
+        const { data, code } = await commonGet('/api/user/user_info', false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
+        if (code == 200) {
+            this.is_first = false
+            this.$store.state.center.score = data.score
+            this.$store.state.center.name = data.nickname
+            this.$store.state.center.avatar = data.avatar
+            this.$store.state.center.level = data.level
+        }
+    }
 
 	rankLists: any = []
 

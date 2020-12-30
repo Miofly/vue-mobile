@@ -81,7 +81,7 @@
 <!--									      :style="{backgroundImage: 'url('+ item.imageURL +')'}">-->
 <!--										<view v-if="false" class="cu-tag badge">999</view>-->
 <!--									</view>-->
-                                    <open-data  style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold" type="groupName" :open-gid="item.openGid"></open-data>
+                                    <open-data style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold" type="groupName" :open-gid="item.openGid"></open-data>
 								</view>
 							</view>
 							<view v-if="true" class="action">
@@ -132,8 +132,12 @@ export default class extends Vue {
 	async created () {
         this.status = !this.status
         // this.rankLists = []
-        const { data } = await commonPost('/api/user_achievement/top', { type: 3 }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
-        this.rankLists = data
+        if (this.$store.state.center.type == 2) {
+
+        } else {
+            const { data } = await commonPost('/api/user_achievement/top', { type: 3 }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
+            this.rankLists = data
+        }
 	}
 }
 </script>

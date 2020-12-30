@@ -5,11 +5,11 @@
             <view :class="qrShow?'show':''" class="flex_row_c_c" style="position: absolute;width: 100%;left: 0;top: 50rpx;text-align: center;z-index: 999">
                 <image style="border-radius: 10px" :src="poster.finalPath || ''" class="posterImage" show-menu-by-longpress="true"></image>
             </view>
-            <view v-show="!qrShow" style="opacity: 0;position: absolute;width: 100%;left: 20%;text-align: center;top: 50rpx;z-index: 1">
-                <canvas :style="{width: 528 + 'px', height: 900 + 'px'}" canvas-id="default_PosterCanvasId"></canvas>
+            <view v-if="!qrShow" style="visibility: hidden;position: absolute;width: 100%;left: 20%;text-align: center;top: 50rpx;">
+                <canvas class="hideCanvas" :style="{width: 528 + 'px', height: 900 + 'px'}" canvas-id="default_PosterCanvasId"></canvas>
             </view>
         </view>
-        <view class="flex justify-around" style="position: fixed;top: 1000rpx;width: 100%;z-index: 99">
+        <view class="flex justify-around" style="position: relative;top: 1000rpx;width: 100%;z-index: 99">
             <button style="height: 100rpx;width: 334rpx" class="fl" open-type="share">
                 <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)"
                          :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
@@ -24,7 +24,10 @@
                     <view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
                 </m-image>
             </button>
+
         </view>
+        <ad v-if="ptgg" ad-intervals="30" :unit-id="ptgg" style="position: relative;top: 1050rpx;"></ad>
+
     </view>
 </template>
 
@@ -34,9 +37,12 @@ import _app from 'uJs/plugin/sharePoster/app.js'
 import {getSharePoster} from 'uJs/plugin/sharePoster/QS-SharePoster.js'
 
 import { Component, Prop, Vue, PropSync, Ref, Watch } from 'vue-property-decorator'
+import {State} from "vuex-class";
 
 @Component({})
 export default class extends Vue {
+    @State('spgg', { namespace: 'root' }) spgg
+    @State('ptgg', { namespace: 'root' }) ptgg
     poster: any = {}
     qrShow: boolean = false
     canvasId: string ='default_PosterCanvasId'
@@ -145,7 +151,7 @@ export default class extends Vue {
                                 return {
                                     size: drawArray[1].text.length == 2 ? 55 : drawArray[1].text.length == 3 ? 45 : 40,
                                     dx: drawArray[1].text.length == 2 ? getBgObj().width * 0.42 : drawArray[1].text.length == 3 ? getBgObj().width * 0.41 : getBgObj().width * 0.40,
-                                    dy: getBgObj().height / 2 + 20
+                                    dy: getBgObj().height / 2 + 18
                                 }
                             }
                         },
@@ -181,6 +187,16 @@ export default class extends Vue {
 </script>
 
 <style>
+.hideCanvasView {
+    position: relative;
+}
+
+.hideCanvas {
+    position: fixed;
+    top: -99999upx;
+    left: -99999upx;
+    z-index: -99999;
+}
 
 .flex_row_c_c {
     display: flex;

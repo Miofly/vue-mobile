@@ -5,11 +5,13 @@
 		<view class="full-width text-white">
 			<view class="full-width bg1"
 			      style="position: relative;background-repeat:no-repeat;background-size: 87% 164rpx;height: 164rpx;overflow-x: hidden!important;">
-				<view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="overflow-x: hidden!important;height: 124rpx;width: 124rpx;position: relative;top: 20rpx;left: 34rpx"
-				:style="{backgroundImage: is_first ? 'url('+ infoConfig.defaultAvatar +')' : 'url('+ avatar +')'}"></view>
+                <image v-if="is_first" class="cu-avatar"  style="border-radius: 50%;overflow-x: hidden!important;height: 124rpx;width: 124rpx;position: relative;top: 20rpx;left: 34rpx"
+                	:src="infoConfig.defaultAvatar" ></image>
+                <image v-else class="cu-avatar"  style="border-radius: 50%;overflow-x: hidden!important;height: 124rpx;width: 124rpx;position: relative;top: 20rpx;left: 34rpx"
+                       :src="avatar" ></image>
 				<view class="text-20" style="position: absolute;left: 186rpx;top: 38rpx">{{is_first? '游客' : name}}</view>
 				<view class="text-14" style="position: absolute;left: 186rpx;top: 98rpx;color: #D9DDFF">{{is_first? '暂无占领群' : infoConfig.occupationGroup}}</view>
-				<view class="text-12" style="color: #7753FF;position: absolute;left: 410rpx;top: 48rpx">最好成绩：{{is_first? '0' : score}}下</view>
+				<view class="text-12" style="color: #7753FF;position: absolute;left: 410rpx;top: 46rpx">最好成绩：{{is_first? '0' : score}}下</view>
 			</view>
 		</view>
 
@@ -128,6 +130,7 @@ export default class extends Vue {
 				this.$store.state.center.avatar = res.userInfo.avatarUrl
 			},
 			fail: err => {
+                this.is_first = true
 				this.getTrueUserInfo()
 			}
 		})
@@ -157,15 +160,19 @@ export default class extends Vue {
 				}
 			})
 		}
+
+
 	}
 
 	async getTrueUserInfo () {
-		const { data } = await commonGet('/api/user/user_info', false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
-        this.is_first = false
-        this.$store.state.center.score = data.score
-        this.$store.state.center.name = data.nickname
-        this.$store.state.center.avatar = data.avatar
-        this.$store.state.center.level = data.level
+		const { data, code } = await commonGet('/api/user/user_info', false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
+        if (code == 200) {
+            this.is_first = false
+            this.$store.state.center.score = data.score
+            this.$store.state.center.name = data.nickname
+            this.$store.state.center.avatar = data.avatar
+            this.$store.state.center.level = data.level
+        }
 	}
 
 	async putUserInfo (encryptedData, iv) {

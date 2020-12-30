@@ -94,7 +94,7 @@ function returnPromise(obj) {
 			if (imagesArray) {
 				if (typeof(imagesArray) == 'function')
 					imagesArray = imagesArray(params);
-				_app.showLoading('正在生成需绘制图片的临时路径');
+				// _app.showLoading('正在生成需绘制图片的临时路径');
 				// _app.log('准备设置图片');
 				imagesArray = await setImage(imagesArray);
 				_app.hideLoading();
@@ -108,7 +108,7 @@ function returnPromise(obj) {
 			if (qrCodeArray) {
 				if (typeof(qrCodeArray) == 'function')
 					qrCodeArray = qrCodeArray(params);
-				_app.showLoading('正在生成需绘制图片的临时路径');
+				// _app.showLoading('正在生成需绘制图片的临时路径');
 				for (let i = 0; i < qrCodeArray.length; i++) {
 					// _app.log(i);
 					if (qrCodeArray[i].image)
@@ -280,7 +280,7 @@ function drawShareImage(obj) { //绘制海报方法
 				}
 			}
 
-			_app.showLoading('绘制图片');
+			// _app.showLoading('绘制图片');
 			if (imagesArray && imagesArray.length > 0)
 				drawImage(Context, imagesArray);
 

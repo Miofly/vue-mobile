@@ -5,9 +5,9 @@
 			<!--倒计时-->
 			<view class="text-22" style="padding-top: 120rpx;color: #FF5555">
 				<text>倒计时：</text>
-				<m-count-down v-show="gameStatus" ref="count_down" :autoplay="autoPlay" :fontSize="40"
+				<m-count-down v-show="gameStatus" ref="count_down" :autoplay="autoPlay" :fontSize="44"
 				              :separator="['colon', 'zh'][0]" :showBorder="false" :showDays="false" :showHours="false"
-				              :showMinutes="false" :timestamp="['60', '86400', '983272', '2'][3]"
+				              :showMinutes="false" :timestamp="['60', '86400', '983272', '9'][3]"
 				              bg-color="transparent" border-color="#303133" class="" color="#FF5555"
 				              separator-color="#303133" @end="end"></m-count-down>
 				<text v-show="!gameStatus">10</text>
@@ -22,13 +22,16 @@
 				       :src="`/static/images/${endNum}.png`" style="width: 120rpx"></image>
 			</view>
 			<!--点击按钮-->
-			<view style="width: 100%;margin-top: 134rpx;text-align: center;position: relative;">
-                <view style="position: absolute;left: 0;text-align: center;width: 100%;z-index: 10">
+			<view style="width: 100%;margin-top: 134rpx;text-align: center;">
+                <view style="z-index: 10">
                     <canvas @click="addNum" id="canvas" style="display: inline-block;" type="2d"></canvas>
+<!--                    <canvas id="canvasTwo" style="display: inline-block;" type="2d"></canvas>-->
                 </view>
 			</view>
-            <!--            <view class="text-18" style="color: #D3D5DE;margin-top: 80rpx">还有{{ chanceNum }}次机会</view>-->
+            <view v-if="chanceNum > 0" class="text-18" style="color: #D3D5DE;">还有{{ chanceNum }}次机会</view>
+            <view v-else class="text-18" style="color: #D3D5DE;">机会用完了，点击按钮观看视频可增加次数</view>
 
+            <ad v-if="ptgg" ad-intervals="30" :unit-id="ptgg" style="margin-top: 28rpx;position: fixed;bottom: 0"></ad>
 		</view>
 	</view>
 </template>
@@ -39,11 +42,16 @@ import {
     commonPost
 } from '@/api'
 import lottie from 'lottie-miniprogram'
+import { State } from 'vuex-class'
 
 let lottieInstance: any = ''
+// let lottieInstanceTwo: any = ''
 
 @Component({})
 export default class extends Vue {
+    @State('spgg', { namespace: 'root' }) spgg
+    @State('ptgg', { namespace: 'root' }) ptgg
+
 	infoConfig: any = {
 		bg: '/static/images/bg.png',
 		clickSrc: '/static/images/click_me@2x.png',
@@ -53,7 +61,7 @@ export default class extends Vue {
 
 	millisecond: number = 0
 	num: number = 0
-	chanceNum: number = 2
+	chanceNum: number | string = this.$mio.mioRoot.getStorageSync('chance_num')
 	millisecondTimer: any = null
 	autoPlay: boolean = false
 	gameStatus: boolean = false
@@ -63,8 +71,52 @@ export default class extends Vue {
 	endNum: string = '0'
 	imgChange: boolean = true
 	tempStatus: boolean = false
+    interstitialAd: any = null
+    rewardedVideoAd: any = null
+
+    sumCount: number = 0
 
     created () {
+	    this.interstitialAd = null
+	    if (wx.createInterstitialAd) {
+	    	this.interstitialAd = wx.createInterstitialAd({
+	    		adUnitId: this.$store.state.root.cpgg
+	    	})
+	    	this.interstitialAd.onLoad(() => {
+	    		console.log('插屏广告加载成功')
+	    	})
+	    	this.interstitialAd.onError((err) => {
+	    		console.log('插屏广告加载出错', err)
+	    	})
+	    	this.interstitialAd.onClose(() => {
+	    		console.log('插屏广告关闭')
+	    	})
+	    }
+	    this.rewardedVideoAd = null
+	    if (wx.createInterstitialAd) {
+	    	this.rewardedVideoAd = wx.createRewardedVideoAd({
+	    		adUnitId: this.$store.state.root.jlgg
+	    	})
+	    	this.rewardedVideoAd.onLoad(() => {
+	    		console.log('激励广告加载成功')
+	    	})
+	    	this.rewardedVideoAd.onError((err) => {
+	    		console.log('激励广告出错', err)
+	    	})
+	    	this.rewardedVideoAd.onClose((res) => {
+	    		console.log(res, '用户关闭广告')
+	    		// 用户点击了【关闭广告】按钮
+	    		if (res && res.isEnded) {
+                    this.chanceNum++
+                    this.$mio.mioRoot.setStorage('chance_num', this.chanceNum)
+	    		    // 正常播放结束，可以下发游戏奖励
+	    		} else {
+	    		    this.$mio.mioRoot.showToast('未观看完成')
+	    			// 播放中途退出，不下发游戏奖励
+	    		}
+	    	})
+	    }
+
         lottieInstance = wx.createSelectorQuery().select('#canvas').node(res => {
             const canvas = res.node
             canvas.width = 300 // 设置宽高，也可以放到wxml中的canvas标签的style中
@@ -81,42 +133,75 @@ export default class extends Vue {
             lottieInstance.setSpeed(1)
             lottieInstance.setDirection(1)
         }).exec()
+
+        // lottieInstanceTwo = wx.createSelectorQuery().select('#canvasTwo').node(res => {
+        //     const canvas = res.node
+        //     canvas.width = 300 // 设置宽高，也可以放到wxml中的canvas标签的style中
+        //     canvas.hight = 300
+        //     const context = canvas.getContext('2d')
+        //     lottie.setup(canvas)
+        //     lottieInstanceTwo = lottie.loadAnimation({ // 微信小程序给的接口，调用就完事了，原理不太懂
+        //         loop: false, // 是否循环播放（选填）
+        //         autoplay: true, // 是否自动播放（选填）
+        //         // animationData: require('./test.json'),
+        //         path: 'https://assets3.lottiefiles.com/packages/lf20_o5mv33b8.json', // lottie json包的网络链接，可以防止小程序的体积过大，要注意请求域名要添加到小程序的合法域名中
+        //         rendererSettings: { context }
+        //     })
+        //     lottieInstanceTwo.setSpeed(1)
+        //     lottieInstanceTwo.setDirection(1)
+        // }).exec()
     }
 
 	addNum () {
-		if (this.tempStatus) {
-			console.log('触发了嘛')
-		    this.tempStatus = false
-		    this.gameOut = false
-		    this.num = -1
-		    this.firstNum = '0'
-		    this.endNum = '0'
-		}
-		console.log('点击了嘛')
-        lottieInstance.play()
-        setTimeout(() => {
-            lottieInstance.stop()
-        }, 100)
-		this.imgChange = !this.imgChange
-		this.gameStatus = true
-		if (this.num == 0) {
-			this.startCountDown()
-		}
-		if (!this.gameOut) {
-			this.num++
-			if (this.num % 2 == 0) {
-				this.infoConfig.clickSrc = '/static/images/click_me@2x.png'
-			} else {
-				this.infoConfig.clickSrc = '/static/images/click_me2.png'
-			}
-			if (this.num < 10) {
-				this.firstNum = '0'
-				this.endNum = String(this.num)
-			} else {
-				this.firstNum = String(this.num).slice(0, 1)
-				this.endNum = String(this.num).slice(1, 2)
-			}
-		}
+	    this.goGame()
+	}
+
+	goGame () {
+        if (this.chanceNum > 0) {
+            if (this.tempStatus) {
+                this.tempStatus = false
+                this.gameOut = false
+                this.num = -1
+                this.firstNum = '0'
+                this.endNum = '0'
+            }
+            console.log('点击了嘛')
+            lottieInstance.play()
+            setTimeout(() => {
+                lottieInstance.stop()
+            }, 100)
+            this.imgChange = !this.imgChange
+            this.gameStatus = true
+            if (this.num == 0) {
+                this.startCountDown()
+            }
+            this.sumCount++
+            if (!this.gameOut) {
+                this.num++
+                // if (this.num % 2 == 0) {
+                // 	this.infoConfig.clickSrc = '/static/images/click_me@2x.png'
+                // } else {
+                // 	this.infoConfig.clickSrc = '/static/images/click_me2.png'
+                // }
+                if (this.num < 10) {
+                    this.firstNum = '0'
+                    this.endNum = String(this.num)
+                } else {
+                    this.firstNum = String(this.num).slice(0, 1)
+                    this.endNum = String(this.num).slice(1, 2)
+                }
+            }
+        } else {
+            this.rewardedVideoAd.show().catch(() => {
+            	// 失败重试
+            	this.rewardedVideoAd.load()
+            		.then(() => this.rewardedVideoAd.show())
+            		.catch(err => {
+            			console.log(err)
+            		})
+            })
+        }
+
 	}
 
 	startCountDown () {
@@ -131,6 +216,20 @@ export default class extends Vue {
 
 	end () {
 		clearInterval(this.millisecondTimer)
+        this.interstitialAd.show().catch(() => {
+            // 失败重试
+            this.interstitialAd.load()
+                .then(() => this.interstitialAd.show())
+                .catch(err => {
+                    console.log(err)
+                })
+        })
+        if (this.chanceNum > 0) {
+            this.chanceNum--
+            this.$mio.mioRoot.setStorage('chance_num', this.chanceNum)
+        } else {
+            this.chanceNum = '机会用完了，点击按钮观看视频可增加次数'
+        }
 		const tempTimer = setInterval(() => {
 			this.millisecond -= 1
 			if (this.millisecond < 5) {
@@ -139,9 +238,13 @@ export default class extends Vue {
 				clearInterval(tempTimer)
 				this.gameOut = true
 				this.tempStatus = true
-                this.$mio.mioRoot.showToast('游戏结束，可再来一次')
-				this.infoConfig.clickSrc = '/static/images/zailai@2x.png'
-				this.infoConfig.clickSrcTwo = '/static/images/zailai@2x.png'
+                if (this.chanceNum > 0) {
+                    this.$mio.mioRoot.showToast('游戏结束，可再来一次')
+                } else {
+
+                }
+				// this.infoConfig.clickSrc = '/static/images/zailai@2x.png'
+				// this.infoConfig.clickSrcTwo = '/static/images/zailai@2x.png'
                 this.putScore({ type: this.$store.state.center.type, openGid: this.$store.state.center.openGid, score: this.num, openId: this.$store.state.center.firend_openId })
 			}
 		}, 10)

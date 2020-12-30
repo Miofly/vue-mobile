@@ -4,17 +4,22 @@ import {commonPost} from "@/api";
 
 export default {
     onLaunch(e) {
-        console.log(e, 'onLaunch：初始化完成')
         // #ifdef MP-WEIXIN
         this.autoUpdate() // 检查小程序是否更新
         // #endif
-        console.log(this.$store.state.center.type)
     },
     async onShow(e) {
         // #ifdef MP-WEIXIN
         this.share() // 定义微信小程序全局分享
         // #endif
         console.log(e, 'onShow：应用页面显示')
+        if (this.$mio.mioRoot.getStorageSync('last_date') == new Date().toLocaleDateString()) {
+            console.log('不重置次数')
+        } else {
+            console.log('重置次数')
+            this.$mio.mioRoot.setStorage('last_date', new Date().toLocaleDateString())
+            this.$mio.mioRoot.setStorage('chance_num', 3)
+        }
         if (e.shareTicket!=undefined) {
             this.$store.state.center.type = 3
             wx.login({

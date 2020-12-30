@@ -343,7 +343,7 @@ function drawShareImage(obj) { //绘制海报方法
 					}
 				}
 			}
-			_app.showLoading('绘制中')
+			// _app.showLoading('绘制中')
 			setTimeout(() => {
 				// _app.log('准备执行draw方法')
 				// _app.log('Context:' + Context);
