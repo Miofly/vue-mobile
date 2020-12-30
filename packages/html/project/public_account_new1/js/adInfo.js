@@ -103,21 +103,34 @@ var Ad = {
     //             e.click();
     //     }, 0);
     // },
-    adClick: function (e, t, n) {
-        console.log(t)
-        console.log(e)
-        Ad.clickCallback(n),
-            e.forEach(function (e) {
-                Ad.send(e);
-            }),
-        t &&
-        setTimeout(function () {
-            var e = document.createElement("a");
-            (e.href = t[0]),
-                (e.rel = "noreferrer"),
-                document.body.appendChild(e),
-                e.click();
-        }, 0);
+    adClick: function(clickUrl, dUrl, pid,type,user_id, page) {
+        event.currentTarget.className = 'news_active'
+        var ua = navigator.userAgent;
+        commonPost('/adClickStat', {
+            ua: ua,
+            pid:pid,
+            type:type,
+            user_id:user_id,
+            oa_id:getParam('oa_id'),
+            page:page,
+            sign:'bFwbxLAzwd5F4DOPS2hO',
+        }, function (res) {
+            if (res.code == 200) {
+
+            }
+        }, {'ACT-USER-ID': getParam('user_id')})
+
+        Ad.clickCallback(pid);
+
+        clickUrl.forEach(function(url) {
+            Ad.send(url);
+        });
+
+        if (dUrl) {
+            setTimeout(() => {
+                location.href = dUrl[0];
+            }, 300);
+        }
     },
 
     /**

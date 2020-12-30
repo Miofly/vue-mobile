@@ -8,7 +8,7 @@
                 <image v-if="is_first" class="cu-avatar"  style="border-radius: 50%;overflow-x: hidden!important;height: 124rpx;width: 124rpx;position: relative;top: 20rpx;left: 34rpx"
                 	:src="infoConfig.defaultAvatar" ></image>
                 <image v-else class="cu-avatar"  style="border-radius: 50%;overflow-x: hidden!important;height: 124rpx;width: 124rpx;position: relative;top: 20rpx;left: 34rpx"
-                       :src="avatar" ></image>
+                       :src="avatar == '' ? infoConfig.defaultAvatar : avatar" ></image>
 				<view class="text-20" style="position: absolute;left: 186rpx;top: 38rpx">{{is_first? '游客' : name}}</view>
 				<view class="text-14" style="position: absolute;left: 186rpx;top: 98rpx;color: #D9DDFF">{{is_first? '暂无占领群' : infoConfig.occupationGroup}}</view>
 				<view class="text-12" style="color: #7753FF;position: absolute;left: 410rpx;top: 46rpx">最好成绩：{{is_first? '0' : score}}下</view>
@@ -16,7 +16,7 @@
 		</view>
 
 		<!--玩游戏-->
-		<button :disabled="btnDisabled" class="margin-top" open-type="getUserInfo" @getuserinfo="getUserInfo">
+		<button :disabled="btnDisabled" class="margin-top" open-type="getUserInfo" @getuserinfo="getUserInfo" @click="goPlay">
 			<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)"
 					:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
 					:shape="['square', 'circle'][0]" :src="infoConfig.tzImg" bgColor="rgba(0, 0, 0, 1)">
@@ -26,7 +26,7 @@
 
 		<view class="margin-top">
 			<!--排行-->
-			<button :disabled="btnDisabled" class="fl" open-type="getUserInfo" @getuserinfo="getUserInfoRank" style="width: 48%;padding-right: 1%">
+			<button :disabled="btnDisabled" class="fl" open-type="getUserInfo" @getuserinfo="getUserInfoRank" @click="goRank" style="width: 48%;padding-right: 1%">
 				<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" style=""
 						:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
 						:shape="['square', 'circle'][0]" :src="infoConfig.heroImg" bgColor="rgba(0, 0, 0, 1)">
@@ -34,7 +34,9 @@
 				</m-image>
 			</button>
 			<!--群挑战-->
-			<button :disabled="btnDisabled" class="fr" open-type="getUserInfo" @getuserinfo="getUserInfoGroup" style="width: 48%;padding-left: 1%">
+			<button :disabled="btnDisabled" class="fr" open-type="getUserInfo"
+                    @click="type == 3 ? goGroupTwo() : goGroup()"
+                    @getuserinfo="getUserInfoGroup" style="width: 48%;padding-left: 1%">
 				<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" style=""
 						:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
 						:shape="['square', 'circle'][0]" :src="infoConfig.groupImg" bgColor="rgba(0, 0, 0, 1)">
@@ -85,6 +87,7 @@ export default class extends Vue {
 	@State('score', { namespace: 'center' }) score
 	@State('spgg', { namespace: 'root' }) spgg
 	@State('ptgg', { namespace: 'root' }) ptgg
+	@State('type', { namespace: 'center' }) type
 
 	infoConfig: any = {
 		xcx_name: '十秒手速',
@@ -124,7 +127,7 @@ export default class extends Vue {
         })
     }
 
-	async created () {
+	created () {
 		wx.getUserInfo({
 			success: (res) => {
 				this.is_first = false
@@ -152,8 +155,7 @@ export default class extends Vue {
 					if (res.code) {
 						// const data= await commonOtherGet(`https://api.weixin.qq.com/sns/jscode2session?appid=${this.wx.appid}&secret=${this.wx.secret}&js_code=${res.code}&grant_type=authorization_code`)
 						const { data } = await commonPost('/mina/wx_auth/login', { code: res.code })
-						this.wx.openid = data.openid
-						this.wx.session_key = data.session_key
+                        this.$store.state.center.open_id = data.openid
 						this.$mio.mioRoot.setStorage('hand_open_id', data.openid)
 						this.$mio.mioRoot.setStorage('hand_session_key', data.session_key)
 					} else {
@@ -167,14 +169,19 @@ export default class extends Vue {
 	}
 
 	async getTrueUserInfo () {
-		const { data, code } = await commonGet('/api/user/user_info', false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
-        if (code == 200) {
-            this.is_first = false
-            this.$store.state.center.score = data.score
-            this.$store.state.center.name = data.nickname
-            this.$store.state.center.avatar = data.avatar
-            this.$store.state.center.level = data.level
+        if (this.$store.state.center.open_id != '' && this.$store.state.center.open_id != null) {
+            const { data, code } = await commonGet('/api/user/user_info', false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
+            if (code == 200) {
+                this.is_first = false
+                this.$store.state.center.score = data.score
+                this.$store.state.center.name = data.nickname
+                this.$store.state.center.avatar = data.avatar
+                this.$store.state.center.level = data.level
+            }
+        } else {
+            console.log('没有openId')
         }
+
 	}
 
 	async putUserInfo (encryptedData, iv) {
@@ -182,11 +189,7 @@ export default class extends Vue {
 	}
 
 	getUserInfoRank (e) {
-        this.goRank()
-        this.btnDisabled = true
-        setTimeout(() => {
-            this.btnDisabled = false
-        }, 1000)
+        // this.goRank()
         if (e.detail.userInfo != undefined) {
 			this.is_first = false
 			this.$store.state.center.name = e.detail.userInfo.nickName
@@ -196,15 +199,6 @@ export default class extends Vue {
 	}
 
 	getUserInfoGroup (e) {
-        if (this.$store.state.center.type == 3) {
-            this.goGroupTwo()
-        } else {
-            this.goGroup()
-        }
-        this.btnDisabled = true
-        setTimeout(() => {
-            this.btnDisabled = false
-        }, 1000)
 		if (e.detail.userInfo != undefined) {
 			this.is_first = false
 			this.$store.state.center.name = e.detail.userInfo.nickName
@@ -214,11 +208,7 @@ export default class extends Vue {
 	}
 
 	getUserInfo (e) {
-        this.goPlay()
-        this.btnDisabled = true
-        setTimeout(() => {
-            this.btnDisabled = false
-        }, 1000)
+        // this.goPlay()
         if (e.detail.userInfo != undefined) {
 			this.is_first = false
 			this.$store.state.center.name = e.detail.userInfo.nickName
@@ -228,23 +218,52 @@ export default class extends Vue {
 	}
 
 	goPlay () {
-		this.$mio.mioRoot.push('/pages/index/playGame')
+        if (!this.is_first) {
+            this.btnDisabled = true
+            setTimeout(() => {
+                this.btnDisabled = false
+            }, 500)
+            this.$mio.mioRoot.push('/pages/index/playGame')
+        }
+
 	}
 
 	goRank () {
+        if (!this.is_first) {
+        this.btnDisabled = true
+        setTimeout(() => {
+            this.btnDisabled = false
+        }, 500)
 		this.$mio.mioRoot.push('/pages/index/rank')
-	}
+        }
+
+    }
 
 	goPoster () {
+
 		this.$mio.mioRoot.push('/pages/index/poster')
 	}
 
 	goGroup () {
+        if (!this.is_first) {
+
+            this.btnDisabled = true
+        setTimeout(() => {
+            this.btnDisabled = false
+        }, 500)
 		this.$mio.mioRoot.push('/pages/index/groupChallenge')
+        }
 	}
 
     goGroupTwo () {
-        this.$mio.mioRoot.push('/pages/index/rankBefore')
+        if (!this.is_first) {
+
+            this.btnDisabled = true
+            setTimeout(() => {
+                this.btnDisabled = false
+            }, 500)
+            this.$mio.mioRoot.push('/pages/index/rankBefore')
+        }
     }
 }
 </script>

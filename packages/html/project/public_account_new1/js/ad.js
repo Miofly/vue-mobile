@@ -51,6 +51,7 @@ var Ad = {
         commonPost('/adClickStat', {
             ua: ua,
             pid:pid,
+            oa_id:getParam('oa_id'),
             type:type,
             user_id:user_id,
             page:page,

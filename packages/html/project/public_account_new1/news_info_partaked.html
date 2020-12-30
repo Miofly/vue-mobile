@@ -208,7 +208,7 @@
         gogg(location.origin + '/index.html' + delParam(location.search, 'article_id'))
     } else {
         getInfoUrl(function (url) {
-            gogg(url + '/xxl.html')
+            gogg(url + '/xxl.html'+ location.search +'')
         });
     }
 

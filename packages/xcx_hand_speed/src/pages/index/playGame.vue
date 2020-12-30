@@ -103,6 +103,7 @@ export default class extends Vue {
 	    		console.log('插屏广告关闭')
 	    	})
 	    }
+
 	    this.rewardedVideoAd = null
 	    if (wx.createInterstitialAd) {
 	    	this.rewardedVideoAd = wx.createRewardedVideoAd({
