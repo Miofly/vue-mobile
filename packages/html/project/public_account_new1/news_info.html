@@ -14,7 +14,7 @@
     <script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/common.js" type="text/javascript"></script>
     <script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/EventEmitter.min.js"></script>
     <script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/art-template.js"></script>
-    <script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/jf.js"></script>
+    <script src="./js/jf.js"></script>
     <script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/lottie.min.js"></script>
     <link href="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/css/index.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -120,7 +120,7 @@
 
 <script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/adInfo.js"></script>
 <script>
-
+    var more_click = 0
     commonGet('/articles/' + getParam('article_id') + '?from_user_id=' + getParam('from_user_id') + '', function (res) {
         if (res.code == 200) {
             $('#title').html(res.data.title)
@@ -133,6 +133,7 @@
     })
 
     function openAll() {
+        more_click = 1
         $('#content').height('auto')
         $('#contentParent').height($('#content').height())
         $('#openAll').hide()

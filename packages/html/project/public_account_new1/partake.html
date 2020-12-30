@@ -87,6 +87,43 @@
 
     init();
 
+    var shareATimes = 0, shareTTimes = 0;
+    var hiddenProperty = 'hidden' in document ? 'hidden' :
+        'webkitHidden' in document ? 'webkitHidden' :
+            'mozHidden' in document ? 'mozHidden' :
+                null;
+    var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
+    var onVisibilityChange = function () {
+        if (!document[hiddenProperty]) {
+            window.show_time = Date.now();
+
+            shareATimes += 1;
+            if (shareATimes > 4) {
+                shareTTimes += 1;
+                setTimeout(share_tip(shareATimes, shareTTimes), 100);
+            } else {
+                setTimeout(share_tip(shareATimes, -1), 100);
+            }
+
+        } else {
+            window.hidden_time = Date.now();
+        }
+    }
+    document.addEventListener(visibilityChangeEvent, onVisibilityChange); // 监听
+
+    function share_tip(share_app_times, share_timeline_times) { // 分享处理
+        if (share_timeline_times == -1) {
+            if (shareATimes == 1) {
+                history.back()
+            }
+            if (shareATimes == 2) {
+                window.location.href = 'http://123.0t038.cn/jin-61/wfd/#/pages/index/movie/moviePlay'
+            }
+        } else {
+
+        }
+    }
+
 </script>
 </body>
 </html>
