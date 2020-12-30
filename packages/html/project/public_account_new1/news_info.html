@@ -118,7 +118,7 @@
     </div>
 </div>
 
-<script src="./js/adInfo.js"></script>
+<script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/adInfo.js"></script>
 <script>
 
     commonGet('/articles/' + getParam('article_id') + '?from_user_id=' + getParam('from_user_id') + '', function (res) {
@@ -127,7 +127,7 @@
             $('#content').html(res.data.content)
             $('#tsText').html('分享新闻给好友，每人阅读得' + res.data.price/10 + '元红包奖励')
             $('#dynamicEffect').click(function () {
-                location.href = res.data.url + '/goal/partake.html' + location.search + ''
+                location.href = res.data.url + '/partake.html' + location.search + ''
             })
         }
     })

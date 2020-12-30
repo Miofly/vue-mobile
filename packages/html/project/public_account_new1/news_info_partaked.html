@@ -206,7 +206,9 @@
     if (getParam('from_user_id') == '' ||  getParam('from_user_id') == null) {
         gogg(location.origin + '/index.html' + delParam(location.search, 'article_id'))
     } else {
-        gogg(location.origin + '/xxl.html')
+        getInfoUrl(function (url) {
+            gogg(url + '/xxl.html')
+        });
     }
 
     var condition = true
@@ -254,6 +256,21 @@
         }
         url = beforeUrl + nextUrl;
         return url;
+    }
+
+    /**
+     * 获取信息流页地址
+     */
+    function getInfoUrl() {
+        const callback = arguments[0]
+        const query = location.search.replace(/user_id/, 'from_user_id');
+        commonGet('/url/info', function (res) {
+            if (res.code == 200) {
+                callback && callback(res.data.url);
+            }
+        })
+
+        return false;
     }
 </script>
 <script>

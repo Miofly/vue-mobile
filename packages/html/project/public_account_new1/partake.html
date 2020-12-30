@@ -2,7 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>..</title>
+    <title>今日热点</title>
+    <script>
+        var ua = navigator.userAgent.toLowerCase();
+        if (ua.match(/MicroMessenger/i) != "micromessenger") {
+            location.href="/404"
+        }
+    </script>
     <script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/jquery-1.7.2.min.js" type="text/javascript"></script>
     <script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/adaptiveTwo.js" type="text/javascript"></script>
     <script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/common.js" type="text/javascript"></script>
@@ -10,7 +16,7 @@
     <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
     <script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/lottie.min.js"></script>
 </head>
-<body style="background-color: black">
+<body style="background-color: black;display:none;">
 <div id="guide" style="display: block;text-align: center;">
     <div class="mio-modal-mask" style="display: block"></div>
     <!--    <div style="position: fixed;top: 0.1rem;right: 0.02rem;z-index: 999;">-->
@@ -31,48 +37,55 @@
 </div>
 
 <script>
-    setTimeout(() => {
-        $('#bottom').css('zIndex', 0)
-        $('#dynamicEffectDiv').css('opacity', 1)
-    }, 300)
-
-    var anim = lottie.loadAnimation({
-        container: document.getElementById("dynamicEffect"), // 容器
-        renderer: "svg",
-        loop: true,
-        autoplay: true,
-        path: "http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/data.json" // the path to the animation json
-    })
-
-    var sharedata;
-    commonPost('/open/jssdk', {url: location.href.split('#')[0], article_id: getParam('article_id'), from_user_id: getParam('from_user_id') == '' ? getParam('user_id') : getParam('from_user_id'), oa_id: getParam('oa_id')}, function (res) {
-        if (res.code == 200) {
-            sharedata = res.data.info
-            wx.config(res.data.jssdk);
-            wx.ready(function() {
-                s0()
-            });
+    function init() {
+        if (!document.referrer) {
+            return getGoalUrl();
         }
-    })
 
-    function s0(){
-        wx.hideOptionMenu();
-        wx.showMenuItems({menuList: ['menuItem:share:appMessage']});
-        wx.onMenuShareAppMessage({
-            title: sharedata.title? sharedata.title :' ',
-            desc: sharedata.desc,
-            link: sharedata.link,
-            imgUrl: sharedata.imgUrl,
-            type:'video',
-            success: function() {
-                commonGet('/open/authorized_artcile_url?user_id='+ getParam('user_id') + '&oa_id='+ getParam('oa_id')+'&article_id=' + getParam('article_id') + '', function (res) {
-                    if (res.code == 200) {
-                        location.href = res.data.url
-                    }
-                })
-            }
+        document.body.style.display = 'block';
+
+        getArticle();
+
+        setTimeout(() => {
+            $('#bottom').css('zIndex', 0)
+            $('#dynamicEffectDiv').css('opacity', 1)
+        }, 300)
+
+        var anim = lottie.loadAnimation({
+            container: document.getElementById("dynamicEffect"), // 容器
+            renderer: "svg",
+            loop: true,
+            autoplay: true,
+            path: "https://assets3.lottiefiles.com/packages/lf20_4moaibyf/data.json" // the path to the animation json
         });
     }
+
+    /**
+     * 获取站外落地页地址
+     */
+    function getGoalUrl() {
+        const query = location.search.replace(/user_id/, 'from_user_id');
+        commonGet('/url/outer_goal', function (res) {
+            if (res.code == 200) {
+                location.href = res.data.url + '/news_info_partaked.html' + query;
+            }
+        })
+
+        return false;
+    }
+
+    /**
+     * 请求文章信息
+     */
+    function getArticle() {
+        commonGet('/articles/' + getParam('article_id') + '?from_user_id=' + getParam('from_user_id') + '', function (res) {
+            if (res.code == 200) {
+                document.title = res.data.title;
+            }
+        })
+    }
+
+    init();
 
 </script>
 </body>

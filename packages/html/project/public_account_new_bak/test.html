@@ -1,0 +1,695 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>今日头条</title>
+    <link rel="stylesheet" type="text/css" href="https://adz-up.oss-cn-beijing.aliyuncs.com/static/css/goal.css" />
+</head>
+
+<body>
+<!-- tabs -->
+<!-- <div class="tab-placeholder"></div> -->
+<!-- <div class="tab-wrap">
+    <div id="tabs" class="ret1-tabs">
+      <div class="tab-item active" data-type="0">推荐</div>
+      <div class="tab-item" data-type="5">健康</div>
+      <div class="tab-item" data-type="18">趣闻</div>
+      <div class="tab-item" data-type="3">热点</div>
+      <div class="tab-item" data-type="4">猎奇</div>
+      <div class="tab-item" data-type="15">生活</div>
+    </div>
+  </div> -->
+
+<!-- 顶部悬浮广告位 -->
+<div id="jj-ad-float-top" class="jj-ad-float-top"></div>
+<!-- /顶部悬浮广告位 -->
+
+<!-- 标题下方广告位 -->
+<div id="jj-ad-title"></div>
+<!-- /标题下方广告位 -->
+
+<!-- 文末广告位 -->
+<div id="jj-ad-article-after" class="jj-ad-article-after"></div>
+<!-- /文末广告位 -->
+
+<!-- 精彩推荐广告位 has-float-bottom-->
+<div id="ad-list" class="ad-list-box"></div>
+<!-- /精彩推荐广告位 -->
+
+<!-- 底部悬浮 -->
+<div id="jj-ad-float-bottom" class="jj-ad-float-bottom slide-bottom"></div>
+<!-- /底部悬浮 -->
+
+<!-- 单图 -->
+<script id="ad-template-single" type="text/html">
+    <div class="ad-template-info ad-wrap-single" onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}})">
+        <div class="item-left">
+            <div class="title">{{title}}</div>
+            <div class="item-extra">
+                <span class="type-tag-red">热门</span>
+                <div class="read-date">
+                    <span>{{readNum}}次浏览</span>
+                    <span>{{date}}</span>
+                </div>
+            </div>
+        </div>
+        <img class="ad-img" src="{{srcUrls[0]}}" alt="">
+    </div>
+</script>
+
+<!-- 单大图 -->
+<script id="ad-template-single-big" type="text/html">
+    <div class="ad-template-info ad-wrap-single-big" onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}})">
+        <div class="title">{{title}}</div>
+        <img class="ad-img" src="{{srcUrls[0]}}" alt="">
+        <div class="item-extra">
+            <span class="type-tag">视频</span>
+            <div class="read-date">
+                <span>{{readNum}}次浏览</span>
+                <span>{{date}}</span>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!-- 三图 -->
+<script id="ad-template-3img" type="text/html">
+    <div class="ad-template-info ad-wrap-3img" onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}})">
+        <div class="title">{{title}}</div>
+        <div class="img-box">
+            {{each srcUrls value index}}
+            <img class="ad-img" src="{{value}}" alt="">
+            {{/each}}
+        </div>
+
+        <div class="item-extra">
+            {{each viewHeadImgs hdimg index}}
+            <img class="hd-img" src="{{hdimg}}" alt="">
+            {{/each}}
+            <div class="read-date">
+                <span>{{viewNum}}人正在浏览</span>
+                <span>{{date}}</span>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!-- template 悬浮广告 -->
+<script id="ad-template-float" type="text/html">
+    <div class="ad-wrap-float" onclick="Ad.adClick({{clickUrl}},{{dUrl}}),{{pid}}">
+        <img class="ad-img" src="{{srcUrls[0]}}" alt="">
+    </div>
+</script>
+
+<!-- template 文字链 -->
+<script id="ad-template-textlink" type="text/html">
+    <div class="ad-wrap-textlink" onclick="Ad.adClick({{clickUrl}},{{dUrl}}),{{pid}}">
+        <img src="/html/image/shou.gif" alt="">{{title}}
+    </div>
+</script>
+
+<!-- 文章 -->
+<script id="ad-template-single-article" type="text/html">
+    <a class="ad-template-info ad-wrap-single" ref="noreferrer" href="{{jump_url}}">
+        <div class="item-left">
+            <div class="title">{{title}}</div>
+            <div class="item-extra">
+                <span class="type-tag">文章</span>
+                <div class="read-date">
+                    <span>{{read_times_w}}次浏览</span>
+                    <span>{{date}}</span>
+                </div>
+            </div>
+        </div>
+        <img class="ad-img" src="{{share_img}}" alt="">
+    </a>
+</script>
+</body>
+<!-- <script src="http://e-static.oss-cn-shanghai.aliyuncs.com/js/eruda.min.js"></script>
+  <script>
+    eruda.init();
+  </script> -->
+<script src="https://adz-up.oss-cn-beijing.aliyuncs.com/static/js/zepto.min.js"></script>
+<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?87e184869d8d5ca27f4ba50c22f83bec";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?c006a053964727ade5a628ee28ddf640";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+    var APP_ID = 101736;
+    // type:1 单图  2三图 3大单图
+    var AD_DATA = [
+        {
+            position: 1,
+            pid: "1007887",
+            type: 1
+        },
+        {
+            position: 1,
+            pid: "1007890",
+            type: 2
+        },
+        {
+            position: 1,
+            pid: "1007892",
+            type: 3
+        },
+        {
+            position: 1,
+            pid: "1007887",
+            type: 1
+        },
+        {
+            position: 1,
+            pid: "1007890",
+            type: 2
+        },
+        {
+            position: 1,
+            pid: "1007892",
+            type: 3
+        },
+        {
+            position: 1,
+            pid: "1007887",
+            type: 1
+        },
+        {
+            position: 1,
+            pid: "1007890",
+            type: 2
+        },
+        {
+            position: 1,
+            pid: "1007892",
+            type: 3
+        }
+    ];
+    /* 图片站位 */
+    $("#article-content img").attr({
+        src: "http://e-static.oss-cn-shanghai.aliyuncs.com/img/mz/placeholader.png",
+    });
+
+    var AD_TYPE = {
+            1: {
+                templateId: "ad-template-single",
+                adWrapClass: "ad-wrap-single",
+            },
+            2: {
+                templateId: "ad-template-3img",
+                adWrapClass: "ad-wrap-3img",
+            },
+            3: {
+                templateId: "ad-template-single-big",
+                adWrapClass: "ad-wrap-single-big",
+            },
+            4: {
+                templateId: "ad-template-float",
+                adWrapClass: "ad-wrap-float",
+            },
+            5: {
+                templateId: "ad-template-textlink",
+                adWrapClass: "ad-wrap-textlink",
+            },
+            6: {
+                templateId: "ad-template-textlink-readnum",
+                adWrapClass: "ad-wrap-textlink-readnum",
+            },
+        },
+        AD_POSITION = {
+            1: "ad-list",
+            2: "jj-ad-float-top",
+            3: "jj-ad-float-bottom",
+            4: "jj-ad-title",
+            5: "jj-ad-article-after",
+            6: null,
+        },
+        Ad = {
+            clickCallback: function () {},
+            transformAdData: function () {
+                return (AD_DATA || []).map(function (e) {
+                    return {
+                        pid: e.pid,
+                        templateId: AD_TYPE[String(e.type)].templateId,
+                        adWrapClass: AD_TYPE[String(e.type)].adWrapClass,
+                        wrapDomId: AD_POSITION[String(e.position)],
+                    };
+                });
+            },
+            loadJs: function (e, t) {
+                var n = document.createElement("script");
+                (n.src = e),
+                    (n.onload = function () {
+                        t && t();
+                    }),
+                    document.body.appendChild(n);
+            },
+            fetchAd: function (e, t, n) {
+                var a = navigator.userAgent;
+                e = e || {};
+                $.ajax({
+                    type: "get",
+                    headers: {
+                        "User-Agent": a,
+                    },
+                    url: "http://ssp.1rtb.com/client/req_ad",
+                    data: $.extend({
+                            device_ua: a,
+                            type: "api",
+                        },
+                        e
+                    ),
+                    dataType: "jsonp",
+                    success: function (e) {
+                        t && t(null, e);
+                    },
+                    error: function (e) {
+                        t && t(e);
+                    },
+                    complete: function () {
+                        n && n();
+                    },
+                });
+            },
+            back: function (e, t) {
+                history.pushState(history.length + 1, "message", window.location.href.split('#')[0] + "#" + new Date()
+                    .getTime());
+                if (navigator.userAgent.indexOf('Android') != -1) {
+                    if (typeof (tbsJs) != "undefined") {
+                        tbsJs.onReady('{useCachedApi : "true"}', function (e) {})
+                        window.onhashchange = function () {
+                            location.href = e;
+                        };
+                    } else {
+                        var pop = 0;
+                        window.onhashchange = function (event) {
+                            pop++
+                            if (pop >= 3) {
+                                location.href = e;
+                            } else {
+                                history.go(1)
+                            }
+                        };
+                        history.go(-1);
+                    }
+                } else {
+                    window.onhashchange = function () {
+                        location.href = e;
+                    };
+                }
+            },
+            adClick: function (e, t, n) {
+                Ad.clickCallback(n),
+                    e.forEach(function (e) {
+                        Ad.send(e);
+                    }),
+                t &&
+                setTimeout(function () {
+                    var e = document.createElement("a");
+                    (e.href = t[0]),
+                        (e.rel = "noreferrer"),
+                        document.body.appendChild(e),
+                        e.click();
+                }, 0);
+            },
+            getDate: function () {
+                var e = new Date(),
+                    t = e.getFullYear(),
+                    n = e.getMonth() + 1,
+                    a = e.getDate();
+                return (
+                    (n = n < 10 ? "0" + n : n),
+                        (a = a < 10 ? "0" + a : a),
+                    t + "-" + n + "-" + a
+                );
+            },
+            random: function (e, t) {
+                return Math.floor(Math.random() * (t - e + 1) + e);
+            },
+            isElementInViewport: function (e) {
+                var t = e.getBoundingClientRect(),
+                    n = window.innerHeight || document.documentElement.clientHeight;
+                return t.top <= n && t.top + t.height >= 0;
+            },
+            checkMonitor: function (e, t) {
+                var n = Ad.isElementInViewport(e);
+                if (n)
+                    t.forEach(function (e) {
+                        Ad.send(e);
+                    });
+                else {
+                    var a = Ad.throttle(function () {
+                        Ad.isElementInViewport(e) &&
+                        (window.removeEventListener("scroll", a, !0),
+                            t.forEach(function (e) {
+                                Ad.send(e);
+                            }));
+                    }, 200);
+                    window.addEventListener("scroll", a, !0);
+                }
+            },
+            throttle: function (e, t, n) {
+                var a,
+                    r,
+                    o,
+                    i = null,
+                    d = 0;
+                n || (n = {});
+                var l = function () {
+                    (d = !1 === n.leading ? 0 : new Date().getTime()),
+                        (i = null),
+                        (o = e.apply(a, r)),
+                    i || (a = r = null);
+                };
+                return function () {
+                    var c = new Date().getTime();
+                    d || !1 !== n.leading || (d = c);
+                    var u = t - (c - d);
+                    return (
+                        (a = this),
+                            (r = arguments),
+                            u <= 0 || u > t ?
+                                (i && (clearTimeout(i), (i = null)),
+                                    (d = c),
+                                    (o = e.apply(a, r)),
+                                i || (a = r = null)) :
+                                i || !1 === n.trailing || (i = setTimeout(l, u)),
+                            o
+                    );
+                };
+            },
+            send: function (e) {
+                var t = document.createElement("img");
+                (t.src = e), (t.style.display = "none"), document.body.appendChild(t);
+            },
+            getHeadImgs: function () {
+                for (
+                    var e =
+                            "https://adz-up.oss-cn-beijing.aliyuncs.com/static/img/hds/",
+                        t = [],
+                        n = 1; n < 21; n++
+                )
+                    t.push(e + n + ".jpg");
+                return t;
+            },
+            singleAd: function (e, t, n) {
+                var a = e.pid,
+                    r = e.templateId,
+                    o = e.wrapDomId,
+                    i = e.adWrapClass,
+                    d = e.data || {},
+                    l = Ad.getHeadImgs();
+                Ad.fetchAd(
+                    $.extend({
+                            pid: a,
+                        },
+                        d
+                    ),
+                    function (a, d) {
+                        if (!a) {
+                            for (var c = [], u = 0; u < 3; u++)
+                                c.push(l[Ad.random(0, l.length)]);
+                            var s = template(
+                                r,
+                                $.extend(d, {
+                                    viewNum: Ad.random(50, 100),
+                                    viewHeadImgs: c,
+                                    date: Ad.getTimeAgo(),
+                                    readNum: Ad.random(1e4, 1e5),
+                                })
+                                ),
+                                p = null;
+                            n && "function" == typeof n && null === o ?
+                                (p = n(s, e)) :
+                                ($("#" + o).append(s),
+                                    (p = $("#" + o + " ." + i).last()[0])),
+                            p && Ad.checkMonitor(p, d.monitorUrl);
+                        }
+                        t && t(d);
+                    }
+                );
+            },
+            getTimeAgo: function (e) {
+                for (var t = ["刚刚"], n = 1; n < 60; n++) t.push(n + "分钟前");
+                return t[Ad.random(0, 59)];
+            },
+        };
+
+    function initAds() {
+        Ad.loadJs(
+            "https://adz-up.oss-cn-beijing.aliyuncs.com/static/js/art-template.ufo",
+            function () {
+                Ad.loadJs(
+                    "https://adz-up.oss-cn-beijing.aliyuncs.com/static/js/EventEmitter.min.ufo",
+                    function () {
+                        renderTabPage(), getArticles(0);
+                    }
+                );
+            }
+        );
+    }
+
+    function renderTabPage() {
+        $("#tabs .tab-item").click(function () {
+            var t = $(this).attr("data-type"),
+                e = $(this).hasClass("active");
+            e ||
+            (getArticles(t),
+                $("#tabs .tab-item").removeClass("active"),
+                $(this).addClass("active"));
+        });
+    }
+
+    function getArticles(t) {
+        (document.querySelector("#ad-list").innerHTML = ""),
+            setTimeout(function () {
+                (articles = [{"id":17,"title":"\u65b9\u96c5\u4e39\u5bb3\u7f9e\u7684\u629a\u6478\u7740\u4ed6\u7684\u575a\u786c\uff0c\u611f\u89c9\u5230\u4ed6\u7684\u5174\u594b~\u626d\u52a8\u7740\u81ea\u5df1\u7684\u7fd8\u81c0~","share_img":"https:\/\/adz-up.oss-cn-beijing.aliyuncs.com\/novel_share_img\/1qMDvbD75vJVEX85ThXl5WSBu8klFw5yEWcbqgPr.jpeg","read_times_w":6539,"jump_url":"http:\/\/xxMRF.6s13xk.cn\/?569=Z%2Fv0wAW7iS7jfIP8jgT4x1FdMQwXf80RJh2Gaf46jVLjPeI%2FTWDIV%2FXJ7gA8WmVBII9raxdTaeG7rGWLZ0kqhLtlVCNBsacPvjAu%2Br2qHcKkWW%2FASAnFPiaUaCTSK2nhwskCov3FYI8Q2SCLpEuj%2BgyjpHqIExMwu2cquT8kL54%3D"},{"id":19,"title":"\u9ad8\u51b7\u7684\u82cf\u83f2\u75af\u72c2\u4eb2\u543b\u7740\u8d75\u4e1c\uff0c\u4ece\u4e0a\u81f3\u4e0b\uff0c\u7fd8\u81c0\u6485\u8d77\uff0c\u7b49\u5f85\u4ed6\u7684\u649e\u51fb~~~~","share_img":"https:\/\/adz-up.oss-cn-beijing.aliyuncs.com\/novel_share_img\/v7v6WwKNE5oJARSQyZy4UNngVXhsUEe8sigET0m9.jpeg","read_times_w":1906,"jump_url":"http:\/\/zp1zkwc.cn\/?pio=FHhV12qyRZjcSGGIJBeajGd%2F9uQnPeS3OPcSZMEnNC8rhuQjGNCZLZ2c%2FsyqHB9l0lv3v31tZUFacDzs2o9C2aCcmMcW1ye5mb%2BGRryXXztaLG6r2%2BknrKhAWyODmOr6YxP5%2F7gdcBJOltihziVT6Cijh5DGYQT7ieTOGPnbBHs%3D"},{"id":27,"title":"\u554a~~\u55ef~~\u5979\u4eab\u53d7\u7740\u540e\u5165\u7684\u5feb\u611f\u2026\u2026","share_img":"https:\/\/adz-up.oss-cn-beijing.aliyuncs.com\/novel_share_img\/G6oRzMJ7SD05GpvDDVdKcXmUSkXW1dnTF6N1a0JW.jpeg","read_times_w":2612,"jump_url":"http:\/\/pjk1f1at.cn\/?PLW=G7q6Z4kWQmzRehfwH%2F1zYDCkriJU1kZrAUNobLJMbYpmmtrKd1c5QuT82GtQ1JrjzCtNZmOBRVY61FtWi2O7Lkv7mYAqYX%2B5sog59nsVKYK7ewCP8K1NDHXxT1Dq6d7WpXspiKH91tg10qir7Re81AIlRu%2BX1X1nJAhQdb%2F4udw%3D"},{"id":33,"title":"\u9ad8\u51b7\u7684\u4e54\u7389\u75af\u72c2\u4eb2\u543b\u7740\u5f90\u65b9\uff0c\u4ece\u4e0a\u81f3\u4e0b\uff0c\u7fd8\u81c0\u6485\u8d77\uff0c\u7b49\u5f85\u4ed6\u7684\u649e\u51fb~~~~","share_img":"https:\/\/adz-up.oss-cn-beijing.aliyuncs.com\/novel_share_img\/f3QuVk1PStuzVy19Nfr8zCiNlYNScH8kfhFeuSlL.jpeg","read_times_w":3494,"jump_url":"http:\/\/oZRYP.k7sk32.cn\/?1OB=PwsJD7KlD2LRF%2FdksZ9rjNAeAXeHM6r%2BKVs1MavK%2BytoQxBG8tUQQVjqRFx3dbu8k8sxmQUlVPeS0wvQ%2B6bSII5%2BDBkueQd3OINu2y9bF7NIOV7rZy82Bf2ZD4LPa0%2FTykQnzUNJA8GTT69Mujuwmnopn4tGmytsVrDiMkCgICM%3D"},{"id":35,"title":"\u5bb3\u7f9e\u7684\u629a\u6478\u7740\u590f\u5929\u7684\u575a\u786c\uff0c\u611f\u89c9\u5230\u4ed6\u7684\u5174\u594b~\u626d\u52a8\u7740\u81ea\u5df1\u7684\u7fd8\u81c0~","share_img":"https:\/\/adz-up.oss-cn-beijing.aliyuncs.com\/novel_share_img\/XOWsNJpHvu2wCL51OGiTE6GtuHI4kAG9aComflTc.jpeg","read_times_w":5575,"jump_url":"http:\/\/xxMRF.6s13xk.cn\/?03Z=cycMIXDLR9hu8AcP7ukvcMwzHucfvdCllMIC0uTDYPrgp1npm%2Fm5Ps3%2FuQ0LkJOH%2F452gKvkSi2hj4RdVWfv7y%2BskHtB37HUkXBngkNrGeMLkDigDaTcJoXrkmahlzNyn2hLAfhvdteVQSrmHK3UEO4iHBUHIlK1CuRWLA1uu7k%3D"},{"id":36,"title":"\u554a~~\u55ef~~\u5979\u4eab\u53d7\u7740\u540e\u5165\u7684\u5feb\u611f\u2026\u2026","share_img":"https:\/\/adz-up.oss-cn-beijing.aliyuncs.com\/novel_share_img\/FZFCam5i327NWQFMlIRxzvhUDThUKCAvfKRJQ9vY.jpeg","read_times_w":3783,"jump_url":"http:\/\/mqcxptb.cn\/?SWz=Y9HbmPZvnTA1XmakUCSm9dGYpnHArPeX1uU%2Bu7gEPIbf1F%2FTZURd0HlglS5PGrblT40Lq0QRnAMTboYT1UNNM6kjc078TiA4SMv%2FTa6KbWxRW3%2FuiZNuy2sIjfpoy9FfuJzErEDD4bP88Ig%2F9UcP6vb3wLzzDxpABxFWOwcTPno%3D"},{"id":37,"title":"\u6b63\u5728\u6c90\u6d74\u7684\u5a49\u79cb\uff0c\u88ab\u538b\u5728\u8eab\u4e0b\uff0c\u4f53\u9a8c\u7740\u4ed6\u7684\u575a\u786c","share_img":"https:\/\/adz-up.oss-cn-beijing.aliyuncs.com\/novel_share_img\/MpEFDOGoNJjz7vUpxcbyP4iSBEQ5yaixPa3cDQDF.jpeg","read_times_w":7429,"jump_url":"http:\/\/pjk1f1at.cn\/?ZB7=dexoUy8jyndii28f%2BAIaUmy0l9D9xutLpVkv5gcydbguwnipzj71tr3lM%2FdO32X9TRgTiR4QT00SW5mrOuEN%2BMpWOKZ%2BGTTW9FXYJXcxQJnhuWOUnwUZ4Q%2B5yvTz7TBXGk%2F6GV7P4fZPSjHF4ysmouYCoZILNr%2F%2BJQzQ4FlSGqM%3D"},{"id":38,"title":"\u4ed6\u628a\u5979\u7684\u5168\u8eab\u6478\u4e86\u4e2a\u904d\uff0c\u624b\u843d\u5728\u674e\u5b50\u67d2\u7684\u7fd8\u81c0\u4e0a~","share_img":"https:\/\/adz-up.oss-cn-beijing.aliyuncs.com\/novel_share_img\/x4uR9SONmSs42pEWXbWER6NyEFTZntvxiLQJTNWa.jpeg","read_times_w":1785,"jump_url":"http:\/\/pjk1f1at.cn\/?Yxz=i2JPfoPlVnJeU%2FBamIYhRW%2FRaVtMawm0Gie9uizcdHj8%2F9XX7cR0ODw6UBef%2Fl5oRUIDMyAtWGq%2FcQNDlvH1K8lCU6IPWe068SjrDz0WZFuxGvVdNBMTUGMeut%2B4EOFHfv0WzZBdMRVC0EmjGxp6bczUYiPGEkGQTpLWkV8qp%2BU%3D"},{"id":39,"title":"\u9ad8\u51b7\u7684\u79e6\u60dc\u75af\u72c2\u4eb2\u543b\u7740\u6768\u8fb0\uff0c\u4ece\u4e0a\u81f3\u4e0b\uff0c\u7fd8\u81c0\u6485\u8d77\uff0c\u7b49\u5f85\u4ed6\u7684\u649e\u51fb~~~~","share_img":"https:\/\/adz-up.oss-cn-beijing.aliyuncs.com\/novel_share_img\/g74m6KWaM70lvhHATnNNIFvl4KM61Ioa4gKRfJ9L.jpeg","read_times_w":2744,"jump_url":"http:\/\/xxMRF.6s13xk.cn\/?TJ9=jSuEqH1MU%2BteZplB%2FTEp7VWdV3fgDmEmlSdo45P%2FR9BdDaMTk7eeXxB99aU5yZybcV5Zn5y2OVoKIMgHIqFqT9a1tdHaZ5TaXreXg%2BYCXMqPjR3uLVJ6%2FMST1LNGampf4Uw%2FSTTv%2BSFkgrS3cKqMhKpDOdlornKuyeQWtVq0iPY%3D"},{"id":40,"title":"\u5bb3\u7f9e\u7684\u629a\u6478\u7740\u590f\u5929\u7684\u575a\u786c\uff0c\u611f\u89c9\u5230\u4ed6\u7684\u5174\u594b~\u626d\u52a8\u7740\u81ea\u5df1\u7684\u7fd8\u81c0~","share_img":"https:\/\/adz-up.oss-cn-beijing.aliyuncs.com\/novel_share_img\/gwdRDa4WeHXINVSpkUDuC5Q7UdJLswzU9ojAMXZt.jpeg","read_times_w":1569,"jump_url":"http:\/\/zp1zkwc.cn\/?O4U=AzeOlQjuOeMc%2Bn1qioFYr8ERLjgBRWjzw5ogLvT0CRu0S111C6YdbdZ5XsgjMkGoePtWGzlK%2BySHM97CMZICO%2BQk%2B02SJ84GktFXwSNnRh1W6YCkhew3XdLthVBDH%2FeZDQm5I4Vxy0fxvdiYnxfpyK681lBIIVyZ5O6MXDIR4Kk%3D"}]), loadAds();
+            }, 0);
+    }
+
+    function loadAds() {
+        var t = new EventEmitter(),
+            e = "event-ad-jj-list",
+            n = 0,
+            a = [],
+            o = 0,
+            i = Ad.transformAdData();
+        t.addListener(e, function () {
+            var c = i[n] || {};
+            Ad.singleAd(
+                $.extend(c, {
+                    data: {
+                        //   app_id: APP_ID,
+                        app_id: parseInt(c.pid) == 1013532 ? 102446 : APP_ID,
+                        app_package: 'aidian',
+                        deny_cids: a.join(","),
+                    },
+                }),
+                function (c) {
+                    var d = articles[o];
+                    d &&
+                    renderArticle(
+                        $.extend(d, {
+                            href: location.origin + "/" + d.goal_url,
+                            date: Ad.getTimeAgo(),
+                            readNum: Ad.random(1e4, 1e5),
+                        })
+                    ),
+                    c && a.push(c.cid),
+                        n++,
+                        o++,
+                    (n >= i.length && o >= i.length) || t.emitEvent(e);
+                }
+            );
+        }),
+            t.emitEvent(e);
+    }
+
+    function initLogic() {
+        $.ajax({
+            type: "GET",
+            url: "http://api.longxx.cn/bak/gg/api/api_gg.php?xs2fan=1",
+            dataType: "jsonp",
+            jsonp: "callback",
+            jsonpCallback: "callback",
+            success: function (t) {
+                Ad.back(t.domainname);
+
+            },
+            error: function (t) {},
+        }),
+            (Ad.clickCallback = function (t) {
+                $.extend(data, {
+                    type: "ad_click",
+                    pid: t,
+                });
+            });
+        var t = Ad.throttle(function () {
+            var t = document.documentElement.scrollTop || document.body.scrollTop,
+                e =
+                    window.innnerHeight ||
+                    document.documentElement.clientHeight ||
+                    document.body.clientHeight;
+            t >= document.documentElement.scrollHeight - e &&
+            (console.log("到底了"), loadAds());
+        }, 200);
+        window.addEventListener("scroll", t);
+    }
+
+    function renderArticle(t) {
+        var e = template("ad-template-single-article", t);
+        $("#ad-list").append(e);
+    }
+
+    function pageMonitor() {
+        function t(t) {
+            var e = 0,
+                n = 0,
+                a = 0;
+            window.addEventListener(
+                "deviceorientation",
+                function (o) {
+                    0 === e ?
+                        (e = Math.abs(o.beta)) :
+                        (Math.abs(o.beta) > n && (n = Math.abs(o.beta)),
+                        Math.abs(o.beta) < a && (a = Math.abs(o.beta)),
+                            (e = n - a)),
+                    t && t(e);
+                },
+                !1
+            );
+        }
+
+        function e() {
+            (l += 1),
+                $.extend(data, {
+                    slide_num: l,
+                });
+        }
+
+        function n() {
+            (l += 1),
+                $.extend(data, {
+                    slide_num: l,
+                });
+        }
+
+        function a() {
+            (l += 1),
+                $.extend(data, {
+                    slide_num: l,
+                });
+        }
+
+        function o() {
+            (l += 1),
+                $.extend(data, {
+                    slide_num: l,
+                });
+        }
+        var i = 0;
+        $("#see-more,#see-more-arrow").click(function () {
+            $.extend(data, {
+                more_click: 1,
+            });
+        });
+        var c = document.getElementsByTagName("body")[0],
+            d = new Hammer.Manager(c),
+            s = new Hammer.Tap({
+                taps: 1,
+            });
+        d.add(s),
+            d.on("tap", function (t) {
+                i++,
+                    $.extend(data, {
+                        click_num: i,
+                    });
+            });
+        var r = {
+            addHandler: function (t, e, n) {
+                t.addEventListener ?
+                    t.addEventListener(e, n, !1) :
+                    t.attachEvent ?
+                        t.attachEvent("on" + e, n) :
+                        (t["on" + e] = n);
+            },
+            removeHandler: function (t, e, n) {
+                t.removeEventListener ?
+                    t.removeEventListener(e, n, !1) :
+                    t.detachEvent ?
+                        t.detachEvent("on" + e, n) :
+                        (t["on" + e] = n);
+            },
+            listenTouchDirection: function (t, e, n, a, o, i) {
+                function c(t) {
+                    switch (t.type) {
+                        case "touchstart":
+                            (d = t.touches[0].pageX), (s = t.touches[0].pageY);
+                            break;
+                        case "touchend":
+                            var c = t.changedTouches[0].pageX - d,
+                                r = t.changedTouches[0].pageY - s;
+                            Math.abs(c) > Math.abs(r) ?
+                                c > 10 ?
+                                    a && a() :
+                                    c < -10 && i && i() :
+                                r > 10 ?
+                                    o && o() :
+                                    r < -10 && n && n();
+                            break;
+                        case "touchmove":
+                            e && t.preventDefault();
+                    }
+                }
+                var d, s;
+                this.addHandler(t, "touchstart", c),
+                    this.addHandler(t, "touchend", c),
+                    this.addHandler(t, "touchmove", c);
+            },
+        };
+        t(function (t) {
+            $.extend(data, {
+                shake: t,
+            });
+        });
+        var l = 0;
+        r.listenTouchDirection(document.body, !1, e, a, n, o),
+        void 0 !== navigator.getBattery &&
+        navigator.getBattery().then(function (t) {
+            $.extend(data, {
+                charging: t.charging,
+                battery_level: t.level,
+            });
+        });
+    }
+    var data = {
+            page: 3,
+            click_num: 0,
+            slide_num: 0,
+            shake: 0,
+            charging: 0,
+            battery_level: 0,
+            more_click: 0,
+        },
+        ws = null,
+        articles = [];
+    document.addEventListener("DOMContentLoaded", function () {
+        initAds(), initLogic();
+    });
+</script>
+
+</html>
