@@ -72,7 +72,7 @@ export default class extends Vue {
 	status: boolean = false
 	millisecond: number = 0
 	num: number = 0
-	chanceNum: number | string = this.$mio.mioRoot.getStorageSync('chance_num')
+	chanceNum: any = this.$mio.mioRoot.getStorageSync('chance_num')
 	millisecondTimer: any = null
 	autoPlay: boolean = false
 	gameStatus: boolean = false
@@ -128,7 +128,6 @@ export default class extends Vue {
 	    		}
 	    	})
 	    }
-
         lottieInstance = wx.createSelectorQuery().select('#canvas').node(res => {
             const canvas = res.node
             canvas.width = 300 // 设置宽高，也可以放到wxml中的canvas标签的style中

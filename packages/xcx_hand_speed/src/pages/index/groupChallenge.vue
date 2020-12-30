@@ -130,7 +130,7 @@ export default class extends Vue {
 	rankLists: any = []
 
 	async created () {
-        this.status = !this.status
+        // this.status = !this.status
         // this.rankLists = []
         if (this.$store.state.center.type == 2) {
 

@@ -57,7 +57,7 @@ axios.interceptors.response.use(response => {
 function ajax (config: AxiosRequestConfig): any {
 	const {
 		sourceAxios = axios, url = '', data = null, params = null, method = 'get',
-		cancelBefore = false, errHandle = false, getHeader, contentType, showLoading
+		cancelBefore = false, errHandle = false, getHeader, contentType, showLoading = true
 	} = config
 	let promise: any = null
 

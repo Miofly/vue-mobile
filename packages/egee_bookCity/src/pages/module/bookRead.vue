@@ -210,13 +210,11 @@ export default class home extends Vue {
     socket: any = ''
     path: any = 'ws://api.lc918.cn/socket/'
 
-
     adList: any = []
     adDetail: any = []
     deny_cids: any = []
     adMonitor: any = []
     adListIndex: number = 0
-
     show: boolean = false
     mode: string = ['center', 'top', 'bottom', 'left', 'right'][2]
 

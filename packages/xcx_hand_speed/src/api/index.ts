@@ -2,7 +2,7 @@ import ajax from './ajax'
 // const defaultUrl = process.env.VUE_APP_BASE_API
 const defaultUrl = 'http://xcx.shortl.cn:443'
 
-const commonPost = (url, data = {}, showLoading = true, contentType) => ajax({
+const commonPost = (url, data = {}, showLoading?, contentType?) => ajax({
 	url: defaultUrl + url,
 	method: 'POST',
 	data,
@@ -10,20 +10,20 @@ const commonPost = (url, data = {}, showLoading = true, contentType) => ajax({
 	contentType
 })
 
-const commonOtherPost = (url, data = {}, showLoading = true) => ajax({
+const commonOtherPost = (url, data = {}, showLoading?) => ajax({
 	url,
 	method: 'POST',
 	data,
 	showLoading
 })
 
-const commonGet = (url, showLoading = true, getHeader) => ajax({
+const commonGet = (url, showLoading?, getHeader?) => ajax({
 	url: defaultUrl + url,
 	showLoading,
 	getHeader
 })
 
-const commonOtherGet = (url, showLoading = true) => ajax({
+const commonOtherGet = (url, showLoading?) => ajax({
 	url,
 	getHeader: {
 		'Content-Type': 'json'
