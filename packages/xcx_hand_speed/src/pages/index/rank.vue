@@ -16,7 +16,7 @@
 				</view>
 				<view style="margin-top: 40rpx">
 					<view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="border: 2px solid #FFFFFF;width: 132rpx;height: 132rpx"
-					      :style="{backgroundImage: avatar == '' ? 'url('+ infoConfig.defaultAvatar +')' : 'url('+ avatar +')'}">
+					      :style="{backgroundImage: avatar == '' || avatar == undefined ? 'url('+ infoConfig.defaultAvatar +')' : 'url('+ avatar +')'}">
 						<view v-if="false" class="cu-tag badge">999</view>
 					</view>
 					<view style="margin-top: 24rpx;color: #333;" class="text-18">
@@ -24,7 +24,7 @@
 					</view>
 				</view>
 				<view style="margin-top: 136rpx">
-					<view style="color: #FF5555" class="text-20 text-bold">{{level}}</view>
+					<view style="color: #FF5555" class="text-20 text-bold">{{level == '' || level == undefined ? '999+' : level}}</view>
 					<view class="text-14" style="margin-top: 28rpx">全国排名</view>
 				</view>
 			</view>
@@ -58,16 +58,16 @@
 						<view class="cu-item" style="background-color: rgba(255, 252, 225, 1)!important;border-bottom: 0px solid transparent!important;">
 							<view class="content">
 								<view>
-									<view class="text-18 text-bold" style="color: #333333;width: 80rpx">{{ person.level }}</view>
+									<view class="text-18 text-bold" style="color: #333333;width: 80rpx">{{ person.level == '' || person.level == undefined ? '999+' : person.level }}</view>
 									<view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="width: 80rpx;height: 80rpx;margin-left: 15rpx"
-									      :style="{backgroundImage: person.avatar == '' ? 'url('+ infoConfig.defaultAvatar +')' : 'url('+ person.avatar +')'}">
+									      :style="{backgroundImage: person.avatar == '' || person.avatar == undefined ? 'url('+ infoConfig.defaultAvatar +')' : 'url('+ person.avatar +')'}">
 										<view v-if="false" class="cu-tag badge">999</view>
 									</view>
-									<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ person.nickName }}</text>
+									<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ person.nickName == '' || person.nickName == undefined ? name : person.nickName }}</text>
 								</view>
 							</view>
 							<view v-if="true" class="action">
-								<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ person.score }}</text>
+								<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ person.score == '' || person.score == undefined ? 0 : person.score }}</text>
 							</view>
 						</view>
 					</view>
@@ -78,10 +78,14 @@
 								<view class="content">
 									<view>
 										<view class="text-18 text-bold" style="color: #333333;width: 80rpx">{{item.level}}</view>
-										<view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="width: 80rpx;height: 80rpx;margin-left: 15rpx"
-										      :style="{backgroundImage: 'url('+ item.avatar +')'}">
+										<view v-if="item.avatar == '' || item.avatar == undefined" class="cu-avatar" :class="[false ? 'radius' : 'round']" style="width: 80rpx;height: 80rpx;margin-left: 15rpx"
+										      :style="{backgroundImage: 'url('+ infoConfig.defaultAvatar +')'}">
 											<view v-if="false" class="cu-tag badge">999</view>
 										</view>
+                                        <view v-else class="cu-avatar" :class="[false ? 'radius' : 'round']" style="width: 80rpx;height: 80rpx;margin-left: 15rpx"
+                                              :style="{backgroundImage: 'url('+ item.avatar +')'}">
+                                            <view v-if="false" class="cu-tag badge">999</view>
+                                        </view>
 										<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ item.nickName }}</text>
 									</view>
 								</view>
@@ -151,7 +155,7 @@ export default class extends Vue {
 		againSrc: '/static/images/zailai@2x.png',
 		startChallenge: '/static/images/kaishi@2x.png',
 		rankImg: '/static/images/paihang@2x.png',
-		defaultAvatar: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg',
+		defaultAvatar: 'https://e-static.oss-cn-shanghai.aliyuncs.com/img/wfd/touxiang@2x.png',
 		rank: '未上榜',
 		sumPerson: this.$mio.mioRoot.randomNum(100000, 30),
 		time: '3:00',

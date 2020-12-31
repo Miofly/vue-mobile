@@ -11,20 +11,20 @@
 			</m-image>
 			<view class="flex justify-around text-white" style="margin-top: 62rpx">
 				<view style="margin-top: 128rpx">
-					<view style="color: #FF5555" class="text-20 text-bold">{{score}}次</view>
+					<view style="color: #FF5555" class="text-20 text-bold">{{score == '' || score == undefined ? 0 : score}}次</view>
 					<view class="text-14" style="margin-top: 28rpx">最好成绩</view>
 				</view>
 				<view style="">
 					<view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="border: 4px solid #FFEB7E;;width: 164rpx;height: 164rpx"
-					      :style="{backgroundImage: avatar == '' ? 'url('+ infoConfig.defaultAvatar +')' : 'url('+ avatar +')'}">
+					      :style="{backgroundImage: avatar == '' || avatar == undefined ? 'url('+ infoConfig.defaultAvatar +')' : 'url('+ avatar +')'}">
 						<view v-if="false" class="cu-tag badge">999</view>
 					</view>
 					<view style="margin-top: 24rpx;" class="text-18">
-						{{name}}
+                        {{name == '' || name == undefined ? '未知' : name}}
 					</view>
 				</view>
 				<view style="margin-top: 128rpx">
-					<view style="color: #FF5555" class="text-20 text-bold">{{level}}</view>
+					<view style="color: #FF5555" class="text-20 text-bold">{{level == '' || level == undefined ? '999+' : level}}</view>
 					<view class="text-14" style="margin-top: 28rpx">全国排名</view>
 				</view>
 			</view>
@@ -85,7 +85,7 @@
 								</view>
 							</view>
 							<view v-if="true" class="action">
-								<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ item.score }}</text>
+								<text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ item.score == '' || item.score == undefined ? '0' : item.score }}</text>
 							</view>
 						</view>
 					</view>
@@ -118,7 +118,7 @@ export default class extends Vue {
 		textImg: '/static/images/qunnei@2x.png',
 		newTextImg: '/static/images/biaoti@2x.png',
 		emptyImg: '/static/images/tupian@2x.png',
-		defaultAvatar: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg',
+		defaultAvatar: 'https://e-static.oss-cn-shanghai.aliyuncs.com/img/wfd/touxiang@2x.png',
 
 		name: 'y',
 		score: '11',

@@ -7,20 +7,20 @@
         <view style="height: 422rpx;background: #F5F6FC;border-radius: 12px;border: 4px solid #36CCF1;margin-top: 40rpx" class="text-center">
             <view class="flex justify-around">
                 <view style="margin-top: 136rpx">
-                    <view style="color: #FF5555" class="text-20 text-bold">{{score}}次</view>
+                    <view style="color: #FF5555" class="text-20 text-bold">{{score == '' || score == undefined ? 0 : score}}次</view>
                     <view class="text-14" style="margin-top: 28rpx">最好成绩</view>
                 </view>
                 <view style="margin-top: 40rpx">
                     <view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="border: 2px solid #FFFFFF;width: 132rpx;height: 132rpx"
-                          :style="{backgroundImage: avatar == '' ? 'url('+ infoConfig.defaultAvatar +')' : 'url('+ avatar +')'}">
+                          :style="{backgroundImage: avatar == '' || avatar == undefined ? 'url('+ infoConfig.defaultAvatar +')' : 'url('+ avatar +')'}">
                         <view v-if="false" class="cu-tag badge">999</view>
                     </view>
                     <view style="margin-top: 24rpx;color: #333;" class="text-18">
-                        {{name}}
+                        {{name == '' || name == undefined ? '未知' : name}}
                     </view>
                 </view>
                 <view style="margin-top: 136rpx">
-                    <view style="color: #FF5555" class="text-20 text-bold">{{level}}</view>
+                    <view style="color: #FF5555" class="text-20 text-bold">{{level == '' || level == undefined ? '999+' : level}}</view>
                     <view class="text-14" style="margin-top: 28rpx">全国排名</view>
                 </view>
             </view>
@@ -53,7 +53,7 @@
                         <view class="cu-item" style="background-color: rgba(255, 252, 225, 1)!important;border-bottom: 0px solid transparent!important;">
                             <view class="content">
                                 <view>
-                                    <view class="text-18 text-bold" style="color: #333333;width: 80rpx">{{ person.level }}</view>
+                                    <view class="text-18 text-bold" style="color: #333333;width: 80rpx">{{ person.level == '' || person.level == undefined ? '999+' : person.level }}</view>
                                     <view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="width: 80rpx;height: 80rpx;margin-left: 15rpx"
                                           :style="{backgroundImage: person.avatar == '' || person.avatar == undefined ? 'url('+ infoConfig.defaultAvatar +')' : 'url('+ person.avatar +')'}">
                                         <view v-if="false" class="cu-tag badge">999</view>
@@ -72,16 +72,20 @@
                             <view v-for="(item, index) in rankLists" :key="index" class="cu-item" style="border-bottom: 0px solid transparent!important;background-color: rgba(255, 252, 225, 1)!important;">
                                 <view class="content">
                                     <view>
-                                        <view class="text-18 text-bold" style="color: #333333;width: 80rpx">{{item.level}}</view>
-                                        <view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="width: 80rpx;height: 80rpx;margin-left: 15rpx"
+                                        <view class="text-18 text-bold" style="color: #333333;width: 80rpx">{{item.level == '' || item.level == undefined ? '999+' : level}}</view>
+                                        <view v-if="item.avatar == '' || item.avatar == undefined" class="cu-avatar" :class="[false ? 'radius' : 'round']" style="width: 80rpx;height: 80rpx;margin-left: 15rpx"
+                                              :style="{backgroundImage: 'url('+ infoConfig.defaultAvatar +')'}">
+                                            <view v-if="false" class="cu-tag badge">999</view>
+                                        </view>
+                                        <view v-else class="cu-avatar" :class="[false ? 'radius' : 'round']" style="width: 80rpx;height: 80rpx;margin-left: 15rpx"
                                               :style="{backgroundImage: 'url('+ item.avatar +')'}">
                                             <view v-if="false" class="cu-tag badge">999</view>
                                         </view>
-                                        <text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ item.nickName }}</text>
+                                        <text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ item.nickName == '' || item.nickName == undefined ? name : item.nickName }}</text>
                                     </view>
                                 </view>
                                 <view v-if="true" class="action">
-                                    <text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ item.score }}</text>
+                                    <text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ item.score == '' || item.score == undefined ? '0' : item.score }}</text>
                                 </view>
                             </view>
                         </view>
