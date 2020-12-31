@@ -217,6 +217,9 @@ export default {
 				this.seconds--;
 				// 发出change事件
 				this.$emit('change', this.seconds);
+                if (this.seconds < 0.05) {
+                    this.endBefore();
+                }
 				if (this.seconds < 0) {
 					return this.end();
 				}
@@ -257,6 +260,9 @@ export default {
 			this.clearTimer();
 			this.$emit('end', {});
 		},
+        endBefore() {
+            this.$emit('endBefore', {});
+        },
 		// 清除定时器
 		clearTimer() {
 			if(this.timer) {

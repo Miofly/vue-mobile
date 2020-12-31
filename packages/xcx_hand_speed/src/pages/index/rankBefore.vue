@@ -2,7 +2,7 @@
     <view :style="{backgroundImage: 'url('+ infoConfig.bg +')'}" class="full-width text-center padding-bottom-ten"
           style="background-repeat:no-repeat;background-size: 100vw 100vh;background-position:bottom left;padding: 30rpx">
         <view style="height: 96rpx;background: #F5F6FC;border-radius: 12px;border: 4px solid #36CCF1;margin-top: 40rpx;line-height: 84rpx" class="text-center">
-            <open-data style="color: #333333;" class="text-20 text-bold" type="groupName" :open-gid="openGid"></open-data>
+            <open-data style="color: #333333;" class="text-20 text-bold" type="groupName" :open-gid="openGid == '' ? '未知' : openGid"></open-data>
         </view>
         <view style="height: 422rpx;background: #F5F6FC;border-radius: 12px;border: 4px solid #36CCF1;margin-top: 40rpx" class="text-center">
             <view class="flex justify-around">
@@ -55,14 +55,14 @@
                                 <view>
                                     <view class="text-18 text-bold" style="color: #333333;width: 80rpx">{{ person.level }}</view>
                                     <view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="width: 80rpx;height: 80rpx;margin-left: 15rpx"
-                                          :style="{backgroundImage: person.avatar == '' ? 'url('+ infoConfig.defaultAvatar +')' : 'url('+ person.avatar +')'}">
+                                          :style="{backgroundImage: person.avatar == '' || person.avatar == undefined ? 'url('+ infoConfig.defaultAvatar +')' : 'url('+ person.avatar +')'}">
                                         <view v-if="false" class="cu-tag badge">999</view>
                                     </view>
-                                    <text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ person.nickName }}</text>
+                                    <text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ person.nickName == '' || person.nickName == undefined ? name : person.nickName  }}</text>
                                 </view>
                             </view>
                             <view v-if="true" class="action">
-                                <text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ person.score }}</text>
+                                <text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ person.score == '' || person.score == undefined ? 0 : person.score }}</text>
                             </view>
                         </view>
                     </view>

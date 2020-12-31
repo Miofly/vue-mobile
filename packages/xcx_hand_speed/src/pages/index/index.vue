@@ -191,6 +191,13 @@ export default class extends Vue {
 	getUserInfoRank (e) {
         // this.goRank()
         if (e.detail.userInfo != undefined) {
+            if (this.is_first) {
+                this.btnDisabled = true
+                setTimeout(() => {
+                    this.btnDisabled = false
+                }, 500)
+                this.$mio.mioRoot.push('/pages/index/rank')
+            }
 			this.is_first = false
 			this.$store.state.center.name = e.detail.userInfo.nickName
 			this.$store.state.center.avatar = e.detail.userInfo.avatarUrl
@@ -200,6 +207,21 @@ export default class extends Vue {
 
 	getUserInfoGroup (e) {
 		if (e.detail.userInfo != undefined) {
+            if (this.is_first) {
+                if (this.$store.state.center.type == 3) {
+                    this.btnDisabled = true
+                    setTimeout(() => {
+                        this.btnDisabled = false
+                    }, 500)
+                    this.$mio.mioRoot.push('/pages/index/rankBefore')
+                } else {
+                    this.btnDisabled = true
+                    setTimeout(() => {
+                        this.btnDisabled = false
+                    }, 500)
+                    this.$mio.mioRoot.push('/pages/index/groupChallenge')
+                }
+            }
 			this.is_first = false
 			this.$store.state.center.name = e.detail.userInfo.nickName
 			this.$store.state.center.avatar = e.detail.userInfo.avatarUrl
@@ -208,8 +230,14 @@ export default class extends Vue {
 	}
 
 	getUserInfo (e) {
-        // this.goPlay()
         if (e.detail.userInfo != undefined) {
+            if (this.is_first) {
+                this.btnDisabled = true
+                setTimeout(() => {
+                    this.btnDisabled = false
+                }, 500)
+                this.$mio.mioRoot.push('/pages/index/playGame')
+            }
 			this.is_first = false
 			this.$store.state.center.name = e.detail.userInfo.nickName
 			this.$store.state.center.avatar = e.detail.userInfo.avatarUrl
@@ -230,17 +258,15 @@ export default class extends Vue {
 
 	goRank () {
         if (!this.is_first) {
-        this.btnDisabled = true
-        setTimeout(() => {
-            this.btnDisabled = false
-        }, 500)
-		this.$mio.mioRoot.push('/pages/index/rank')
+            this.btnDisabled = true
+            setTimeout(() => {
+                this.btnDisabled = false
+            }, 500)
+		    this.$mio.mioRoot.push('/pages/index/rank')
         }
-
     }
 
 	goPoster () {
-
 		this.$mio.mioRoot.push('/pages/index/poster')
 	}
 

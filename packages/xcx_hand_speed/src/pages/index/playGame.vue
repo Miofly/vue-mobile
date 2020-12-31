@@ -1,15 +1,16 @@
 <template>
 	<view class="full-width-height bg"
 	      style="background-repeat:no-repeat;background-size: 100vw 100vh;background-position:bottom left;">
+
 		<view class="full-width text-center">
 			<!--倒计时-->
 			<view class="text-22" style="padding-top: 120rpx;color: #FF5555">
 				<text>倒计时：</text>
 				<m-count-down v-show="gameStatus" ref="count_down" :autoplay="autoPlay" :fontSize="44"
 				              :separator="['colon', 'zh'][0]" :showBorder="false" :showDays="false" :showHours="false"
-				              :showMinutes="false" :timestamp="['60', '86400', '983272', '2'][3]"
+				              :showMinutes="false" :timestamp="['60', '86400', '983272', '9'][3]"
 				              bg-color="transparent" border-color="#303133" class="" color="#FF5555"
-				              separator-color="#303133" @end="end"></m-count-down>
+				              separator-color="#303133" @end="end" @endBefore="endBefore"></m-count-down>
 				<text v-show="!gameStatus">10</text>
 				<text class="text-22" style="color: #FF5555">:{{ millisecond < 10 ? `0${millisecond}` : millisecond }}
 				</text>
@@ -23,10 +24,9 @@
 			</view>
 			<!--点击按钮-->
 			<view style="width: 100%;margin-top: 134rpx;text-align: center;">
-                <view style="z-index: 10">
-                    <canvas @click="addNum" id="canvas" style="display: inline-block;" type="2d"></canvas>
+
+                <canvas @click="addNum" id="canvas" style="display: inline-block;" type="2d"></canvas>
 <!--                    <canvas id="canvasTwo" style="display: inline-block;" type="2d"></canvas>-->
-                </view>
 			</view>
             <view v-if="chanceNum > 0" class="text-18" style="color: #D3D5DE;">还有{{ chanceNum }}次机会</view>
             <view v-else class="text-18" style="color: #D3D5DE;">机会用完了，点击按钮观看视频可增加次数</view>
@@ -34,15 +34,12 @@
             <ad v-if="ptgg" ad-intervals="30" :unit-id="ptgg" style="margin-top: 28rpx;position: fixed;bottom: 0"></ad>
 		</view>
 
-        <m-modal :closeShow="true" closeColor="black" bgColor="white" :closeSize="40" :descSize="30" :maskClosable="true" :status="status"
-        	   title="这是标题" desc="这是描述" modalTop="0rpx" :titleSize="40" descColor="#999d9c" titleColor="black"
-        	   width="90vw" padding="20" radius="30rpx" :showTitle="false" :showContent="true">
-        	<view class="text-center margin-top-xxl">
-        		<view>
-        			再来一次
-        		</view>
-        	</view>
-        </m-modal>
+        <cover-view v-if="modalStatus" class="text-center" style="width: 560rpx;height: 328rpx;border-radius: 10px;position: fixed;left: 50%;top: 60%;transform:translate(-50%,-50%);background: #fff;z-index: 999;">
+            <cover-view style="height: 228rpx;line-height: 228rpx" class="text-18">成绩：{{num}}次</cover-view>
+            <cover-view style="height: 1px;background: #F5F4F3;width: 100%"></cover-view>
+            <cover-view @click="modalStatus = false" style="height: 98rpx;line-height: 98rpx;color: rgba(255, 121, 50, 1)" class="text-18">关闭</cover-view>
+        </cover-view>
+
 	</view>
 </template>
 
@@ -69,7 +66,10 @@ export default class extends Vue {
 		againSrc: '/static/images/zailai@2x.png',
 	}
 
-	status: boolean = false
+
+
+	status: boolean = true
+    modalStatus: boolean = false
 	millisecond: number = 0
 	num: number = 0
 	chanceNum: any = this.$mio.mioRoot.getStorageSync('chance_num')
@@ -164,28 +164,28 @@ export default class extends Vue {
     }
 
 	addNum () {
+
 	    this.goGame()
 	}
 
 	goGame () {
         if (this.chanceNum > 0) {
-            if (this.tempStatus) {
-                this.tempStatus = false
-                this.gameOut = false
-                this.num = -1
-                this.firstNum = '0'
-                this.endNum = '0'
-            }
-            console.log('点击了嘛')
-            lottieInstance.play()
-            setTimeout(() => {
-                lottieInstance.stop()
-            }, 100)
-            this.gameStatus = true
-            if (this.num == 0) {
-                this.startCountDown()
-            }
-            this.sumCount++
+                if (this.tempStatus) {
+                    this.tempStatus = false
+                    this.gameOut = false
+                    this.num = -1
+                    this.firstNum = '0'
+                    this.endNum = '0'
+                }
+                lottieInstance.play()
+                setTimeout(() => {
+                    lottieInstance.stop()
+                }, 100)
+                this.gameStatus = true
+                if (this.num == 0) {
+                    this.startCountDown()
+                }
+                this.sumCount++
             if (!this.gameOut) {
                 this.num++
                 if (this.num < 10) {
@@ -206,7 +206,6 @@ export default class extends Vue {
             		})
             })
         }
-
 	}
 
 	startCountDown () {
@@ -219,17 +218,20 @@ export default class extends Vue {
 		}, 5)
 	}
 
-	end () {
+    endBefore () {
+        this.modalStatus = true
         this.interstitialAd.show().catch(() => {
             // 失败重试
             this.interstitialAd.load()
                 .then(() => this.interstitialAd.show())
                 .catch(err => {
-                    this.status = true
+
                 })
         })
-		clearInterval(this.millisecondTimer)
+    }
 
+	end () {
+		clearInterval(this.millisecondTimer)
         if (this.chanceNum > 0) {
             this.chanceNum--
             this.$mio.mioRoot.setStorage('chance_num', this.chanceNum)
@@ -241,7 +243,8 @@ export default class extends Vue {
 			if (this.millisecond < 5) {
 				this.millisecond = 0
 				clearInterval(tempTimer)
-				this.gameOut = true
+                this.gameOut = true
+
 				this.tempStatus = true
                 if (this.chanceNum > 0) {
                     this.$mio.mioRoot.showToast('游戏结束，可再来一次')
