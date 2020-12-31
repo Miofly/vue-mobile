@@ -29,9 +29,6 @@
         },
         {
             "path": "pages/movie/module/movieDetail"
-        },
-        {
-            "path": "pages/movie/module/mescroll-swiper-item-two"
         }
     ],
     "globalStyle": {

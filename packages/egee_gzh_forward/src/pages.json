@@ -1,0 +1,59 @@
+{
+    "pages": [
+        {
+            "path": "pages/index/index",
+            "style": {
+                "navigationBarTitleText": "vue-超级模板"
+            }
+        },
+        // center
+        {
+            "path": "pages/center/home"
+        },
+        // moduleOne
+        {
+            "path": "pages/moduleOne/home"
+        },
+        // moduleTwo
+        {
+            "path": "pages/moduleTwo/home"
+        }
+    ],
+    "globalStyle": {
+        "navigationBarTextStyle": "black",
+        // #ifdef H5
+        "navigationStyle": "custom",
+        // #endif
+        "navigationBarBackgroundColor": "#F8F8F8",
+        "backgroundColor": "#F8F8F8"
+    },
+    "condition": {
+        "current": 0,
+        "list": [
+            {
+                "name": "test",
+                "path": "pages/center/test"
+            },
+            {
+                "path": "pages/moduleOne/movie/mvHome",
+                "name": "mvHome"
+            },
+            {
+                "path": "pages/moduleOne/pddVideo/videoPlay",
+                "name": "pddVideoPlay"
+            },
+            {
+                "path": "pages/moduleOne/zsQuestion/home",
+                "name": "zsHome"
+            }
+        ]
+    },
+    "easycom": {
+        "autoscan": true,
+        "custom": {
+            // #ifdef H5
+            "^m-(.*)": "zj/m-$1/m-$1.vue"
+            // #endif
+        }
+    }
+}

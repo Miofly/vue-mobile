@@ -8,14 +8,9 @@ import { VuexModule, Module } from 'vuex-module-decorators'
 
 @Module({ name: 'Vehicle', namespaced: true, stateFactory: true })
 export default class Index extends VuexModule {
-	openId: string = ''
-	session_key: string = ''
-	name: string = ''
-	avatar: string = ''
-	score: number = 0
-	chanceNumber: number = 0
-	level: string|number = ''
-	type: number = 1 // 2好友 3群
-	firend_openId: string = ''
-	openGid: string = ''
+	footabs: any[] = [
+		{ name: 'one', type: 'moduleOne' },
+		{ name: 'center', type: 'center' },
+		{ name: 'two', type: 'moduleTwo' }
+	]
 }

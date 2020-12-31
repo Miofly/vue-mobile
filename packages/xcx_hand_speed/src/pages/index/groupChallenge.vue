@@ -16,7 +16,7 @@
 				</view>
 				<view style="">
 					<view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="border: 4px solid #FFEB7E;;width: 164rpx;height: 164rpx"
-					      :style="{backgroundImage: avatar == '' || avatar == undefined ? 'url('+ infoConfig.defaultAvatar +')' : 'url('+ avatar +')'}">
+					      :style="{backgroundImage: avatar == '' || avatar == undefined ? 'url('+ baseConfig.defaultAvatar +')' : 'url('+ avatar +')'}">
 						<view v-if="false" class="cu-tag badge">999</view>
 					</view>
 					<view style="margin-top: 24rpx;" class="text-18">

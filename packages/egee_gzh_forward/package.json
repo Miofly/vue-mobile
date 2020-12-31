@@ -1,15 +1,14 @@
 {
-    "name": "mio_movie",
+    "name": "egee_gzh_forward",
     "version": "0.1.0",
     "private": true,
     "scripts": {
         "start": "yarn run dev:h5",
-        "build": "yarn run build:h5",
-        "wx": "yarn run dev:mp-weixin",
-        "build:h5": "cross-env NODE_ENV=production UNI_PLATFORM=h5 vue-cli-service uni-build",
-        "build:mp-weixin": "cross-env NODE_ENV=production UNI_PLATFORM=mp-weixin vue-cli-service uni-build",
-        "dev:h5": "cross-env NODE_ENV=development UNI_PLATFORM=h5 vue-cli-service uni-serve",
-        "dev:mp-weixin": "cross-env NODE_ENV=development UNI_PLATFORM=mp-weixin vue-cli-service uni-build --watch --minimize"
+        "build": "yarn run build:release",
+        "build:release": "cross-env NODE_ENV=production UNI_PLATFORM=h5 vue-cli-service uni-build --mode produce",
+        "build:dev": "cross-env NODE_ENV=production UNI_PLATFORM=h5 vue-cli-service uni-build --mode development",
+        "dev:h5": "cross-env NODE_ENV=development UNI_PLATFORM=h5 vue-cli-service uni-serve --mode development",
+        "release": "cross-env NODE_ENV=development UNI_PLATFORM=h5 vue-cli-service uni-serve --mode produce"
     },
     "devDependencies": {
         "@babel/plugin-syntax-typescript": "^7.2.0",

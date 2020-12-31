@@ -44,10 +44,9 @@
         <view>
             <view style="position: relative;" class="margin-top">
                 <view style="background-color: rgba(255, 252, 225, 1);width: 100%;position: absolute;top: 85rpx;border-radius: 20rpx">
-                    <view class="flex justify-around text-center"
-                          style="width: 72%;margin-left: 14%;height: 88rpx;line-height: 88rpx;margin-top: 120rpx">
-                        <view @click="nationalRanking" class="border-left-radius" :class="[status ? 'activeStyle' : 'inActiveStyle']" style="width: 50%;">群内排行</view>
-                        <view @click="friendsRanking" class="border-right-radius" :class="[!status ? 'activeStyle' : 'inActiveStyle']" style="width: 50%;">好友排行</view>
+                    <view class="" style="width: 72%;margin-left: 14%;height: 88rpx;line-height: 88rpx;margin-top: 120rpx">
+                        <view @click="nationalRanking" class="border-radius" :class="[status ? 'activeStyle' : 'inActiveStyle']"
+                              style="width: 100%;">群内排行</view>
                     </view>
                     <view class="cu-list menu" style="margin-top: 44rpx">
                         <view class="cu-item" style="background-color: rgba(255, 252, 225, 1)!important;border-bottom: 0px solid transparent!important;">
@@ -143,7 +142,7 @@ export default class extends Vue {
         againSrc: '/static/images/zailai@2x.png',
         startChallenge: '/static/images/kaishi@2x.png',
         rankImg: '/static/images/paihang@2x.png',
-        defaultAvatar: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg',
+        defaultAvatar: 'https://e-static.oss-cn-shanghai.aliyuncs.com/img/wfd/touxiang@2x.png',
         rank: '未上榜',
         sumPerson: this.$mio.mioRoot.randomNum(100000, 30),
         time: '3:00',

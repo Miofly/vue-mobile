@@ -173,17 +173,18 @@ export default class extends Vue {
 
 	rankLists: any = []
 
-	async created () {
+	created () {
 		// #ifdef H5
 		// @ts-ignore
 		// const { data } = await commonGet('/mytest/articles?page=2&limit=50')
 		// #endif
 
-		// #ifdef MP-WEIXIN
-		const { data } = await commonPost('/api/user_achievement/top', { type: 1 }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
-		// #endif
-		this.rankLists = data.list
-        this.person = data.mine
+        setTimeout(async () => {
+            const { data } = await commonPost('/api/user_achievement/top', { type: 1 }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
+            this.rankLists = data.list
+            this.person = data.mine
+        }, 1000)
+
 	}
 
 	goGame () {
