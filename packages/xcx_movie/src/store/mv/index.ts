@@ -11,7 +11,7 @@ import { Module, VuexModule, Mutation, Action, getModule } from 'vuex-module-dec
 // dynamic: true: 是否使用动态加载，简而言之只有在用到当前的module才会加载，动态创建动态模块,即new Vuex.Store({})里面不用注册的.空着就行,
 // store,当前模块注册到store上.也可以写在getModule上,即getModule(PassengerStore,store)
 // namespaced: true, name: 'zsQusetion' 命名空间
-@Module({ name: 'mv', namespaced: true, stateFactory: true, store })
+@Module({ name: 'mv', namespaced: true, stateFactory: true })
 export default class ZsQuestion extends VuexModule {
 	footabs: any = [
 		{ show: true, name: '电影', type: 'youtube' },
