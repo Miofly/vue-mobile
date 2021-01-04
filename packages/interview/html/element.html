@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+	<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+</head>
+<body>
+<p id="p1">1</p>
+<div id="test">
+	<div id="son_one">son_one</div>
+	<div style="display: block" id="son_two" class="test_one test_two"><p id="son_two_p">son_two</p></div>
+	<div style="color: blue!important;">son_three</div>
+	<div style="display: none" id="son_four"><p id="son_four_p">son_four</p></div>
+	<script>
+		var test = '这是测试'
+	</script>
+	<style>
+        *{margin: 0;padding: 0}
+	</style>
+</div>
+<script>
+	// var son_two = document.getElementById('son_two')
+	// //  attributes 属性返回该元素所有属性节点的一个实时集合。该集合是一个 NamedNodeMap 对象，不是一个数组
+	// console.log('attributes：', son_two.attributes)
+	// // classList 返回一个元素的类属性的实时 DOMTokenList 集合。
+	// console.log('classList：', son_two.classList)
+	// // className 返回一个字符串变量,表示当前元素的class属性的值,可以是由空格分隔的多个class属性值
+	// console.log('className：', son_two.className)
+	// // clientHeight/clientWidth 这个属性是只读属性，对于没有定义CSS或者内联布局盒子的元素为0，否则，它是元素内部的高度/宽度(单位像素)，包含内边距，但不包括水平/垂直滚动条、边框和外边距。
+	// console.log('clientHeight:', son_two.clientHeight)
+	// console.log('clientWidth:', son_two.clientWidth)
+	//
+	// // scrollHeight/scrollWidth 的值等于该元素在不使用滚动条的情况下为了适应视口中所用内容所需的最小高度/宽度。
+	// // 没有垂直滚动条的情况下，scrollHeight/scrollWidth 值与元素视图填充所有内容所需要的最小值clientHeight/clientWidth相同。
+	// // 包括元素的padding，但不包括元素的border和margin。scrollHeight也包括 ::before 和 ::after这样的伪元素。
+	// console.log('scrollHeight:', son_two.scrollHeight)
+	// console.log('scrollWidth:', son_two.scrollWidth)
+	// // scrollTop 可以获取或设置一个元素的内容垂直滚动的像素数。
+	// // 一个元素的 scrollTop 值是这个元素的内容顶部（卷起来的）到它的视口可见内容（的顶部）的距离的度量。当一个元素的内容没有产生垂直方向的滚动条，那么它的 scrollTop 值为0。
+	// // 如果一个元素不能被滚动（例如，它没有溢出，或者这个元素有一个"non-scrollable"属性）， scrollTop将被设置为0。
+	// // 设置scrollTop的值小于0，scrollTop 被设为0
+	// // 如果设置了超出这个容器可滚动的值, scrollTop 会被设为最大值。
+	// console.log('scrollTop:', son_two.scrollTop)
+	// // innerHTML 属性设置或获取HTML语法表示的元素的后代。
+	// console.log(son_two.innerHTML)
+	// // outerHTML 属性获取描述元素（包括其后代）的序列化HTML片段。
+	// console.log(son_two.outerHTML)
+</script>
+<script>
+	// Element.closest() 方法用来获取：匹配特定选择器且离当前元素最近的祖先元素（也可以是当前元素本身）。如果匹配不到，则返回 null。
+	var son_two_p = document.getElementById('son_two_p')
+	console.log(son_two_p.closest("body>div"))
+
+
+
+</script>
+</body>
+</html>

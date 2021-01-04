@@ -14,10 +14,10 @@ export default {
         // #endif
         console.log(e, 'onShow：应用页面显示')
         if (this.$mio.mioRoot.getStorageSync('last_date') == new Date().toLocaleDateString()) {
-            // console.log('不重置次数')
-            console.log('重置次数')
-            this.$mio.mioRoot.setStorage('last_date', new Date().toLocaleDateString())
-            this.$mio.mioRoot.setStorage('chance_num', 3)
+            console.log('不重置次数')
+            // console.log('重置次数')
+            // this.$mio.mioRoot.setStorage('last_date', new Date().toLocaleDateString())
+            // this.$mio.mioRoot.setStorage('chance_num', 3)
         } else {
             console.log('重置次数')
             this.$mio.mioRoot.setStorage('last_date', new Date().toLocaleDateString())

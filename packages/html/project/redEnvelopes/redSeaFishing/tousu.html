@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+	<meta charset="utf-8">
+	<meta id=viewport name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+	<title>投诉</title>
+	<script type="text/javascript" src="img/jquery.js"></script>
+	<style>
+		body {
+			--weui-BTN-DISABLED-FONT-COLOR: rgba(0, 0, 0, .2)
+		}
+
+		@media (prefers-color-scheme: dark) {
+			body:not([data-weui-theme=light]) {
+				--weui-BTN-DISABLED-FONT-COLOR: hsla(0, 0%, 100%, .2)
+			}
+		}
+
+		body {
+			--weui-BTN-DEFAULT-BG: #f2f2f2
+		}
+
+		@media (prefers-color-scheme: dark) {
+			body:not([data-weui-theme=light]) {
+				--weui-BTN-DEFAULT-BG: hsla(0, 0%, 100%, .08)
+			}
+		}
+
+		body {
+			--weui-BTN-DEFAULT-COLOR: #06ae56
+		}
+
+		@media (prefers-color-scheme: dark) {
+			body:not([data-weui-theme=light]) {
+				--weui-BTN-DEFAULT-COLOR: hsla(0, 0%, 100%, .8)
+			}
+		}
+
+		body {
+			--weui-BTN-DEFAULT-ACTIVE-BG: #e6e6e6
+		}
+
+		@media (prefers-color-scheme: dark) {
+			body:not([data-weui-theme=light]) {
+				--weui-BTN-DEFAULT-ACTIVE-BG: hsla(0, 0%, 48%, .1536)
+			}
+		}
+
+		body {
+			--weui-DIALOG-LINE-COLOR: rgba(0, 0, 0, .1)
+		}
+
+		@media (prefers-color-scheme: dark) {
+			body:not([data-weui-theme=light]) {
+				--weui-DIALOG-LINE-COLOR: hsla(0, 0%, 100%, .1)
+			}
+		}
+
+		html {
+			-ms-text-size-adjust: 100%;
+			-webkit-text-size-adjust: 100%
+		}
+
+		body {
+			line-height: 1.6;
+			font-family: -apple-system-font, Helvetica Neue, sans-serif
+		}
+
+		* {
+			margin: 0;
+			padding: 0
+		}
+
+		a {
+			text-decoration: none;
+			-webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+		}
+
+		::-webkit-input-placeholder {
+			color: rgba(0, 0, 0, .3);
+			color: var(--weui-FG-2)
+		}
+
+		body {
+			--weui-BG-0: #ededed;
+			--weui-BG-1: #f7f7f7;
+			--weui-BG-2: #fff;
+			--weui-BG-3: #f7f7f7;
+			--weui-BG-4: #4c4c4c;
+			--weui-BG-5: #fff;
+			--weui-FG-0: rgba(0, 0, 0, .9);
+			--weui-FG-HALF: rgba(0, 0, 0, .9);
+			--weui-FG-1: rgba(0, 0, 0, .5);
+			--weui-FG-2: rgba(0, 0, 0, .3);
+			--weui-FG-3: rgba(0, 0, 0, .1);
+			--weui-RED: #fa5151;
+			--weui-ORANGE: #fa9d3b;
+			--weui-YELLOW: #ffc300;
+			--weui-GREEN: #91d300;
+			--weui-LIGHTGREEN: #95ec69;
+			--weui-BRAND: #07c160;
+			--weui-BLUE: #10aeff;
+			--weui-INDIGO: #1485ee;
+			--weui-PURPLE: #6467f0;
+			--weui-WHITE: #fff;
+			--weui-LINK: #576b95;
+			--weui-TEXTGREEN: #06ae56;
+			--weui-FG: #000;
+			--weui-BG: #fff;
+			--weui-TAG-TEXT-ORANGE: #fa9d3b;
+			--weui-TAG-BACKGROUND-ORANGE: rgba(250, 157, 59, .1);
+			--weui-TAG-TEXT-GREEN: #06ae56;
+			--weui-TAG-BACKGROUND-GREEN: rgba(6, 174, 86, .1);
+			--weui-TAG-TEXT-BLUE: #10aeff;
+			--weui-TAG-BACKGROUND-BLUE: rgba(16, 174, 255, .1);
+			--weui-TAG-TEXT-BLACK: rgba(0, 0, 0, .5);
+			--weui-TAG-BACKGROUND-BLACK: rgba(0, 0, 0, .05)
+		}
+
+		@media (prefers-color-scheme: dark) {
+			body:not([data-weui-theme=light]) {
+				--weui-BG-0: #191919;
+				--weui-BG-1: #1f1f1f;
+				--weui-BG-2: #232323;
+				--weui-BG-3: #2f2f2f;
+				--weui-BG-4: #606060;
+				--weui-BG-5: #2c2c2c;
+				--weui-FG-0: hsla(0, 0%, 100%, .8);
+				--weui-FG-HALF: hsla(0, 0%, 100%, .6);
+				--weui-FG-1: hsla(0, 0%, 100%, .5);
+				--weui-FG-2: hsla(0, 0%, 100%, .3);
+				--weui-FG-3: hsla(0, 0%, 100%, .05);
+				--weui-RED: #fa5151;
+				--weui-ORANGE: #c87d2f;
+				--weui-YELLOW: #cc9c00;
+				--weui-GREEN: #74a800;
+				--weui-LIGHTGREEN: #28b561;
+				--weui-BRAND: #07c160;
+				--weui-BLUE: #10aeff;
+				--weui-INDIGO: #1196ff;
+				--weui-PURPLE: #8183ff;
+				--weui-WHITE: hsla(0, 0%, 100%, .8);
+				--weui-LINK: #7d90a9;
+				--weui-TEXTGREEN: #259c5c;
+				--weui-FG: #fff;
+				--weui-BG: #000;
+				--weui-TAG-TEXT-ORANGE: rgba(250, 157, 59, .6);
+				--weui-TAG-BACKGROUND-ORANGE: rgba(250, 157, 59, .1);
+				--weui-TAG-TEXT-GREEN: rgba(6, 174, 86, .6);
+				--weui-TAG-BACKGROUND-GREEN: rgba(6, 174, 86, .1);
+				--weui-TAG-TEXT-BLUE: rgba(16, 174, 255, .6);
+				--weui-TAG-BACKGROUND-BLUE: rgba(16, 174, 255, .1);
+				--weui-TAG-TEXT-BLACK: hsla(0, 0%, 100%, .5);
+				--weui-TAG-BACKGROUND-BLACK: hsla(0, 0%, 100%, .05)
+			}
+		}
+
+		body {
+			--weui-BG-COLOR-ACTIVE: #ececec
+		}
+
+		@media (prefers-color-scheme: dark) {
+			body:not([data-weui-theme=light]) {
+				--weui-BG-COLOR-ACTIVE: #282828
+			}
+		}
+
+		[class^=weui-icon-] {
+			display: inline-block;
+			vertical-align: middle;
+			width: 24px;
+			height: 24px;
+			-webkit-mask-position: 50% 50%;
+			mask-position: 50% 50%;
+			-webkit-mask-repeat: no-repeat;
+			mask-repeat: no-repeat;
+			-webkit-mask-size: 100%;
+			mask-size: 100%;
+			background-color: currentColor
+		}
+
+		.weui-icon-success {
+			-webkit-mask-image: url(data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M12%2022C6.477%2022%202%2017.523%202%2012S6.477%202%2012%202s10%204.477%2010%2010-4.477%2010-10%2010zm-1.177-7.86l-2.765-2.767L7%2012.431l3.119%203.121a1%201%200%20001.414%200l5.952-5.95-1.062-1.062-5.6%205.6z%22%2F%3E%3C%2Fsvg%3E);
+			mask-image: url(data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M12%2022C6.477%2022%202%2017.523%202%2012S6.477%202%2012%202s10%204.477%2010%2010-4.477%2010-10%2010zm-1.177-7.86l-2.765-2.767L7%2012.431l3.119%203.121a1%201%200%20001.414%200l5.952-5.95-1.062-1.062-5.6%205.6z%22%2F%3E%3C%2Fsvg%3E)
+		}
+
+		.weui-icon-success {
+			color: #07c160;
+			color: var(--weui-BRAND)
+		}
+
+		.weui-icon_msg {
+			width: 64px;
+			height: 64px
+		}
+
+		.weui-btn {
+			position: relative;
+			display: block;
+			width: 184px;
+			margin-left: auto;
+			margin-right: auto;
+			padding: 8px 24px;
+			box-sizing: border-box;
+			font-weight: 700;
+			font-size: 17px;
+			text-align: center;
+			text-decoration: none;
+			color: #fff;
+			line-height: 1.41176471;
+			border-radius: 4px;
+			overflow: hidden;
+			-webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+		}
+
+		.weui-btn_primary {
+			background-color: #07c160;
+			background-color: var(--weui-BRAND)
+		}
+
+		.weui-btn_primary:not(.weui-btn_disabled):visited {
+			color: #fff
+		}
+
+		.weui-btn_primary:not(.weui-btn_disabled):active {
+			background-color: #06ae56;
+			background-color: var(--weui-TAG-TEXT-GREEN)
+		}
+
+		.weui-btn-area {
+			margin: 48px 16px 8px
+		}
+
+		.weui-cells {
+			margin-top: 8px;
+			background-color: #fff;
+			background-color: var(--weui-BG-2);
+			line-height: 1.41176471;
+			font-size: 17px;
+			overflow: hidden;
+			position: relative
+		}
+
+		.weui-cells:before {
+			top: 0;
+			border-top: 1px solid rgba(0, 0, 0, .1);
+			border-top: 1px solid var(--weui-FG-3);
+			-webkit-transform-origin: 0 0;
+			transform-origin: 0 0;
+			-webkit-transform: scaleY(.5);
+			transform: scaleY(.5)
+		}
+
+		.weui-cells:after, .weui-cells:before {
+			content: " ";
+			position: absolute;
+			left: 0;
+			right: 0;
+			height: 1px;
+			color: rgba(0, 0, 0, .1);
+			color: var(--weui-FG-3);
+			z-index: 2
+		}
+
+		.weui-cells:after {
+			bottom: 0;
+			border-bottom: 1px solid rgba(0, 0, 0, .1);
+			border-bottom: 1px solid var(--weui-FG-3);
+			-webkit-transform-origin: 0 100%;
+			transform-origin: 0 100%;
+			-webkit-transform: scaleY(.5);
+			transform: scaleY(.5)
+		}
+
+		.weui-cells__title {
+			margin-top: 16px;
+			margin-bottom: 3px;
+			padding-left: 16px;
+			padding-right: 16px;
+			color: rgba(0, 0, 0, .5);
+			color: var(--weui-FG-1);
+			font-size: 14px;
+			line-height: 1.4
+		}
+
+		.weui-cells__title + .weui-cells {
+			margin-top: 0
+		}
+
+		.weui-cell {
+			padding: 16px;
+			position: relative;
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: flex;
+			-webkit-box-align: center;
+			-webkit-align-items: center;
+			align-items: center
+		}
+
+		.weui-cell:before {
+			content: " ";
+			position: absolute;
+			left: 0;
+			top: 0;
+			right: 0;
+			height: 1px;
+			border-top: 1px solid rgba(0, 0, 0, .1);
+			border-top: 1px solid var(--weui-FG-3);
+			color: rgba(0, 0, 0, .1);
+			color: var(--weui-FG-3);
+			-webkit-transform-origin: 0 0;
+			transform-origin: 0 0;
+			-webkit-transform: scaleY(.5);
+			transform: scaleY(.5);
+			left: 16px;
+			z-index: 2
+		}
+
+		.weui-cell:first-child:before {
+			display: none
+		}
+
+		.weui-cell__bd {
+			-webkit-box-flex: 1;
+			-webkit-flex: 1;
+			flex: 1
+		}
+
+		.weui-cell__ft {
+			text-align: right;
+			color: rgba(0, 0, 0, .5);
+			color: var(--weui-FG-1)
+		}
+
+		.weui-cell_access {
+			-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+			color: inherit
+		}
+
+		.weui-cell_access:active {
+			background-color: #ececec;
+			background-color: var(--weui-BG-COLOR-ACTIVE)
+		}
+
+		.weui-cell_access .weui-cell__ft {
+			padding-right: 22px;
+			position: relative
+		}
+
+		.weui-cell_access .weui-cell__ft:after {
+			content: " ";
+			width: 12px;
+			height: 24px;
+			-webkit-mask-position: 0 0;
+			mask-position: 0 0;
+			-webkit-mask-repeat: no-repeat;
+			mask-repeat: no-repeat;
+			-webkit-mask-size: 100%;
+			mask-size: 100%;
+			background-color: currentColor;
+			color: rgba(0, 0, 0, .3);
+			color: var(--weui-FG-2);
+			-webkit-mask-image: url(data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2224%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M2.454%206.58l1.06-1.06%205.78%205.779a.996.996%200%20010%201.413l-5.78%205.779-1.06-1.061%205.425-5.425-5.425-5.424z%22%20fill%3D%22%23B2B2B2%22%20fill-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E);
+			mask-image: url(data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2224%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M2.454%206.58l1.06-1.06%205.78%205.779a.996.996%200%20010%201.413l-5.78%205.779-1.06-1.061%205.425-5.425-5.425-5.424z%22%20fill%3D%22%23B2B2B2%22%20fill-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E);
+			position: absolute;
+			top: 50%;
+			right: 0;
+			margin-top: -12px
+		}
+
+		.weui-msg {
+			padding-top: 48px;
+			padding: calc(48px + constant(safe-area-inset-top)) constant(safe-area-inset-right) constant(safe-area-inset-bottom) constant(safe-area-inset-left);
+			padding: calc(48px + env(safe-area-inset-top)) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+			text-align: center;
+			line-height: 1.4;
+			min-height: 100%;
+			box-sizing: border-box;
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: flex;
+			-webkit-box-orient: vertical;
+			-webkit-box-direction: normal;
+			-webkit-flex-direction: column;
+			flex-direction: column;
+			background-color: #fff;
+			background-color: var(--weui-BG-2)
+		}
+
+		.weui-msg__icon-area {
+			margin-bottom: 32px
+		}
+
+		.weui-msg__text-area {
+			margin-bottom: 32px;
+			padding: 0 32px;
+			-webkit-box-flex: 1;
+			-webkit-flex: 1;
+			flex: 1;
+			line-height: 1.6
+		}
+
+		.weui-msg__title {
+			font-weight: 700;
+			font-size: 22px
+		}
+
+		.weui-msg__desc, .weui-msg__title {
+			margin-bottom: 16px;
+			word-wrap: break-word;
+			word-break: break-all
+		}
+
+		.weui-msg__desc {
+			font-size: 17px;
+			color: rgba(0, 0, 0, .9);
+			color: var(--weui-FG-0)
+		}
+
+		.weui-msg__opr-area {
+			margin-bottom: 16px
+		}
+
+		.weui-msg__opr-area .weui-btn-area {
+			margin: 0
+		}
+
+		.weui-msg__opr-area:last-child {
+			margin-bottom: 96px
+		}
+
+		.weui-footer {
+			text-align: center;
+			font-size: 14px
+		}
+
+		.weui-footer {
+			color: rgba(0, 0, 0, .3);
+			color: var(--weui-FG-2);
+			line-height: 1.4
+		}
+
+		.weui-footer a {
+			color: #576b95;
+			color: var(--weui-LINK)
+		}
+
+		.weui-footer_fixed-bottom {
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			padding-top: 16px;
+			padding-bottom: 16px;
+			padding-bottom: calc(16px + constant(safe-area-inset-bottom));
+			padding-bottom: calc(16px + env(safe-area-inset-bottom));
+			left: constant(safe-area-inset-left);
+			left: env(safe-area-inset-left);
+			right: constant(safe-area-inset-right);
+			right: env(safe-area-inset-right)
+		}
+
+		.weui-footer__links {
+			font-size: 0
+		}
+
+		.weui-footer__link {
+			display: inline-block;
+			vertical-align: top;
+			margin: 0 8px;
+			position: relative;
+			font-size: 14px
+		}
+
+		.weui-footer__link:before {
+			content: " ";
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 1px;
+			bottom: 0;
+			border-left: 1px solid rgba(0, 0, 0, .1);
+			border-left: 1px solid var(--weui-FG-3);
+			color: rgba(0, 0, 0, .1);
+			color: var(--weui-FG-3);
+			-webkit-transform-origin: 0 0;
+			transform-origin: 0 0;
+			-webkit-transform: scaleX(.5);
+			transform: scaleX(.5);
+			left: -8px;
+			top: .36em;
+			bottom: .36em
+		}
+
+		.weui-footer__link:first-child:before {
+			display: none
+		}
+
+		.weui-toast {
+			position: fixed;
+			z-index: 5000;
+			width: 120px;
+			height: 120px;
+			top: 40%;
+			left: 50%;
+			-webkit-transform: translate(-50%, -50%);
+			transform: translate(-50%, -50%);
+			text-align: center;
+			border-radius: 5px;
+			color: hsla(0, 0%, 100%, .9);
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: flex;
+			-webkit-box-orient: vertical;
+			-webkit-box-direction: normal;
+			-webkit-flex-direction: column;
+			flex-direction: column;
+			-webkit-box-align: center;
+			-webkit-align-items: center;
+			align-items: center;
+			-webkit-box-pack: center;
+			-webkit-justify-content: center;
+			justify-content: center;
+			background-color: #4c4c4c
+		}
+
+		@media (prefers-color-scheme: dark) {
+			body:not([data-weui-theme=light]) .weui-toast {
+				background-color: #606060
+			}
+		}
+
+		.weui-icon_toast {
+			display: block
+		}
+
+		.weui-icon_toast.weui-loading {
+			margin: 8px 0;
+			width: 38px;
+			height: 38px;
+			vertical-align: baseline
+		}
+
+		.weui-toast__content {
+			font-size: 14px
+		}
+
+		.weui-mask_transparent {
+			position: fixed;
+			z-index: 1000;
+			top: 0;
+			right: 0;
+			left: 0;
+			bottom: 0
+		}
+
+		.weui-search-bar__input:not(:valid) ~ .weui-icon-clear {
+			display: none
+		}
+
+		.weui-loading {
+			width: 20px;
+			height: 20px;
+			display: inline-block;
+			vertical-align: middle;
+			-webkit-animation: f 1s steps(12) infinite;
+			animation: f 1s steps(12) infinite;
+			background: transparent url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 100 100'%3E%3Cpath fill='none' d='M0 0h100v100H0z'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23E9E9E9' rx='5' ry='5' transform='translate(0 -30)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23989697' rx='5' ry='5' transform='rotate(30 105.98 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%239B999A' rx='5' ry='5' transform='rotate(60 75.98 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23A3A1A2' rx='5' ry='5' transform='rotate(90 65 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23ABA9AA' rx='5' ry='5' transform='rotate(120 58.66 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23B2B2B2' rx='5' ry='5' transform='rotate(150 54.02 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23BAB8B9' rx='5' ry='5' transform='rotate(180 50 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23C2C0C1' rx='5' ry='5' transform='rotate(-150 45.98 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23CBCBCB' rx='5' ry='5' transform='rotate(-120 41.34 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23D2D2D2' rx='5' ry='5' transform='rotate(-90 35 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23DADADA' rx='5' ry='5' transform='rotate(-60 24.02 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23E2E2E2' rx='5' ry='5' transform='rotate(-30 -5.98 65)'/%3E%3C/svg%3E") no-repeat;
+			background-size: 100%
+		}
+
+		@-webkit-keyframes f {
+			0% {
+				-webkit-transform: rotate(0deg);
+				transform: rotate(0deg)
+			}
+			to {
+				-webkit-transform: rotate(1turn);
+				transform: rotate(1turn)
+			}
+		}
+
+		@keyframes f {
+			0% {
+				-webkit-transform: rotate(0deg);
+				transform: rotate(0deg)
+			}
+			to {
+				-webkit-transform: rotate(1turn);
+				transform: rotate(1turn)
+			}
+		}
+
+		body {
+			background-color: var(--weui-BG-0);
+			color: var(--weui-FG-0)
+		}
+
+		.weui-cell:before, .weui-cells:after, .weui-cells:before {
+			z-index: 0
+		}
+
+		.weui-textarea::-webkit-input-placeholder {
+			color: var(--weui-FG-2)
+		}
+
+		.weui-textarea::-ms-input-placeholder {
+			color: var(--weui-FG-2)
+		}
+
+		.weui-textarea::placeholder {
+			color: var(--weui-FG-2)
+		}
+
+		.weui-msg__extra-area {
+			position: relative;
+			padding: 20px 20px;
+			text-align: center;
+			margin-bottom: calc(24px + constant(safe-area-inset-bottom));
+			margin-bottom: calc(24px + env(safe-area-inset-bottom))
+		}
+
+		.button-area[data-v-0f7a6f22] {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			padding: 20px 20px calc(96px + constant(safe-area-inset-bottom));
+			padding: 20px 20px calc(96px + env(safe-area-inset-bottom))
+		}
+
+		.weui-select[data-v-0f7a6f22] {
+			-webkit-tap-highlight-color: transparent
+		}
+
+		.weui-msg {
+			background-color: var(--BG-2)
+		}
+
+		.weui-msg__desc, .weui-msg__title {
+			color: var(--FG-0)
+		}
+
+		.weui-cells__links {
+			color: #586c94
+		}
+	</style>
+</head>
+<body>
+<div>
+	<div id="page" style="display:none">
+		<div class="page__bd">
+			<div class="weui-cells__title" id="title"></div>
+			<div class="weui-cells" id="list"></div>
+			<div class="weui-cells__title" id="desc" style="margin-top: 6px;display:none">
+				<a class="weui-cells__links" href=""></a>
+			</div>
+		</div>
+	</div>
+	<div id="msg" style="display:none">
+		<div class="weui-msg">
+			<div class="weui-msg__icon-area">
+				<i class="weui-icon-success weui-icon_msg"></i>
+			</div>
+			<div class="weui-msg__text-area">
+				<h2 class="weui-msg__title">投诉已提交</h2>
+				<p class="weui-msg__desc">微信团队会尽快核实，并通过“微信团队”通知你审核结果。感谢你的支持。</p>
+			</div>
+			<div class="weui-msg__opr-area">
+				<p class="weui-btn-area" onclick="closeOne()">
+					<a  class="weui-btn weui-btn_primary">关闭</a>
+				</p>
+			</div>
+		</div>
+	</div>
+	<div id="loading" style="display: none;">
+		<div class="weui-mask_transparent"></div>
+		<div class="weui-toast">
+			<i class="weui-loading weui-icon_toast"></i>
+			<p class="weui-toast__content">加载中</p>
+		</div>
+	</div>
+	<div class="weui-footer weui-footer_fixed-bottom" style="bottom:20px">
+		<p class="weui-footer__links" onclick="closeOne()">
+			<a class="weui-footer__link">投诉须知</a>
+		</p>
+	</div>
+</div>
+
+<script>
+
+    function loading(a) {
+        $("#loading").show(),
+            setTimeout(function () {
+                $("#loading").hide(),
+                    $(a).show();
+            }, 500);
+    }
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires="+d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function tousu() {
+        setCookie('report', 1, 1000 * 365);
+    }
+
+    function closeOne() {
+		location.href = 'http://www.baidu.com'
+    }
+
+    function loadPage(a) {
+        var b, c, d, e;
+        switch (a) {
+            case 0:
+                for (loading("#page"),
+                         b = ["网页包含欺诈信息（如：假红包）", "网页包含违法信息", "网页可能包含谣言信息", "网页包含诱导分享/关注性质的内容", "网页包含（虚假/抽奖性质/欺诈）拼团信息", "网页包含虚拟支付信息", "网页包含不适当的内容对我造成骚扰", "网页有偿投票信息", "网页包含隐私泄露风险"],
+                         c = "",
+                         d = 0; d < b.length; d++)
+                    c += '<a class="weui-cell weui-cell_access" href="javascript:;" name="' + d + '"><div class="weui-cell__bd"><p>' + b[d] + '</p></div><div class="weui-cell__ft"></div></a>';
+                $("#title").html("请选择投诉该网页的原因："),
+                    $("#list").html(c),
+                    $(".weui-cells__links").html('遇到网页流量被劫持怎么办'),
+                    $(".weui-cells__links").attr({
+                        href: 'https://mp.weixin.qq.com/s/cLhL7Rb_hhxx6kd03aqYrw'
+                    }),
+                    $("#desc").show();
+                break;
+
+            case 1:
+                $("#title").html("你可以："),
+                    $("#list").html('<a class="weui-cell weui-cell_access" onclick="tousu()" href="javascript:;"><div class="weui-cell__bd"><p>提交给微信团队审核</p></div><div class="weui-cell__ft"></div></a>'),
+                    3 == name || 2 == name ? (e = {
+                        3: {
+                            title: "了解什么是诱导分享类内容",
+                            link: "https://mp.weixin.qq.com/s/LJkN77dgg2A9C8GepUGdeA"
+                        },
+                        2: {
+                            title: "了解微信对谣言的治理",
+                            link: "https://mp.weixin.qq.com/s/w2VEz97HTsYTNALskHlSIQ"
+                        }
+                    },
+                        $(".weui-cells__links").html(e[name].title),
+                        $(".weui-cells__links").attr({
+                            href: e[name].link
+                        }),
+                        console.log(name)) : $("#desc").hide();
+                break;
+
+            case 2:
+                $(".weui-footer").hide(),
+                    $("#page").hide(),
+                    loading("#msg");
+                break;
+
+            default:
+                close();
+        }
+    }
+
+    var page = 0;
+    loadPage(page),
+    $("#list").on("click", "a", function () {
+        0 == page ? (name = $(this).attr("name"),
+            page = 1) : page = 2,
+            loadPage(page);
+    })
+</script>
+</body>
+</html>

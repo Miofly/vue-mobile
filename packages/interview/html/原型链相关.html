@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+</head>
+<body>
+	<script>
+		// __proto__ constructor 对象独有  prototype 函数独有（函数也是对象，所以也拥有 __proto__ constructor 属性）
+		function Parent(name, age) { // 构造函数
+		    this.name = name
+		    this.age = age
+		}
+		Parent.prototype.sex = '男'
+
+		var p1 = new Parent('fx', 18) // p1是对象实例
+        // p1.prototype.sex = '女' // 对象不能设置原型 prototype 是函数独有
+		// console.log(p1.name, p1.age, p1.sex) // fx 18 女 如果
+        // p1.sex = '女' // 给对象实例新增属性
+
+		// 如果没给p1单独设置sex属性则p1会沿着__proto__找到其构造函数上的属性 找不到则 undefined
+		console.log('对象实例p1的属性：', p1)
+        console.log(p1.name, p1.age, p1.sex, p1.birthday) // fx 18 男 undefined
+
+        console.log('p1的数据类型是：', judgeType(p1)) // p1的数据类型是： object
+        console.log('p1的隐式原型', p1.__proto__) // p1的隐式原型 指向 其构造函数的 显示原型
+        console.log('构造函数的显示原型', Parent.prototype) // 构造函数的显示原型
+		console.log('对象实例的隐式原型 === 函数的显式原型', p1.__proto__ === Parent.prototype) // true 对象实例的隐式原型 === 函数的显式原型
+        console.log('构造函数的隐式原型 === Object的显示原型', Parent.prototype.__proto__ === Object.prototype) // 构造函数的隐式原型 === Object的显示原型
+		console.log('Object的隐式原型为null, 原型链的尽头', Object.prototype.__proto__) // null
+        console.log('prototype 是函数独有属性, p1.prototype：', p1.prototype) // undefined prototype 是函数独有属性
+        // constructor是从一个对象指向一个函数，指向该对象的构造函数
+		// 每个对象都有构造函数 constructor 可能是对象自己本身显式定义的或者通过__proto__在原型链中找到的。而单从constructor这个属性来讲，只有prototype对象才有。
+		console.log('Parent的数据类型是：', judgeType(Parent)) // Parent的数据类型是： function
+        console.log('p1的构造函数', p1.constructor) // p1本身没有constructor属性，但是可以通过__proto__找到，构造函数的.prototype,
+        console.log('构造函数原型的构造器是其本身', Parent.prototype.constructor) // 对象本身
+		console.log('对象实例的构造器 === 其构造函数原型的构造器', p1.constructor === Parent.prototype.constructor) // true
+		console.log('由于p1.__proto__ === Parent.prototype', p1.__proto__.constructor === Parent.prototype.constructor) // true
+
+        // 所有的函数都是构造函数Function的实例
+        console.log(Parent.constructor === Function) // Function() { [native code] }
+
+        console.log('Function 的显式原型 === Function 的隐式原型', Function.prototype === Function.__proto__) // Function 的显式原型 === Function 的隐式原型
+        console.log('Function 的构造器是他本身 Function.constructor === Function：', Function.constructor === Function)
+		console.log('原型链的尽头是null 上一级是Object 所以万物皆对象', Function.prototype.__proto__ == Object.prototype) // 原型链的尽头是null 上一级是Object 所以万物皆对象
+		console.log('所有的函数都是构造函数Function的实例', Object.constructor === Function)
+		console.log('Object.__proto__ === Function.prototype:', Object.__proto__ === Function.prototype)
+
+        function judgeType (obj) { // 判断数据类型
+            const class2type = {}
+            'Array Date RegExp Object Error'.split(' ').forEach(e => class2type[`[object ${e}]`] = e.toLowerCase())
+            if (obj === null) return String(obj)
+            return typeof obj === 'object' ? class2type[Object.prototype.toString.call(obj)] || 'object' : typeof obj
+        }
+	</script>
+</body>
+</html>

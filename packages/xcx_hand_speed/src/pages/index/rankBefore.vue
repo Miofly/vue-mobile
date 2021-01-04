@@ -54,14 +54,14 @@
                                 <view>
                                     <view class="text-18 text-bold" style="color: #333333;width: 80rpx">{{ person.level == '' || person.level == undefined ? '999+' : person.level }}</view>
                                     <view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="width: 80rpx;height: 80rpx;margin-left: 15rpx"
-                                          :style="{backgroundImage: person.avatar == '' || person.avatar == undefined ? 'url('+ infoConfig.defaultAvatar +')' : 'url('+ person.avatar +')'}">
+                                          :style="{backgroundImage: person.avatar == '' || person.avatar == undefined ? 'url('+ avatar +')' : 'url('+ person.avatar +')'}">
                                         <view v-if="false" class="cu-tag badge">999</view>
                                     </view>
-                                    <text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ person.nickName == '' || person.nickName == undefined ? name : person.nickName  }}</text>
+                                    <text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ person.nickName == '' || person.nickName == undefined ? name : person.nickName }}</text>
                                 </view>
                             </view>
                             <view v-if="true" class="action">
-                                <text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ person.score == '' || person.score == undefined ? 0 : person.score }}</text>
+                                <text style="margin-left: 40rpx;color: #772E01;" class="text-16 text-bold">{{ person.score == '' || person.score == undefined ? '未上榜' : person.score }}</text>
                             </view>
                         </view>
                     </view>
@@ -71,7 +71,7 @@
                             <view v-for="(item, index) in rankLists" :key="index" class="cu-item" style="border-bottom: 0px solid transparent!important;background-color: rgba(255, 252, 225, 1)!important;">
                                 <view class="content">
                                     <view>
-                                        <view class="text-18 text-bold" style="color: #333333;width: 80rpx">{{item.level == '' || item.level == undefined ? '999+' : level}}</view>
+                                        <view class="text-18 text-bold" style="color: #333333;width: 80rpx">{{item.level == '' || item.level == undefined ? '999+' : item.level}}</view>
                                         <view v-if="item.avatar == '' || item.avatar == undefined" class="cu-avatar" :class="[false ? 'radius' : 'round']" style="width: 80rpx;height: 80rpx;margin-left: 15rpx"
                                               :style="{backgroundImage: 'url('+ infoConfig.defaultAvatar +')'}">
                                             <view v-if="false" class="cu-tag badge">999</view>
@@ -169,6 +169,7 @@ export default class extends Vue {
 
         // #ifdef MP-WEIXIN
         const { data } = await commonPost('/api/user_achievement/group_top', { openGid: this.$store.state.center.openGid }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
+        // const { data } = await commonPost('/api/user_achievement/group_top', { openGid: 'GBfQr48D1dQF4o80zSxpX_-98G94' }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
         // #endif
         this.rankLists = data
         const personIndex = this.rankLists.findIndex(item => {

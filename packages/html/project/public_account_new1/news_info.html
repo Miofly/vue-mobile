@@ -120,6 +120,7 @@
 
 <script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/adInfo.js"></script>
 <script>
+    var ip = ''
     var more_click = 0
     commonGet('/articles/' + getParam('article_id') + '?from_user_id=' + getParam('from_user_id') + '', function (res) {
         if (res.code == 200) {
@@ -127,10 +128,34 @@
             $('#content').html(res.data.content)
             $('#tsText').html('分享新闻给好友，每人阅读得' + res.data.price/10 + '元红包奖励')
             $('#dynamicEffect').click(function () {
-                location.href = res.data.url + '/partake.html' + location.search + ''
+                location.href = res.data.url + '/partake.html' + location.search + '&ip='+ ip +''
             })
         }
     })
+
+    var Ajax = {
+        get: function (url, fn) {
+            // XMLHttpRequest对象用于在后台与服务器交换数据
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", url, true);
+            xhr.onreadystatechange = function () {
+                // readyState == 4说明请求已完成
+                if ((xhr.readyState == 4 && xhr.status == 200) || xhr.status == 304) {
+                    // 从服务器获得数据
+                    fn.call(this, xhr.responseText);
+                }
+            };
+            xhr.send();
+        },
+    };
+
+    Ajax.get(
+        "https://1905658906400513.cn-shanghai.fc.aliyuncs.com/2016-08-15/proxy/getIp/getIp/",
+        function (data) {
+            var data_ip = JSON.parse(data);
+            ip = data_ip.data.ip;
+        }
+    )
 
     function openAll() {
         more_click = 1
@@ -149,46 +174,140 @@
             "http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/lf20_zivk5lyq.json" // the path to the animation json
     });
 
-    var adListIndex = 0;
-    var adList = [];
-    var deny_cids = []; // 被禁止的创意广告id
 
-
-    var page = {num: 1, size:3}
-    var maxPgae = 0
-    getAds()
-
-    function getAds () {
-        commonGet('/adverts?page_type=7&page=' + page.num + '&per_page=' + page.size + '', function (res) {
-            if (res.code == 200) {
-                adList = res.data
-                maxPgae = res.meta.last_page
-            }
-            ee.emitEvent('fetch-jj-ad')
-        }, {'ACT-USER-ID': getParam('user_id')})
+    function setListData(curPageData, page) {
+        var listDom = document.getElementById("dataList");
+        for (var i = 0; i < curPageData.length; i++) {
+            var pd = curPageData[i];
+            var str = '<div id="news'+ i +'" style="display: flex;justify-content: space-between;height: 2.05rem;padding-top: 0.24rem" onclick="goInfo(' + pd.id + ', ' + i + ')">\n' +
+                '            <div style="width: 65%;">\n' +
+                '                <div style="font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.44rem;" class="line-two">' + pd.title + '</div>\n' +
+                '                <div style="display: flex;justify-content: space-between;margin-top: 0.28rem">\n' +
+                '                    <span style="color: rgba(255, 66, 55, 1);font-size: 14px;"><img src="./img/xhb.png" style="margin-top: -0.08rem;margin-right: 0.12rem;width: 0.28rem;height: 0.28rem">' +
+                '<span>分享好友得'+ pd.price/10 +'元红包</span></span>\n' +
+                '                    <img src="./img/fxzq.png" style="height: 0.34rem;">\n' +
+                '                </div>\n' +
+                '            </div>\n' +
+                '            <div style="width: 2rem;height: 1.6rem;padding-right: 0.00rem;line-height: 1.4rem">\n' +
+                '                <img src="'+ pd.cover[0].path +'" style="height: 1.6rem;object-fit: cover;width: 2rem;border-radius: 4px;object-position: center">\n' +
+                '            </div>\n' +
+                '        </div><div style="height: 1px;background: #EEEEEE;width: 100%;margin-left: 0%"></div>';
+            var liDom = document.createElement("div");
+            liDom.setAttribute('id', 'adIndex'+ (i+1 + (page.num - 1)*page.size) +'')
+            liDom.innerHTML = str;
+            listDom.appendChild(liDom);
+        }
     }
 
-    ee.addListener('fetch-jj-ad', function() {
-        var curData = adList[adListIndex];
-        Ad.singleAd(
-            $.extend(curData, {
-                data: {
-                    app_id: 103019,
-                    deny_cids: deny_cids.join(',')
+    function goInfo (id, newId) {
+        $('#news' + newId).addClass('news_active')
+
+        var params = location.search
+        var params1 = delParam(location.search, 'article_id')
+        var params2 = delParam(params1, 'is_index')
+
+        location.href = 'news_info.html'+ params2 +'&is_index=1&article_id='+ id +''
+    }
+
+    if (getParam('is_index') == 1) {
+        var page = {num: 1, size:10}
+        var maxPgae = 0
+        getText()
+        function getText () {
+            commonGet('/articles?page=' + page.num + '&per_page=' + page.size + '',
+                function (res) {
+                    if (res.code == 200) {
+                        maxPgae = Math.ceil(res.meta.total/res.meta.per_page)
+                    }
+                    setListData(res.data, page)
+                }, {'ACT-USER-ID': getParam('user_id')})
+        }
+
+        var condition = true
+        setTimeout(() => {
+            $(window).scroll(function () {
+                var scrollTop = $(this).scrollTop();
+                var scrollHeight = $(document).height();
+                var windowHeight = $(this).height();
+
+                if (scrollTop + windowHeight + 150 >= scrollHeight && page.num < maxPgae) {
+                    if (condition) {
+                        condition = false
+                        page.num++
+                        getText()
+                        setTimeout(function() {
+                            condition = true
+                        }, 1000)
+                    }
                 }
-            }),
-            function(res) {
-                if (res && deny_cids.indexOf(res.cid) == -1) {
-                    /* 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复 */
-                    deny_cids.push(res.cid); //插入创意id 用于广告位被重复广告占用
+            })
+        }, 2000)
+    } else {
+        var adListIndex = 0;
+        var adList = [];
+        var deny_cids = []; // 被禁止的创意广告id
+
+        var page = {num: 1, size:3}
+        var maxPgae = 0
+        getAds()
+
+        function getAds () {
+            commonGet('/adverts?page_type=7&page=' + page.num + '&per_page=' + page.size + '', function (res) {
+                if (res.code == 200) {
+                    adList = res.data
+                    maxPgae = res.meta.last_page
                 }
-                if (adListIndex === adList.length - 1) return;
-                adListIndex++;
-                /* 请求下个广告 */
-                ee.emitEvent('fetch-jj-ad');
-            }
-        );
-    });
+                ee.emitEvent('fetch-jj-ad')
+            }, {'ACT-USER-ID': getParam('user_id')})
+        }
+
+        ee.addListener('fetch-jj-ad', function() {
+            var curData = adList[adListIndex];
+            Ad.singleAd(
+                $.extend(curData, {
+                    data: {
+                        app_id: 103019,
+                        deny_cids: deny_cids.join(',')
+                    }
+                }),
+                function(res) {
+                    if (res && deny_cids.indexOf(res.cid) == -1) {
+                        /* 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复 */
+                        deny_cids.push(res.cid); //插入创意id 用于广告位被重复广告占用
+                    }
+                    if (adListIndex === adList.length - 1) return;
+                    adListIndex++;
+                    /* 请求下个广告 */
+                    ee.emitEvent('fetch-jj-ad');
+                }
+            );
+        });
+
+        var condition = true
+        setTimeout(() => {
+            $(window).scroll(function () {
+                var scrollTop = $(this).scrollTop();
+                var scrollHeight = $(document).height();
+                var windowHeight = $(this).height();
+
+                if (scrollTop + windowHeight + 150 >= scrollHeight && page.num < maxPgae) {
+                    if (condition) {
+                        console.log('触发了吗')
+                        condition = false
+                        adListIndex = 0
+                        adList = []
+                        page.num++
+                        getAds()
+                        setTimeout(function() {
+                            condition = true
+                        }, 1000)
+                    }
+                }
+            })
+
+        }, 2000)
+    }
+
 
 
     function gogg(url) {
@@ -225,30 +344,6 @@
     } else {
         gogg(location.origin + '/xxl.html')
     }
-
-    var condition = true
-    setTimeout(() => {
-        $(window).scroll(function () {
-            var scrollTop = $(this).scrollTop();
-            var scrollHeight = $(document).height();
-            var windowHeight = $(this).height();
-
-            if (scrollTop + windowHeight + 150 >= scrollHeight && page.num < maxPgae) {
-                if (condition) {
-                    console.log('触发了吗')
-                    condition = false
-                    adListIndex = 0
-                    adList = []
-                    page.num++
-                    getAds()
-                    setTimeout(function() {
-                        condition = true
-                    }, 1000)
-                }
-            }
-        })
-
-    }, 2000)
 
     function delParam(url, paramKey) {
         let beforeUrl = url.substr(0, url.indexOf("?"));   //?之前主地址

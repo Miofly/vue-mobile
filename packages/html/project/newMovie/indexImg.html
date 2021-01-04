@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" style="overflow-x: hidden">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+	<title>Title</title>
+	<script src="js/jquery.js"></script>
+	<script src="js/adaptive.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/video.css"/>
+</head>
+<body style="font-size: 0.05rem;background: black">
+<div id="main" style="position: relative"></div>
+<div id="detail" class="padding"></div>
+<script>
+    var obj = {
+        title: '八佰111',
+		mark: '9.9',
+		clear: '· 超清',
+		type: '战争片 动作 战争',
+		star: '主演：王千源 / 张译 / 姜武 / 黄志忠 / 张俊一 / 欧豪',
+		direct: '导演：管虎',
+		desc: '1937年淞沪会战的最后一役，“八百壮士”奉命坚守上海四行仓库，以少敌多顽强抵抗四天四夜。电影《八佰》由管虎导演，是亚洲首部全片使用IMAX摄影机拍摄的商业电影，将于2020年8月21日全国影院上映。',
+		poster: 'https://rpg.pic-imges.com/pic/upload/vod/2020-07/1594433160.jpg',
+		src: 'https://good.jieshuo-okzy.com/20200507/5724_323db7a1/index.m3u8',
+
+		endUrl: '',
+		ssUrl: 'http://localhost:8888/vue-ts/other/html/project/newMovie/indexImg.html?status=1',
+		tssUrl: 'http://localhost:8888/vue-ts/other/html/project/newMovie/indexImg.html?status=1&tstatus=1',
+		bTime: 60,
+
+		ds: './js/DPlayer.min.js',
+		hls: './js/hls.js',
+        bofang: './img/bofang.png',
+        huo: './img/huo.png',
+        ld: './img/loading.gif',
+        picTwo: './img/loading_wap3.gif',
+	}
+
+	var temp = 'sadasdasd'
+    function getVideo(url) {
+        var dp = new DPlayer({
+            container: document.getElementById('ppbf'),
+            video: {
+                url: obj.src,
+                pic: obj.picTwo,
+            },
+            preload: 'auto',
+            autoplay: true
+        });
+        dp.play()
+        dp.on('timeupdate', function () {
+            if (dp.video.currentTime > obj.bTime && getParam('tstatus') != 1 ) {
+				dp.pause()
+				location.href = obj.tssUrl
+            }
+
+            if (getParam('tstatus') == 1 && temp == 'sadasdasd') {
+                dp.seek(obj.bTime)
+                temp = 'sadasdasdadasd'
+            }
+        });
+        dp.on('ended', function () {
+			location.href = obj.endUrl
+        });
+    }
+
+    function loadAsyncScript(src, callback) { // 同步加载js
+        var head = document.getElementsByTagName('head')[0]
+        var script = document.createElement('script')
+        script.setAttribute('type', 'text/javascript')
+        script.setAttribute('src', src)
+        script.setAttribute('async', true)
+        script.setAttribute('defer', true)
+        head.appendChild(script)
+        if (script.readyState) { // ie
+            script.onreadystatechange = function () {
+                var state = this.readyState
+                if (state === 'loaded' || state === 'complete') {
+                    callback()
+                }
+            }
+        } else {
+            script.onload = function () {
+                callback()
+            }
+        }
+    }
+
+	if (getParam('status') == 1) {
+        loadAsyncScript(obj.ds, jiazai2)
+        function jiazai2(){
+            loadAsyncScript(obj.hls, getVideo)
+        }
+        $('#main').append('<div id="ppbf" style="height: 50vh;background: url(' + obj.poster +');background-repeat:no-repeat;background-position:center;"></div>')
+    } else {
+        $('#main').append('<div id="dplayer" style="height: 50vh;background: url(' + obj.poster +');background-repeat:no-repeat;background-position:center;"></div>' +
+            '<img onclick="bofang()" id="bofang" src="'+ obj.bofang +'" style="position: absolute;top: 50%; left: 50%; transform:translate(-50%,-50%);width: 80px">')
+        function bofang	() {
+            $('#main').append('<div id="new" style="height: 50vh;background: black"></div>' +
+                '<strong style="color: white;position: absolute;top: 48%; left: 60%; transform:translate(-50%,-50%);width: 80vw;font-size: 18px">连接成功,稍等数据正在缓冲中...</strong><img src="'+ obj.ld +'" style="position: absolute;top: 60%; left: 50%; transform:translate(-50%,-50%);">')
+            $('#dplayer').css('display', 'none')
+            $('#bofang').css('display', 'none')
+            setTimeout(() => {
+                location.href = obj.ssUrl
+            }, 2000)
+        }
+	}
+
+
+    $('#detail').append('<div style="margin-top: 0.21rem">' +
+        '<img style="width: 0.18rem;height: 0.21rem" class="fl" src="'+ obj.huo +'"><span class="fl" style="width:2.52rem;height:0.25rem;font-size:0.18rem;font-weight:400;color:rgba(255,255,255,1);line-height:0.2rem;">'+ obj.title+'</span></div>' +
+        '<div style="clear: both;margin-top: 0.08rem"><span style="width:1.14rem;height:0.41rem;">' +
+        '<span style="color:rgba(253,74,89,1);font-size: 0.29rem;font-weight:600;">'+ obj.mark+'</span>' +
+        '<span style="font-size: 0.16rem;color: white">'+ obj.clear+'</span>' +
+        '<span class="margin-left-xxl" style="width:1rem;height:0.21rem;font-size:0.15rem;font-weight:400;color:rgba(255,255,255,1);line-height:0.21rem;">' + obj.type + '</span>' +
+        '</div><div style="margin-top: 0.08rem;width:100vw;height:0.21rem;font-size:0.15rem;font-weight:400;color:rgba(255,255,255,1);line-height:0.21rem;">' + obj.star+ '</div>' +
+        '<div style="margin-top: 0.08rem;width:0.90rem;height:0.21rem;font-size:0.15rem;font-weight:400;color:rgba(255,255,255,1);line-height:0.21rem;">' +obj.direct+ '</div>' +
+        '<div style="margin-top: 0.08rem;;font-size:0.15rem;font-weight:400;color:rgba(255,255,255,1);line-height:0.21rem;"><div style="">' +obj.desc+ '</div></div>')
+
+    function getParam(name, url) { // 获取地址栏参数
+        if (typeof name !== 'string') return false
+        if (!url) url = window.location.href
+        // 当遇到name[xx]时，对方括号做一下转义为 name\[xxx\]，因为下面还需要使用name做正则
+        name = name.replace(/[\[\]]/g, '\\$&')
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)')
+        var results = regex.exec(url)
+        if (!results) return null
+        if (!results[2]) return ''
+        return decodeURIComponent(results[2].replace(/\+/g, ' '))
+    }
+</script>
+</body>
+</html>
