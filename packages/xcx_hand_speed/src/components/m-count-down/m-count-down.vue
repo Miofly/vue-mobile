@@ -217,7 +217,7 @@ export default {
 				this.seconds--;
 				// 发出change事件
 				this.$emit('change', this.seconds);
-                if (this.seconds < 0.05) {
+                if (this.seconds < 0.1) {
                     this.endBefore();
                 }
 				if (this.seconds < 0) {

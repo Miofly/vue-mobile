@@ -34,10 +34,13 @@
             <ad v-if="ptgg" ad-intervals="30" :unit-id="ptgg" style="margin-top: 28rpx;position: fixed;bottom: 0"></ad>
 		</view>
 
-        <cover-view v-if="modalStatus" class="text-center" style="width: 560rpx;height: 328rpx;border-radius: 10px;position: fixed;left: 50%;top: 60%;transform:translate(-50%,-50%);background: #fff;z-index: 999;">
-            <cover-view style="height: 228rpx;line-height: 228rpx" class="text-18">成绩：{{num}}次</cover-view>
-            <cover-view style="height: 1px;background: #F5F4F3;width: 100%"></cover-view>
-            <cover-view @click="modalStatus = false" style="height: 98rpx;line-height: 98rpx;color: rgba(255, 121, 50, 1)" class="text-18">关闭</cover-view>
+        <cover-view v-if="modalStatus" class="text-center " style="border: 5px solid #36B2F1;border-radius: 12px;background: #F5F6FC;
+        box-shadow: 0px 0px 16px 0px rgba(0, 41, 62, 0.34);width: 570rpx;height: 500rpx;position: fixed;left: 50%;top: 50%;transform:translate(-50%,-50%);z-index: 999;">
+            <cover-image src="/static/images/jxtz.png" style="height: 96rpx;width: 570rpx;margin-top:44rpx"></cover-image>
+            <cover-view v-if="chanceNum > 0" class="text-18" style="color: #333;margin-top: 84rpx">你点击了{{num}}次</cover-view>
+            <cover-view v-else class="text-18" style="color: #333;margin-top: 84rpx">没有机会了</cover-view>
+            <cover-image @click="getVideo" src="/static/images/pgtext.png" style="margin-top: 100rpx;width: 80%;margin-left: 10%;height: 100rpx;"></cover-image>
+            <cover-view @click="getVideo" style="position: absolute;top: 386rpx;font-size: 20px;color: white;width: 100%;text-align: center">{{tsText}}</cover-view>
         </cover-view>
 
 	</view>
@@ -66,8 +69,6 @@ export default class extends Vue {
 		againSrc: '/static/images/zailai@2x.png',
 	}
 
-
-
 	status: boolean = true
     modalStatus: boolean = false
 	millisecond: number = 0
@@ -78,6 +79,7 @@ export default class extends Vue {
 	gameStatus: boolean = false
 	gameOut: boolean = false
 	promptText: string = '点我'
+    tsText: string = '确认'
 	firstNum: string = '0'
 	endNum: string = '0'
 	imgChange: boolean = true
@@ -169,7 +171,8 @@ export default class extends Vue {
 	}
 
 	goGame () {
-        if (this.chanceNum > 0) {
+        if (!this.modalStatus) {
+            if (this.chanceNum > 0) {
                 if (this.tempStatus) {
                     this.tempStatus = false
                     this.gameOut = false
@@ -186,26 +189,31 @@ export default class extends Vue {
                     this.startCountDown()
                 }
                 this.sumCount++
-            if (!this.gameOut) {
-                this.num++
-                if (this.num < 10) {
-                    this.firstNum = '0'
-                    this.endNum = String(this.num)
-                } else {
-                    this.firstNum = String(this.num).slice(0, 1)
-                    this.endNum = String(this.num).slice(1, 2)
+                if (!this.gameOut) {
+                    this.num++
+                    if (this.num < 10) {
+                        this.firstNum = '0'
+                        this.endNum = String(this.num)
+                    } else {
+                        this.firstNum = String(this.num).slice(0, 1)
+                        this.endNum = String(this.num).slice(1, 2)
+                    }
                 }
+            } else {
+                this.tsText = '观看视频，增加次数'
+                this.tsText = '观看视频，增加次数'
+                this.modalStatus = true
+                // this.rewardedVideoAd.show().catch(() => {
+                // 	// 失败重试
+                // 	this.rewardedVideoAd.load()
+                // 		.then(() => this.rewardedVideoAd.show())
+                // 		.catch(err => {
+                // 			console.log(err)
+                // 		})
+                // })
             }
-        } else {
-            this.rewardedVideoAd.show().catch(() => {
-            	// 失败重试
-            	this.rewardedVideoAd.load()
-            		.then(() => this.rewardedVideoAd.show())
-            		.catch(err => {
-            			console.log(err)
-            		})
-            })
         }
+
 	}
 
 	startCountDown () {
@@ -230,13 +238,30 @@ export default class extends Vue {
         })
     }
 
+    getVideo () {
+    	if (this.tsText == '确认') {
+    	    this.modalStatus = false
+    	} else {
+    	    this.rewardedVideoAd.show().catch(() => {
+    	    	// 失败重试
+    	    	this.rewardedVideoAd.load()
+    	    		.then(() => this.rewardedVideoAd.show())
+    	    		.catch(err => {
+    	    			console.log(err)
+    	    		})
+    	    })
+            this.modalStatus = false
+        }
+    }
+
 	end () {
 		clearInterval(this.millisecondTimer)
         if (this.chanceNum > 0) {
             this.chanceNum--
             this.$mio.mioRoot.setStorage('chance_num', this.chanceNum)
         } else {
-            this.chanceNum = '机会用完了，点击按钮观看视频可增加次数'
+            // this.chanceNum = '机会用完了，点击按钮观看视频可增加次数'
+            this.tsText = '观看视频，增加次数'
         }
 		const tempTimer = setInterval(() => {
 			this.millisecond -= 1

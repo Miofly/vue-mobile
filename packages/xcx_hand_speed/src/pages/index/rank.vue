@@ -142,7 +142,10 @@ export default class extends Vue {
         }
     }
 
-    onShow () {
+    async onShow () {
+        const { data } = await commonPost('/api/user_achievement/top', { type: 1 }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
+        this.rankLists = data.list
+        this.person = data.mine
     	this.getTrueUserInfo()
     }
 
@@ -173,19 +176,14 @@ export default class extends Vue {
 
 	rankLists: any = []
 
-	created () {
-		// #ifdef H5
-		// @ts-ignore
-		// const { data } = await commonGet('/mytest/articles?page=2&limit=50')
-		// #endif
-
+    created () {
         setTimeout(async () => {
             const { data } = await commonPost('/api/user_achievement/top', { type: 1 }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
             this.rankLists = data.list
             this.person = data.mine
         }, 1000)
+    }
 
-	}
 
 	goGame () {
 		this.$mio.mioRoot.push('/pages/index/playGame')
