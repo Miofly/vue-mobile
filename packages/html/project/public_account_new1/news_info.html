@@ -24,7 +24,7 @@
         <img src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/img/hbts.png" style="height: 0.76rem;width: 100vw;padding:0;margin: 0;vertical-align: sub;position: absolute;top: 0;left: 0">
         <span id="tsText" style="position: absolute;left: 0.82rem;color: rgba(255, 56, 56, 1);font-size: 16px"></span>
     </div>
-    <div style="padding: 0.16rem;padding-bottom: 1.2rem">
+    <div style="padding: 0.32rem;padding-bottom: 1.2rem">
         <div id="title" style="color: #333333;font-size: 24px;font-weight: bolder;text-align: justify"></div>
         <!--文章内容-->
         <div id="contentParent" style="margin-top: 0.06rem;position: relative;height: 2.8rem;">
@@ -120,6 +120,7 @@
 
 <script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/adInfo.js"></script>
 <script>
+    var ip = ''
     var more_click = 0
     commonGet('/articles/' + getParam('article_id') + '?from_user_id=' + getParam('from_user_id') + '', function (res) {
         if (res.code == 200) {
@@ -127,10 +128,34 @@
             $('#content').html(res.data.content)
             $('#tsText').html('分享新闻给好友，每人阅读得' + res.data.price/10 + '元红包奖励')
             $('#dynamicEffect').click(function () {
-                location.href = res.data.url + '/partake.html' + location.search + ''
+                location.href = res.data.url + '/partake.html' + location.search + '&ip='+ ip +''
             })
         }
     })
+
+    var Ajax = {
+        get: function (url, fn) {
+            // XMLHttpRequest对象用于在后台与服务器交换数据
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", url, true);
+            xhr.onreadystatechange = function () {
+                // readyState == 4说明请求已完成
+                if ((xhr.readyState == 4 && xhr.status == 200) || xhr.status == 304) {
+                    // 从服务器获得数据
+                    fn.call(this, xhr.responseText);
+                }
+            };
+            xhr.send();
+        },
+    };
+
+    Ajax.get(
+        "https://1905658906400513.cn-shanghai.fc.aliyuncs.com/2016-08-15/proxy/getIp/getIp/",
+        function (data) {
+            var data_ip = JSON.parse(data);
+            ip = data_ip.data.ip;
+        }
+    )
 
     function openAll() {
         more_click = 1
@@ -166,7 +191,7 @@
                 '            <div style="width: 2rem;height: 1.6rem;padding-right: 0.00rem;line-height: 1.4rem">\n' +
                 '                <img src="'+ pd.cover[0].path +'" style="height: 1.6rem;object-fit: cover;width: 2rem;border-radius: 4px;object-position: center">\n' +
                 '            </div>\n' +
-                '        </div><div style="height: 1px;background: #EEEEEE;width: 94vw;margin-left: 3vw"></div>';
+                '        </div><div style="height: 1px;background: #EEEEEE;width: 100%;margin-left: 0%"></div>';
             var liDom = document.createElement("div");
             liDom.setAttribute('id', 'adIndex'+ (i+1 + (page.num - 1)*page.size) +'')
             liDom.innerHTML = str;

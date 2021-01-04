@@ -67,38 +67,12 @@
      */
     function getGoalUrl() {
         const query = location.search.replace(/user_id/, 'from_user_id');
-        var Ajax = {
-            get: function (url, fn) {
-                // XMLHttpRequest对象用于在后台与服务器交换数据
-                var xhr = new XMLHttpRequest();
-                xhr.open("GET", url, true);
-                xhr.onreadystatechange = function () {
-                    // readyState == 4说明请求已完成
-                    if ((xhr.readyState == 4 && xhr.status == 200) || xhr.status == 304) {
-                        // 从服务器获得数据
-                        fn.call(this, xhr.responseText);
-                    }
-                };
-                xhr.send();
-            },
-        };
-
-
-        Ajax.get(
-            "https://1905658906400513.cn-shanghai.fc.aliyuncs.com/2016-08-15/proxy/getIp/getIp/",
-            function (data) {
-                var data_ip = JSON.parse(data);
-                var ip = data_ip.data.ip;
-                commonGet('/url/outer_goal', function (res) {
-                    if (res.code == 200) {
-                        url = res.data.url
-                        location.href = url + '/news_info_partaked.html' + query+'&ip='+ ip +'';
-                    }
-                })
+        commonGet('/url/outer_goal', function (res) {
+            if (res.code == 200) {
+                url = res.data.url
+                location.href = url + '/news_info_partaked.html' + query+'&ip='+ getParam('ip') +'';
             }
-        )
-
-
+        })
         return false;
     }
 
