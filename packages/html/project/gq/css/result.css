@@ -1,0 +1,248 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.contain {
+  width: 100vw;
+  position: relative;
+  left: 0;
+  top: 0;
+}
+.contain .top {
+  width: 100vw;
+}
+.contain .top .top_img {
+  width: 100%;
+  height: 100%;
+}
+.contain .choice {
+  width: 100vw;
+  margin-top: -1.5rem;
+  position: relative;
+}
+.contain .choice .choice_img {
+  width: 100%;
+  height: 100%;
+}
+.contain .choice .touxiang {
+  width: 22.7vw;
+  height: 22.7vw;
+  position: absolute;
+  left: 0.4rem;
+  top: 0.42rem;
+  border-radius: 50%;
+}
+.contain .center {
+  width: 100vw;
+  position: relative;
+  left: 0;
+  top: 0;
+  border-radius: 0 0 14px 14px;
+}
+.contain .center .list {
+  width: 93.6vw;
+  height: 1.82rem;
+  box-shadow: 0px 2px 4px 0px #D3D1C9;
+  margin-top: 0.24rem;
+  margin-left: 0.24rem;
+}
+.contain .center .list .list_img {
+  width: 90.7vw;
+  position: relative;
+  left: 0.22rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.contain .center #list1 {
+  width: 93.6vw;
+  height: 1.82rem;
+  background: #30AA33;
+  box-shadow: 0px 3px 4px 0px #E8E6DF;
+  border: 1px solid #FAE8AC;
+  margin-top: 0.24rem;
+  margin-left: 0.24rem;
+}
+.contain .center #list2 {
+  width: 93.6vw;
+  height: 1.82rem;
+  background: #81C71E;
+  box-shadow: 0px 3px 4px 0px #E8E6DF;
+  border: 1px solid #FAE8AC;
+  margin-top: 0.24rem;
+  margin-left: 0.24rem;
+}
+.contain .center #list3 {
+  width: 93.6vw;
+  height: 1.82rem;
+  background: #F3DC00;
+  box-shadow: 0px 3px 4px 0px #E8E6DF;
+  border: 1px solid #FAE8AC;
+  margin-top: 0.24rem;
+  margin-left: 0.24rem;
+}
+.contain .center #list4 {
+  width: 93.6vw;
+  height: 1.82rem;
+  background: #FDC600;
+  box-shadow: 0px 3px 4px 0px #E8E6DF;
+  border: 1px solid #FAE8AC;
+  margin-top: 0.24rem;
+  margin-left: 0.24rem;
+}
+.contain .center #list5 {
+  width: 93.6vw;
+  height: 1.82rem;
+  background: #F89B06;
+  box-shadow: 0px 3px 4px 0px #E8E6DF;
+  border: 1px solid #FAE8AC;
+  margin-top: 0.24rem;
+  margin-left: 0.24rem;
+}
+.contain .center #list6 {
+  width: 93.6vw;
+  height: 1.82rem;
+  background: #F36F0D;
+  box-shadow: 0px 3px 4px 0px #E8E6DF;
+  border: 1px solid #FAE8AC;
+  margin-top: 0.24rem;
+  margin-left: 0.24rem;
+}
+.contain .center #list7 {
+  width: 93.6vw;
+  height: 1.82rem;
+  background: #E91D18;
+  box-shadow: 0px 3px 4px 0px #E8E6DF;
+  border: 1px solid #FAE8AC;
+  margin-top: 0.24rem;
+  margin-left: 0.24rem;
+}
+.contain .center #list8 {
+  width: 93.6vw;
+  height: 1.82rem;
+  background: #C11D3C;
+  box-shadow: 0px 3px 4px 0px #E8E6DF;
+  border: 1px solid #FAE8AC;
+  margin-top: 0.24rem;
+  margin-left: 0.24rem;
+}
+.contain .center #list9 {
+  width: 93.6vw;
+  height: 1.82rem;
+  background: #9B1D47;
+  box-shadow: 0px 3px 4px 0px #E8E6DF;
+  border: 1px solid #FAE8AC;
+  margin-top: 0.24rem;
+  margin-left: 0.24rem;
+}
+.contain .center #list0 {
+  width: 93.6vw;
+  height: 1.82rem;
+  background: #30AA33;
+  box-shadow: 0px 3px 4px 0px #E8E6DF;
+  border: 1px solid #FAE8AC;
+  margin-top: 0.24rem;
+  margin-left: 0.24rem;
+  margin-bottom: 0.46rem;
+}
+.contain .center .radious {
+  width: 100vw;
+}
+.contain .center .radious .radious_img {
+  width: 100%;
+  height: 100%;
+  vertical-align: middle;
+}
+.contain .bottom {
+  background-color: #4DAFFF;
+}
+.contain .bottom .jibie {
+  width: 100vw;
+}
+.contain .bottom .anniu {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+.contain .bottom .anniu .yaoqing {
+  width: 48.3vw;
+}
+.contain .bottom .anniu .save {
+  width: 44.53vw;
+}
+.contain .bottom .again {
+  margin-left: 26vw;
+  width: 48.3vw;
+  margin-top: 0.4rem;
+  padding-bottom: 0.5rem;
+}
+.contain .bottom .again .again_img {
+  width: 100%;
+  height: 100%;
+}
+.contain .mengceng {
+  width: 100vw;
+  height: 100rem;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  background: #000000;
+  opacity: 0.59;
+  display: none;
+}
+.contain .invite {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: none;
+}
+.contain .invite .invite_title {
+  width: 92.3vw;
+  height: 1.7rem;
+  position: fixed;
+  left: 3.7vw;
+  top: 0;
+}
+.contain .invite .share {
+  width: 87.2vw;
+  position: fixed;
+  top: 1.76rem;
+  left: 0.48rem;
+}
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10% {
+    transform: translateX(-9px);
+  }
+  20% {
+    transform: translateX(8px);
+  }
+  30% {
+    transform: translateX(-7px);
+  }
+  40% {
+    transform: translateX(6px);
+  }
+  50% {
+    transform: translateX(-5px);
+  }
+  60% {
+    transform: translateX(4px);
+  }
+  70% {
+    transform: translateX(-3px);
+  }
+  80% {
+    transform: translateX(2px);
+  }
+  90% {
+    transform: translateX(-1px);
+  }
+}
+.contain .shake {
+  animation: shake 2s linear;
+}

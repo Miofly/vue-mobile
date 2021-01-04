@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"  content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/index.css">
+	<style>
+		.active{
+			background:#E15465!important;
+		}
+	</style>
+</head>
+<body>
+    <div class="contain">
+        <div class="mengceng"></div>
+        <div class="top">
+            <img class="top_img" src="image/beijing@2x.png" alt="">
+        </div>
+        <div class="choice">
+            <img class="choice_img" src="image/huangse@2x.png" alt="">
+            <img class="touxiang" src="image/1.jpg" alt="">
+        </div>
+        <div class="center">
+            <div class="remind">
+                <img class="remind_img" src="image/hongsebeijing@2x.png" alt="">
+                <img class="jiantou_img dong" src="image/jiantou@2x.png" alt="">
+            </div>
+            <div id="lists">
+			</div>
+            <div class="radious">
+                <img class="radious_img" src="image/radious@2x.png" alt="">
+            </div>
+
+        </div>
+        <div class="bottom">
+          <img class="bottom_img dong2" src="image/jieguo@2x.png" alt="">
+        </div>
+        <div class="wenzi">
+            <p> 最多只能选择<span>九项</span>哦～</p>
+            <p>亲，你已经够惨啦</p>
+            <p>快去查看结果，跟<span>好友吐槽</span>吧</p>
+        </div>
+        <div class="know">
+            <img class="know_img dong2" src="image/wzhidaol@2x.png" alt="">
+        </div>
+        <div class="fenxiang">
+           <img class="fengxiang_title" src="image/pengyou@2x.png" alt="">
+           <img class="share shake" src="image/fenxiang1@2x.png" alt="">
+        </div>
+        <div class="shengcheng">
+           <img class="shengcheng_img span" src="image/buyaozoukai@2x.png" alt="">
+           <p class="jieguo">结果生成中…</p>
+        </div>
+    </div>
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/adaptive.js"></script>
+    <script>
+		var lists = [
+			{src: './image/0@2x.png'},
+			{src: './image/1@2x.png'},
+			{src: './image/2@2x.png'},
+			{src: './image/3@2x.png'},
+			{src: './image/4@2x.png'},
+			{src: './image/5@2x.png'},
+			{src: './image/6@2x.png'},
+			{src: './image/7@2x.png'},
+			{src: './image/8@2x.png'},
+			{src: './image/9@2x.png'},
+		]
+
+		$.each(lists, function (i, val) { //两个参数，第一个参数表示遍历的数组的下标，第二个参数表示下标对应的值
+		    $('#lists').append('<div onclick="getList('+ i +')" id="list'+ i +'" class="list"><img src="' + val.src + '" class="list_img	"></div>');
+		})
+
+		var temp = []
+
+		function getList(i) {
+            // if(temp.length > 8){
+            //         $('.mengceng').show();
+            //         $('.wenzi').show();
+            //         $('.know').show();
+            //         return;
+            // }
+
+            if (!temp.includes(i)) {
+                console.log(temp.length)
+                temp.push(i) // 不存在添加
+            } else {
+                temp.splice(temp.indexOf(i), 1)
+            }
+
+            console.log(temp)
+			if ($('#list'+ i +'').hasClass('active')) {
+                $('#list'+ i +'').removeClass('active')
+			} else {
+                $('#list'+ i +'').addClass('active')
+			}
+        }
+        $('.bottom').click(function(){
+           if(temp.length > 8){
+                    $('.mengceng').show();
+                    $('.wenzi').show();
+                    $('.know').show();
+                    return;
+            }
+            $('.mengceng').show();
+            $('.shengcheng').show()
+            setTimeout(function(){
+                $('.shengcheng').hide()
+                $('.fenxiang').show()
+            },3000)
+        })
+        $('.know').click(function(){
+            $('.mengceng').hide();
+            $('.wenzi').hide();
+            $('.know').hide();
+        })
+
+        //分享
+        function share_tip(share_app_times, share_timeline_times) { // 分享处理
+    console.log('处理了吗')
+    if (share_timeline_times == -1) {
+        if (shareATimes == 1) {
+
+            $('.fengxiang_title').attr('src','./image/pengyouquan@2x.png');
+            $('.share').attr('src','./image/fenxiang2@2x.png')
+            $('.share').removeClass('shake')
+            $('.share').addClass('shake1')
+
+
+        } else if (shareATimes == 2) {
+
+
+            if(temp.length > 0){
+                $('.mengceng').hide();
+            $('.fengxiang').hide();
+                var list = temp.join();
+            location.href = './result.html?list='+list+'';
+            }else{
+            // $('.mengceng').hide();
+            // $('.fengxiang').hide();
+               return false;
+            }
+
+
+        }
+    }
+}
+
+        var shareATimes = 0
+        var shareTTimes = 0
+        //js监听页面隐藏与显示
+        var hiddenProperty = 'hidden' in document ? 'hidden'
+            : 'webkitHidden' in document ? 'webkitHidden'
+                : 'mozHidden' in document ? 'mozHidden'
+                    : null
+        var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange')
+        var onVisibilityChange = function () {
+            if (!document[hiddenProperty]) {
+                window.show_time = Date.now()
+                if (show_time - hidden_time > 100) {
+                    // if (show_time - hidden_time > 0) {
+                    shareATimes += 1
+                    if (shareATimes > 4) {
+                        shareTTimes += 1
+                        setTimeout(share_tip(shareATimes, shareTTimes), 100)
+                    } else {
+                        setTimeout(share_tip(shareATimes, -1), 100)
+                    }
+                } else {
+                    console.log('分享失败')
+                    // alert('分享失败')
+                }
+            } else {
+                window.hidden_time = Date.now()
+            }
+        }
+        document.addEventListener(visibilityChangeEvent, onVisibilityChange) // 监听
+    </script>
+</body>
+</html>

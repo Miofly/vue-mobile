@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"  content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/index.css">
+	<style>
+		.active{
+			background: red!important;
+		}
+	</style>
+</head>
+<body>
+    <div class="contain">
+        <!-- <div class="mengceng"></div> -->
+        <div class="top">
+            <img class="top_img" src="image/beijing@2x.png" alt="">
+        </div>
+        <div class="choice">
+            <img class="choice_img" src="image/huangse@2x.png" alt="">
+            <img class="touxiang" src="image/1.jpg" alt="">
+        </div>
+        <div class="center">
+            <div class="remind">
+                <img class="remind_img" src="image/hongsebeijing@2x.png" alt="">
+            </div>
+            <div id="lists">
+			</div>
+            <div class="radious">
+                <img class="radious_img" src="image/radious@2x.png" alt="">
+            </div>
+
+        </div>
+        <div class="bottom">
+          <img class="bottom_img" src="image/jieguo@2x.png" alt="">
+        </div>
+    </div>
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/adaptive.js"></script>
+    <script>
+		var lists = [
+			{src: './image/1@2x.png'},
+			{src: './image/2@2x.png'},
+			{src: './image/3@2x.png'},
+			{src: './image/4@2x.png'},
+			{src: './image/5@2x.png'},
+			{src: './image/6@2x.png'},
+			{src: './image/7@2x.png'},
+			{src: './image/8@2x.png'},
+			{src: './image/9@2x.png'},
+			{src: './image/10@2x.png'},
+		]
+
+		$.each(lists, function (i, val) { //两个参数，第一个参数表示遍历的数组的下标，第二个参数表示下标对应的值
+		    $('#lists').append('<div onclick="getList('+ i +')" id="list'+ i +'" class="list"><img src="' + val.src + '" class="list_img	"></div>');
+		})
+
+		var temp = []
+
+		function getList(i) {
+            if (!temp.includes(i)) {
+                temp.push(i) // 不存在添加
+            } else {
+                temp.splice(temp.indexOf(i), 1)
+            }
+
+            console.log(temp)
+			if ($('#list'+ i +'').hasClass('active')) {
+                $('#list'+ i +'').removeClass('active')
+			} else {
+                $('#list'+ i +'').addClass('active')
+			}
+        }
+    </script>
+</body>
+</html>

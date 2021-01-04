@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+</head>
+<body>
+<p id="p1">1</p>
+<div id="test">
+	<div id="son_one">son_one</div>
+	<div style="display: block" id="son_two"><p id="son_two_p">son_two</p></div>
+	<div style="color: blue!important;">son_three</div>
+	<div style="display: none" id="son_four"><p id="son_four_p">son_four</p></div>
+	<script>
+		var test = '这是测试'
+	</script>
+	<style>
+		*{margin: 0;padding: 0}
+	</style>
+</div>
+<script>
+	var byId = document.getElementById('test').normalize()
+	var p1 = document.getElementById('p1')
+	var son_one = document.getElementById('son_one')
+	var son_two_p = document.getElementById('son_two_p')
+	var son_two = son_two_p.parentNode
+
+	/*克隆一个元素节点会拷贝它所有的属性以及属性值,当然也就包括了属性上绑定的事件(比如onclick="alert(1)"),但不会拷贝那些使用addEventListener()方法或者node.onclick = fn这种用JavaScript动态绑定的事件.
+	在使用Node.appendChild()或其他类似的方法将拷贝的节点添加到文档中之前,那个拷贝节点并不属于当前文档树的一部分,也就是说,它没有父节点.
+	如果deep参数设为false,则不克隆它的任何子节点.该节点所包含的所有文本也不会被克隆,因为文本本身也是一个或多个的Text节点.*/
+	var clonePone = p1.cloneNode(true)
+	console.log(clonePone)
+	p1.appendChild(clonePone) // 将指定的 childNode 参数作为最后一个子节点添加到当前节点。
+
+	// 返回一个 Boolean 布尔值，来表示传入的节点是否为该节点的后代节点。
+	console.log('document.body.contains(clonePone)：', document.body.contains(clonePone))
+	console.log('clonePone.contains(p1)：', clonePone.contains(p1))
+	console.log('p1.contains(clonePone)：', p1.contains(clonePone))
+
+	console.log('p1.hasChildNodes()：', p1.hasChildNodes()) // 返回一个Boolean 布尔值，来表示该元素是否包含有子节点。
+	console.log('clonePone.hasChildNodes()：', clonePone.hasChildNodes())
+
+	console.log(clonePone.isEqualNode(clonePone)) // 返回一个 Boolean 类型值。当两个 node 节点为相同类型的节点且定义的数据点匹配时（即属性和属性值相同，节点值相同）返回 true，否则返回 false。
+
+	// son_two.removeChild(son_two_p) // 移除当前节点的一个子节点。这个子节点必须存在于当前节点中。
+
+	// replaceChild() 方法用指定的节点替换当前节点的一个子节点，并返回被替换掉的节点。
+	var sp1 = document.createElement("p");
+	sp1.setAttribute("id", "newSpan") // 添加一个id属性,值为'newSpan'
+	var sp1_content = document.createTextNode("新的span元素的内容.") // 创建一个文本节点
+	sp1.appendChild(sp1_content) // 将文本节点插入到span元素中
+	son_two.replaceChild(sp1, son_two_p) // 用新的span元素sp1来替换掉sp2
+
+	// insertBefore 在参考节点之前插入一个拥有指定父节点的子节点。如果给定的子节点是对文档中现有节点的引用，
+	// insertBefore() 会将其从当前位置移动到新位置（在将节点附加到其他节点之前，不需要从其父节点删除该节点）。
+	// var insertedNode = parentNode.insertBefore(newNode, referenceNode);
+	// insertedNode 被插入节点(newNode) parentNode 新插入节点的父节点 newNode 用于插入的节点 referenceNode newNode 将要插在这个节点之前
+	// 如果 referenceNode 为 null 则 newNode 将被插入到子节点的末尾。
+	// referenceNode 引用节点不是可选参数——你必须显式传入一个 Node 或者 null。如果不提供节点或者传入无效值，在不同的浏览器中会有不同的表现。
+	var newChild = document.createElement('span')
+	son_two.insertBefore(newChild, son_two_p)
+
+</script>
+<script>
+	// var byId = document.getElementById('test')
+	// var p1 = document.getElementById('p1')
+	// var son_one = document.getElementById('son_one')
+	// console.log('baseURI：', byId.baseURI) // 返回一个表示base URL的DOMString。
+	// console.log('childNodes：', byId.childNodes) // 返回一个包含了该节点所有子节点的实时的NodeList。NodeList 是动态变化的。如果该节点的子节点发生了变化，NodeList对象就会自动更新。
+	//
+	// console.log('firstChild：', byId.firstChild) // 返回该节点的第一个子节点Node，如果该节点没有子节点则返回null。
+	// console.log('firstElementChild：', byId.firstElementChild) // 返回该节点的第一个子节点Node，如果该节点没有子节点则返回null。
+	//
+	// console.log('lastChild：', byId.lastChild) // 返回该节点的最后一个子节点Node，如果该节点没有子节点则返回null。
+	// console.log('lastElementChild：', byId.lastElementChild) // 返回该节点的最后一个子节点Node，如果该节点没有子节点则返回null。
+	//
+	// console.log('nextSibling：', byId.nextSibling) // 返回与该节点同级的下一个节点 Node，如果没有返回null。
+	// console.log('nextElementSibling：', byId.nextElementSibling) // 返回与该节点同级的下一个节点 Node，如果没有返回null。
+	//
+	// console.log('previousSibling：', byId.previousSibling) // 返回一个当前节点同辈的前一个节点( Node) ，或者返回null（如果不存在这样的一个节点的话）。
+	// console.log('previousElementSibling：', byId.previousElementSibling) // 返回一个当前节点同辈的前一个节点( Node) ，或者返回null（如果不存在这样的一个节点的话）。
+	//
+	// console.log('parentNode', byId.parentNode) // 返回一个当前节点 Node的父节点 。如果没有这样的节点，比如说像这个节点是树结构的顶端或者没有插入一棵树中， 这个属性返回null。
+	// console.log('parentElement', byId.parentElement) // 返回一个当前节点的父节点 Element 。 如果当前节点没有父节点或者说父节点不是一个元素(Element), 这个属性返回null。
+	//
+	// console.log('son_one.parentNode', son_one.parentNode) // 返回一个当前节点 Node的父节点 。如果没有这样的节点，比如说像这个节点是树结构的顶端或者没有插入一棵树中， 这个属性返回null。
+	// console.log('son_one.parentElement', son_one.parentElement) // 返回一个当前节点的父节点 Element 。 如果当前节点没有父节点或者说父节点不是一个元素(Element), 这个属性返回null。
+	//
+	// console.log('nodeName：', byId.nodeName) // 返回一个包含该节点名字的DOMString。
+	// console.log('nodeType：', byId.nodeType) // 返回一个与该节点类型对应的无符号短整型的值
+	// console.log('nodeValue：', byId.nodeValue) // 对于文档节点来说, nodeValue返回null. 对于text, comment, 和 CDATA 节点来说, nodeValue返回该节点的文本内容. 对于 attribute 节点来说, 返回该属性的属性值.
+	//
+	// console.log('p1.nodeName：', p1.nodeName) // 返回一个包含该节点名字的DOMString。
+	// console.log('p1.nodeType：', p1.nodeType) // 返回一个与该节点类型对应的无符号短整型的值
+	// console.log('p1.nodeValue：', p1.nodeValue) // 对于文档节点来说, nodeValue返回null. 对于text, comment, 和 CDATA 节点来说, nodeValue返回该节点的文本内容. 对于 attribute 节点来说, 返回该属性的属性值.
+	//
+	// console.log('textContent:', byId.textContent)
+	// console.log('innerText:', byId.innerText)
+	// console.log('innerHTML:', byId.innerHTML)
+	// //  textContent 属性表示一个节点及其后代的文本内容
+	// byId.textContent = '1221' // 在节点上设置 textContent 属性的话，会删除它的所有子节点，并替换为一个具有给定值的文本节点。
+	// console.log(byId.textContent)
+
+	// 从上面的例子中可以看出，在两个标签之间（即一个元素的闭合标签之后，下一个元素的起始标签之前）有空白出现时，
+	// 会有#text 节点被插入到 DOM 中。使用 document.write 语句插入的两个元素之间不会有空白。
+
+	/*
+	在DOM中实际上有一个叫做textNode的元素，相应的还有document.createTextNode的JS方法，而在IE和Chrome浏览器中会将源代码中的换行符渲染成一个textNode，只是视觉上不可见。
+	然而，通过childNodes来获取子元素的时候，结果会包含这些textNode，所以会得到题主所见的情况。
+	而解决方法很简单，主要有两种：
+	第一，使用children代替childNodes
+	第二，遍历childNodes，根据nodeType过滤掉textNode。
+	*/
+</script>
+</body>
+</html>

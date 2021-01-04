@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+</head>
+<body>
+<ul>
+	<li>li(1)</li>
+	<li>li(2)</li>
+	<li>li(3)</li>
+</ul>
+<script>
+    const arr = [
+        { name: 'fx', sex: 'girl', age: 18 },
+        { name: 'wfd', sex: 'boy', age: 18 }
+    ]
+    console.table(arr)
+
+    console.log('%c普通for循环：', 'color: white; background: red; padding: 5px 10px')
+    for(var i = 0; i < arr.length; i++){
+        console.log(i + '. ' + '姓名：' + arr[i].name + ' 性别：' + arr[i].sex + ' 年龄：' + arr[i].age);
+    }
+
+	console.log('%cforeach：', 'color: white; background: red; padding: 5px 10px')
+    arr.forEach(function(item, i, arr) {
+        console.log(i + '. ' + '姓名：' + item.name + ' 性别：' + item.sex + ' 年龄：' + item.age);
+    })
+
+    console.log('%c jq each方法一遍历DOM：', 'color: white; background: red; padding: 5px 10px')
+    $('li').each(function (i, item) {
+        console.log($(this).text());
+    })
+
+    console.log('%c jq each方法二遍历数组：', 'color: white; background: red; padding: 5px 10px')
+    $.each(arr, function (i, item) {
+        console.log(i + '. ' + '姓名：' + item.name + ' 性别：' + item.sex + ' 年龄：' + item.age);
+    })
+</script>
+</body>
+</html>

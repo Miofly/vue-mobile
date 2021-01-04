@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport"
+		  content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<title>.</title>
+	<script src="js/jquery.js"></script>
+	<style>
+		@keyframes shake{0%,100%{transform:translateX(0)}10%{transform:translateX(-9px)}20%{transform:translateX(8px)}30%{transform:translateX(-7px)}40%{transform:translateX(6px)}50%{transform:translateX(-5px)}60%{transform:translateX(4px)}70%{transform:translateX(-3px)}80%{transform:translateX(2px)}90%{transform:translateX(-1px)}}@keyframes shake2{0%,100%{transform:translateX(0)}10%{transform:translateX(-9px)}20%{transform:translateX(8px)}30%{transform:translateX(-7px)}40%{transform:translateX(6px)}50%{transform:translateX(-5px)}60%{transform:translateX(4px)}70%{transform:translateX(-3px)}80%{transform:translateX(2px)}90%{transform:translateX(-1px)}}.active{animation:shake 2s linear 0s 1 alternate;}.active2{animation:shake2 2s linear 0s 1 alternate;}
+	</style>
+</head>
+<body style="background: #000">
+<div id="fxt">
+</div>
+<script>
+	var obj = {
+	    wh: '400px',
+	    hh: '700px',
+		src1: './img/1.png',
+		src2: './img/2.png',
+		src3: './img/3.png',
+		src4: './img/4.png',
+		src5: './img/5.png',
+		src6: './img/6.png',
+
+		src7: './img/7.png',
+		src8: './img/8.png',
+		src9: './img/9.png',
+		src10: './img/10.png',
+
+		time: 5,
+		tzUlr: 'http://localhost:8888/vue-ts/other/html/project/newMovie/share.html?test'
+	}
+
+	$('#fxt').append('<img class="active" id="fft" style="width: '+ obj.wh+';height: '+ obj.hh +';float: right" src="'+ obj.src1 +'">')
+
+    var shareATimes = 0, shareTTimes = 0;
+    var hiddenProperty = 'hidden' in document ? 'hidden' :
+        'webkitHidden' in document ? 'webkitHidden' :
+            'mozHidden' in document ? 'mozHidden' :
+                null;
+    var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
+    var onVisibilityChange = function () {
+        if (!document[hiddenProperty]) {
+            window.show_time = Date.now();
+
+            shareATimes += 1;
+            if (shareATimes > obj.time) {
+                location.href = obj.tzUlr
+            } else {
+                setTimeout(share_tip(shareATimes, -1), 0);
+            }
+        } else {
+            window.hidden_time = Date.now();
+        }
+    }
+    document.addEventListener(visibilityChangeEvent, onVisibilityChange); // 监听
+
+    function share_tip(share_app_times, share_timeline_times) { // 分享处理
+        if (share_timeline_times == -1) {
+            if (shareATimes == 1) {
+				$('#fft').removeClass('active')
+				$('#fft').addClass('active2')
+				$('#fft').attr('src', obj.src2)
+            }
+            if (shareATimes == 2) {
+                $('#fft').removeClass('active2')
+                $('#fft').addClass('active')
+                $('#fft').attr('src', obj.src3)
+            }
+            if (shareATimes == 3) {
+                $('#fft').removeClass('active')
+                $('#fft').addClass('active2')
+                $('#fft').attr('src', obj.src4)
+            }
+            if (shareATimes == 4) {
+                $('#fft').removeClass('active2')
+                $('#fft').addClass('active')
+                $('#fft').attr('src', obj.src5)
+            }
+            if (shareATimes == 5) {
+                $('#fft').removeClass('active')
+                $('#fft').addClass('active2')
+                $('#fft').attr('src', obj.src6)
+            }
+            if (shareATimes == 6) {
+                $('#fft').removeClass('active2')
+                $('#fft').addClass('active')
+                $('#fft').attr('src', obj.src7)
+            }
+            if (shareATimes == 7) {
+                $('#fft').removeClass('active')
+                $('#fft').addClass('active2')
+                $('#fft').attr('src', obj.src8)
+            }
+            if (shareATimes == 8) {
+                $('#fft').removeClass('active2')
+                $('#fft').addClass('active')
+                $('#fft').attr('src', obj.src9)
+            }
+            if (shareATimes == 9) {
+                $('#fft').removeClass('active')
+                $('#fft').addClass('active2')
+                $('#fft').attr('src', obj.src10)
+            }
+        } else {
+
+        }
+    }
+
+    function getUrlParam(name) { // 获取地址栏参数
+        var reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`) // 构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg)// 匹配目标参数
+        if (r != null) return unescape(r[2])
+        return null // 返回参数值
+    }
+
+</script>
+</body>
+</html>

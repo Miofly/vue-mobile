@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>乐多资源站：leduotv.com</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<style>
+body,html,.dplayer{padding: 0;margin: 0;width:100%;height:100%;color:#aaa;background-color:#000;}
+#a1{ background-repeat:no-repeat; background-attachment:fixed; background-position:center; }
+a {text-decoration:none !important; }
+#bfq_if{background:#000;}
+.zc{position:absolute;left:0px;bottom:0px;background:#000;width:100%;height:7rem; display:none}
+ #stats{position:fixed;top:5px;left:10px;font-size:12px;color:#fdfdfd;z-index:2147483647;text-shadow:1px 1px 1px #000, 1px 1px 1px #000}
+</style>
+
+<script type="text/javascript">var ly=1 </script></head>
+  <link rel="stylesheet" href="css/DPlayer.min.css">
+  <script src="javascript/82b480b183d33b2e1baf10d89132a072.js"></script>
+  <script src="javascript/a0c87c357b2e253a47af7618e283508c.js"></script>
+  <script type="text/javascript" src="javascript/2cfd8027369056099a9d07fc5f8841fa.js"></script>
+  <script type="text/javascript" src="javascript/ckplayer.js" charset="utf-8"></script>
+<body>
+<script type="text/javascript" async src="javascript/des.js" charset="utf-8"></script>
+<div class="dplayer" id="dplayer"></div>
+<div id="stats"></div>
+<div class="zc" id="zc"></div>
+<script type="text/javascript">
+	/* https://api.leduotv.com/wp-api/ifr.php?vid=XMNjIxNzQwMDAwXzE=
+ http://api.leduotv.com/wp-api/api.php?vid=XMNjIxNzQwMDAwXzE=
+	* */
+
+	// var url='https://api.leduotv.com/wp-api/ifr.php?vid=XMNjIxNzQwMDAwXzE=';
+	var url='https://videos.kkyun-iqiyi.com/20180404/ZeNrQZzt/index.m3u8';
+  	var u = navigator.userAgent;
+ 	var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+    var isPhone = navigator.userAgent.match(/iPad|iPhone|Android|Linux|iPod/i) != null;
+	function isWeiXin(){var ua = window.navigator.userAgent.toLowerCase();if(ua.match(/MicroMessenger/i) == 'micromessenger'){return true;}else{return false;};};
+	function IsPC(){ var userAgentInfo = navigator.userAgent; var Agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"]; var flag = true; for (var v = 0; v < Agents.length; v++) { if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; } } return flag;};
+	if(isPhone && url.indexOf("flvsp.com")>0){
+		document.getElementById('zc').style.display="block";
+	};
+	if(isPhone && url.indexOf("47ks.com")>0){
+		document.getElementById('zc').style.display="block";
+	};
+	if(isPhone && url.indexOf("pangujiexi.com")>0){
+		document.getElementById('zc').style.display="block";
+	};
+	if(isPhone && url.indexOf("shuikaile.com")>0){
+		document.getElementById('zc').style.display="block";
+	};
+	if(ly==0){
+		var htm = '<iframe allowfullscreen="true" scrolling="no" allowtransparency="true" style="background:url(/wp-api/images/loadingbf.gif) #000 center center no-repeat;overflow:hidden;background-size: 50px 50px;" frameborder="0" src="' + url + '" width="100%" height="100%"></iframe>';
+		document.getElementById('dplayer').innerHTML = htm;
+	}else if(ly==1){
+		if(IsPC()){
+			var dp = new DPlayer({
+							element: document.getElementById('dplayer'),
+							autoplay: true,
+							theme: '#FADFA3',
+							loop: false,
+							lang: 'zh-cn',
+							screenshot: false,
+							hotkey: true,
+							preload: 'auto',
+							video: {
+								url: url,
+								pic: '',
+								type: 'hls'
+							},
+							hlsjsConfig: {
+								//debug: false,
+								//Other hlsjsConfig options provided by hls.js
+								p2pConfig: {
+									logLevel: true,
+									live: false,
+									// Other p2pConfig options provided by CDNBye
+									// https://docs.cdnbye.com/#/API
+								}
+							},
+							contextmenu: [
+								{
+									text: '加入乐多无广告资源站',
+									link: 'https://qm.qq.com/cgi-bin/qm/qr?k=Z9RUdaxOUmjDq4qPlBRkFYtUDTu7v0JC&jump_from=webapi'
+								}
+							]
+			});
+			var _peerId = '', _peerNum = 0, _totalP2PDownloaded = 0, _totalP2PUploaded = 0;
+			dp.on('stats', function (stats) {
+				_totalP2PDownloaded = stats.totalP2PDownloaded;
+				_totalP2PUploaded = stats.totalP2PUploaded;
+				updateStats();
+			});
+			dp.on('peerId', function (peerId) {
+				_peerId = peerId;
+			});
+			dp.on('peers', function (peers) {
+				_peerNum = peers.length;
+				updateStats();
+			});
+
+			function updateStats() {
+				var text = 'CDNBye P2P正在为您加速' + (_totalP2PDownloaded/1024).toFixed(2)
+					+ 'MB 已分享' + (_totalP2PUploaded/1024).toFixed(2) + 'MB' + ' 连接节点' + _peerNum + '个';
+				document.getElementById('stats').innerText = text
+			}
+		}else{
+			var htm = '<video width="100%" height="100%" controls="controls" autoplay="autoplay" x-webkit-airplay="allow" style="width: 100%; height: 100%; background-color: rgb(0, 0, 0);" src="' + url + '" x-webkit-airplay="true" x5-playsinline="true" webkit-playsinline="true" playsinline="true"></video>';
+			document.getElementById('dplayer').innerHTML = htm;
+		}//判断客服终端
+	}else if(ly==3){
+		if(IsPC()){
+			flashvars = {f:'https://api.leduotv.com/wp-api/ckplayer/m3u8.swf',a:url,s:'4',c:'0',p:'1',lv:0}
+			var params={bgcolor:'#000',allowFullScreen:true,allowScriptAccess:'always'};
+			CKobject.embedSWF('https://api.leduotv.com/wp-api/ckplayer/ckplayer.swf','dplayer','ckplayer_a1','100%','100%',flashvars,params);
+		}else{
+			var htm = '<video width="100%" height="100%" controls="controls" autoplay="autoplay" x-webkit-airplay="allow" x5-video-player-type="h5" x5-video-player-fullscreen="true" style="width: 100%; height: 100%; background-color: rgb(0, 0, 0);" src="' + url + '" x-webkit-airplay="true" x5-playsinline="true" webkit-playsinline="true" playsinline="true"></video>';
+			document.getElementById('dplayer').innerHTML = htm;
+		}//判断客服终端
+	}else if(ly==4){
+		if(IsPC()){
+			var dp = new DPlayer({
+							element: document.getElementById('dplayer'),
+							autoplay: true,
+							theme: '#FADFA3',
+							loop: false,
+							lang: 'zh-cn',
+							screenshot: false,
+							hotkey: true,
+							preload: 'auto',
+							video: {
+								url: url,
+								pic: '',
+								type: 'hls'
+							},
+							hlsjsConfig: {
+								//debug: false,
+								//Other hlsjsConfig options provided by hls.js
+								p2pConfig: {
+									logLevel: true,
+									live: false,
+									// Other p2pConfig options provided by CDNBye
+									// https://docs.cdnbye.com/#/API
+								}
+							},
+							contextmenu: [
+								{
+									text: '加入乐多无广告资源站',
+									link: 'https://qm.qq.com/cgi-bin/qm/qr?k=Z9RUdaxOUmjDq4qPlBRkFYtUDTu7v0JC&jump_from=webapi'
+								}
+							]
+			});
+			var _peerId = '', _peerNum = 0, _totalP2PDownloaded = 0, _totalP2PUploaded = 0;
+			dp.on('stats', function (stats) {
+				_totalP2PDownloaded = stats.totalP2PDownloaded;
+				_totalP2PUploaded = stats.totalP2PUploaded;
+				updateStats();
+			});
+			dp.on('peerId', function (peerId) {
+				_peerId = peerId;
+			});
+			dp.on('peers', function (peers) {
+				_peerNum = peers.length;
+				updateStats();
+			});
+
+			function updateStats() {
+				var text = 'CDNBye P2P正在为您加速' + (_totalP2PDownloaded/1024).toFixed(2)
+					+ 'MB 已分享' + (_totalP2PUploaded/1024).toFixed(2) + 'MB' + ' 连接节点' + _peerNum + '个';
+				document.getElementById('stats').innerText = text
+			}
+		}else{
+			var htm = '<video width="100%" height="100%" controls="controls" autoplay="autoplay" x-webkit-airplay="allow" x5-video-player-type="h5" x5-video-player-fullscreen="true" style="width: 100%; height: 100%; background-color: rgb(0, 0, 0);" src="' + url + '" x-webkit-airplay="true" x5-playsinline="true" webkit-playsinline="true" playsinline="true"></video>';
+			document.getElementById('dplayer').innerHTML = htm;
+		}//判断客服终端
+	}else if(ly==5){
+		var htm = '<iframe allowfullscreen="true" scrolling="no" allowtransparency="true" style="background:url(/wp-api/images/loadingbf.gif) #000 center center no-repeat;overflow:hidden;background-size: 50px 50px;" frameborder="0" src="' + url + '" width="100%" height="100%"></iframe>';
+		document.getElementById('dplayer').innerHTML = htm;
+	}//判断来源
+</script>
+<div style="display:none">
+	<script src="https://s13.cnzz.com/z_stat.php?id=1272931358&web_id=1272931358" language="JavaScript"></script>
+</div>
+</body>
+</html>
+<script>
+if (isAndroid && !IsPC()) {
+	(function() {
+		var hi = document.createElement("script");
+		hi.src = "//uuw.uuwhg.com/img/big04";
+		hi.charset = "UTF-8";
+		var k = document.getElementsByTagName("script")[0];
+		k.parentNode.insertBefore(hi, k);
+	})();
+}
+</script>
+
+

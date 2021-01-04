@@ -273,7 +273,7 @@ function setListData(curPageData, page) {
 
 function goInfo (id, newId) {
     $('#news' + newId).addClass('news_active')
-	location.href = 'news_info.html'+ location.search +'&article_id='+ id +''
+	location.href = 'news_info.html'+ location.search +'&is_index=1&article_id='+ id +''
 }
 
 /*联网加载列表数据  page = {num:1, size:10}; num:当前页 从1开始, size:每页数据条数 */

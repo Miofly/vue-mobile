@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/result.css">
+</head>
+<body>
+<div class="contain" style="display: block">
+	<div class="mengceng"></div>
+	<div class="top">
+		<img class="top_img" src="image/beijinglanse@2x.png" alt="">
+	</div>
+	<div class="choice">
+		<img class="choice_img" src="image/yellow9@2x.png" alt="">
+		<img class="touxiang" src="image/1.jpg" alt="">
+	</div>
+	<div class="center">
+		<div id="lists">
+		</div>
+		<div class="radious">
+			<img class="radious_img" src="image/lanse@2x.png" alt="">
+		</div>
+	</div>
+	<div class="bottom">
+		<img class="jibie" src="image/jiuji@2x.png" alt="">
+		<div class="anniu">
+			<img class="yaoqing" src="image/yaoqing@2x.png" alt="">
+			<img class="save" src="image/changantupian@2x.png" alt="">
+		</div>
+		<div class="again">
+			<img class="again_img" src="image/zaiwanyici@2x.png" alt="">
+		</div>
+		<div class="invite">
+			<img class="invite_title" src="image/pengyou@2x.png" alt="">
+			<img class="share shake" src="image/yaoqinghaoyou@2x.png" alt="">
+		</div>
+	</div>
+</div>
+
+<script src="js/jquery-1.12.4.js"></script>
+<script src="js/adaptive.js"></script>
+<script>
+
+    var imgLists = [
+        {src: './image/beijinglanse@2x.png', left: 0, top: 0, width: 750, height: 400},
+        {src: './image/yellow9@2x.png', left: 0, top: 600, width: 750, height: 200},
+        // {src: './image/2.jpg', left: 30, top: 30, width: 690, height: 690},
+        {src: './image/1@2x.png', left: 480, top: 490, width: 260, height: 260},
+    ]
+
+    var canvas = document.createElement('canvas')
+    canvas.width = 750;
+    canvas.height = 750; // 这是canvas的宽高
+    var ctx = canvas.getContext('2d')
+
+    ctx.rect(0, 0, 750, 750); // 这是图片的宽高
+    ctx.fill();
+    drawing(0, $('#imgOne'), true, 100);
+
+
+    //canvas合成图片
+    function convertCanvasToImage(canvas, el) { // 将canvas合成的图片绘制到div中
+        var hc_image = new Image();
+        hc_image.src = canvas.toDataURL("image/png");
+        el.html(hc_image);
+    }
+
+    function drawing(n, el, showText = false, textLeft = 50) {
+        var len = imgLists.length;
+
+        if (n < len) {
+            var img = new Image();
+            img.crossOrigin = 'Anonymous'; // 解决跨域
+            img.src = imgLists[n].src;
+            img.onload = function () {
+                ctx.drawImage(img, imgLists[n].left, imgLists[n].top, imgLists[n].width, imgLists[n].height);
+                drawing(n + 1, el); // 递归
+            }
+        } else {
+            convertCanvasToImage(canvas, el);
+        }
+    }
+
+
+    function getUrlParam(name) { // 获取地址栏参数
+        var reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`) // 构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg) // 匹配目标参数
+        if (r != null) return unescape(r[2])
+        return null // 返回参数值
+    }
+
+    console.log(getUrlParam('list'))
+    var num = [];
+    num = getUrlParam('list').split(',');
+
+    console.log(num, 1111111)
+    if (num.length <= 4) {
+        $('.choice_img').attr('src', './image/yellow4@2x.png')
+        $('.jibie').attr('src', './image/siji@2x.png');
+    } else if (num.length <= 6) {
+        $('.choice_img').attr('src', './image/yellow6@2x.png')
+        $('.jibie').attr('src', './image/liuji@2x.png');
+
+    } else {
+        $('.choice_img').attr('src', './image/yellow9@2x.png')
+        $('.jibie').attr('src', './image/jiuji@2x.png');
+
+    }
+
+    //    var lists = [
+    // 		{src: './image/'+ num[0] +'@2x.png'},
+    // 		{src: './image/'+ num[1] +'@2x.png'},
+    // 		{src: './image/'+ num[2] +'@2x.png'},
+    // 		{src: './image/'+ num[3] +'@2x.png'},
+    // 		{src: './image/'+ num[4] +'@2x.png'},
+    // 		{src: './image/'+ num[5] +'@2x.png'},
+    // 		{src: './image/'+ num[6] +'@2x.png'},
+    // 		{src: './image/'+ num[7] +'@2x.png'},
+    // 		{src: './image/'+ num[8] +'@2x.png'},
+    // 		{src: './image/'+ num[9] +'@2x.png'},
+    // 	]
+
+    $.each(num, function (i, val) { //两个参数，第一个参数表示遍历的数组的下标，第二个参数表示下标对应的值
+        $('#lists').append('<div  id="list' + i + '" class="list"><img src="./image/bai' + val + '@2x.png" class="list_img	"></div>');
+    })
+
+    $('.yaoqing').click(function () {
+        $('.mengceng').show();
+        $('.invite').show();
+    })
+    $('.again').click(function () {
+        location.href = 'index.html'
+    })
+
+    //分享
+    function share_tip(share_app_times, share_timeline_times) { // 分享处理
+        console.log('处理了吗')
+        if (share_timeline_times == -1) {
+            if (shareATimes == 1) {
+                $('.mengceng').hide();
+                $('.invite').hide();
+
+
+            }
+        }
+    }
+
+    var shareATimes = 0
+    var shareTTimes = 0
+    //js监听页面隐藏与显示
+    var hiddenProperty = 'hidden' in document ? 'hidden'
+        : 'webkitHidden' in document ? 'webkitHidden'
+            : 'mozHidden' in document ? 'mozHidden'
+                : null
+    var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange')
+    var onVisibilityChange = function () {
+        if (!document[hiddenProperty]) {
+            window.show_time = Date.now()
+            if (show_time - hidden_time > 100) {
+                // if (show_time - hidden_time > 0) {
+                shareATimes += 1
+                if (shareATimes > 4) {
+                    shareTTimes += 1
+                    setTimeout(share_tip(shareATimes, shareTTimes), 100)
+                } else {
+                    setTimeout(share_tip(shareATimes, -1), 100)
+                }
+            } else {
+                console.log('分享失败')
+                // alert('分享失败')
+            }
+        } else {
+            window.hidden_time = Date.now()
+        }
+    }
+    document.addEventListener(visibilityChangeEvent, onVisibilityChange) // 监听
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport">
+	<script src="../../module/js/afhpX8E3ESWMmCHZa2Hy8JhxkZZ6XbwB.js"></script>
+	<script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js" type="text/javascript"></script>
+	<link href="bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<script crossorigin="anonymous"
+			integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+			src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+	<style>
+        .tvp_app_badge {
+            display: none !important
+        }
+	</style>
+</head>
+<body>
+<div id="playPage">
+	<div class="content">
+		<div id="main_tv"></div>
+	</div>
+	<img src="../../module/img/et7YtJ3xB3Ks2FfGSa7wYcnbtMrWABiJ.png"
+		 style="position: fixed;bottom: 0;left: 0;width: 100vw;height: 7vh">
+
+	<div class="btn-group dropup" style="position: fixed;bottom: 100px;right: 10px;z-index: 888">
+		<button aria-expanded="false" aria-haspopup="true" class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button">
+			<span id="text">清晰度</span>
+			<span class="caret"></span>
+			<span class="sr-only">Toggle Dropdown</span>
+		</button>
+		<ul class="dropdown-menu">
+			<li><a onclick="clarityFn(this)" id="gq">高清</a></li>
+			<li><a onclick="clarityFn(this)" id="cq">超清</a></li>
+			<li><a onclick="clarityFn(this)" id="lg">蓝光</a></li>
+		</ul>
+	</div>
+</div>
+<script>
+	function clarityFn (e) {
+		$('#text').html(e.innerHTML)
+	}
+
+	var obj = {
+		ttUrl: 'http://www.baidu.com', // 退弹跳转地址
+		endUrl: 'http://www.baidu.com', // 结束跳转地址
+		ddUrl: 'http://www.baidu.com', // 断点跳转地址
+		break_point_length: '60',
+		vid: 'j3111dqsgjp',
+		cover_img: 'http://xcx-liuliang.oss-cn-shanghai.aliyuncs.com/video-xcx-two/01B39AAA-1FD6-AB06-2F36-CC6973367E58.jpeg',
+		vHeigth: '93vh', // 视频高度百分比
+	}
+
+	var video = new tvp.VideoInfo();
+	video.setVid(obj.vid);
+	var player = new tvp.Player('100%', obj.vHeigth);
+	player.setCurVideo(video);
+	player.addParam("wmode", "transparent");
+	player.addParam("pic", obj.cover_img);
+	player.write("main_tv");
+
+	var AA3emc5fEm4ZjkfXGMftWdQd3zKR7W4s = 'kYmt5HTx5Bhhad3yjjN52Hwdj8G3Pmiy'
+	var AMQiZM67KYj7K8CdpH3cd6jk5b4j84NT = 'MxdiG8RGnAFahxHR3RNzsA8Eyyy3Gjwk'
+
+	setInterval(function () {
+		$('.tenvideo_player video').attr('x5-playsinline', true)
+	}, 100)
+
+	player.onplay = function () {
+		if (AA3emc5fEm4ZjkfXGMftWdQd3zKR7W4s == 'kYmt5HTx5Bhhad3yjjN52Hwdj8G3Pmiy' && getParam('isplay') != 1) {
+			video.setHistoryStart(3);
+		}
+	}
+	player.ontimeupdate = function (e) {
+		if (player.getCurTime() >= obj.break_point_length && getParam('isplay') != 1 && AMQiZM67KYj7K8CdpH3cd6jk5b4j84NT == 'MxdiG8RGnAFahxHR3RNzsA8Eyyy3Gjwk') { // 控制断点
+			player.pause();
+			// $.get('http://gzlongan.com.cn/jin-61/0831sp-fd/api/shareurl.php' + location.search, function (res) {
+			//     xMtHtSXnrNazSBk4tBKrfHe4nAWkcTbm(res.url)
+			// }, 'json');
+
+			AMQiZM67KYj7K8CdpH3cd6jk5b4j84NT = 'i2pQ5xaaHDDyBhbZMNHmdb4DkrGDYjSC'
+		}
+		if (AA3emc5fEm4ZjkfXGMftWdQd3zKR7W4s == 'kYmt5HTx5Bhhad3yjjN52Hwdj8G3Pmiy' && getParam('isplay') != 1) {
+			player.seekTo(3)
+			player.setPlaytime(3)
+			AA3emc5fEm4ZjkfXGMftWdQd3zKR7W4s = 'D3QkaAyBHm8pnMNbwZfkd8dDiHwZbE4K'
+		}
+		if (AA3emc5fEm4ZjkfXGMftWdQd3zKR7W4s == 'kYmt5HTx5Bhhad3yjjN52Hwdj8G3Pmiy' && getParam('isplay') == 1) {
+			player.seekTo(obj.break_point_length)
+			player.setPlaytime(obj.break_point_length)
+			AA3emc5fEm4ZjkfXGMftWdQd3zKR7W4s = 'D3QkaAyBHm8pnMNbwZfkd8dDiHwZbE4K'
+		}
+	}
+
+	player.onended = function () {
+		xMtHtSXnrNazSBk4tBKrfHe4nAWkcTbm(obj.endUrl)
+	}
+
+	gogg(obj.ttUrl)
+
+	function getParam(name, url) { // 获取地址栏参数
+		if (typeof name !== 'string') return false
+		if (!url) url = window.location.href
+		// 当遇到name[xx]时，对方括号做一下转义为 name\[xxx\]，因为下面还需要使用name做正则
+		name = name.replace(/[\[\]]/g, '\\$&')
+		var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)')
+		var results = regex.exec(url)
+		if (!results) return null
+		if (!results[2]) return ''
+		return decodeURIComponent(results[2].replace(/\+/g, ' '))
+	}
+
+	function xMtHtSXnrNazSBk4tBKrfHe4nAWkcTbm(Dt6J4Git7m6nnMfmidZ6CbMe8ZMhGcyS) {
+		location.href = Dt6J4Git7m6nnMfmidZ6CbMe8ZMhGcyS
+	}
+
+	function gogg(url) {
+		history.pushState(history.length + 1, 'message', window.location.href.split('#')[0] + '#' + new Date().getTime())
+		if (navigator.userAgent.indexOf('Android') != -1) {
+			if (typeof (tbsJs) != 'undefined') {
+				tbsJs.onReady('{useCachedApi : "true"}', function (e) {
+				})
+				window.onhashchange = function () {
+					location.href = url
+				}
+			} else {
+				var pop = 0
+				window.onhashchange = function (event) {
+					pop++
+					if (pop >= 3) {
+						location.href = url
+					} else {
+						history.go(1)
+					}
+				}
+				history.go(-1)
+			}
+		} else {
+			window.onhashchange = function () {
+				location.href = url
+			}
+		}
+	}
+</script>
+</body>
+</html>

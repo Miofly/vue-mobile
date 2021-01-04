@@ -2,6 +2,10 @@
 	<view class="full-width-height text-center" :style="{backgroundImage: 'url('+ baseConfig.bg +')'}"
 	      style="background-repeat:no-repeat;background-size: 100vw 100vh;background-position:bottom left;">
 
+        <view style="position: fixed;right: 20rpx;top: 20rpx;width: 100rpx">
+            增加次数
+        </view>
+
 		<view style="padding-top: 80rpx">
 			<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)"
 			         :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]"

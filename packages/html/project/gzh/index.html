@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="renderer" content="webkit">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	<link rel="stylesheet" type="text/css" href="index/layout_head4c67b6.css">
+	<link rel="stylesheet" type="text/css" href="index/base4fdc05.css">
+	<link rel="stylesheet" type="text/css" href="index/lib49d030.css">
+	<link rel="stylesheet" href="index/index4daee3.css">
+	<link rel="stylesheet" href="index/index49d030.css">
+	<script type="text/javascript" src="vue.js"></script>
+	<style>
+
+	</style>
+</head>
+<body>
+<div id="app" style="padding: 30px">
+	<div class="menu_preview_area">
+		<div class="mobile_menu_preview">
+			<div class="mobile_bd">
+				<ul v-if="nameLists.length != 0" class="pre_menu_list grid_line ui-sortable ui-sortable-disabled" id="menuList">
+					<li @click="changeTab(index)" v-for="(item, index) in nameLists" :key="index"
+						class="jsMenu pre_menu_item grid_item jslevel1 ui-sortable ui-sortable-disabled size1of3 current selected">
+						<a href="javascript:void(0);" :class="[myIndex == index ? 'pre_menu_link' : '']"
+						   draggable="false">
+							<span class="js_l1Title">{{item.name}}</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<button @click="addMenu" style="margin-left: 30%;margin-top: 20px;width: 100px;border: none;border-radius: 10px;height: 30px;
+	background: lightskyblue">添加
+		</button>
+	</div>
+
+	<div class="menu_form_area portable_editor to_left">
+		<div  class="editor_inner">
+			<div class="global_mod float_layout menu_form_hd js_second_title_bar">
+				<h4 class="global_info">{{nameLists[myIndex].name}}</h4>
+				<span @click="delMenu" style="margin-left: 10%;color: red;cursor: pointer">删除菜单</span>
+			</div>
+			<div class="menu_form_bd" id="view">
+				<div id="js_innerNone" style="display:none;"
+					 class="msg_sender_tips tips_global"></div>
+				<div class="frm_control_group js_setNameBox">
+					<div class="frm_controls">
+						<span class="frm_input_box with_counter counter_in append">
+							<input type="text" v-model="nameLists[myIndex].name" class="frm_input js_menu_name">
+						</span>
+						<p class="frm_tips js_titleNolTips">仅支持中英文和数字，字数不超过4个汉字或8个字母</p>
+					</div>
+				</div>
+				<div class="frm_control_group">
+					<label class="frm_label"><strong class="title js_menuContent">菜单内容</strong> </label>
+					<div class="frm_controls frm_vertical_pt">
+						<label @click="labelIndex=0" class="frm_radio_label js_radio_url selected"
+							   data-editing="1">
+							<i style="width: 16px;height: 16px;vertical-align: middle;display: inline-block;border: 1px solid #eee;border-radius: 50%;"
+							   :style="{background: labelIndex == 0 ? 'lightblue' : 'white'}"></i>
+							<span class="lbl_content">跳转网页</span><input type="radio" name="hello" class="frm_radio">
+						</label>
+
+						<label @click="labelIndex=1" class="frm_radio_label js_radio_weapp"
+							   data-editing="1"> <i
+								style="width: 16px;height: 16px;vertical-align: middle;display: inline-block;border: 1px solid #eee;border-radius: 50%;"
+								:style="{background: labelIndex == 1 ? 'lightblue' : 'white'}"></i>
+							<span class="lbl_content">跳转小程序</span> <input
+									type="radio" name="hello" class="frm_radio">
+						</label>
+					</div>
+				</div>
+
+				<div class="menu_content_container">
+					<div class="menu_content url jsMain" id="url" style="display: block;">
+						<div v-if="labelIndex==0" class="frm_control_group">
+							<label class="frm_label">页面地址</label>
+							<div class="frm_controls">
+									<span class="frm_input_box">
+									<input v-model="detailMess[myIndex].url" type="text" class="frm_input"
+										   name="urlText"
+										   placeholder="请输入页面地址">
+									</span>
+							</div>
+						</div>
+						<div v-if="labelIndex==1">
+							<div class="frm_control_group">
+								<label class="frm_label">APPid</label>
+								<div class="frm_controls">
+								<span class="frm_input_box">
+									<input v-model="detailMess[myIndex].appId" type="text" class="frm_input"
+										   name="urlText" placeholder="请输入APPid">
+								</span>
+								</div>
+							</div>
+							<div class="frm_control_group">
+								<label class="frm_label">小程序路径</label>
+								<div class="frm_controls">
+								<span class="frm_input_box">
+									<input v-model="detailMess[myIndex].path" type="text" class="frm_input"
+										   name="urlText" placeholder="请输入小程序路径">
+								</span>
+								</div>
+							</div>
+							<div class="frm_control_group">
+								<label class="frm_label">备用网页</label>
+								<div class="frm_controls">
+								<span class="frm_input_box">
+									<input v-model="detailMess[myIndex].page" type="text" class="frm_input"
+										   name="urlText" placeholder="请输入备用网页">
+								</span>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div v-if="modalStatus" style="position: fixed;top: 40%;left: 40%;width: 300px;height: 100px;background: rgba(0, 0, 0, 0.3);
+		border: 1px solid white;display: flex;align-items: center;justify-content: center;border-radius: 20px">
+
+				<button @click="ok"
+						style="margin-top: 20px;width: 100px;border: none;border-radius: 10px;height: 30px;background: lightskyblue;color: white">
+					确定
+				</button>
+
+				<button @click="cancel"
+						style="margin-left: 3%;margin-top: 20px;width: 100px;border: none;border-radius: 10px;height: 30px;background: red;color: white">
+					取消
+				</button>
+
+		</div>
+
+		<div class="tool_bar tc js_editBox" @click="save">
+			<span id="pubBt" class="btn btn_input btn_primary"><button>保存并发布</button></span>
+			<!--<a href="javascript:void(0);" class="btn btn_default" id="viewBt">预览</a>-->
+		</div>
+	</div>
+</div>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data() {
+            return {
+                modalStatus: false,
+                labelIndex: 0,
+                myIndex: 0,
+                nameLists: [{name: '请输入'}],
+                detailMess: [
+                    {name: '菜单名称', url: 'www.baidu.com', appId: '这是APPid', path: '这是path', page: '这是备用'}
+                ]
+            }
+        },
+        methods: {
+            ok() {
+                this.nameLists.splice(this.myIndex, 1)
+                this.detailMess.splice(this.myIndex, 1)
+                console.log(this.nameLists)
+                this.myIndex--
+                this.modalStatus = false
+            },
+            cancel() {
+                this.modalStatus = false
+            },
+            delMenu() {
+                if (this.myIndex !== 0) {
+                    this.modalStatus = true
+                }
+                console.log('删除菜单')
+            },
+            changeTab(index) {
+                this.labelIndex = 0
+                this.myIndex = index
+            },
+            addMenu() {
+                if (this.nameLists.length < 3) {
+                    this.labelIndex = 0
+                    this.myIndex++
+                    this.nameLists.push({name: '请输入'})
+                    this.detailMess.push({url: '', appId: '', path: '', page: ''})
+                }
+            },
+            save() {
+                console.log(this.detailMess)
+                console.log(this.nameLists)
+            }
+        }
+    })
+</script>
+</body>
+</html>
