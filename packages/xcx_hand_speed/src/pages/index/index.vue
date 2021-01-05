@@ -128,19 +128,6 @@ export default class extends Vue {
     }
 
 	created () {
-        wx.login({
-            success: async (res) => {
-                if (res.code) {
-                    // const data= await commonOtherGet(`https://api.weixin.qq.com/sns/jscode2session?appid=${this.wx.appid}&secret=${this.wx.secret}&js_code=${res.code}&grant_type=authorization_code`)
-                    const { data } = await commonPost('/mina/wx_auth/login', { code: res.code })
-                    this.$store.state.center.open_id = data.openid
-                    this.$store.state.center.session_key = data.session_key
-                } else {
-                    console.log(`登录失败！${res.errMsg}`)
-                }
-            }
-        })
-
 		wx.getUserInfo({
 			success: (res) => {
 				this.is_first = false
@@ -180,28 +167,44 @@ export default class extends Vue {
 	}
 
 	async getTrueUserInfo () {
-        const { data, code } = await commonGet('/api/user/user_info', false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
-        if (code == 200) {
-            this.is_first = false
-            this.$store.state.center.score = data.score
-            this.$store.state.center.name = data.nickname
-            this.$store.state.center.avatar = data.avatar
-            this.$store.state.center.level = data.level
-        } else {
-            // wx.login({
-            //     success: async (res) => {
-            //         if (res.code) {
-            //             // const data= await commonOtherGet(`https://api.weixin.qq.com/sns/jscode2session?appid=${this.wx.appid}&secret=${this.wx.secret}&js_code=${res.code}&grant_type=authorization_code`)
-            //             const { data } = await commonPost('/mina/wx_auth/login', { code: res.code })
-            //             this.$store.state.center.open_id = data.openid
-            //             this.$mio.mioRoot.setStorage('hand_open_id', data.openid)
-            //             this.$mio.mioRoot.setStorage('hand_session_key', data.session_key)
-            //         } else {
-            //             console.log(`登录失败！${res.errMsg}`)
-            //         }
-            //     }
-            // })
-        }
+        wx.login({
+            success: async (res) => {
+                if (res.code) {
+                    // const data= await commonOtherGet(`https://api.weixin.qq.com/sns/jscode2session?appid=${this.wx.appid}&secret=${this.wx.secret}&js_code=${res.code}&grant_type=authorization_code`)
+                    const { data, code } = await commonPost('/mina/wx_auth/login', { code: res.code })
+                    this.$store.state.center.open_id = data.openid
+                    this.$store.state.center.session_key = data.session_key
+
+                    if (code == 200) {
+                        const { data, code } = await commonGet('/api/user/user_info', false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
+                        if (code == 200) {
+                            this.is_first = false
+                            this.$store.state.center.score = data.score
+                            this.$store.state.center.name = data.nickname
+                            this.$store.state.center.avatar = data.avatar
+                            this.$store.state.center.level = data.level
+                        } else {
+                            // wx.login({
+                            //     success: async (res) => {
+                            //         if (res.code) {
+                            //             // const data= await commonOtherGet(`https://api.weixin.qq.com/sns/jscode2session?appid=${this.wx.appid}&secret=${this.wx.secret}&js_code=${res.code}&grant_type=authorization_code`)
+                            //             const { data } = await commonPost('/mina/wx_auth/login', { code: res.code })
+                            //             this.$store.state.center.open_id = data.openid
+                            //             this.$mio.mioRoot.setStorage('hand_open_id', data.openid)
+                            //             this.$mio.mioRoot.setStorage('hand_session_key', data.session_key)
+                            //         } else {
+                            //             console.log(`登录失败！${res.errMsg}`)
+                            //         }
+                            //     }
+                            // })
+                        }
+                    }
+                } else {
+                    console.log(`登录失败！${res.errMsg}`)
+                }
+            }
+        })
+
 	}
 
 	async putUserInfo (encryptedData, iv) {

@@ -8,7 +8,6 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import poster from 'wxa-plugin-canvas/poster'
 
 @Component({})
 export default class index extends Vue {

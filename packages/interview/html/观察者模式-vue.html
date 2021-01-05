@@ -24,7 +24,7 @@
             // 数据域
             this.$data = options.data;
 
-            // 保存数据model与view相关的指令，当model改变时，我们会触发其中的指令类更新，保证view也能实时更新
+            // 保存数据 model与view相关的指令，当 model改变时，我们会触发其中的指令类更新，保证view也能实时更新
             this._directives = {};
             // 数据劫持，重新定义数据的 set 和 get 方法
             this._obverse(this.$data);
@@ -36,22 +36,23 @@
         _obverse(data) {
             let val;
             // 遍历数据
+
             for (let key in data) {
+                console.log('key:', key, 'data:', data[key])
                 // 判断是不是属于自己本身的属性
                 if (data.hasOwnProperty(key)) {
                     this._directives[key] = [];
                 }
-
                 val = data[key];
                 // 递归遍历
                 if (typeof val === 'object') {
+                    console.log('当前data数据是对象')
                     // 递归遍历
                     this._obverse(val);
                 }
 
                 // 初始当前数据的执行队列
                 let _dir = this._directives[key];
-
                 // 重新定义数据的 get 和 set 方法
                 Object.defineProperty(this.$data, key, {
                     enumerable: true,
@@ -76,6 +77,7 @@
         _compile(el) {
             //子元素
             let nodes = el.children;
+            console.log(nodes)
             for (let i = 0; i < nodes.length; i++) {
                 let node = nodes[i];
                 // 递归对所有元素进行遍历，并进行处理

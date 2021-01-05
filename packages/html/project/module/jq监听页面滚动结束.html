@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+</head>
+<body>
+<div style="height: 1000px;width: 100px">1111</div>
+<script>
+    $(document).ready(function(){
+        // 监听滚动停止
+        let t1 = 0;
+        let t2 = 0;
+        let timer = null; // 定时器
+        $(window).on("touchstart", function(){
+            // 触摸开始 ≈ 滚动开始
+        })
+        $(window).on("scroll", function(){
+            // 滚动
+            clearTimeout(timer)
+            timer = setTimeout(isScrollEnd, 100)
+            t1 =  $(window).scrollTop()
+        })
+        function isScrollEnd() {
+            t2 = $(window).scrollTop();
+            if(t2 == t1){
+                clearTimeout(timer)
+                console.log("滚动停止", t2) // 这里处理
+            }
+        }
+    })
+</script>
+</body>
+</html>
