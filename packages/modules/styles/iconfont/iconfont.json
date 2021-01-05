@@ -1,23 +1,23 @@
 {
-  "id": "2212226",
-  "name": "mio-icon",
+  "id": "2250128",
+  "name": "mio",
   "font_family": "iconfont",
-  "css_prefix_text": "icon-",
+  "css_prefix_text": "icon",
   "description": "",
   "glyphs": [
     {
-      "icon_id": "11474203",
-      "name": "auto",
-      "font_class": "auto",
-      "unicode": "e6eb",
-      "unicode_decimal": 59115
+      "icon_id": "8687197",
+      "name": "喇叭",
+      "font_class": "laba",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
     },
     {
-      "icon_id": "11474219",
-      "name": "all",
-      "font_class": "all",
-      "unicode": "e6ef",
-      "unicode_decimal": 59119
+      "icon_id": "8826992",
+      "name": "关  闭",
+      "font_class": "guanbi",
+      "unicode": "e6ab",
+      "unicode_decimal": 59051
     }
   ]
 }

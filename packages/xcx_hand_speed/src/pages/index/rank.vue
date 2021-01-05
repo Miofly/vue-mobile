@@ -37,7 +37,7 @@
 			</view>
 		</view>
 
-        <ad v-if="spgg" :unit-id="spgg" ad-type="video" ad-theme="white" style="margin-top: 28rpx"></ad>
+        <ad v-if="spgg" :unit-id="spgg" ad-type="video" ad-theme="white" style="margin-top: 28rpx" class="text-left"></ad>
 
 		<view style="color: #D3D5DE;margin-top: 60rpx" class="text-18">
 			共 <text style="color: #FF5555" class="text-22">{{infoConfig.sumPerson}}</text>人正在挑战

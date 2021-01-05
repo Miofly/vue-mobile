@@ -127,5 +127,6 @@ export default {
 
 <style lang='scss'>
 @import "../../modules/styles/main";
+//@import "../../modules/styles/iconfont/iconfont.css";
 @import "../../modules/styles/plugin/font-awesome.css";
 </style>
