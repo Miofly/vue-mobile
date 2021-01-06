@@ -136,12 +136,12 @@ export default class extends Vue {
 	async created () {
         // this.status = !this.status
         // this.rankLists = []
-        if (this.$store.state.center.type == 2) {
-
-        } else {
+        // if (this.$store.state.center.type == 2) {
+        //
+        // } else {
             const { data } = await commonPost('/api/user_achievement/top', { type: 3 }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
             this.rankLists = data
-        }
+        // }
 	}
 }
 </script>

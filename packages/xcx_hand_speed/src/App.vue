@@ -9,6 +9,9 @@ export default {
         // #endif
     },
     async onShow(e) {
+        uni.setEnableDebug({
+            enableDebug: true
+        })
         // #ifdef MP-WEIXIN
         this.share() // 定义微信小程序全局分享
         // #endif
@@ -44,7 +47,6 @@ export default {
                                 console.log(err, '获取信息失败')
                             }
                         })
-
                     } else {
                         console.log(`登录失败！${res.errMsg}`)
                     }
@@ -62,7 +64,8 @@ export default {
                         console.log('登陆成功', data)
                         this.$mio.mioRoot.setStorage('hand_open_id', data.openid)
                         this.$mio.mioRoot.setStorage('hand_session_key', data.session_key)
-                        const dataGroup = await commonPost('/api/user/bind_friend', {openId: e.query.open_id}, { 'AUTH-TOKEN': data.openid })
+                        const dataGroup = await commonPost('/api/user/bind_friend', {openId: e.query.open_id}, false,{ 'AUTH-TOKEN': data.openid })
+                        console.log(dataGroup, '绑定好友关系')
                     } else {
                         console.log(`登录失败！${res.errMsg}`)
                     }

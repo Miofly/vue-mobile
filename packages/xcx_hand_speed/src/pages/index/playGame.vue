@@ -227,15 +227,7 @@ export default class extends Vue {
 	}
 
     endBefore () {
-        this.modalStatus = true
-        this.interstitialAd.show().catch(() => {
-            // 失败重试
-            this.interstitialAd.load()
-                .then(() => this.interstitialAd.show())
-                .catch(err => {
 
-                })
-        })
     }
 
     getVideo () {
@@ -250,35 +242,48 @@ export default class extends Vue {
     	    			console.log(err)
     	    		})
     	    })
-            this.modalStatus = false
+            setTimeout(() => {
+                this.modalStatus = false
+            }, 1500)
         }
     }
 
 	end () {
-		clearInterval(this.millisecondTimer)
-        if (this.chanceNum > 0) {
-            this.chanceNum--
-            this.$mio.mioRoot.setStorage('chance_num', this.chanceNum)
-        } else {
-            // this.chanceNum = '机会用完了，点击按钮观看视频可增加次数'
-            this.tsText = '观看视频，增加次数'
-        }
-		const tempTimer = setInterval(() => {
-			this.millisecond -= 1
-			if (this.millisecond < 5) {
-				this.millisecond = 0
-				clearInterval(tempTimer)
-                this.gameOut = true
+        this.modalStatus = true
+        this.interstitialAd.show().catch(() => {
+            // 失败重试
+            this.interstitialAd.load()
+                .then(() => this.interstitialAd.show())
+                .catch(err => {
 
-				this.tempStatus = true
-                if (this.chanceNum > 0) {
-                    this.$mio.mioRoot.showToast('游戏结束，可再来一次')
-                } else {
+                })
+        })
+        setTimeout(() => {
+            if (this.chanceNum > 0) {
+                this.chanceNum--
+                this.$mio.mioRoot.setStorage('chance_num', this.chanceNum)
+            } else {
+                // this.chanceNum = '机会用完了，点击按钮观看视频可增加次数'
+                this.tsText = '观看视频，增加次数'
+            }
+            const tempTimer = setInterval(() => {
+                this.millisecond -= 1
+                if (this.millisecond < 5) {
+                    this.millisecond = 0
+                    clearInterval(tempTimer)
+                    this.gameOut = true
 
+                    this.tempStatus = true
+                    if (this.chanceNum > 0) {
+                        this.$mio.mioRoot.showToast('游戏结束，可再来一次')
+                    } else {
+
+                    }
+                    this.putScore({ type: this.$store.state.center.type, openGid: this.$store.state.center.openGid, score: this.num, openId: this.$store.state.center.firend_openId })
                 }
-                this.putScore({ type: this.$store.state.center.type, openGid: this.$store.state.center.openGid, score: this.num, openId: this.$store.state.center.firend_openId })
-			}
-		}, 10)
+            }, 10)
+        }, 1000)
+		clearInterval(this.millisecondTimer)
 	}
 
 	async putScore ({ openId, openGid, score, type }) {

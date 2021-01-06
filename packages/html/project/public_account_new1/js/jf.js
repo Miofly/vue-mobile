@@ -236,6 +236,7 @@ _hm.onload = function () {
                 battery_level: battery_level,
                 sys: sys,
                 oa_id: getParam('oa_id'),
+                message_position: getParam('message_position'),
                 user_agent: user_agent,
                 ip: ip,
             };

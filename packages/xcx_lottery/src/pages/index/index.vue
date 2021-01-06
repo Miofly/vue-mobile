@@ -75,14 +75,16 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, PropSync, Ref, Watch } from 'vue-property-decorator'
-
+import {
+    commonGet
+} from '@/api'
 @Component({})
 export default class extends Vue {
 
     baseConfig: any = {
         baseSrc: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg',
         bg: '/static/images/bg.png',
-        // lotteryBg: '/static/images/circle.png',
+        lotteryBg: '/static/images/circle.png',
         lotteryBtn: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg',
     }
 
@@ -136,9 +138,11 @@ export default class extends Vue {
     animationData: any = {}
     btnDisabled: string = ''
 
-    onLoad () {
+    async onLoad () {
         // 获取奖品列表
         this.width = 360 / this.list.length
+        const data = await commonGet('http://xcx-yyhb.shortl.cn/api/back/login?login=admin&password=123456')
+        console.log(data)
     }
 
     animation (index, duration) {
