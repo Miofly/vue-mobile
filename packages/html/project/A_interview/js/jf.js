@@ -55,7 +55,6 @@ _hm.onload = function () {
              */
             var square = document.getElementsByTagName("body")[0];
             var manager = new Hammer.Manager(square);
-            var Swipe = new Hammer.Swipe();
             var Tap = new Hammer.Tap({
                 taps: 1
             });

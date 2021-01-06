@@ -3,18 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js" type="text/javascript"></script>
-    <script src="../js/hammer.js" type="text/javascript"></script>
+<!--	<script src="https://cdn.bootcdn.net/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>-->
+	<script src="https://e-static.oss-cn-shanghai.aliyuncs.com/js/hammer.js"></script>
 </head>
 <body>
+<div style="width: 100vw;height: 2000px;background: lightpink">
+
+</div>
 <script>
+	var swipe = 0;
+	var click = 0;
+	var doubletap = 0;
+
     var square = document.getElementsByTagName("body")[0];
-    var manager = new Hammer.Manager(square);
-    var Swipe = new Hammer.Swipe();
-    var Tap = new Hammer.Tap({
-        taps: 1
-    });
-    manager.add(Tap);
+    var manager = new Hammer(square);
+
+	manager.get('swipe').set({
+		direction: Hammer.DIRECTION_ALL
+	});
+	// 检测点击
+	manager.on("tap", function (e) {
+		click++;
+		console.log('click', click)
+	});
+
+	// 检测双击
+	manager.on("doubletap", function (e) {
+		doubletap++;
+		console.log('doubletap', doubletap)
+	});
+
+	// 检测滑动
+	// manager.on("swipe", function (e) {
+	// 	swipe++;
+	// 	console.log('swipe', swipe)
+	// });
+	manager.on("swipeleft", function (e) {
+		swipe++;
+		console.log('swipeleft', swipe)
+	});
+	manager.on("swiperight", function (e) {
+		swipe++;
+		console.log('swiperight', swipe)
+	});
+	manager.on("swipeup", function (e) {
+		swipe++;
+		console.log('swipeup', swipe)
+	});
+	manager.on("swipedown", function (e) {
+		swipe++;
+		console.log('swipedown', swipe)
+	});
+</script>
+<script>
+	/*
+
+
+
+	function orientationHandler(event) {
+		if (shake === 0) {
+			shake = Math.abs(event.beta);
+		} else {
+			if (Math.abs(event.beta) > max) {
+				max = Math.abs(event.beta);
+			}
+			if (Math.abs(event.beta) < min) {
+				min = Math.abs(event.beta);
+			}
+			shake = max - min;
+		}
+	}*/
 </script>
 </body>
 </html>
