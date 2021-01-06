@@ -26,6 +26,7 @@
 		</swiper>
 		<view class="u-icon-wrap">
 <!--			<u-icon @click="getMore" class="u-right-icon" v-if="moreIcon" name="arrow-right" :size="26" :color="computeColor"></u-icon>-->
+<!--            <icon class="iconfont iconlaba" v-if="true" :size="volumeSize" :color="computeColor"></icon>-->
 <!--			<u-icon @click="close" class="u-right-icon" v-if="closeIcon" name="close" :size="24" :color="computeColor"></u-icon>-->
 		</view>
 	</view>
@@ -115,7 +116,8 @@ export default {
 		// 滚动方向，horizontal-水平滚动，vertical-垂直滚动
 		mode: {
 			type: String,
-			default: 'horizontal'
+			default: 'vertical',
+            required: false
 		},
 		// 播放状态，play-播放，paused-暂停
 		playState: {

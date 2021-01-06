@@ -11,12 +11,7 @@
 @import "module/list"; // 盒子模型样式模块
 @import "module/avatar"; // 盒子模型样式模块
 @import "module/animation"; // 动画样式模块
-
-
-page {
-    width: 100vw;
-    height: 100vh;
-}
+@import "module/uni"; // uni的样式模块
 
 // 初始化
 page {

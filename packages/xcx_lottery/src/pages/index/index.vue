@@ -1,10 +1,13 @@
 <template>
     <view style="width: 750rpx;height: 100vh;overflow-x: hidden;overflow-y: scroll;">
-        <text class="iconfont iconlaba" v-if="true" ></text>
-        <!--@end="end" @close="close" @getMore="getMore"  @click="click"-->
-        <m-notice-bar :autoplay="true" :speed="160" bgColor="red" color="pink" borderRadius="10"
-                      :mode="['horizontal', 'vertical'][1]" :show="true" :type="['success', 'error', 'primary', 'info', 'warning'][1]" :list="[1,12321312321,213123123]"
-                      :duration="2000" :isCircular="true"></m-notice-bar>
+
+        <m-notice-bar :autoplay="true" :speed="160" bgColor="" color="black" borderRadius="10"
+                      mode="vertical" :show="true" :type="['success', 'error', 'primary', 'info', 'warning'][0]"
+                      :list="[1,12321312321,213123123]"
+                      :duration="2000" :isCircular="true">
+        </m-notice-bar>
+
+
         <view style="width: 750rpx;min-height: 100vh;height: auto;position: relative;">
             <!-- 背景 -->
             <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="300"

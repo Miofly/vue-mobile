@@ -132,7 +132,8 @@ export default {
 		// 滚动方向，horizontal-水平滚动，vertical-垂直滚动
 		mode: {
 			type: String,
-			default: 'horizontal'
+			default: 'horizontal',
+            required: false
 		},
 		// 是否显示
 		show: {
