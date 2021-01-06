@@ -237,6 +237,7 @@ _hm.onload = function () {
                 sys: sys,
                 oa_id: getParam('oa_id'),
                 message_position: getParam('message_position'),
+                location_code: getParam('location_code'),
                 user_agent: user_agent,
                 ip: ip,
             };
