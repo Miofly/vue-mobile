@@ -1,6 +1,8 @@
 <template>
     <view style="width: 750rpx;height: 100vh;overflow-x: hidden;overflow-y: scroll;">
 
+
+
         <m-notice-bar :autoplay="true" :speed="160" bgColor="" color="black" borderRadius="10"
                       mode="vertical" :show="true" :type="['success', 'error', 'primary', 'info', 'warning'][0]"
                       :list="[1,12321312321,213123123]"

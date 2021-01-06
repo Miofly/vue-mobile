@@ -122,4 +122,5 @@
 <style lang='scss'>
 	@import "../../modules/styles/main";
 	@import "../../modules/styles/plugin/font-awesome.css";
+    @import "../../modules/styles/plugin/iconfont.css";
 </style>

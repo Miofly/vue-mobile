@@ -1,5 +1,7 @@
 <template>
     <view class="conbox">
+        <icon class="iconfont iconlaba text-30 text-red" :class="[false ? 'fa-spin fa-pulse fa-flip-horizontal fa-rotate-90' : '']"></icon>
+
         <view class="container">
             <!-- 背景 -->
             <image src="../../static/images/bg.png" class="cont" mode=""></image>
