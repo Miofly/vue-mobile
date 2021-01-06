@@ -104,6 +104,7 @@ var Ad = {
     //     }, 0);
     // },
     adClick: function(clickUrl, dUrl, pid,type,user_id, page) {
+        ws.send(JSON.stringify({pid:pid, event: 'adClick'}));
         event.currentTarget.className = 'news_active'
         var ua = navigator.userAgent;
         commonPost('/adClickStat', {

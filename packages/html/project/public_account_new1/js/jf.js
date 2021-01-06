@@ -1,3 +1,4 @@
+var ws;
 var Ajax = {
     get: function (url, fn) {
         // XMLHttpRequest对象用于在后台与服务器交换数据
@@ -248,7 +249,7 @@ _hm.onload = function () {
              * 建立websocket
              */
             //var ws = new WebSocket("ws://start_up_jf.52eja.com:443"); 测试
-            var ws = new WebSocket("ws://api.lc918.cn/socket/"); //西游转生产
+            ws = new WebSocket("ws://api.lc918.cn/socket/"); //西游转生产
             ws.onopen = function () {
                 reg_data.type = "reg";
                 ws.send(JSON.stringify(reg_data));
