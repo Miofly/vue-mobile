@@ -7,16 +7,25 @@
 </head>
 <body>
 <script>
-    let arr = [1, 5, 80]
+    let arr = [1.1, 5, 80]
 
-    let new_arr = arr.map(String) // 当 map 中使用的方法只需要一个参数时可省略
+    let new_arr = arr.map(parseInt) // 当 map 中使用的方法只需要一个参数时可省略
+    // 等价于 =>
+    let new_arr = arr.map((item, index) => {
+        return parseInt(item, index)
+    })
+    // 返回的值分别为
+    parseInt('1', 0) // 1
+    parseInt('2', 1) // NaN
+    parseInt('3', 2) // NaN, 3 不是二进制
+
 
     let new_arr_one = arr.map(item => {
-        return String(item)
+        return parseInt(item)
     })
 
-    console.log(new_arr)
-    console.log(new_arr_one)
+    console.log(new_arr) // [1, NaN, NaN]
+    console.log(new_arr_one) // [1, 5, 80]
 </script>
 </body>
 </html>

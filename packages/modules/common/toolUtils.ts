@@ -6,7 +6,7 @@ const isArrayFn = (value) => {
 		return Array.isArray(value)
 	}
 	return Object.prototype.toString.call(value) === '[object Array]'
-	
+
 }
 
 // 去除空数组
@@ -63,7 +63,7 @@ const conver = (limit) => {
 	} else { // 其他转化成GB
 		size = `${ (limit / (1024 * 1024 * 1024)).toFixed(2) }GB`
 	}
-	
+
 	const sizestr = `${ size }`
 	const len = sizestr.indexOf('.')
 	const dec = sizestr.substr(len + 1, 2)
@@ -209,12 +209,12 @@ const getAge = (strBirthday) => { // 根据出生日期算出年龄 getAge('1995
 	const birthYear = strBirthdayArr[0] // eslint-disable-line
 	const birthMonth = strBirthdayArr[1] // eslint-disable-line
 	const birthDay = strBirthdayArr[2] // eslint-disable-line
-	
+
 	const d = new Date()
 	const nowYear = d.getFullYear()
 	const nowMonth = d.getMonth() + 1
 	const nowDay = d.getDate()
-	
+
 	if (nowYear == birthYear) {
 		returnAge = 0// 同年 则为0岁
 	} else {
@@ -239,7 +239,7 @@ const getAge = (strBirthday) => { // 根据出生日期算出年龄 getAge('1995
 			returnAge = -1// 返回-1 表示出生日期输入错误 晚于今天
 		}
 	}
-	
+
 	return returnAge// 返回周岁年龄
 }
 
@@ -349,12 +349,14 @@ const throttle = (fn: any, wait: number = 1000): any => { // 节流 滚动条 �
 	let last = null
 	let timer = null
 	const interval = wait
-	
+
+	console.log(this)
+
 	return function () { // eslint-disable-line
 		const th = this // eslint-disable-line
 		const args = arguments // eslint-disable-line
 		const now = Number(new Date())
-		
+
 		if (last && now - last < interval) {
 			clearTimeout(timer)
 			timer = setTimeout(() => { // eslint-disable-line
@@ -400,7 +402,7 @@ const arrSort = (prop, type, desc = 'down') => { // eslint-disable-line
 			return Date.parse(val1) - Date.parse(val2)
 		}
 	}
-	
+
 	if (type == 'date' && desc == 'up') {
 		return function (obj1, obj2) { // eslint-disable-line
 			const val1 = obj1[prop]
@@ -408,7 +410,7 @@ const arrSort = (prop, type, desc = 'down') => { // eslint-disable-line
 			return Date.parse(val2) - Date.parse(val1)
 		}
 	}
-	
+
 	if (type == 'num' && desc == 'down') {
 		return function (obj1, obj2) { // eslint-disable-line
 			const val1 = obj1[prop]
@@ -416,7 +418,7 @@ const arrSort = (prop, type, desc = 'down') => { // eslint-disable-line
 			return val1 - val2
 		}
 	}
-	
+
 	if (type == 'num' && desc == 'up') {
 		return function (obj1, obj2) { // eslint-disable-line
 			const val1 = obj1[prop]
@@ -424,7 +426,7 @@ const arrSort = (prop, type, desc = 'down') => { // eslint-disable-line
 			return val2 - val1
 		}
 	}
-	
+
 	if (type == 'yw' && desc == 'down') {
 		return function (obj1, obj2) { // eslint-disable-line
 			const val1 = obj1[prop].toLowerCase()
@@ -438,7 +440,7 @@ const arrSort = (prop, type, desc = 'down') => { // eslint-disable-line
 			return 0
 		}
 	}
-	
+
 	if (type == 'yw' && desc == 'up') {
 		return function (obj1, obj2) { // eslint-disable-line
 			const val1 = obj1[prop].toLowerCase()
@@ -452,7 +454,7 @@ const arrSort = (prop, type, desc = 'down') => { // eslint-disable-line
 			return 0
 		}
 	}
-	
+
 	if (type == 'zw' && desc == 'down') {
 		return function (obj1, obj2) { // eslint-disable-line
 			const val1 = obj1[prop]
@@ -460,7 +462,7 @@ const arrSort = (prop, type, desc = 'down') => { // eslint-disable-line
 			return val2.localeCompare(val1)
 		}
 	}
-	
+
 	if (type == 'zw' && desc == 'up') {
 		return function (obj1, obj2) { // eslint-disable-line
 			const val1 = obj1[prop]
@@ -498,7 +500,7 @@ const getYourIP = () => {
 			if (1 || window.mozRTCPeerConnection) { // eslint-disable-line
 				rtc.createDataChannel('', { reliable: false })
 			}
-			
+
 			rtc.onicecandidate = function (evt) { // eslint-disable-line
 				if (evt.candidate) grepSDP(`a=${ evt.candidate.candidate }`)
 			}
@@ -506,11 +508,11 @@ const getYourIP = () => {
 				grepSDP(offerDesc.sdp)
 				rtc.setLocalDescription(offerDesc)
 			}, (e) => { console.warn('offer failed', e) })
-			
-			
+
+
 			const addrs = Object.create(null)
 			addrs['0.0.0.0'] = false
-			
+
 			function updateDisplay (newAddr) {
 				if (newAddr in addrs) return
 				addrs[newAddr] = true
@@ -523,7 +525,7 @@ const getYourIP = () => {
 				}
 				console.log(`ip${ displayAddrs[0] }`)
 			}
-			
+
 			function grepSDP (sdp) {
 				const hosts = []
 				sdp.split('\r\n').forEach((line, index, arr) => {

@@ -9,9 +9,6 @@ export default {
         // #endif
     },
     async onShow(e) {
-        uni.setEnableDebug({
-            enableDebug: true
-        })
         // #ifdef MP-WEIXIN
         this.share() // 定义微信小程序全局分享
         // #endif

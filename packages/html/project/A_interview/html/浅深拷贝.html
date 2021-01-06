@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+</head>
+<body>
+<script>
+    // 只复制第一层的浅拷贝
+    function simpleCopy (obj1) {
+        var obj2 = Array.isArray(obj1) ? [] : {}
+        for (let i in obj1) {
+            obj2[i] = obj1[i]
+        }
+        return obj2
+    }
+    var fxObj = {
+        age: 18,
+        nature: ['smart', 'good'],
+        names: {
+            name1: 'fx',
+            name2: 'xka'
+        },
+        love: function () {
+            console.log('fx is a great girl')
+        }
+    }
+    var newfxObj = simpleCopy(fxObj)
+    newfxObj.age = 8
+    newfxObj.nature.push('why')
+    newfxObj.names.name1 = 'why fx'
+    newfxObj.love = function () {
+        console.log('fx is 18 years old')
+    }
+    console.log(fxObj.age) // 18 基本数据类型不会改变
+    console.log(fxObj.nature) //  ["smart", "good", "why"] 引用类型会改变
+    console.log(fxObj['names']) // {name1: "why fx", name2: "xka"} 引用类型会改变
+    console.log(fxObj['love']) // ƒ () {console.log('fx is a great girl')}
+</script>
+</body>
+</html>
