@@ -10,7 +10,7 @@
 		]"
 	>
 		<view class="u-icon-wrap">
-            <span class="iconfont icon-auto" v-if="true" :size="volumeSize" :color="computeColor"></span>
+            <icon class="iconfont iconlaba" v-if="true" :size="volumeSize" :color="computeColor"></icon>
 		</view>
 		<swiper :disable-touch="disableTouch" @change="change" :autoplay="autoplay && playState == 'play'" :vertical="vertical" circular :interval="duration" class="u-swiper">
 			<swiper-item v-for="(item, index) in list" :key="index" class="u-swiper-item">
