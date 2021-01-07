@@ -65,3 +65,10 @@ function startcountDown(time) {
 function randomNumDecimal (min, max) {
     return ((Math.random() * (max - min + 1))+min).toFixed(2)
 }
+
+function loadJS (src) {
+    const s = document.createElement('script')
+    s.setAttribute('src', src)
+    s.setAttribute('charset', 'utf-8')
+    document.body.appendChild(s)
+}
