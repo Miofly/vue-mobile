@@ -168,8 +168,8 @@ export default class extends Vue {
         // #endif
 
         // #ifdef MP-WEIXIN
-        const { data } = await commonPost('/api/user_achievement/group_top', { openGid: this.$store.state.center.openGid }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
-        // const { data } = await commonPost('/api/user_achievement/group_top', { openGid: 'GBfQr48D1dQF4o80zSxpX_-98G94' }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
+        // const { data } = await commonPost('/api/user_achievement/group_top', { openGid: this.$store.state.center.openGid }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
+        const { data } = await commonPost('/api/user_achievement/group_top', { openGid: 'GBfQr48D1dQF4o80zSxpX_-98G94' }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
         // #endif
         this.rankLists = data
         const personIndex = this.rankLists.findIndex(item => {

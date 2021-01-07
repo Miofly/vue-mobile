@@ -86,6 +86,7 @@ export default class extends Vue {
 	tempStatus: boolean = false
     interstitialAd: any = null
     rewardedVideoAd: any = null
+    innerAudioContext: any = null
 
     sumCount: number = 0
 
@@ -166,7 +167,6 @@ export default class extends Vue {
     }
 
 	addNum () {
-
 	    this.goGame()
 	}
 
@@ -187,6 +187,10 @@ export default class extends Vue {
                 this.gameStatus = true
                 if (this.num == 0) {
                     this.startCountDown()
+                    this.innerAudioContext = uni.createInnerAudioContext()
+                    this.innerAudioContext.autoplay = true
+                    this.innerAudioContext.src = '/static/images/musics.mp3'
+                    this.innerAudioContext.play()
                 }
                 this.sumCount++
                 if (!this.gameOut) {
@@ -258,6 +262,12 @@ export default class extends Vue {
 
                 })
         })
+        this.innerAudioContext.destroy()
+        // if (this.millisecond < 5) {
+            this.millisecond = 0
+        // }
+        clearInterval(this.millisecondTimer)
+
         setTimeout(() => {
             if (this.chanceNum > 0) {
                 this.chanceNum--
@@ -267,23 +277,18 @@ export default class extends Vue {
                 this.tsText = '观看视频，增加次数'
             }
             const tempTimer = setInterval(() => {
-                this.millisecond -= 1
-                if (this.millisecond < 5) {
-                    this.millisecond = 0
-                    clearInterval(tempTimer)
-                    this.gameOut = true
+                clearInterval(tempTimer)
+                this.gameOut = true
 
-                    this.tempStatus = true
-                    if (this.chanceNum > 0) {
-                        this.$mio.mioRoot.showToast('游戏结束，可再来一次')
-                    } else {
+                this.tempStatus = true
+                if (this.chanceNum > 0) {
+                    this.$mio.mioRoot.showToast('游戏结束，可再来一次')
+                } else {
 
-                    }
-                    this.putScore({ type: this.$store.state.center.type, openGid: this.$store.state.center.openGid, score: this.num, openId: this.$store.state.center.firend_openId })
                 }
+                this.putScore({ type: this.$store.state.center.type, openGid: this.$store.state.center.openGid, score: this.num, openId: this.$store.state.center.firend_openId })
             }, 10)
         }, 1000)
-		clearInterval(this.millisecondTimer)
 	}
 
 	async putScore ({ openId, openGid, score, type }) {

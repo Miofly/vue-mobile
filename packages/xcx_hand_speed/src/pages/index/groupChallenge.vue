@@ -15,7 +15,7 @@
 			</m-image>
 			<view class="flex justify-around text-white" style="margin-top: 62rpx">
 				<view style="margin-top: 128rpx">
-					<view style="color: #FF5555" class="text-20 text-bold">{{score == '' || score == undefined ? 0 : score}}次</view>
+					<view style="color: #FF5555" class="text-20 text-bold">{{rankNum == '' || rankNum == undefined ? 0 : rankNum}}次</view>
 					<view class="text-14" style="margin-top: 28rpx">最好成绩</view>
 				</view>
 				<view style="">
@@ -28,8 +28,8 @@
 					</view>
 				</view>
 				<view style="margin-top: 128rpx">
-					<view style="color: #FF5555" class="text-20 text-bold">{{level == '' || level == undefined ? '999+' : level}}</view>
-					<view class="text-14" style="margin-top: 28rpx">全国排名</view>
+					<view style="color: #FF5555" class="text-20 text-bold">{{count == '' || count == undefined ? 0 : count}}</view>
+					<view class="text-14" style="margin-top: 28rpx">攻占群个数</view>
 				</view>
 			</view>
 		</view>
@@ -132,6 +132,8 @@ export default class extends Vue {
 	}
 
 	rankLists: any = []
+	rankNum: number = 0
+	count: number = 0
 
 	async created () {
         // this.status = !this.status
@@ -140,7 +142,9 @@ export default class extends Vue {
         //
         // } else {
             const { data } = await commonPost('/api/user_achievement/top', { type: 3 }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
-            this.rankLists = data
+            this.rankLists = data.list
+            this.rankNum = data.bestScore
+            this.count = data.count
         // }
 	}
 }

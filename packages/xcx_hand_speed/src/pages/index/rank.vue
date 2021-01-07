@@ -9,7 +9,7 @@
 			</m-image>
 		</view>
 		<view style="height: 422rpx;background: #F5F6FC;border-radius: 12px;border: 4px solid #36CCF1;margin-top: 40rpx" class="text-center">
-			<view class="flex justify-around">
+			<view v-if="status" class="flex justify-around">
 				<view style="margin-top: 136rpx">
 					<view style="color: #FF5555" class="text-20 text-bold">{{score}}次</view>
 					<view class="text-14" style="margin-top: 28rpx">最好成绩</view>
@@ -28,6 +28,27 @@
 					<view class="text-14" style="margin-top: 28rpx">全国排名</view>
 				</view>
 			</view>
+
+            <view v-else class="flex justify-around">
+                <view style="margin-top: 136rpx">
+                    <view style="color: #FF5555" class="text-20 text-bold">{{score}}次</view>
+                    <view class="text-14" style="margin-top: 28rpx">最好成绩</view>
+                </view>
+                <view style="margin-top: 40rpx">
+                    <view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="border: 2px solid #FFFFFF;width: 132rpx;height: 132rpx"
+                          :style="{backgroundImage: avatar == '' || avatar == undefined ? 'url('+ infoConfig.defaultAvatar +')' : 'url('+ avatar +')'}">
+                        <view v-if="false" class="cu-tag badge">999</view>
+                    </view>
+                    <view style="margin-top: 24rpx;color: #333;" class="text-18">
+                        {{name}}
+                    </view>
+                </view>
+                <view style="margin-top: 136rpx">
+                    <view style="color: #FF5555" class="text-20 text-bold">{{person.level == '' || person.level == undefined ? '999+' : person.level}}</view>
+                    <view class="text-14" style="margin-top: 28rpx">好友排名</view>
+                </view>
+            </view>
+
 			<view @click="goGame">
 				<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="100"
 						:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" style="margin-left: 17%;margin-top: 34rpx"
