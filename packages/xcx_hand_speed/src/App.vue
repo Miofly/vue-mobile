@@ -150,7 +150,16 @@ export default {
                 wx.showShareMenu({
                     withShareTicket: true
                 });
-                if (view.route == 'pages/index/groupChallenge') {
+                if (view.route == 'pages/index/groupChallenge' || view.route == 'pages/index/rankBefore') {
+                    view.onShareAppMessage = function (res) {
+                        console.log(res)
+                        return {
+                            title: that.$mio.mioRoot.makeRandomArr(['我，10秒98次，将成为群内手速王，谁来应战？', '10秒98次，不好意思，手速快就是可以为所欲为！', '@群主，不服来战', '@所有人，在座的各位都是垃圾'], 1)[0],
+                            path: `pages/index/index?open_id=${that.$store.state.center.open_id}`,
+                            imageUrl: that.$mio.mioRoot.makeRandomArr(['/static/images/share1.png', '/static/images/share2.png', '/static/images/share3.png'], 1)[0],
+                        }
+                    }
+                } else if (view.route == 'pages/index/rank') {
                     view.onShareAppMessage = function (res) {
                         console.log(res)
                         return {

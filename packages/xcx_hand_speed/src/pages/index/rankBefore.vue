@@ -8,7 +8,7 @@
             <view class="flex justify-around">
                 <view style="margin-top: 136rpx">
                     <view style="color: #FF5555" class="text-20 text-bold">{{score == '' || score == undefined ? 0 : score}}次</view>
-                    <view class="text-14" style="margin-top: 28rpx">最好成绩</view>
+                    <view class="text-14" style="margin-top: 28rpx">群内成绩</view>
                 </view>
                 <view style="margin-top: 40rpx">
                     <view class="cu-avatar" :class="[false ? 'radius' : 'round']" style="border: 2px solid #FFFFFF;width: 132rpx;height: 132rpx"
@@ -21,7 +21,7 @@
                 </view>
                 <view style="margin-top: 136rpx">
                     <view style="color: #FF5555" class="text-20 text-bold">{{level == '' || level == undefined ? '999+' : level}}</view>
-                    <view class="text-14" style="margin-top: 28rpx">全国排名</view>
+                    <view class="text-14" style="margin-top: 28rpx">群内排名</view>
                 </view>
             </view>
             <button style="width: 460rpx;height: 100rpx;background: transparent;margin-top: 34rpx;"
