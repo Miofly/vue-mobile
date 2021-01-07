@@ -77,7 +77,7 @@ function returnPromise(obj) {
 			bgObj.width = bgObj.width * bgScale;
 			bgObj.height = bgObj.height * bgScale;
 
-			// _app.log('获取背景图信息对象成功:' + JSON.stringify(bgObj));
+			_app.log('获取背景图信息对象成功:' + JSON.stringify(bgObj));
 			const params = {
 				bgObj,
 				type,

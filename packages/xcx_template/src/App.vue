@@ -19,22 +19,24 @@ export default {
         // #endif
     },
     onShow(e) {
-        wx.getShareInfo({
-            shareTicket: e.shareTicket,
-            success: res => {
-                const WXBizDataCrypt = require('uJs/plugin/WXBizDataCrypt')
-                const appId = 'wx5f036ada6b1ca382'
-                const sessionKey = '683fecc3c4e99c632b25fefb46480b93'
-                const encryptedData = res.encryptedData
-                const iv = res.iv
-                const pc = new WXBizDataCrypt(appId, sessionKey)
-                const data = pc.decryptData(encryptedData, iv)
-                console.log('解密后 data: ', data)
-            },
-            fail: err => {
-                console.log(err, '获取信息失败')
-            }
-        })
+    	// #ifdef MP-WEIXIN
+		wx.getShareInfo({
+			shareTicket: e.shareTicket,
+			success: res => {
+				const WXBizDataCrypt = require('uJs/plugin/WXBizDataCrypt')
+				const appId = 'wx5f036ada6b1ca382'
+				const sessionKey = '683fecc3c4e99c632b25fefb46480b93'
+				const encryptedData = res.encryptedData
+				const iv = res.iv
+				const pc = new WXBizDataCrypt(appId, sessionKey)
+				const data = pc.decryptData(encryptedData, iv)
+				console.log('解密后 data: ', data)
+			},
+			fail: err => {
+				console.log(err, '获取信息失败')
+			}
+		})
+    	// #endif
         console.log(e, 'onShow：页面展示')
     },
     onHide() {
