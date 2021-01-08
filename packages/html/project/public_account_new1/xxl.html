@@ -111,7 +111,7 @@
         Ad.singleAd(
             $.extend(curData, {
                 data: {
-                    app_id: 103019,
+                    app_id: 103164,
                     deny_cids: deny_cids.join(',')
                 }
             }),
@@ -134,7 +134,7 @@
                 adList = res.data
                 maxPgae = res.meta.last_page
                 for (var i = 0; i < adList.length; i++) {
-                    adList[i].data = {app_id: 103019, deny_cids: deny_cids.join(',')}
+                    adList[i].data = {app_id: 103164, deny_cids: deny_cids.join(',')}
                 }
             }
             ee.emitEvent('fetch-jj-ad')

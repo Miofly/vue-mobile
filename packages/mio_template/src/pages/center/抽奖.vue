@@ -45,11 +45,10 @@
             </view>
 
             <!--转盘-->
-            <view class="main" style="padding-top: 150rpx;position: relative">
-                <!--抽奖背景-->
-                <view :animation="animationData" :style="{backgroundImage: 'url('+ baseConfig.lotteryBg +')'}" class="margin-center round"
-                      style="position: relative;width: 600rpx;height: 600rpx;background-size: cover;z-index: 1">
-                    <view class="block"
+            <view class="main" style="padding-top: 150rpx;">
+                <view :style="{backgroundImage: 'url('+ baseConfig.lotteryBg +')'}" class="margin-center round"
+                      style="position: relative;width: 600rpx;height: 600rpx;background-size: cover;">
+                    <view :animation="animationData" class="block"
                           style="position: absolute;left: 0;top: 0;z-index: 1;width: 600rpx;height: 600rpx;border-radius: inherit;">
 <!--                        <view style="position: absolute;left: 0;top: 0;width: inherit;height: inherit;z-index: 99;">-->
 <!--                            &lt;!&ndash;线条颜色&ndash;&gt;-->
@@ -74,24 +73,26 @@
                         </view>
                     </view>
                     <!--抽奖按钮-->
+                    <view id="wx" :class="btnDisabled" @tap="playReward">
+                        <button style="position: absolute;left: 260rpx;top: 280rpx;z-index: 3">
+                            <m-image :borderRadius="10" :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" :shape="['square', 'circle'][0]"
+                                     :showLoading="false" :src="baseConfig.lotteryBtn"
+                                     bgColor="rgba(0, 0, 0, 1)"
+                                     bgColorError="rgba(0, 0, 0, 1)" duration="0"
+                                     height="50">
+                                <view slot="error" class="text-white" style="font-size: 24rpx;">加载失败</view>
+                            </m-image>
+                        </button>
+                    </view>
                 </view>
-                <view id="wx" :class="btnDisabled" @tap="playReward" style="position: absolute;left: 250rpx;top: 290rpx;z-index: 3">
-                    <m-image :borderRadius="10" :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" :shape="['square', 'circle'][0]"
-                             :showLoading="false" :src="baseConfig.btn"
-                              duration="0"
-                             height="276">
-                        <view slot="error" class="text-white" style="font-size: 24rpx;">加载失败</view>
-                    </m-image>
-                </view>
-<!--                <view :style="{backgroundImage: 'url('+ baseConfig.lotteryBg +')'}" class="margin-center round"-->
-<!--                      style="position: absolute;width: 700rpx;height: 700rpx;background-size: cover;top: 100rpx;left: 30rpx;z-index: 2">-->
-<!--                </view>-->
+
+
             </view>
-            <m-column-notice :autoplay="true" :duration="2000" :isCircular="true" :list="['恭喜用户 ***** 抽中VIP碎片', '恭喜用户 ***** 抽中50书币', '恭喜用户 ***** 抽中888书币', '恭喜用户 ***** 抽中30书币', '恭喜用户 ***** 抽中50书币', '恭喜用户 ***** 抽中888书币', '恭喜用户 ***** 抽中30书币']" :show="true"
-                          :speed="160" bgColor="transparent"
-                          borderRadius="10" style="position: relative;z-index: 3;"
-                          color="rgba(255, 245, 150, 1)" mode="vertical">
-            </m-column-notice>
+<!--            <m-notice-bar :autoplay="true" :duration="2000" :isCircular="true" :list="[1,12321312321,213123123]" :show="true"-->
+<!--                          :speed="160" :type="['success', 'error', 'primary', 'info', 'warning'][0]" bgColor=""-->
+<!--                          borderRadius="10" style="position: relative;z-index: 3;"-->
+<!--                          color="black" mode="vertical">-->
+<!--            </m-notice-bar>-->
         </view>
         <m-modal :closeShow="true" :closeSize="40" :descSize="30" :maskClosable="false" :showContent="true"
                  :showTitle="false" :status.sync="modalStatus"
@@ -131,19 +132,14 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import mColumnNotice from '../../components/m-column-notice/m-column-notice.vue'
+import { commonGet } from '@/api'
 
-@Component({
-    components: {
-        mColumnNotice
-    },
-})
+@Component({})
 export default class extends Vue {
 
     baseConfig: any = {
         zjjl: '/static/images/zjjl.png',
         bt: '/static/images/bt.png',
-        btn: '/static/images/btn.png',
 
         baseSrc: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg',
         bg: '/static/images/bg.png',
@@ -225,7 +221,7 @@ export default class extends Vue {
     // 发起抽奖
     playReward () {
         const duration = 2000 // 动画时间
-        const index = 4 // 抽到礼物的索引
+        const index = 3 // 抽到礼物的索引
         this.animation(index, duration)
 
         setTimeout(() => {

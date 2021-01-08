@@ -35,7 +35,7 @@
 			</button>
 			<!--群挑战-->
 			<button :disabled="btnDisabled" class="fr" open-type="getUserInfo"
-                    @click="type == 3 ? goGroupTwo() : goGroupTwo()"
+                    @click="type == 3 ? goGroupTwo() : goGroup()"
                     @getuserinfo="getUserInfoGroup" style="width: 48%;padding-left: 1%">
 				<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" style=""
 						:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"

@@ -117,7 +117,7 @@ export default class extends Vue {
                         {
                             type: 'image',
                             id: 'productImage',
-                            url: 'https://e-static.oss-cn-shanghai.aliyuncs.com/img/wfd/haibao.jpg',
+                            url: 'https://e-static.oss-cn-shanghai.aliyuncs.com/img/wfd/hb.png',
                             dx: 0,
                             dy: 0,
                             serialNum: 0,

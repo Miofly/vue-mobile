@@ -49,13 +49,24 @@
                 </view>
             </view>
 
-			<view @click="goGame">
-				<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="100"
-						:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" style="margin-left: 17%;margin-top: 34rpx"
-						:shape="['square', 'circle'][0]" :src="infoConfig.startChallenge" bgColor="rgba(0, 0, 0, 1)">
-					<view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
-				</m-image>
-			</view>
+            <view class="margin-top">
+                <!--排行-->
+                <button @click="goGame" class="fl" style="width: 43%;margin-left: 5%">
+                    <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" style=""
+                             :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
+                             :shape="['square', 'circle'][0]" :src="infoConfig.kstz" bgColor="rgba(0, 0, 0, 1)">
+                        <view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
+                    </m-image>
+                </button>
+                <!--群挑战-->
+                <button open-type="share" class="fr" style="width: 43%;margin-right: 5%">
+                    <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" style=""
+                             :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
+                             :shape="['square', 'circle'][0]" :src="infoConfig.fx" bgColor="rgba(0, 0, 0, 1)">
+                        <view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
+                    </m-image>
+                </button>
+            </view>
 		</view>
 
         <ad v-if="spgg" :unit-id="spgg" ad-type="video" ad-theme="white" style="margin-top: 28rpx" class="text-left"></ad>
@@ -157,7 +168,7 @@ export default class extends Vue {
 
     onShareAppMessage (res) {
         return {
-            title: '是男人就来！',
+            title: '是男人就来！111',
             imageUrl: '/static/images/poster.png',
             path: `pages/index/index?openId=${this.$store.state.center.openId}`,
         }
@@ -173,6 +184,9 @@ export default class extends Vue {
 	status: boolean = true
     person: any = {}
 	infoConfig: any = {
+        fx: '/static/images/fx.png',
+        kstz: '/static/images/kstz.png',
+
 		bg: '/static/images/bg.png',
 		clickSrc: '/static/images/click_me@2x.png',
 		clickSrcTwo: '/static/images/click_me2.png',
@@ -257,5 +271,11 @@ page {
 	font-size: 18px;
 	background-color: rgba(255, 255, 255, 0.9);
 	color: #772E01;
+}
+button {
+    border: 0 !important;padding: 0!important;line-height: 0!important;
+}
+button:after {
+    border: 0 !important;padding: 0!important;line-height: 0!important;
 }
 </style>

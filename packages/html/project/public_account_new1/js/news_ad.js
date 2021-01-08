@@ -339,7 +339,7 @@ function getListData(page) {
             if (res.code == 200) {
                 adList = res.data
                 for (var i = 0; i < adList.length; i++) {
-                    adList[i].data = {app_id: 103019, deny_cids: deny_cids.join(',')}
+                    adList[i].data = {app_id: 103164, deny_cids: deny_cids.join(',')}
                 }
                 // console.log(adList)
                 commonGet('/articles?page=' + page.num + '&per_page=' + page.size + '',

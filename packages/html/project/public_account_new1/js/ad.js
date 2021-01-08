@@ -311,7 +311,7 @@ ee.addListener('fetch-jj-ad', function() {
     Ad.singleAd(
         $.extend(curData, {
             data: {
-                app_id: 103019,
+                app_id: 103164,
                 deny_cids: deny_cids.join(',')
             }
         }),

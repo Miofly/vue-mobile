@@ -7,7 +7,7 @@
         <view style="height: 422rpx;background: #F5F6FC;border-radius: 12px;border: 4px solid #36CCF1;margin-top: 40rpx" class="text-center">
             <view class="flex justify-around">
                 <view style="margin-top: 136rpx">
-                    <view style="color: #FF5555" class="text-20 text-bold">{{score == '' || score == undefined ? 0 : score}}次</view>
+                    <view style="color: #FF5555" class="text-20 text-bold">{{ person.score == '' || person.score == undefined ? '未上榜' : person.score }}次</view>
                     <view class="text-14" style="margin-top: 28rpx">群内成绩</view>
                 </view>
                 <view style="margin-top: 40rpx">
@@ -20,16 +20,29 @@
                     </view>
                 </view>
                 <view style="margin-top: 136rpx">
-                    <view style="color: #FF5555" class="text-20 text-bold">{{level == '' || level == undefined ? '999+' : level}}</view>
+                    <view style="color: #FF5555" class="text-20 text-bold">{{ person.level == '' || person.level == undefined ? '999+' : person.level }}</view>
                     <view class="text-14" style="margin-top: 28rpx">群内排名</view>
                 </view>
             </view>
-            <button style="width: 460rpx;height: 100rpx;background: transparent;margin-top: 34rpx;"
-            open-type="share">
-                <image :src="infoConfig.captureImg" style="width: 100%;height: 100%"
-                       :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]">
-                </image>
-            </button>
+
+            <view class="margin-top">
+                <!--排行-->
+                <button @click="goGame" class="fl" style="width: 43%;margin-left: 5%">
+                    <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" style=""
+                             :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
+                             :shape="['square', 'circle'][0]" :src="infoConfig.jxqtz" bgColor="rgba(0, 0, 0, 1)">
+                        <view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
+                    </m-image>
+                </button>
+                <!--群挑战-->
+                <button open-type="share" class="fr" style="width: 43%;margin-right: 5%">
+                    <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" style=""
+                             :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
+                             :shape="['square', 'circle'][0]" :src="infoConfig.fx" bgColor="rgba(0, 0, 0, 1)">
+                        <view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
+                    </m-image>
+                </button>
+            </view>
         </view>
 
         <ad v-if="spgg" :unit-id="spgg" ad-type="video" ad-theme="white" style="margin-top: 28rpx"></ad>
@@ -136,6 +149,9 @@ export default class extends Vue {
     status: boolean = true
     person: any = {}
     infoConfig: any = {
+        fx: '/static/images/fx.png',
+        jxqtz: '/static/images/jxqtz.png',
+
         bg: '/static/images/bg.png',
         clickSrc: '/static/images/click_me@2x.png',
         clickSrcTwo: '/static/images/click_me2.png',
@@ -161,21 +177,22 @@ export default class extends Vue {
 
     rankLists: any = []
 
-    async created () {
-        // #ifdef H5
-        // @ts-ignore
-        // const { data } = await commonGet('/mytest/articles?page=2&limit=50')
-        // #endif
+    // async created () {
+    //     // #ifdef H5
+    //     // @ts-ignore
+    //     // const { data } = await commonGet('/mytest/articles?page=2&limit=50')
+    //     // #endif
+    //
+    //
+    // }
 
+    async onShow () {
         // #ifdef MP-WEIXIN
-        // const { data } = await commonPost('/api/user_achievement/group_top', { openGid: this.$store.state.center.openGid }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
-        const { data } = await commonPost('/api/user_achievement/group_top', { openGid: 'GBfQr48D1dQF4o80zSxpX_-98G94' }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
+        const { data } = await commonPost('/api/user_achievement/group_top', { openGid: this.$store.state.center.openGid }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
+        // const { data } = await commonPost('/api/user_achievement/group_top', { openGid: 'GBfQr48D1dQF4o80zSxpX_-98G94' }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
         // #endif
-        this.rankLists = data
-        const personIndex = this.rankLists.findIndex(item => {
-            return item.nickName == this.$store.state.center.name
-        })
-        this.person = this.rankLists[personIndex]
+        this.rankLists = data.list
+        this.person = data.mine
     }
 
     goGame () {
@@ -189,7 +206,7 @@ export default class extends Vue {
             // this.rankLists = []
             const { data } = await commonPost('/api/user_achievement/group_top', { openGid: this.$store.state.center.openGid }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
             uni.hideLoading()
-            this.rankLists = data
+            this.rankLists = data.list
             const personIndex = this.rankLists.findIndex(item => {
                 return item.nickName == this.$store.state.center.name
             })
