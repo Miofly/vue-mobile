@@ -135,19 +135,32 @@
                           :style="{backgroundImage: 'url('+ userData.avatar +')'}" style="width: 68rpx;height: 68rpx;position: absolute;top: 28rpx;left: 32rpx">
                         <view v-if="false" class="cu-tag badge">999</view>
                     </view>
-                    <!--用户信息-->
+                    <!--中奖用户信息-->
                     <view class=" full-width" style="color: rgba(73, 54, 43, 1)">
                         <view style="position: absolute;top: 20rpx;left: 124rpx;color: rgba(73, 54, 43, 1)" class="text-16 text-bold">{{userData.name}}</view>
                         <view style="position: absolute;top: 68rpx;left: 124rpx">
 
-                            <text class="text-12" style="color: rgba(73, 54, 43, 0.5);">合肥市包河区宝文中心</text>
+                            <image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
+                            	:src="baseConfig.dingwei" style="width: 18rpx"></image>
+                            <text class="text-12" style="color: rgba(73, 54, 43, 0.5);margin-left: 8rpx">合肥市包河区宝文中心</text>
                         </view>
                     </view>
-                    <!--中奖纪录按钮-->
-                    <view style="position: absolute;top: 0;right: 28rpx">
-                        <image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
-                               :src="baseConfig.zjjl" style="width: 84rpx"></image>
+                    <!--时间-->
+                    <view style="position: absolute;top: 24rpx;right: 32rpx;color: rgba(73, 54, 43, 0.5)">
+                        2020.05.12 22:12:23
                     </view>
+                </view>
+                <!--文字描述-->
+                <view>
+                    1111111111
+                </view>
+                <!--图片信息-->
+                <view class="flex">
+
+                </view>
+                <!--查看更多-->
+                <view>
+                    查看更多
                 </view>
             </view>
         </view>
@@ -205,6 +218,7 @@ export default class extends Vue {
         wdjp: '/static/images/wdjp.png',
         zjsd: '/static/images/zjsd.png',
         wfsm: '/static/images/wfsm.png',
+        dingwei: '/static/images/dingweei.png',
 
         baseSrc: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg',
         bg: '/static/images/bg.png',
