@@ -209,9 +209,9 @@
             var scrollTop = $(this).scrollTop();
             var scrollHeight = $(document).height();
             var windowHeight = $(this).height();
-            if (page.num >= maxPgae) {
-                page.num = 0
-            }
+            // if (page.num >= maxPgae) {
+            //     page.num = 0
+            // }
             if (scrollTop + windowHeight + 240 >= scrollHeight && page.num < maxPgae) {
                 if (condition) {
                     console.log('触发了吗')
@@ -261,6 +261,7 @@
         });
         $('#tabs div').removeClass('active')
         $('#dataList').html('')
+        page.num = 0
         adListIndex = 0
         adList = []
         deny_cids = []
