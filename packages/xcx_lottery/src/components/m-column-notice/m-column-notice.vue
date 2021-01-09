@@ -218,6 +218,7 @@ export default {
 	align-items: center;
 	flex: 1;
 	margin-left: 12rpx;
+    margin-top: 36rpx;
 }
 
 .u-swiper-item {
@@ -227,6 +228,7 @@ export default {
     /* #endif */
 	align-items: center;
 	overflow: hidden;
+    width: 100%;
 }
 
 .u-news-item {
@@ -235,6 +237,7 @@ export default {
 
 .u-right-icon {
 	margin-left: 12rpx;
+    margin-top: 40rpx;
 	/* #ifndef APP-NVUE */
 	display: inline-flex;
 	/* #endif */

@@ -53,8 +53,9 @@ export default {
             return
         }
         if (e.query.open_id!=undefined) {
-            console.log('进入好友分享type:', this.$store.state.center.type, e.query.open_id)
             this.$store.state.center.type = 2
+            this.$store.state.center.firend_openId = e.query.open_id
+            console.log('进入好友分享type:', this.$store.state.center.type, e.query.open_id)
             wx.login({
                 success: async (res) => {
                     if (res.code) {
@@ -69,7 +70,6 @@ export default {
                     }
                 }
             })
-            this.$store.state.center.firend_openId = e.query.open_id
         } else {
             console.log('未进入好友分享type:', this.$store.state.center.type)
             this.$store.state.center.type = 1

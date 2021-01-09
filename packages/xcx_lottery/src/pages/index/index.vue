@@ -1,14 +1,14 @@
 <template>
-    <view style="overflow-x: hidden;overflow-y: scroll;padding-bottom: 30px" class="text-center fulls-width-height">
+    <view style="overflow-x: hidden;overflow-y: scroll;padding-bottom: 30px" class="text-center fulls-width-height" :style="{background: 'url('+ baseConfig.bg +')'}">
         <view style="height: auto;" class="text-center full-width">
             <!-- 背景 -->
-            <m-image :borderRadius="10" :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]" :shape="['square', 'circle'][0]"
-                     :showLoading="false" :src="baseConfig.bg"
-                     bgColor="rgba(0, 0, 0, 1)"
-                     bgColorError="rgba(0, 0, 0, 1)" width="100vw"
-                     duration="0" style="height: 100%;position: absolute;z-index: 0">
-                <view slot="error" class="text-white" style="font-size: 24rpx;">加载失败</view>
-            </m-image>
+<!--            <m-image :borderRadius="10" :shape="['square', 'circle'][0]"-->
+<!--                     :showLoading="false" :src=""-->
+<!--                     bgColor="rgba(0, 0, 0, 1)"-->
+<!--                     bgColorError="rgba(0, 0, 0, 1)"-->
+<!--                     duration="0" style="width: 100vw;height: 100%;position: absolute;z-index: 0;left: 0">-->
+<!--                <view slot="error" class="text-white" style="font-size: 24rpx;">加载失败</view>-->
+<!--            </m-image>-->
 
             <view class="margin-center" style="height: 150rpx;width: 690rpx;position: relative;top: 16rpx;
             background: linear-gradient(90deg, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0.2) 100%);
@@ -87,14 +87,17 @@
                       style="position: absolute;width: 780rpx;height: 780rpx;background-size: cover;top: 60rpx;left: -10rpx;z-index:2">
                 </view>
             </view>
-            <m-column-notice :autoplay="true" :duration="2000" :isCircular="true" :list="['恭喜用户 ***** 抽中VIP碎片', '恭喜用户 ***** 抽中50书币', '恭喜用户 ***** 抽中888书币', '恭喜用户 ***** 抽中30书币', '恭喜用户 ***** 抽中50书币', '恭喜用户 ***** 抽中888书币', '恭喜用户 ***** 抽中30书币']" :show="true"
-                          :speed="160" bgColor="transparent"
-                          borderRadius="10" style="position: relative;z-index: 3;margin-top: 80rpx"
-                          color="rgba(255, 245, 150, 1)" mode="vertical">
-            </m-column-notice>
+
+            <view style="position: relative;z-index: 3;margin-top: 80rpx">
+                <m-column-notice :autoplay="true" :duration="2000" :isCircular="true" :list="['恭喜用户 ***** 抽中VIP碎片', '恭喜用户 ***** 抽中50书币', '恭喜用户 ***** 抽中888书币', '恭喜用户 ***** 抽中30书币', '恭喜用户 ***** 抽中50书币', '恭喜用户 ***** 抽中888书币', '恭喜用户 ***** 抽中30书币']" :show="true"
+                                 :speed="160" bgColor="transparent"
+                                 borderRadius="10"
+                                 color="rgba(255, 245, 150, 1)" mode="vertical">
+                </m-column-notice>
+            </view>
 
             <!--我的奖品-->
-            <view style="position: relative;width: 100%;" class="margin-top margin-center text-center">
+            <view style="position: relative;width: 100%;margin-top: 40rpx" class="margin-center text-center">
                 <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="336"
                 		:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]"
                 		:shape="['square', 'circle'][0]" :src="baseConfig.wdjp" bgColor="rgba(0, 0, 0, 1)">
@@ -121,10 +124,11 @@
             </view>
 
             <!--中奖晒单-->
-            <view style="background: rgba(255, 243, 237, 1);width: 690rpx;height: 558rpx;margin-top: 56rpx;position: relative;padding-bottom: 32rpx;border-radius: 16rpx"
+            <view style="background: rgba(255, 243, 237, 1);width: 690rpx;height: 578rpx;margin-top: 56rpx;position: relative;
+            padding-bottom: 32rpx;border-radius: 16rpx"
                   class="text-center margin-center">
                 <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="80"
-                		:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" style="position: absolute;top: -16rpx"
+                		:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" style="position: absolute;top: -16rpx;left: 106rpx"
                 		:shape="['square', 'circle'][0]" :src="baseConfig.zjsd" bgColor="rgba(0, 0, 0, 1)">
                 	<view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
                 </m-image>
@@ -179,7 +183,7 @@
                 <view>
                     <text style="position: absolute;top: 510rpx;left: 35%"></text>
                     <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="30"
-                    		:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" style="position: absolute;top: 515rpx;"
+                    		:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" style="position: absolute;top: 515rpx;left: 270rpx"
                     		:shape="['square', 'circle'][0]" :src="baseConfig.open" bgColor="rgba(0, 0, 0, 1)">
                     	<view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
                     </m-image>
@@ -190,7 +194,7 @@
             <view style="background: rgba(255, 243, 237, 1);width: 690rpx;height: auto;margin-top: 56rpx;position: relative;padding-bottom: 32rpx;border-radius: 16rpx"
                   class="text-center margin-center">
                 <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="80"
-                         :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" style="position: absolute;top: -16rpx"
+                         :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" style="position: absolute;top: -16rpx;left: 106rpx;"
                          :shape="['square', 'circle'][0]" :src="baseConfig.wfsm" bgColor="rgba(0, 0, 0, 1)">
                     <view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
                 </m-image>
@@ -211,15 +215,17 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-// import mColumnNotice from '../../components/m-column-notice/m-column-notice.vue'
-// import lineProgress from '../../components/progress/line-progress.vue'
+import mColumnNotice from '../../components/m-column-notice/m-column-notice.vue'
+import lineProgress from '../../components/progress/line-progress.vue'
 import {
     commonGet, commonPost
 } from '@/api'
 @Component({
     components: {
-        // mColumnNotice,
-        // lineProgress
+        // #ifdef H5
+        mColumnNotice,
+        lineProgress
+        // #endif
     },
 })
 export default class extends Vue {

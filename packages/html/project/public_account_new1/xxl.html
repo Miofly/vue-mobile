@@ -15,9 +15,38 @@
     <script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/EventEmitter.min.js"></script>
     <script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/art-template.js"></script>
     <link href="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/css/index.css" rel="stylesheet" type="text/css"/>
+    <style>
+        .tab-wrap .ret1-tabs {
+            display: flex;
+            margin: 2vw;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .active {
+            background: #eb1c38;
+            color: #fff;
+            border-radius: 6vw;
+        }
+        .tab-wrap .ret1-tabs .tab-item {
+            display: inline-block;
+            width: 16vw;
+            padding: 1vw 0;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 <div>
+    <div class="tab-wrap" style="position: fixed;top: 0;background: white;width: 100vw;z-index: 9999999">
+        <div id="tabs" class="ret1-tabs">
+            <div class="tab-item active" >美女</div>
+            <div class="tab-item">学生</div>
+            <div class="tab-item">少妇</div>
+            <div class="tab-item">空姐</div>
+        </div>
+    </div>
+    <div style="height: 25px;"></div>
     <div style="padding: 0.32rem;">
         <div id="dataList"></div>
         <!--广告-->
@@ -101,10 +130,10 @@
     var adList = [];
     var deny_cids = []; // 被禁止的创意广告id
 
-
     var page = {num: 1, size:4}
     var maxPgae = 0
     getAds()
+
 
     ee.addListener('fetch-jj-ad', function() {
         var curData = adList[adListIndex];
@@ -180,13 +209,16 @@
             var scrollTop = $(this).scrollTop();
             var scrollHeight = $(document).height();
             var windowHeight = $(this).height();
-
-            if (scrollTop + windowHeight + 150 >= scrollHeight && page.num < maxPgae) {
+            if (page.num >= maxPgae) {
+                page.num = 0
+            }
+            if (scrollTop + windowHeight + 240 >= scrollHeight && page.num < maxPgae) {
                 if (condition) {
                     console.log('触发了吗')
                     condition = false
                     adListIndex = 0
                     adList = []
+
                     page.num++
                     getAds()
                     setTimeout(function() {
@@ -221,6 +253,25 @@
         url = beforeUrl + nextUrl;
         return url;
     }
+
+    $('#tabs div').bind('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+        $('#tabs div').removeClass('active')
+        $('#dataList').html('')
+        adListIndex = 0
+        adList = []
+        deny_cids = []
+        if (page.num >= maxPgae) {
+            page.num = 0
+        }
+        page.num++
+        getAds()
+        $(this).addClass('active')
+        // $('#dataList').html('')
+    })
 </script>
 <script>
     var _hmt = _hmt || [];

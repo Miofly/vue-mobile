@@ -291,6 +291,10 @@
                             condition = true
                         }, 1000)
                     }
+                } else if (page.num >= maxPgae){
+                    getInfoUrl(function (url) {
+                        location.href = url + '/xxl.html?isXxl=1'
+                    });
                 }
             })
 

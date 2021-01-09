@@ -2,7 +2,10 @@
 // @ts-ignore
 import axios from 'uJs/plugin/uni-axios'
 // #endif
-
+// #ifdef H5
+// @ts-ignore
+import axios from 'axios' // eslint-disable-line
+// #endif
 import root from 'uJs/root'
 import { AxiosRequestConfig } from './types'
 
