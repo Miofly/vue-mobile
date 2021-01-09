@@ -48,7 +48,7 @@
         <ad v-if="spgg" :unit-id="spgg" ad-type="video" ad-theme="white" style="margin-top: 28rpx"></ad>
 
         <view style="color: #D3D5DE;margin-top: 60rpx" class="text-18">
-            共 <text style="color: #FF5555" class="text-22">{{infoConfig.sumPerson}}</text>人正在挑战
+            共 <text style="color: #FF5555" class="text-22">{{number}}</text>人正在挑战
         </view>
         <view style="color: #D3D5DE;margin-top: 28rpx;" class="text-16">
             榜单将于每周一凌晨{{infoConfig.time}}重置
@@ -142,16 +142,10 @@ export default class extends Vue {
     @State('ptgg', { namespace: 'root' }) ptgg
     @State('openGid', { namespace: 'center' }) openGid
 
-    async onShow () {
-        console.log('接口调用了吗？')
-        const { data } = await commonPost('/api/user_achievement/group_top', { openGid: this.$store.state.center.openGid }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
-        console.log('接口调用结果：', data)
-        this.rankLists = data.list
-        this.person = data.mine
-        this.getTrueUserInfo()
-    }
 
     status: boolean = true
+    number: number = 0
+
     person: any = {}
     infoConfig: any = {
         fx: '/static/images/gz.png',
@@ -168,6 +162,16 @@ export default class extends Vue {
         sumPerson: this.$mio.mioRoot.randomNum(100000, 30),
         time: '3:00',
         captureImg: '/static/images/capture.png',
+    }
+
+    async onShow () {
+        console.log('接口调用了吗？')
+        const { data } = await commonPost('/api/user_achievement/group_top', { openGid: this.$store.state.center.openGid }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
+        console.log('接口调用结果：', data)
+        this.rankLists = data.list
+        this.person = data.mine
+        this.number = data.number
+        this.getTrueUserInfo()
     }
 
     async getTrueUserInfo () {

@@ -183,6 +183,11 @@ export default class extends Vue {
                             this.$store.state.center.name = data.nickname
                             this.$store.state.center.avatar = data.avatar
                             this.$store.state.center.level = data.level
+
+                            if (this.$store.state.center.firend_openId != '' && this.$store.state.center.firend_openId != undefined) {
+                                const dataGroup = await commonPost('/api/user/bind_friend', {openId: this.$store.state.center.firend_openId}, false,{ 'AUTH-TOKEN': this.$store.state.center.open_id })
+                                console.log(dataGroup, '绑定好友关系')
+                            }
                         } else {
                             // wx.login({
                             //     success: async (res) => {

@@ -175,6 +175,7 @@ export default class extends Vue {
     }
 
     async onShow () {
+	    this.status = true
         const { data } = await commonPost('/api/user_achievement/top', { type: 1 }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
         this.rankLists = data.list
         this.person = data.mine

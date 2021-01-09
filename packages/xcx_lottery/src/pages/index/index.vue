@@ -24,7 +24,7 @@
                     <view style="position: absolute;top: 68rpx;left: 144rpx">书币余额<span class="text-24" style="color: rgba(255, 251, 18, 1);margin-right: 4rpx;margin-left: 16rpx">{{ user.money }}</span>书币</view>
                 </view>
                 <!--中奖纪录按钮-->
-                <view style="position: absolute;top: 0;right: 28rpx">
+                <view style="position: absolute;top: 0;right: 28rpx" @click="goRecord">
                     <image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
                     	:src="baseConfig.zjjl" style="width: 84rpx"></image>
                 </view>
@@ -279,6 +279,14 @@ export default class extends Vue {
             this.winningIndex = newData.data
         }, 1000)
 
+    }
+
+    goRecord () {
+    	this.$mio.mioRoot.push('/pages/index/record')
+    }
+
+    goMore () {
+        this.$mio.mioRoot.push('/pages/index/more')
     }
 
     animation (index, duration) {

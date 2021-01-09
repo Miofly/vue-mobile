@@ -53,6 +53,7 @@ export default {
             return
         }
         if (e.query.open_id!=undefined) {
+            console.log(e, '进入好友分享')
             this.$store.state.center.type = 2
             this.$store.state.center.firend_openId = e.query.open_id
             console.log('进入好友分享type:', this.$store.state.center.type, e.query.open_id)
