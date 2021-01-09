@@ -13,7 +13,7 @@ function getParam(name, url) { // 获取地址栏参数
 function commonPost(url, data, success, headers, fail) {
     $.ajax({
         type: 'POST',
-        url: 'http://api.lc918.cn/h5' + url,
+        url: 'http://gzh.shortl.cn/h5' + url,
         // url: 'http://api.17code.net/h5' + url,
         // url: 'http://lb-manage-api.52xiaoshuo.cn/api/' + url,
         data: data,
@@ -26,7 +26,7 @@ function commonPost(url, data, success, headers, fail) {
 function commonGet(url, success, headers,fail) {
     $.ajax({
         type: 'GET',
-        url: 'http://api.lc918.cn/h5' + url,
+        url: 'http://gzh.shortl.cn/h5' + url,
         // url: 'http://api.17code.net/h5' + url,
         success: success,
         fail: fail,

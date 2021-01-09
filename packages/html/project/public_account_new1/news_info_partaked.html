@@ -350,7 +350,7 @@
         gogg(location.origin + '/index.html' + delParam(location.search, 'article_id'))
     } else {
         getInfoUrl(function (url) {
-            gogg(url + '/xxl.html'+ location.search +'')
+            gogg(url + '/xxl.html?isXxl=1')
         });
     }
 

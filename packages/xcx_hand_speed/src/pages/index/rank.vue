@@ -72,7 +72,7 @@
         <ad v-if="spgg" :unit-id="spgg" ad-type="video" ad-theme="white" style="margin-top: 28rpx" class="text-left"></ad>
 
 		<view style="color: #D3D5DE;margin-top: 60rpx" class="text-18">
-			共 <text style="color: #FF5555" class="text-22">{{infoConfig.sumPerson}}</text>人正在挑战
+			共 <text style="color: #FF5555" class="text-22">{{number}}</text>人正在挑战
 		</view>
 		<view style="color: #D3D5DE;margin-top: 28rpx;" class="text-16">
 			榜单将于每周一凌晨{{infoConfig.time}}重置
@@ -183,6 +183,7 @@ export default class extends Vue {
 
 	status: boolean = true
     person: any = {}
+    number: number = 0
 	infoConfig: any = {
         fx: '/static/images/fx.png',
         kstz: '/static/images/kstz.png',
@@ -216,6 +217,7 @@ export default class extends Vue {
             const { data } = await commonPost('/api/user_achievement/top', { type: 1 }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
             this.rankLists = data.list
             this.person = data.mine
+            this.number = data.number
         }, 1000)
     }
 

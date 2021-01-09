@@ -142,14 +142,19 @@ export default class extends Vue {
     @State('ptgg', { namespace: 'root' }) ptgg
     @State('openGid', { namespace: 'center' }) openGid
 
-    onShow () {
+    async onShow () {
+        console.log('接口调用了吗？')
+        const { data } = await commonPost('/api/user_achievement/group_top', { openGid: this.$store.state.center.openGid }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
+        console.log('接口调用结果：', data)
+        this.rankLists = data.list
+        this.person = data.mine
         this.getTrueUserInfo()
     }
 
     status: boolean = true
     person: any = {}
     infoConfig: any = {
-        fx: '/static/images/fx.png',
+        fx: '/static/images/gz.png',
         jxqtz: '/static/images/jxqtz.png',
 
         bg: '/static/images/bg.png',
@@ -169,31 +174,13 @@ export default class extends Vue {
         const { data, code } = await commonGet('/api/user/user_info', false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
         if (code == 200) {
             this.$store.state.center.score = data.score
-            this.$store.state.center.name = data.nickname
+            this.$store.state.center.gzname = data.nickname
             this.$store.state.center.avatar = data.avatar
             this.$store.state.center.level = data.level
         }
     }
 
     rankLists: any = []
-
-    // async created () {
-    //     // #ifdef H5
-    //     // @ts-ignore
-    //     // const { data } = await commonGet('/mytest/articles?page=2&limit=50')
-    //     // #endif
-    //
-    //
-    // }
-
-    async onShow () {
-        // #ifdef MP-WEIXIN
-        const { data } = await commonPost('/api/user_achievement/group_top', { openGid: this.$store.state.center.openGid }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
-        // const { data } = await commonPost('/api/user_achievement/group_top', { openGid: 'GBfQr48D1dQF4o80zSxpX_-98G94' }, false, { 'AUTH-TOKEN': this.$store.state.center.open_id })
-        // #endif
-        this.rankLists = data.list
-        this.person = data.mine
-    }
 
     goGame () {
         this.$mio.mioRoot.push('/pages/index/playGame')

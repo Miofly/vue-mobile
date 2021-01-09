@@ -25,6 +25,7 @@ export default {
         }
         if (e.shareTicket!=undefined) {
             this.$store.state.center.type = 3
+            console.log('从群进入 type:', this.$store.state.center.type)
             wx.login({
                 success: async (res) => {
                     if (res.code) {
@@ -52,7 +53,7 @@ export default {
             return
         }
         if (e.query.open_id!=undefined) {
-            console.log('进入好友分享', e.query.open_id)
+            console.log('进入好友分享type:', this.$store.state.center.type, e.query.open_id)
             this.$store.state.center.type = 2
             wx.login({
                 success: async (res) => {
@@ -70,7 +71,7 @@ export default {
             })
             this.$store.state.center.firend_openId = e.query.open_id
         } else {
-            console.log('未进入好友分享')
+            console.log('未进入好友分享type:', this.$store.state.center.type)
             this.$store.state.center.type = 1
         }
 

@@ -16,11 +16,12 @@
 				</text>
 			</view>
 			<!--点击次数-->
-			<view style="margin-top: 114rpx">
-				<image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
-				       :src="`/static/images/${firstNum}.png`" style="width: 120rpx"></image>
-				<image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
-				       :src="`/static/images/${endNum}.png`" style="width: 120rpx"></image>
+			<view style="margin-top: 114rpx;color: white;font-weight: bolder;font-size: 64px;font-style: italic">
+                {{num < 10 ? '0' + num : num}}
+<!--				<image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"-->
+<!--				       :src="`/static/images/${firstNum}.png`" style="width: 120rpx"></image>-->
+<!--				<image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"-->
+<!--				       :src="`/static/images/${endNum}.png`" style="width: 120rpx"></image>-->
 			</view>
 			<!--点击按钮-->
 			<view style="width: 100%;margin-top: 134rpx;text-align: center;">

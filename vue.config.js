@@ -93,6 +93,14 @@ module.exports = {
     devServer: { // 开发环境跨域处理
     	open: true,
         proxy: {
+            //
+            '/dzp': {
+                target: 'http://book.wihens.com/api/wheel',
+                changeOrigin: true, // 是否跨域
+                pathRewrite: {
+                    '^/dzp': ''
+                }
+            },
 			'/mockApi': {
 				target: process.env.VUE_APP_BASE_API,
 				changeOrigin: true, // needed for virtual hosted sites

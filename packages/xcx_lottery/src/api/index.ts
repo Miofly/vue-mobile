@@ -1,14 +1,21 @@
 import ajax from './ajax'
-
+// #ifdef H5
+// @ts-ignore
+const defaultUrl = '/dzp' // eslint-disable-line
+// #endif
+// #ifdef MP-WEIXIN
+// @ts-ignore
+const defaultUrl = 'http://book.wihens.com/api/wheel' // eslint-disable-line
+// #endif
 const commonPost = (url, data = {}, showLoading = true) => ajax({
-    url,
+    url: defaultUrl + url,
     method: 'POST',
     data,
     showLoading
 })
 
 const commonGet = (url, showLoading = true) => ajax({
-    url,
+    url: defaultUrl + url,
     getHeader: {
         'Content-Type': 'json'
     },

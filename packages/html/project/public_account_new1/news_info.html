@@ -373,7 +373,7 @@
     if (getParam('from_user_id') == '' ||  getParam('from_user_id') == null) {
         gogg(location.origin + '/index.html' + delParam(location.search, 'article_id'))
     } else {
-        gogg(location.origin + '/xxl.html')
+        gogg(location.origin + '/?isXxl=1')
     }
 
     function delParam(url, paramKey) {

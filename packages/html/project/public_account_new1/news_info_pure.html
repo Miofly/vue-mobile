@@ -236,7 +236,7 @@
         var adList = [];
         var deny_cids = []; // 被禁止的创意广告id
 
-        var page = {num: 1, size:5}
+        var page = {num: 1, size:3}
         var maxPgae = 0
         getAds()
 
@@ -294,7 +294,7 @@
                 }
             })
 
-        }, 2000)
+        }, 1000)
     }
 
 
@@ -329,7 +329,23 @@
 
     var params = location.search
 
-    gogg(location.origin + '/xxl.html')
+    getInfoUrl(function (url) {
+        gogg(url + '/xxl.html?isXxl=1')
+    });
+    /**
+     * 获取信息流页地址
+     */
+    function getInfoUrl() {
+        const callback = arguments[0]
+        const query = location.search.replace(/user_id/, 'from_user_id');
+        commonGet('/url/info', function (res) {
+            if (res.code == 200) {
+                callback && callback(res.data.url);
+            }
+        })
+
+        return false;
+    }
 
     function delParam(url, paramKey) {
         let beforeUrl = url.substr(0, url.indexOf("?"));   //?之前主地址
