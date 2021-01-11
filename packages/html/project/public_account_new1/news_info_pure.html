@@ -614,7 +614,7 @@
         }
 
         .content .acticle_cont {
-            height: 75vw
+            /*height: 75vw*/
         }
 
         .content .acticle_cont .article_box {
@@ -740,7 +740,7 @@
         <div style="padding: 0.32rem;padding-bottom: 0!important;">
             <div id="title" style="color: #333333;font-size: 24px;font-weight: bolder;text-align: justify"></div>
             <!--文章内容-->
-            <div id="contentParent" style="margin-top: 0.06rem;position: relative;height: 2.8rem;">
+            <div id="contentParent" style="margin-top: 0.06rem;position: relative;height: 2.8rem;overflow:hidden">
                 <div id="content" style="">
                     <div class="acticle_cont" style="display: block;">
                         <div class="article_box"></div>
@@ -878,7 +878,9 @@
 
     function openAll() {
         more_click = 1
+        $('.acticle_cont').height('auto')
         $('.article_box').height('auto')
+        $('#contentParent').height($('.acticle_cont').height())
         $('#contentParent').height($('.article_box').height())
         $('#openAll').hide()
     }

@@ -64,11 +64,11 @@
                                   :style="{transform: 'rotate('+(index * width)+'deg)', zIndex:index, }" style="position: absolute;left: 0;top: 0;width: 100%;height: 100%;">
                                 <view :style="'transform:rotate('+(index )+')'"
                                       class="margin-center text-center flex align-center"
-                                      style="position: relative;padding-top: 46rpx;-webkit-transform-origin: 50% 300rpx;
+                                      style="position: relative;padding-top: 25rpx;-webkit-transform-origin: 50% 300rpx;
                                       transform-origin: 50% 300rpx;flex-direction: column;">
                                     <!--文字颜色-->
                                     <text style="font-size: 32rpx;color: rgba(255, 48, 45, 1);" class="text-bold">{{ iteml.name }}</text>
-                                    <image :src="iteml.icon" style="width: 50rpx;height:50rpx"></image>
+                                    <image :src="`/static/images/${iteml.icon}.png`" style="width: 92rpx;height: 92rpx;margin-top: 10rpx"></image>
                                 </view>
                             </view>
                         </view>
@@ -180,7 +180,7 @@
 <!--                    </view>-->
 <!--                </view>-->
                 <!--查看更多-->
-                <view>
+                <view @click="goMore">
                     <text style="position: absolute;top: 510rpx;left: 35%"></text>
                     <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="30"
                     		:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" style="position: absolute;top: 515rpx;left: 270rpx"
@@ -207,15 +207,56 @@
             </view>
         </view>
 
-        <view>
+        <m-modal :closeShow="false" bgColor="transparent" :closeSize="40" :descSize="30" padding="0" radius="30rpx" :maskClosable="false"
+                 :status.sync="modalStatus" :showTitle="false" title="" desc="" modalTop="300rpx" :titleSize="40"
+                 :showContent="false" descColor="#999d9c" titleColor="black" width="660rpx">
+            <view style="position: relative;left: 0;top: -150rpx;z-index: 889;">
+<!--                <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="660"-->
+<!--                         :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]"-->
+<!--                         style=""-->
+<!--                         :shape="['square', 'circle'][0]" src="/static/images/gyxz.png" bgColor="rgba(0, 0, 0, 1)">-->
+<!--                    <view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>-->
+<!--                </m-image>-->
+                <image src="/static/images/gyxz.png" style="width: 660rpx;height: 660rpx;animation: rotate 4s linear 0s infinite;"></image>
+            </view>
 
-        </view>
+        	<view style="position: relative;margin-top: -550rpx;z-index: 900;display: block">
+        		<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)"
+        		         :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]" style=""
+        		         :shape="['square', 'circle'][0]" :src="baseConfig.cjbj" bgColor="rgba(0, 0, 0, 1)">
+        			<view slot="error" style="font-size: 24rpx;position: absolute;top: 0;left: 0" class="text-white">加载失败</view>
+        		</m-image>
+
+                <view style="position: absolute;top: 160rpx;text-align: center;width: 100%;color: #B24A09;font-weight: bold" class="text-30">
+                    21213
+                </view>
+
+
+                <m-image @click="getAward" duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="196"
+                		:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]"
+                		:shape="['square', 'circle'][0]" :src="baseConfig.jlOne"
+                         style="position: absolute;top: 260rpx;left: 10%;width: 80%;height: 196rpx;">
+                	<view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
+                </m-image>
+
+                <view @click="getAward" style="position: absolute;bottom: 30rpx;text-align: center;width: 100%;text-decoration: underline;color: rgba(178, 74, 9, 1)">
+                    直接领取
+                </view>
+        	</view>
+        	<view style="background-color: transparent!important;position: relative">
+        		<image @click="statusTwo=false" :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
+        		       :src="baseConfig.closeImg" style="width: 76rpx;margin-top: 100rpx"></image>
+        	</view>
+        </m-modal>
+
     </view>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import mColumnNotice from '../../components/m-column-notice/m-column-notice.vue'
+import mImage from '../../components/m-image/m-image.vue'
+import mModal from '../../components/m-modal/m-modal.vue'
 import lineProgress from '../../components/progress/line-progress.vue'
 import {
     commonGet, commonPost
@@ -224,7 +265,9 @@ import {
     components: {
         // #ifdef H5
         mColumnNotice,
-        lineProgress
+        lineProgress,
+        mImage,
+        mModal
         // #endif
     },
 })
@@ -241,6 +284,9 @@ export default class extends Vue {
         open: '/static/images/open.png',
         zpdx: '/static/images/zpdx.gif',
         gdx: '/static/images/gdx.gif',
+        cjbj: '/static/images/gxbj.png',
+        jlOne: '/static/images/jlOne.png',
+        jlTwo: '/static/images/jlTwo.png',
 
         baseSrc: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg',
         bg: '/static/images/bg.png',
@@ -321,6 +367,15 @@ export default class extends Vue {
 </script>
 
 <style>
+@keyframes rotate {
+    from {
+        transform: rotate(0deg)
+    }
+    to {
+        transform: rotate(359deg)
+    }
+}
+
 #wx button {
     border: 0 !important;
     padding: 0 !important;
