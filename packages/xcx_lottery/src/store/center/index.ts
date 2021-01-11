@@ -13,4 +13,6 @@ export default class Index extends VuexModule {
         { name: 'center', type: 'center' },
         { name: 'two', type: 'moduleTwo' }
     ]
+
+    uuid: 0
 }

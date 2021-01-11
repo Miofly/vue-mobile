@@ -2,6 +2,7 @@
     <mescroll-uni :down="downOption" :up="upOption" @down="downCallback"
                   @emptyclick="emptyClick" @init="mescrollInit"
                   @up="upCallback" ref="mescrollRef" top="0" class="bg-white">
+        <ad v-if="ptgg" ad-intervals="30" :unit-id="ptgg"></ad>
         <!--中奖晒单-->
         <view class="bg-white flex justify-between" style="height: 154rpx;border-bottom: 1px solid #eeeeec;padding: 28rpx" v-for="(item, index) in dataLists" :key="index">
             <view>
@@ -31,6 +32,7 @@ import mescrollUni from 'zj/mescroll-uni/mescroll-uni.vue'
 // #endif
 import mImage from 'zj/m-image/m-image.vue'
 import mButton from 'zj/m-button/m-button.vue'
+import { State } from 'vuex-class'
 
 
 @Component({
@@ -43,6 +45,10 @@ import mButton from 'zj/m-button/m-button.vue'
     }
 })
 export default class mescrollSwiper extends mixins(scrollMixins) {
+    @State('spgg', { namespace: 'root' }) spgg
+    @State('ptgg', { namespace: 'root' }) ptgg
+    @State('cpgg', { namespace: 'root' }) cpgg
+
     downOption: any = { // 下拉刷新的配置参数
         use: false, // 是否启用下拉刷新
         auto: false, // 是否在初始化完毕之后自动执行一次下拉刷新的回调
@@ -90,7 +96,7 @@ export default class mescrollSwiper extends mixins(scrollMixins) {
         const pageNum = page.num // 页码
         const pageSize = page.size // 页长
 
-        const { data } = await commonGet(`record.html?uuid=63&page=${pageNum}&number=${pageSize}`) // 获取的数据
+        const { data } = await commonGet(`/record.html?uuid=${this.$store.state.center.uuid}&page=${pageNum}&number=${pageSize}`) // 获取的数据
         const curPageData = data.list // 当前页数据列表
         const curPageLen = curPageData.length // 当前页数据长度
         const totalSize = data.count // 总数据条数

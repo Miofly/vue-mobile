@@ -10,17 +10,15 @@
  export const Test = getModule(ZsQuestion)
  dynamic: true,
  */
-import { Module, VuexModule } from 'vuex-module-decorators'
+import { Module, VuexModule, Mutation, Action, getModule } from 'vuex-module-decorators'
 
 @Module({ name: 'root', namespaced: true, stateFactory: true })
 export default class Root extends VuexModule {
     ggkz: boolean = false
     ggkzs: boolean = true
     master: boolean = false
-    zsptgg: string = 'adunit-e814017b8fa8a63a'
-    zsjlgg: string = 'adunit-3107a6d257dd1938'
-    zscpgg: string = 'adunit-4ff1a10fc4bcf8b8'
-    zsspgg: string = 'adunit-0401c255cc4b89d3'
-    zstpgg: string = 'adunit-4513ac078c21d2ed'
-    rootest: string = 'asdasdasdasdd'
+    ptgg: string = 'adunit-0f2dcb7e01855f32'
+    jlgg: string = 'adunit-6b0794db0e2aa285'
+    cpgg: string = 'adunit-0e242525f014a349'
+    spgg: string = 'adunit-b016d746a3c4b966'
 }

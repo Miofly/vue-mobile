@@ -8,10 +8,10 @@ import axios from 'axios' // eslint-disable-line
 // #endif
 import root from 'uJs/root'
 import { AxiosRequestConfig } from './types'
-
+const Qs = require('qs')
 // axios 默认配置
 axios.defaults.baseURL = '' // 优先级比axios实例要低
-axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8'
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 axios.defaults.withCredentials = false // 允许axios请求携带cookie等凭证
 
 // 创建一个 axios 实例 ==> instanceOne
@@ -69,7 +69,7 @@ function ajax (config: AxiosRequestConfig): any {
         } else {
             // 发送post请求
             // @ts-ignore
-            promise = sourceAxios({ method: 'POST', url, data, headers: { 'Content-Type': contentType } })
+            promise = sourceAxios.post(url, Qs.stringify(data))
         }
 
         promise.then((response) => {

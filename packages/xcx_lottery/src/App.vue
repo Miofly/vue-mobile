@@ -20,6 +20,7 @@ export default {
     },
     onShow(e) {
         console.log(e, 'onShow：页面展示')
+        this.$store.state.center.uuid = 63
     },
     onHide() {
         console.log('onHide：应用页面隐藏')
