@@ -72,3 +72,26 @@ function loadJS (src) {
     s.setAttribute('charset', 'utf-8')
     document.body.appendChild(s)
 }
+
+function delParam(url, paramKey) {
+    let beforeUrl = url.substr(0, url.indexOf("?"));   //?之前主地址
+    let afterUrl = url.substr(url.indexOf("?") + 1);   //？之后参数路径
+    let nextUrl = "";
+
+    let arr = new Array();
+    if (afterUrl != "") {
+        let urlParamArr = afterUrl.split("&"); //将参数按照&符分成数组
+        for (let i = 0; i < urlParamArr.length; i++) {
+            let paramArr = urlParamArr[i].split("="); //将参数键，值拆开
+            //如果键雨要删除的不一致，则加入到参数中
+            if (paramArr[0] !== paramKey) {
+                arr.push(urlParamArr[i]);
+            }
+        }
+    }
+    if (arr.length > 0) {
+        nextUrl = "?" + arr.join("&");
+    }
+    url = beforeUrl + nextUrl;
+    return url;
+}

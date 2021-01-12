@@ -323,8 +323,10 @@ export default class extends Vue {
     btnDisabled: string = ''
 
     async created (e) {
-        console.log('created参数', e)
+        console.log('created', this.$mio.mioRoot.getStorageSync('uuid'))
+        console.log('created', this.$store.state.center.uuid)
         const data = await commonGet(`/wmain.html?uuid=${this.$store.state.center.uuid}&page=1&number=1`)
+        console.log('请求是否成功：', data)
         if (data.code == 200) {
             const { awards, chip, comment, unable, user } = data.data
             this.chip = chip
@@ -443,23 +445,35 @@ export default class extends Vue {
     }
 
     // 领取
-    async getAward () {
+    getAward () {
+        if (this.modalStatus) {
+            this.modalStatus = false
+            this.getAwardFn()
+        }
+    }
+
+    async getAwardFn () {
         const { data, code } = await commonPost(`/report.html?uuid=${this.$store.state.center.uuid}`, { award_index: this.winningIndex, plus: this.unable == 5 || this.unable == 4 ? 1 : 0 })
         if (code == 200) {
             this.chip = data.chip
             this.user.money = data.money
             this.unable = data.unable
         }
-        this.modalStatus = false
         this.$mio.mioRoot.showToast('领取成功')
     }
 
-    async giveUp () {
+    giveUp () {
+        if (this.modalStatus) {
+            this.modalStatus = false
+            this.giveUpFn()
+        }
+    }
+
+    async giveUpFn () {
         const { data, code } = await commonPost(`/report.html?uuid=${this.$store.state.center.uuid}`, { award_index: 7, plus: 0 })
         if (code == 200) {
             this.unable = data.unable
         }
-        this.modalStatus = false
     }
 }
 </script>
