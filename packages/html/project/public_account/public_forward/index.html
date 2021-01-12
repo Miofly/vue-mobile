@@ -138,7 +138,7 @@
     getAds()
     // 广告列表
     function getAds () {
-        commonGet('/adverts?page_type=7&page=' + page.num + '&per_page=' + page.size + '', function (res) {
+        commonGet('/adverts?page_type=2&page=' + page.num + '&per_page=' + page.size + '', function (res) {
             if (res.code == 200) {
                 adList = res.data
                 maxPgae = res.meta.last_page
@@ -153,11 +153,12 @@
         Ad.singleAd(
             $.extend(curData, {
                 data: {
-                    app_id: 103164,
+                    app_id: 27,
                     deny_cids: deny_cids.join(',')
                 }
             }),
             function(res) {
+                console.log(res)
                 if (res && deny_cids.indexOf(res.cid) == -1) {
                     /* 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复 */
                     deny_cids.push(res.cid); //插入创意id 用于广告位被重复广告占用

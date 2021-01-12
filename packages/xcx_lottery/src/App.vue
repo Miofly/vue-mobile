@@ -20,7 +20,16 @@ export default {
     },
     onShow(e) {
         console.log(e, 'onShow：页面展示')
-        this.$store.state.center.uuid = 63
+        this.$store.state.center.uuid = e.query.uuid
+        if (e.query.uuid == undefined) {
+            if (this.$mio.mioRoot.getStorageSync('uuid') == undefined || this.$mio.mioRoot.getStorageSync('uuid') == '') {
+                this.$store.state.center.uuid = 60
+            } else {
+                this.$store.state.center.uuid = this.$mio.mioRoot.getStorageSync('uuid')
+            }
+        } else{
+            this.$mio.mioRoot.setStorage('uuid', e.query.uuid)
+        }
     },
     onHide() {
         console.log('onHide：应用页面隐藏')

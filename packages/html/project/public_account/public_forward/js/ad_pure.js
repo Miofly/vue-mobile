@@ -7,7 +7,6 @@ var Ad = {
     clickCallback: function () {
     },
     fetchAd: function (data, callback, complete) {
-        console.log(data)
         $.ajax({
             type: 'get',
             url: wm_base_url + 'get_ad/?ad_position_id=' + data.pid,
@@ -205,29 +204,57 @@ var Ad = {
      * @param {*} params
      */
     singleAd: function (params, callback) {
-        var pid = params.pid,
-            templateId = params.adWrapClass,
-            adWrapClass = params.adWrapClass,
-            data = params.data || {};
+        if (params.ad_platform == 1) {
+            console.log('固价广告逻辑', params)
+            var pid = params.pid,
+                templateId = params.adWrapClass,
+                adWrapClass = params.adWrapClass,
+                data = params.data || {};
 
-        Ad.fetchAd($.extend({pid: pid}, data), function (err, res) {
-            callback && callback(res);
-            if (err) return;
-            //获取模板生成的html
-            var html = template(
-                templateId,
-                $.extend(res, {
-                    date: Ad.getDate(), //日期
-                    page: params.page, //日期
-                    readNum: Ad.random(100000, 500000) //阅读数
-                })
-            );
-            $('#dataList').append(html)
-            // 查询被插入的广告 用于曝光监测
-            var currAd = $('#dataList' + ' .' + adWrapClass + ':last')[0];
-            //启动广告曝光监测
-            Ad.checkMonitor(currAd, res.monitorUrl);
-        });
+            Ad.fetchAd($.extend({pid: pid}, data), function (err, res) {
+                callback && callback(res.data);
+                if (err) return;
+                //获取模板生成的html
+                var html = template(
+                    templateId,
+                    $.extend(res.data, {
+                        date: Ad.getDate(), //日期
+                        page: params.page, //日期
+                        readNum: Ad.random(100000, 500000) //阅读数
+                    })
+                );
+                $('#dataList').append(html)
+                // 查询被插入的广告 用于曝光监测
+                var currAd = $('#dataList' + ' .' + adWrapClass + ':last')[0];
+                //启动广告曝光监测
+                Ad.checkMonitor(currAd, res.data.monitorUrl);
+            });
+        } else {
+            var pid = params.pid,
+                templateId = params.adWrapClass,
+                adWrapClass = params.adWrapClass,
+                data = params.data || {};
+
+            Ad.fetchAd($.extend({pid: pid}, data), function (err, res) {
+                callback && callback(res);
+                if (err) return;
+                //获取模板生成的html
+                var html = template(
+                    templateId,
+                    $.extend(res, {
+                        date: Ad.getDate(), //日期
+                        page: params.page, //日期
+                        readNum: Ad.random(100000, 500000) //阅读数
+                    })
+                );
+                $('#dataList').append(html)
+                // 查询被插入的广告 用于曝光监测
+                var currAd = $('#dataList' + ' .' + adWrapClass + ':last')[0];
+                //启动广告曝光监测
+                Ad.checkMonitor(currAd, res.monitorUrl);
+            });
+        }
+
     }
 };
 

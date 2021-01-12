@@ -51,7 +51,7 @@ axios.interceptors.response.use(response => {
     return response
 }, (error) => {
     console.log(error)
-    root.showToast('请求出错')
+    root.showToast('网络不佳...请稍后再试')
 })
 
 function ajax (config: AxiosRequestConfig): any {
@@ -91,8 +91,8 @@ function ajax (config: AxiosRequestConfig): any {
                 uni.hideLoading()
             }
             if (!errHandle) { // 全局错误的提示
-                console.log('请求出错')
-                root.showToast('请求出错')
+                console.log('网络不佳...请稍后再试')
+                root.showToast('网络不佳...请稍后再试')
             }
             reject(err)
         })

@@ -5,7 +5,7 @@ const defaultUrl = '/dzp' // eslint-disable-line
 // #endif
 // #ifdef MP-WEIXIN
 // @ts-ignore
-const defaultUrl = 'http://book.wihens.com/api/wheel' // eslint-disable-line
+const defaultUrl = 'https://88umr.cn/api/wheel' // eslint-disable-line
 // #endif
 const commonPost = (url, data = {}, showLoading = true) => ajax({
     url: defaultUrl + url,

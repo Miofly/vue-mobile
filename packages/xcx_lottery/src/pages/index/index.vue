@@ -78,6 +78,7 @@
                     	:src="baseConfig.btn" style="height: 276rpx;animation: scale-upOne-zp 1s linear 0s infinite alternate;"></image>
                 </view>
 
+
                 <view v-else :class="btnDisabled" style="position: absolute;left: 260rpx;top: 290rpx;z-index: 3">
                     <m-image :borderRadius="10" :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" :shape="['square', 'circle'][0]"
                              :showLoading="false" :src="baseConfig.btn2"
@@ -236,7 +237,7 @@
         		</m-image>
 
                 <view style="position: absolute;top: 160rpx;text-align: center;width: 100%;color: #B24A09;font-weight: bold" class="text-30">
-                    抽中{{ awards[winningIndex].name }}
+                    抽中{{ awards[winningIndex - 1].name }}
                 </view>
 
                 <m-image @click="getAd()" duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="196"
@@ -249,7 +250,7 @@
                 <view v-if="unable == 5 || unable == 4" @click="getAward" style="position: absolute;bottom: 30rpx;text-align: center;width: 100%;text-decoration: underline;color: rgba(178, 74, 9, 1)">
                     直接领取
                 </view>
-                <view v-else @click="modalStatus=false" style="position: absolute;bottom: 30rpx;text-align: center;width: 100%;text-decoration: underline;color: rgba(178, 74, 9, 1)">
+                <view v-else @click="giveUp" style="position: absolute;bottom: 30rpx;text-align: center;width: 100%;text-decoration: underline;color: rgba(178, 74, 9, 1)">
                     放弃领取
                 </view>
         	</view>
@@ -321,7 +322,8 @@ export default class extends Vue {
     animationData: any = {}
     btnDisabled: string = ''
 
-    async created () {
+    async created (e) {
+        console.log('created参数', e)
         const data = await commonGet(`/wmain.html?uuid=${this.$store.state.center.uuid}&page=1&number=1`)
         if (data.code == 200) {
             const { awards, chip, comment, unable, user } = data.data
@@ -336,11 +338,6 @@ export default class extends Vue {
                 this.btnDisabled = 'notClick'
             }
         }
-
-        setTimeout(async () => {
-            const newData = await commonGet(`/fetchRecord.html?uuid=${this.$store.state.center.uuid}`)
-            this.winningIndex = newData.data
-        }, 1000)
 
         this.rewardedVideoAd = null
         if (wx.createInterstitialAd) {
@@ -386,7 +383,12 @@ export default class extends Vue {
     		this.rewardedVideoAd.load()
     			.then(() => this.rewardedVideoAd.show())
     			.catch(err => {
-    				this.$mio.mioRoot.showToast('暂无视频，请直接领取')
+                    if (this.unable == 5 || this.unable == 4) {
+                        this.$mio.mioRoot.showToast('暂无视频，请直接领取')
+                    } else {
+                        this.$mio.mioRoot.showToast('暂无视频，请稍后尝试')
+                        this.modalStatus = false
+                    }
     			})
     	})
     }
@@ -413,18 +415,22 @@ export default class extends Vue {
         })
         animationRun.rotate(this.runDeg).step()
         this.animationData = animationRun.export()
-        this.btnDisabled = 'notClick'
     }
 
     // 发起抽奖
-    playReward () {
+    async playReward () {
         if (this.unable == 0) {
             this.$mio.mioRoot.showToast('当日已无抽奖次数')
             return
         }
         if (this.unable > 0) {
+            this.btnDisabled = 'notClick'
+
+            const newData = await commonGet(`/fetchRecord.html?uuid=${this.$store.state.center.uuid}`)
+            this.winningIndex = newData.data
+
             const duration = 2000 // 动画时间
-            this.animation(this.winningIndex, duration)
+            this.animation(this.winningIndex - 1, duration)
 
             setTimeout(() => {
                 // 抽奖结束
@@ -438,10 +444,19 @@ export default class extends Vue {
 
     // 领取
     async getAward () {
-        const { data, code } = await commonPost(`/report.html?uuid=${this.$store.state.center.uuid}&award_index=${this.winningIndex}`, { award_index: this.winningIndex, plus: this.unable == 5 || this.unable == 4 ? 1 : 0 })
+        const { data, code } = await commonPost(`/report.html?uuid=${this.$store.state.center.uuid}`, { award_index: this.winningIndex, plus: this.unable == 5 || this.unable == 4 ? 1 : 0 })
         if (code == 200) {
             this.chip = data.chip
             this.user.money = data.money
+            this.unable = data.unable
+        }
+        this.modalStatus = false
+        this.$mio.mioRoot.showToast('领取成功')
+    }
+
+    async giveUp () {
+        const { data, code } = await commonPost(`/report.html?uuid=${this.$store.state.center.uuid}`, { award_index: 7, plus: 0 })
+        if (code == 200) {
             this.unable = data.unable
         }
         this.modalStatus = false
