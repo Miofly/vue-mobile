@@ -50,36 +50,41 @@ var Ad = {
     //         }
     //     });
     // },
-    adClick: function (clickUrl, dUrl, pid, type, user_id, page) {
+    adClick: function (clickUrl, dUrl, pid, type, user_id, page, ad_platform) {
         if (getParam('isXxl') != 1) {
             ws.send(JSON.stringify({pid: pid, event: 'adClick'}));
         }
-        var ua = navigator.userAgent;
-        commonPost('/adClickStat', {
-            ua: ua,
-            pid: pid,
-            type: type,
-            user_id: user_id,
-            oa_id: getParam('oa_id'),
-            page: page,
-            sign: 'bFwbxLAzwd5F4DOPS2hO',
-        }, function (res) {
-            if (res.code == 200) {
+        if (ad_platform == 1) { // 固价广告逻辑
 
+        } else {
+            var ua = navigator.userAgent;
+            commonPost('/adClickStat', {
+                ua: ua,
+                pid: pid,
+                type: type,
+                user_id: user_id,
+                oa_id: getParam('oa_id'),
+                page: page,
+                sign: 'bFwbxLAzwd5F4DOPS2hO',
+            }, function (res) {
+                if (res.code == 200) {
+
+                }
+            }, {'ACT-USER-ID': getParam('user_id')})
+
+            Ad.clickCallback(pid);
+
+            clickUrl.forEach(function (url) {
+                Ad.send(url);
+            });
+
+            if (dUrl) {
+                setTimeout(() => {
+                    location.href = dUrl[0];
+                }, 300);
             }
-        }, {'ACT-USER-ID': getParam('user_id')})
-
-        Ad.clickCallback(pid);
-
-        clickUrl.forEach(function (url) {
-            Ad.send(url);
-        });
-
-        if (dUrl) {
-            setTimeout(() => {
-                location.href = dUrl[0];
-            }, 300);
         }
+
     },
 
     /**
@@ -127,25 +132,30 @@ var Ad = {
      * div 广告dom
      * monitorUrl 广告曝光接口
      */
-    checkMonitor: function (div, monitorUrl) {
-        var isInViewport = Ad.isElementInViewport(div);
-        if (isInViewport) {
-            monitorUrl.forEach(function (url) {
-                Ad.send(url);
-            });
-            return;
-        }
+    checkMonitor: function (div, monitorUrl, ad_platform) {
+        if (ad_platform == 1) { // 固价广告逻辑
 
-        var checkFun = Ad.throttle(function () {
-            if (Ad.isElementInViewport(div)) {
-                window.removeEventListener('scroll', checkFun, true);
+        } else {
+            var isInViewport = Ad.isElementInViewport(div);
+            if (isInViewport) {
                 monitorUrl.forEach(function (url) {
                     Ad.send(url);
                 });
+                return;
             }
-        }, 200);
 
-        window.addEventListener('scroll', checkFun, true);
+            var checkFun = Ad.throttle(function () {
+                if (Ad.isElementInViewport(div)) {
+                    window.removeEventListener('scroll', checkFun, true);
+                    monitorUrl.forEach(function (url) {
+                        Ad.send(url);
+                    });
+                }
+            }, 200);
+
+            window.addEventListener('scroll', checkFun, true);
+        }
+
     },
 
     /**
@@ -205,7 +215,6 @@ var Ad = {
      */
     singleAd: function (params, callback) {
         if (params.ad_platform == 1) {
-            console.log('固价广告逻辑', params)
             var pid = params.pid,
                 templateId = params.adWrapClass,
                 adWrapClass = params.adWrapClass,
@@ -214,10 +223,21 @@ var Ad = {
             Ad.fetchAd($.extend({pid: pid}, data), function (err, res) {
                 callback && callback(res.data);
                 if (err) return;
+
+                console.log(res)
+                var new_res = {
+                    clickUrl: [],
+                    dUrl: res.data.links,
+                    pid: res.data.ad_material_id,
+                    srcUrls: res.data.pics,
+                    title: res.data.title,
+                    ad_platform: 1
+                }
+
                 //获取模板生成的html
                 var html = template(
                     templateId,
-                    $.extend(res.data, {
+                    $.extend(new_res, {
                         date: Ad.getDate(), //日期
                         page: params.page, //日期
                         readNum: Ad.random(100000, 500000) //阅读数
@@ -227,7 +247,7 @@ var Ad = {
                 // 查询被插入的广告 用于曝光监测
                 var currAd = $('#dataList' + ' .' + adWrapClass + ':last')[0];
                 //启动广告曝光监测
-                Ad.checkMonitor(currAd, res.data.monitorUrl);
+                Ad.checkMonitor(currAd, res.data.links, 1);
             });
         } else {
             var pid = params.pid,

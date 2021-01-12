@@ -38,7 +38,7 @@
                 <script id="ad-template-info" type="text/html">
                     <div class="ad-template-info"
                          style="display: flex;justify-content: space-between;height: 1.86rem;margin-top: 0.24rem"
-                         onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},1,getParam('from_user_id'),{{page}})">
+                         onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},1,getParam('from_user_id'),{{page}},{{ad_platform}})">
                         <div style="width: 65%">
                             <div class="line-two"
                                  style="font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.44rem;">
@@ -61,7 +61,7 @@
                 <!--三图-->
                 <script id="ad-template-3img" type="text/html">
                     <div class="ad-template-3img" style="padding: 0.24rem 0"
-                         onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},2,getParam('from_user_id'),{{page}})">
+                         onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},2,getParam('from_user_id'),{{page}},{{ad_platform}})">
                         <div class="line-two"
                              style="padding: 0 0rem;font-weight: bolder;line-height: 0.44rem;color: #333;font-size: 16px!important;">
                             {{ title }}
@@ -85,7 +85,7 @@
                 <!--大图-->
                 <script id="ad-template-info-big" type="text/html">
                     <div class="ad-template-info-big" style="padding: 0.24rem 0"
-                         onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},3,getParam('from_user_id'),{{page}})">
+                         onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},3,getParam('from_user_id'),{{page}},{{ad_platform}})">
                         <div class="line-two"
                              style="padding: 0 0rem;font-weight: bolder;line-height: 0.44rem;color: #333;font-size: 16px!important;">
                             {{ title }}
@@ -133,7 +133,7 @@
     var adList = [];
     var deny_cids = []; // 被禁止的创意广告id
 
-    var page = {num: 1, size:3}
+    var page = {num: 1, size:10}
     var maxPgae = 0
     getAds()
     // 广告列表
@@ -150,15 +150,15 @@
     // 拉取广告
     ee.addListener('fetch-jj-ad', function() {
         var curData = adList[adListIndex];
+        console.log(curData)
         Ad.singleAd(
             $.extend(curData, {
                 data: {
-                    app_id: 27,
+                    app_id: curData.ad_platform == 1 ? 27 : 103164,
                     deny_cids: deny_cids.join(',')
                 }
             }),
             function(res) {
-                console.log(res)
                 if (res && deny_cids.indexOf(res.cid) == -1) {
                     /* 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复 */
                     deny_cids.push(res.cid); //插入创意id 用于广告位被重复广告占用

@@ -195,7 +195,6 @@ var Ad = {
      * @param {*} params
      */
     singleAd: function(params, callback) {
-        console.log('广告逻辑', params)
         var pid = params.pid,
             templateId = params.adWrapClass,
             adWrapClass = params.adWrapClass,
@@ -203,6 +202,7 @@ var Ad = {
 
         Ad.fetchAd($.extend({ pid: pid }, data), function(err, res) {
             callback && callback(res);
+            console.log(res)
             if (err) return;
             //获取模板生成的html
             var html = template(
