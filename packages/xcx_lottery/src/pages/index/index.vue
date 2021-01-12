@@ -315,6 +315,7 @@ export default class extends Vue {
     winningIndex: number = 0
 
     modalStatus: boolean = false
+    adStatus: boolean = false
     width: number = 0
     runDeg: number = 0
     rewardedVideoAd: any = null
@@ -357,6 +358,7 @@ export default class extends Vue {
         		// 用户点击了【关闭广告】按钮
         		if (res && res.isEnded) {
         			// 正常播放结束，可以下发游戏奖励
+					this.adStatus = true
                     this.getAward()
         		} else {
         		    this.$mio.mioRoot.showToast('视频未观看完成')
@@ -380,6 +382,7 @@ export default class extends Vue {
     }
 
     getAd () {
+		this.adStatus = false
     	this.rewardedVideoAd.show().catch(() => {
     		// 失败重试
     		this.rewardedVideoAd.load()
@@ -453,7 +456,7 @@ export default class extends Vue {
     }
 
     async getAwardFn () {
-        const { data, code } = await commonPost(`/report.html?uuid=${this.$store.state.center.uuid}`, { award_index: this.winningIndex, plus: this.unable == 5 || this.unable == 4 ? 1 : 0 })
+        const { data, code } = await commonPost(`/report.html?uuid=${this.$store.state.center.uuid}`, { award_index: this.winningIndex, plus: this.adStatus && (this.unable == 5 || this.unable == 4) ? 1 : 0 })
         if (code == 200) {
             this.chip = data.chip
             this.user.money = data.money
