@@ -7,19 +7,49 @@ var Ad = {
     clickCallback: function () {
     },
     fetchAd: function (data, callback, complete) {
-        $.ajax({
-            type: 'get',
-            url: wm_base_url + 'get_ad/?ad_position_id=' + data.pid,
-            success: function (res) {
-                callback && callback(null, res);
-            },
-            error: function (err) {
-                callback && callback(err);
-            },
-            complete: function () {
-                complete && complete();
-            },
-        });
+        if (data.ad_platform == 1) {
+            $.ajax({
+                type: 'get',
+                url: wm_base_url + 'get_ad/?ad_position_id=' + data.pid,
+                success: function (res) {
+                    callback && callback(null, res);
+                },
+                error: function (err) {
+                    callback && callback(err);
+                },
+                complete: function () {
+                    complete && complete();
+                },
+            });
+        } else {
+            var ua = navigator.userAgent;
+            var data = data || {};
+
+            $.ajax({
+                type: 'get',
+                headers: {
+                    'User-Agent': ua
+                },
+                url: 'http://ssp.1rtb.com/client/req_ad',
+                data: $.extend(
+                    {
+                        device_ua: ua,
+                        type: 'api'
+                    },
+                    data
+                ),
+                dataType: 'jsonp', //jsonp格式访问
+                success: function (res) {
+                    callback && callback(null, res);
+                },
+                error: function (err) {
+                    callback && callback(err);
+                },
+                complete: function () {
+                    complete && complete();
+                }
+            });
+        }
     },
     // fetchAd: function (data, callback, complete) {
     //     var ua = navigator.userAgent;
@@ -50,29 +80,40 @@ var Ad = {
     //         }
     //     });
     // },
-    adClick: function (clickUrl, dUrl, pid, type, user_id, page, ad_platform) {
+    adClick: function (clickUrl, dUrl, pid, type, user_id, page, ad_platform,ad_material_id) {
+        var ua = navigator.userAgent;
+        commonPost('/adClickStat', {
+            ua: ua,
+            pid: pid,
+            type: type,
+            user_id: user_id,
+            oa_id: getParam('oa_id'),
+            page: page,
+            ad_platform: ad_platform,
+            sign: 'bFwbxLAzwd5F4DOPS2hO',
+        }, function (res) {
+            if (res.code == 200) {
+
+            }
+        }, {'ACT-USER-ID': getParam('user_id')})
+
         if (getParam('isXxl') != 1) {
             ws.send(JSON.stringify({pid: pid, event: 'adClick'}));
         }
         if (ad_platform == 1) { // 固价广告逻辑
-
+            $.ajax({
+                type: 'post',
+                url: wm_base_url_click + 'charging',
+                data: { ad_material_id: ad_material_id, ad_position_id: pid },
+                success: function (res) {
+                    // location.href = clickUrl[0];
+                },
+                error: function (err) {
+                    console.log(err);
+                },
+            });
         } else {
             var ua = navigator.userAgent;
-            commonPost('/adClickStat', {
-                ua: ua,
-                pid: pid,
-                type: type,
-                user_id: user_id,
-                oa_id: getParam('oa_id'),
-                page: page,
-                sign: 'bFwbxLAzwd5F4DOPS2hO',
-            }, function (res) {
-                if (res.code == 200) {
-
-                }
-            }, {'ACT-USER-ID': getParam('user_id')})
-
-            Ad.clickCallback(pid);
 
             clickUrl.forEach(function (url) {
                 Ad.send(url);
@@ -132,8 +173,36 @@ var Ad = {
      * div 广告dom
      * monitorUrl 广告曝光接口
      */
-    checkMonitor: function (div, monitorUrl, ad_platform) {
+    checkMonitor: function (div, monitorUrl, ad_platform, positionId, materialId) {
         if (ad_platform == 1) { // 固价广告逻辑
+            var isInViewport = Ad.isElementInViewport(div);
+            if (isInViewport) {
+                $.ajax({
+                    type: 'get',
+                    url:
+                        wm_base_url +
+                        'ad_show/?ad_position_id=' +
+                        positionId +
+                        '&ad_material_id=' +
+                        materialId,
+                    success: function (res) {},
+                    error: function (err) {
+                        console.log(err);
+                    },
+                })
+                return;
+            }
+
+            var checkFun = Ad.throttle(function () {
+                if (Ad.isElementInViewport(div)) {
+                    window.removeEventListener('scroll', checkFun, true);
+                    monitorUrl.forEach(function (url) {
+                        Ad.send(url);
+                    });
+                }
+            }, 200);
+
+            window.addEventListener('scroll', checkFun, true);
 
         } else {
             var isInViewport = Ad.isElementInViewport(div);
@@ -221,14 +290,14 @@ var Ad = {
                 data = params.data || {};
 
             Ad.fetchAd($.extend({pid: pid}, data), function (err, res) {
-                callback && callback(res.data);
+                callback && callback(res);
                 if (err) return;
 
-                console.log(res)
                 var new_res = {
                     clickUrl: [],
                     dUrl: res.data.links,
-                    pid: res.data.ad_material_id,
+                    pid: params.pid,
+                    ad_material_id: res.data.ad_material_id,
                     srcUrls: res.data.pics,
                     title: res.data.title,
                     ad_platform: 1
@@ -247,7 +316,7 @@ var Ad = {
                 // 查询被插入的广告 用于曝光监测
                 var currAd = $('#dataList' + ' .' + adWrapClass + ':last')[0];
                 //启动广告曝光监测
-                Ad.checkMonitor(currAd, res.data.links, 1);
+                Ad.checkMonitor(currAd, res.data.links, 1, params.pid, res.data.ad_material_id);
             });
         } else {
             var pid = params.pid,

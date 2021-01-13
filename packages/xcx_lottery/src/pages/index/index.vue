@@ -1,6 +1,9 @@
 <template>
-    <view style="overflow-x: hidden;overflow-y: scroll;padding-bottom: 30px" class="text-center fulls-width-height" :style="{background: 'url('+ baseConfig.bg +')'}">
-        <view style="height: auto;" class="text-center full-width">
+    <view class="text-center"
+          :style="{backgroundImage: 'url('+ baseConfig.bg +')'}"
+          style="background-size: 100% 100%;overflow-x: hidden;overflow-y: scroll
+          ;padding-bottom: 30px;background-repeat: no-repeat">
+        <view style="height: auto;" class="text-center ">
             <!-- 背景 -->
             <view class="margin-center" style="height: 150rpx;width: 690rpx;position: relative;top: 16rpx;
             background: linear-gradient(90deg, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0.2) 100%);
@@ -23,12 +26,14 @@
             </view>
 
             <!--书币文字图片-->
-            <view style="position: relative;top: 72rpx">
-                <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="72"
-                		:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]"
+            <view style="position: relative;top: 72rpx;width: 100%;text-align: center;left: 50%;margin-left: -319rpx;">
+                <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" width="638"
+                		:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
                 		:shape="['square', 'circle'][0]" :src="baseConfig.bt" bgColor="rgba(0, 0, 0, 1)">
                 	<view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
                 </m-image>
+<!--                <image-->
+<!--                	:src="baseConfig.bt" style="width: 638rpx;height: 72rpx"></image>-->
             </view>
 
             <!--剩余抽奖次数-->
@@ -68,12 +73,6 @@
                 </view>
                 <!--抽奖按钮-->
                 <view v-if="btnDisabled == ''" id="wx" :class="btnDisabled" @tap="playReward" style="position: absolute;left: 260rpx;top: 290rpx;z-index: 3">
-<!--                    <m-image :borderRadius="10" :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" :shape="['square', 'circle'][0]"-->
-<!--                             :showLoading="false" :src="baseConfig.btn"-->
-<!--                              duration="0" style=""-->
-<!--                             height="276">-->
-<!--                        <view slot="error" class="text-white" style="font-size: 24rpx;">加载失败</view>-->
-<!--                    </m-image>-->
                     <image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]"
                     	:src="baseConfig.btn" style="height: 276rpx;animation: scale-upOne-zp 1s linear 0s infinite alternate;"></image>
                 </view>
@@ -94,9 +93,14 @@
             </view>
 
             <view style="position: relative;z-index: 3;margin-top: 80rpx">
+                <view style="width: 100%;position: absolute;left: 50%;margin-left: -325rpx;text-align: justify;top: 32rpx">
+                    <image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
+                           src="/static/images/kuang.png" style="width: 650rpx;"></image>
+                </view>
+
                 <m-column-notice :autoplay="true" :duration="2000" :isCircular="true" :list="['恭喜用户 ***** 抽中VIP碎片', '恭喜用户 ***** 抽中50书币', '恭喜用户 ***** 抽中888书币', '恭喜用户 ***** 抽中30书币', '恭喜用户 ***** 抽中50书币', '恭喜用户 ***** 抽中888书币', '恭喜用户 ***** 抽中30书币']" :show="true"
                                  :speed="160" bgColor="transparent"
-                                 borderRadius="10"
+                                 borderRadius="10" style=""
                                  color="rgba(255, 245, 150, 1)" mode="vertical">
                 </m-column-notice>
             </view>
@@ -106,7 +110,7 @@
             </view>
 
             <!--我的奖品-->
-            <view style="position: relative;width: 100%;margin-top: 50rpx" class="margin-center text-center">
+            <view style="position: relative;width: 100%;margin-top: 40rpx" class="margin-center text-center">
                 <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="336"
                 		:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]"
                 		:shape="['square', 'circle'][0]" :src="baseConfig.wdjp" bgColor="rgba(0, 0, 0, 1)">
@@ -144,9 +148,7 @@
                 		:shape="['square', 'circle'][0]" :src="baseConfig.zjsd" bgColor="rgba(0, 0, 0, 1)">
                 	<view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
                 </m-image>
-                <view class="margin-center" style="height: 150rpx;width: 690rpx;position: relative;top: 96rpx;
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0.2) 100%);
-            box-shadow: 1px 1px 2px 0px rgba(255, 255, 255, 0.23);border-radius: 8px;">
+                <view class="margin-center" style="height: 150rpx;width: 690rpx;position: relative;top: 96rpx;">
                     <!--头像-->
                     <view class="cu-avatar" :class="[false ? 'radius' : 'round']"
                           :style="{backgroundImage: 'url('+ comment.headimgurl +')'}" style="width: 68rpx;height: 68rpx;position: absolute;top: 28rpx;left: 32rpx">
@@ -175,19 +177,19 @@
                 <!--图片信息-->
                 <view v-if="comment.pic.length !== 2" class="flex justify-between" style="width: 628rpx;position: absolute;top: 340rpx;left: 32rpx">
                     <view v-for="(item, index) in comment.pic" :key="index">
-                        <image @click="$mio.mioRoot.showImg(item)" :src="item" style="width: 194rpx;height: 140rpx"></image>
+                        <image @click="$mio.mioRoot.showImg(item)" :src="item" style="border-radius: 8rpx;width: 194rpx;height: 140rpx"></image>
                     </view>
                 </view>
                 <view v-else class="flex justify-start" style="width: 628rpx;position: absolute;top: 340rpx;left: 32rpx">
                     <view v-for="(item, index) in comment.pic" :key="index" :style="{marginLeft: index==1 ? 24 + 'rpx' : 0}">
-                        <image @click="$mio.mioRoot.showImg(item)" :src="item" style="width: 194rpx;height: 140rpx"></image>
+                        <image @click="$mio.mioRoot.showImg(item)" :src="item" style="border-radius: 8rpx;width: 194rpx;height: 140rpx"></image>
                     </view>
                 </view>
                 <!--查看更多-->
                 <view @click="goMore">
                     <text style="position: absolute;top: 510rpx;left: 35%"></text>
-                    <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="30"
-                    		:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" style="position: absolute;top: 515rpx;left: 270rpx"
+                    <m-image duration="0" :showLoading="false" :borderRadius="0" bgColorError="rgba(0, 0, 0, 1)" height="30"
+                    		:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" style="position: absolute;top: 515rpx;left: 270rpx" @click="goMore"
                     		:shape="['square', 'circle'][0]" :src="baseConfig.open" bgColor="rgba(0, 0, 0, 1)">
                     	<view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
                     </m-image>
@@ -195,14 +197,14 @@
             </view>
 
             <!--规则-->
-            <view style="background: rgba(255, 243, 237, 1);width: 690rpx;height: auto;margin-top: 56rpx;position: relative;padding-bottom: 32rpx;border-radius: 16rpx"
+            <view style="background: rgba(255, 243, 237, 1);width: 690rpx;height: auto;margin-top: 16rpx;position: relative;border-radius: 16rpx"
                   class="text-center margin-center">
                 <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="80"
                          :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" style="position: absolute;top: -16rpx;left: 106rpx;"
                          :shape="['square', 'circle'][0]" :src="baseConfig.wfsm" bgColor="rgba(0, 0, 0, 1)">
                     <view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
                 </m-image>
-                <view class="text-left text-16" style="margin-top: 86rpx;padding: 86rpx 32rpx 32rpx 32rpx;line-height: 48rpx">
+                <view class="text-left text-16" style="margin-top: 56rpx;padding: 86rpx 32rpx 32rpx 32rpx;line-height: 48rpx">
                     1、每个账户每天最多有5次抽奖机会，每天0点刷新 <br>
                     2、每天前两次可直接领取抽奖奖品，其他3次抽奖奖品需要通过观看小视频来领取 <br>
                     3、书币及7天VIP会员中心抽中后自动发放至书城账号，可在中奖记录中查看 <br>
@@ -217,9 +219,9 @@
         </view>
 
         <m-modal :closeShow="false" bgColor="transparent" :closeSize="40" :descSize="30" padding="0" radius="30rpx" :maskClosable="false"
-                 :status.sync="modalStatus" :showTitle="false" title="" desc="" modalTop="300rpx" :titleSize="40"
+                 :status.sync="modalStatus" :showTitle="false" title="" desc="" modalTop="200rpx" :titleSize="40"
                  :showContent="false" descColor="#999d9c" titleColor="black" width="660rpx">
-            <view style="position: relative;left: 0;top: -150rpx;z-index: 889;">
+            <view style="position: relative;left: 0;top: -180rpx;z-index: 889;">
 <!--                <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="660"-->
 <!--                         :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]"-->
 <!--                         style=""-->
@@ -229,14 +231,14 @@
                 <image src="https://e-static.oss-cn-shanghai.aliyuncs.com/img/wfd/zhuanpan/gyxz.png" style="width: 660rpx;height: 660rpx;animation: rotate 4s linear 0s infinite;"></image>
             </view>
 
-        	<view style="position: relative;margin-top: -550rpx;z-index: 900;display: block">
+        	<view style="position: relative;margin-top: -580rpx;z-index: 900;display: block">
         		<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)"
         		         :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]" style=""
         		         :shape="['square', 'circle'][0]" :src="baseConfig.cjbj" bgColor="rgba(0, 0, 0, 1)">
         			<view slot="error" style="font-size: 24rpx;position: absolute;top: 0;left: 0" class="text-white">加载失败</view>
         		</m-image>
 
-                <view style="position: absolute;top: 160rpx;text-align: center;width: 100%;color: #B24A09;font-weight: bold" class="text-30">
+                <view style="position: absolute;top: 160rpx;text-align: center;width: 100%;color: #B24A09;" class="text-30">
                     抽中{{ awards[winningIndex - 1].name }}
                 </view>
 
@@ -313,6 +315,7 @@ export default class extends Vue {
     user: any = {}
     unable: number = 0
     winningIndex: number = 0
+    ticket: string = ''
 
     modalStatus: boolean = false
     adStatus: boolean = false
@@ -337,9 +340,9 @@ export default class extends Vue {
             this.user = user
             // 获取奖品列表
             this.width = 360 / this.awards.length
-            if (this.unable == 0) {
-                this.btnDisabled = 'notClick'
-            }
+            // if (this.unable == 0) {
+            //     this.btnDisabled = 'notClick'
+            // }
         }
 
         this.rewardedVideoAd = null
@@ -432,7 +435,8 @@ export default class extends Vue {
             this.btnDisabled = 'notClick'
 
             const newData = await commonGet(`/fetchRecord.html?uuid=${this.$store.state.center.uuid}`)
-            this.winningIndex = newData.data
+            this.winningIndex = newData.data.award_index
+            this.ticket = newData.data.ticket
 
             const duration = 2000 // 动画时间
             this.animation(this.winningIndex - 1, duration)
@@ -456,7 +460,7 @@ export default class extends Vue {
     }
 
     async getAwardFn () {
-        const { data, code } = await commonPost(`/report.html?uuid=${this.$store.state.center.uuid}`, { award_index: this.winningIndex, plus: this.adStatus && (this.unable == 5 || this.unable == 4) ? 1 : 0 })
+        const { data, code } = await commonPost(`/report.html?uuid=${this.$store.state.center.uuid}`, { ticket: this.ticket, award_index: this.winningIndex, plus: this.adStatus && (this.unable == 5 || this.unable == 4) ? 1 : 0 })
         if (code == 200) {
             this.chip = data.chip
             this.user.money = data.money
@@ -473,7 +477,7 @@ export default class extends Vue {
     }
 
     async giveUpFn () {
-        const { data, code } = await commonPost(`/report.html?uuid=${this.$store.state.center.uuid}`, { award_index: 7, plus: 0 })
+        const { data, code } = await commonPost(`/report.html?uuid=${this.$store.state.center.uuid}`, { ticket: this.ticket, award_index: 7, plus: 0 })
         if (code == 200) {
             this.unable = data.unable
         }

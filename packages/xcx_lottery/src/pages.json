@@ -3,24 +3,27 @@
     {
       "path": "pages/index/index",
       "style": {
-        "navigationBarTitleText": "书币大抽奖"
+        "navigationBarTitleText": "书币大抽奖",
+        "navigationBarBackgroundColor": "#FE4111"
       }
     },
     {
       "path": "pages/index/record",
       "style": {
-        "navigationBarTitleText": "中奖纪录"
+        "navigationBarTitleText": "中奖纪录",
+        "navigationBarTextStyle": "black"
       }
     },
     {
       "path": "pages/index/more",
       "style": {
-        "navigationBarTitleText": "中奖晒单"
+        "navigationBarTitleText": "中奖晒单",
+        "navigationBarBackgroundColor": "#FF5125"
       }
     }
   ],
   "globalStyle": {
-    "navigationBarTextStyle": "black",
+    "navigationBarTextStyle": "white",
     // #ifdef H5
     "navigationStyle": "custom",
     // #endif

@@ -209,7 +209,8 @@ export default {
 }
 
 .u-swiper {
-	font-size: 26rpx;
+    font-weight: bold;
+	font-size: 28rpx;
 	height: 32rpx;
 	 /* #ifndef APP-NVUE */
     display: flex;
