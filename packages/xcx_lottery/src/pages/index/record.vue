@@ -6,7 +6,7 @@
         <!--中奖晒单-->
         <view class="bg-white flex justify-between" style="height: 154rpx;border-bottom: 1px solid #eeeeec;padding: 28rpx" v-for="(item, index) in dataLists" :key="index">
             <view>
-                <view class="text-24" style="color: #B24A09;letter-spacing: 1px;">{{item.name}}</view>
+                <view class="text-24" style="color: #B24A09;letter-spacing: 1px;">{{item.duplicated == 1 ? item.coin + '书币' : item.name}}</view>
                 <view class="text-14" style="color: rgba(73, 54, 43, 0.5);margin-top: 8rpx">发放时间:{{item.create_at}}</view>
             </view>
             <view class="text-14" style="color: #49362B;margin-top: 60rpx">

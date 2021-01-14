@@ -9,7 +9,7 @@
     <script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/EventEmitter.min.js"></script>
     <script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/art-template.js"></script>
     <script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/jf.js"></script>
-    <link href="./css/index.css" rel="stylesheet" type="text/css"/>
+    <link href="./css/index_new.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div>
@@ -107,7 +107,6 @@
         </div>
     </div>
 </div>
-
 <script src="./js/ad_pure.js"></script>
 <script>
     var ip = ''
@@ -116,6 +115,7 @@
     commonGet('/articles/' + getParam('article_id') + '?from_user_id=' + getParam('from_user_id') + '', function (res) {
         if (res.code == 200) {
             $('#title').html(res.data.title)
+            $('title').html(res.data.title)
             $('.article_box').html(res.data.content.replace(/data-src/g, 'src'))
         }
     })
@@ -138,7 +138,7 @@
     getAds()
     // 广告列表
     function getAds () {
-        commonGet('/adverts?page_type=2&page=' + page.num + '&per_page=' + page.size + '', function (res) {
+        commonGet('/adverts?page_type=7&page=' + page.num + '&per_page=' + page.size + '', function (res) {
             if (res.code == 200) {
                 adList = res.data
                 maxPgae = res.meta.last_page

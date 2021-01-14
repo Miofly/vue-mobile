@@ -158,14 +158,8 @@ var Ad = {
         }
 
         var rect = el.getBoundingClientRect();
-
-        return (
-            rect.top >= 0 &&
-            rect.left >= 0 &&
-            rect.bottom <=
-            (window.innerHeight || document.documentElement.clientHeight) &&
-            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-        );
+        var n = window.innerHeight || document.documentElement.clientHeight;
+        return rect.top <= n && rect.top + rect.height >= 0;
     },
 
     /**
