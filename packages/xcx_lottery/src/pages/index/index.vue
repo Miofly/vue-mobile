@@ -397,6 +397,14 @@ export default class extends Vue {
                         this.$mio.mioRoot.showToast('暂无视频，请稍后尝试')
                         this.modalStatus = false
                     }
+                    this.interstitialAd.show().catch(() => {
+                    	// 失败重试
+                    	this.interstitialAd.load()
+                    		.then(() => this.interstitialAd.show())
+                    		.catch(err => {
+                    			console.log(err)
+                    		})
+                    })
     			})
     	})
     }
@@ -467,6 +475,14 @@ export default class extends Vue {
             this.unable = data.unable
         }
         this.$mio.mioRoot.showToast('领取成功')
+		this.interstitialAd.show().catch(() => {
+			// 失败重试
+			this.interstitialAd.load()
+				.then(() => this.interstitialAd.show())
+				.catch(err => {
+					console.log(err)
+				})
+		})
     }
 
     giveUp () {
@@ -474,6 +490,7 @@ export default class extends Vue {
             this.modalStatus = false
             this.giveUpFn()
         }
+
     }
 
     async giveUpFn () {
@@ -481,6 +498,14 @@ export default class extends Vue {
         if (code == 200) {
             this.unable = data.unable
         }
+		this.interstitialAd.show().catch(() => {
+			// 失败重试
+			this.interstitialAd.load()
+				.then(() => this.interstitialAd.show())
+				.catch(err => {
+					console.log(err)
+				})
+		})
     }
 }
 </script>
