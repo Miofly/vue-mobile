@@ -106,7 +106,7 @@ var Ad = {
                 url: wm_base_url_click + 'charging',
                 data: { ad_material_id: ad_material_id, ad_position_id: pid },
                 success: function (res) {
-                    // location.href = clickUrl[0];
+                    location.href =  dUrl[0];
                 },
                 error: function (err) {
                     console.log(err);
@@ -327,6 +327,8 @@ var Ad = {
                     $.extend(res, {
                         date: Ad.getDate(), //日期
                         page: params.page, //日期
+                        ad_platform: '0',
+                        ad_material_id: '0',
                         readNum: Ad.random(100000, 500000) //阅读数
                     })
                 );
