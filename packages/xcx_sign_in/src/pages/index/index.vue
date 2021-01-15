@@ -95,6 +95,41 @@
         <view class="empty"></view>
         <!--骨架屏-->
         <m-skeleton bg-color="rgb(250, 250, 250)" :loading="loading" :animation="true" el-color="#e5e5e5" :border-radius="10"></m-skeleton>
+
+        <m-modal :closeShow="false" bgColor="transparent" :closeSize="40" :descSize="30" padding="0" radius="30rpx" :maskClosable="false"
+                 :status.sync="modalStatus" :showTitle="false" title="" desc="" modalTop="200rpx" :titleSize="40"
+                 :showContent="false" descColor="#999d9c" titleColor="black" width="660rpx">
+            <view style="position: relative;left: 0;top: -180rpx;z-index: 889;">
+                <image src="https://e-static.oss-cn-shanghai.aliyuncs.com/img/wfd/zhuanpan/gyxz.png" style="width: 660rpx;height: 660rpx;animation: rotate 4s linear 0s infinite;"></image>
+            </view>
+
+            <view style="position: relative;margin-top: -580rpx;z-index: 900;display: block">
+                <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)"
+                         :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
+                         :shape="['square', 'circle'][0]" :src="baseConfig.cjbj" bgColor="rgba(0, 0, 0, 1)">
+                    <view slot="error" style="font-size: 24rpx;position: absolute;top: 0;left: 0" class="text-white">加载失败</view>
+                </m-image>
+
+                <view style="position: absolute;top: 160rpx;text-align: center;width: 100%;color: #B24A09;" class="text-30">
+                    抽中
+                </view>
+
+                <image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
+                	:src="baseConfig.ljbq_btn" style="position: absolute;top: 260rpx;left: 15%;width: 70%;height: 196rpx;">
+                </image>
+
+                <view @click="getAward" style="position: absolute;bottom: 30rpx;text-align: center;width: 100%;text-decoration: underline;color: rgba(178, 74, 9, 1)">
+                    直接领取
+                </view>
+<!--                <view v-else @click="giveUp" style="position: absolute;bottom: 30rpx;text-align: center;width: 100%;text-decoration: underline;color: rgba(178, 74, 9, 1)">-->
+<!--                    放弃领取-->
+<!--                </view>-->
+            </view>
+            <view style="background-color: transparent!important;position: relative">
+                <image @click="statusTwo=false" :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
+                       :src="baseConfig.closeImg" style="width: 76rpx;margin-top: 100rpx"></image>
+            </view>
+        </m-modal>
     </view>
 </template>
 
@@ -109,7 +144,7 @@ export default class index extends Vue {
         bg: '/static/images/bg.png',
         btn: '/static/images/btn.png',
         btn2: '/static/images/btn2.png',
-        buqiank: '/static/images/btn2.png',
+        buqiank: '/static/images/buqiank.png',
         guang: '/static/images/guang.png',
         libao: '/static/images/libao.png',
         ljbq_btn: '/static/images/ljbq_btn.png',
@@ -120,9 +155,12 @@ export default class index extends Vue {
         text: '/static/images/text.png',
         avatar: '/static/images/avatar.png',
         qdjl: '/static/images/qdjl.png',
+
+        cjbj: '/static/images/buqiank.png',
     }
 
     loading: boolean = true
+    modalStatus: boolean = false
 
     config: any = {}
     signInStatusLists: any = []
