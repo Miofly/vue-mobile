@@ -9,7 +9,10 @@
     "build:dev": "cross-env NODE_ENV=production UNI_PLATFORM=h5 vue-cli-service uni-build --mode development",
     "dev:h5": "cross-env NODE_ENV=development UNI_PLATFORM=h5 vue-cli-service uni-serve --mode development",
     "release": "cross-env NODE_ENV=development UNI_PLATFORM=h5 vue-cli-service uni-serve --mode produce",
+    "test": "concurrently \"npm:mock\" \"cross-env NODE_ENV=development UNI_PLATFORM=h5 vue-cli-service uni-serve --mode test\"",
+    "mock": "cd ../../mock && ts-node-dev mock-server.ts",
     "wx": "yarn run dev:mp-weixin",
+    "wx:test": "concurrently \"npm:mock\" \"cross-env NODE_ENV=development UNI_PLATFORM=mp-weixin vue-cli-service uni-build --watch --minimize --mode test",
     "dev:mp-weixin": "cross-env NODE_ENV=development UNI_PLATFORM=mp-weixin vue-cli-service uni-build --watch --minimize"
   },
   "devDependencies": {

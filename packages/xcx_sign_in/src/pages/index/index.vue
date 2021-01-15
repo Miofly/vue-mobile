@@ -170,7 +170,6 @@ export default class index extends Vue {
     interstitialAd: any = null
 
     created () {
-        this.rewardedVideoAd = null
         if (wx.createInterstitialAd) {
             this.rewardedVideoAd = wx.createRewardedVideoAd({
                 adUnitId: this.$store.state.root.jlgg
