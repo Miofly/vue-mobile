@@ -10,6 +10,7 @@
     "dev:h5": "cross-env NODE_ENV=development UNI_PLATFORM=h5 vue-cli-service uni-serve --mode development",
     "release": "cross-env NODE_ENV=development UNI_PLATFORM=h5 vue-cli-service uni-serve --mode produce",
     "wx": "yarn run dev:mp-weixin",
+    "wx:test": "yarn run dev:mp-weixin",
     "dev:mp-weixin": "cross-env NODE_ENV=development UNI_PLATFORM=mp-weixin vue-cli-service uni-build --watch --minimize"
   },
   "devDependencies": {

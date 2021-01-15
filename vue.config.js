@@ -30,9 +30,10 @@ function getIpAddress () { // 获取真实IP地址
 	}
 }
 
-const mockServerPort = 8686
-
-process.env.VUE_APP_BASE_API = `http://${getIpAddress()}:8686/mock-api/v1`
+if (process.env.VUE_APP_BASE_API == '/mio') {
+    process.env.VUE_APP_BASE_API = `http://${getIpAddress()}:8686/mock-api/v1`
+}
+//
 /**
  *  publicPath 不支持，如果需要配置，请在 manifest.json->h5->router->base 中配置，
  *  outputDir 不支持
@@ -109,6 +110,14 @@ module.exports = {
 					['^' + process.env.VUE_APP_BASE_API]: ''
 				}
 			},
+            '/mio': { // mock 自定义接口
+                target: process.env.VUE_APP_BASE_API,
+                changeOrigin: true, // needed for virtual hosted sites
+                ws: true, // proxy websockets
+                pathRewrite: {
+                    '^/mio': ''
+                }
+            },
 			'/tp': {
 				target: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la',
 				changeOrigin: true, // 是否跨域

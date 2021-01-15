@@ -1,41 +1,41 @@
 {
-  "pages": [
-    {
-      "path": "pages/index/index",
-      "style": {
-        "navigationBarTitleText": "书币大抽奖",
-        "navigationBarBackgroundColor": "#FE4111"
-      }
+    "pages": [
+        {
+            "path": "pages/index/index",
+            "style": {
+                "navigationBarTitleText": "书币大抽奖",
+                "navigationBarBackgroundColor": "#FE4111"
+            }
+        },
+        {
+            "path": "pages/index/record",
+            "style": {
+                "navigationBarTitleText": "中奖纪录",
+                "navigationBarTextStyle": "black"
+            }
+        },
+        {
+            "path": "pages/index/more",
+            "style": {
+                "navigationBarTitleText": "中奖晒单",
+                "navigationBarBackgroundColor": "#FF5125"
+            }
+        }
+    ],
+    "globalStyle": {
+        "navigationBarTextStyle": "white",
+        // #ifdef H5
+        "navigationStyle": "custom",
+        // #endif
+        "navigationBarBackgroundColor": "#F8F8F8",
+        "backgroundColor": "#F8F8F8"
     },
-    {
-      "path": "pages/index/record",
-      "style": {
-        "navigationBarTitleText": "中奖纪录",
-        "navigationBarTextStyle": "black"
-      }
-    },
-    {
-      "path": "pages/index/more",
-      "style": {
-        "navigationBarTitleText": "中奖晒单",
-        "navigationBarBackgroundColor": "#FF5125"
-      }
+    "easycom": {
+        "autoscan": true,
+        "custom": {
+            // #ifdef H5
+            "^m-(.*)": "zj/m-$1/m-$1.vue"
+            // #endif
+        }
     }
-  ],
-  "globalStyle": {
-    "navigationBarTextStyle": "white",
-    // #ifdef H5
-    "navigationStyle": "custom",
-    // #endif
-    "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8"
-  },
-  "easycom": {
-    "autoscan": true,
-    "custom": {
-      // #ifdef H5
-      "^m-(.*)": "zj/m-$1/m-$1.vue"
-      // #endif
-    }
-  }
 }

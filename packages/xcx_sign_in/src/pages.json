@@ -3,8 +3,15 @@
         {
             "path": "pages/index/index",
             "style": {
-                "navigationBarTitleText": "测试==测试",
-                "navigationBarBackgroundColor": "#FF5125"
+                "navigationBarTitleText": "签到送书币",
+                "navigationBarBackgroundColor": "#FA5429"
+            }
+        },
+        {
+            "path": "pages/index/record",
+            "style": {
+                "navigationBarTitleText": "签到记录",
+                "navigationBarBackgroundColor": "#FA5429"
             }
         }
     ],

@@ -26,3 +26,6 @@ paths:
     /articles:
         get:
             operationId: getArticles
+    /getSignInData:
+        get:
+            operationId: getSignInData
