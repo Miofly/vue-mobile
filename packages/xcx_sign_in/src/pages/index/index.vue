@@ -166,11 +166,49 @@ export default class index extends Vue {
     config: any = {}
     signInStatusLists: any = []
 
+    rewardedVideoAd: any = null
+    interstitialAd: any = null
+
     created () {
-        console.log('初始化 created:')
-        setTimeout(() => {
-            this.getData()
-        }, 1)
+        this.rewardedVideoAd = null
+        if (wx.createInterstitialAd) {
+            this.rewardedVideoAd = wx.createRewardedVideoAd({
+                adUnitId: this.$store.state.root.jlgg
+            })
+            this.rewardedVideoAd.onLoad(() => {
+                console.log('激励广告加载成功')
+            })
+            this.rewardedVideoAd.onError((err) => {
+                console.log('激励广告出错', err)
+            })
+            this.rewardedVideoAd.onClose((res) => {
+                console.log(res, '用户关闭广告')
+                // 用户点击了【关闭广告】按钮
+                if (res && res.isEnded) {
+                    // 正常播放结束，可以下发游戏奖励
+                    this.adStatus = true
+                    this.getAward()
+                } else {
+                    this.$mio.mioRoot.showToast('视频未观看完成')
+                    // 播放中途退出，不下发游戏奖励
+                }
+            })
+
+            this.interstitialAd = wx.createInterstitialAd({
+                adUnitId: this.$store.state.root.cpgg
+            })
+            this.interstitialAd.onLoad(() => {
+                console.log('插屏广告加载成功')
+            })
+            this.interstitialAd.onError((err) => {
+                console.log('插屏广告加载出错', err)
+            })
+            this.interstitialAd.onClose(() => {
+                console.log('插屏广告关闭')
+            })
+        }
+
+        this.getData()
     }
 
     // 获取初始数据
