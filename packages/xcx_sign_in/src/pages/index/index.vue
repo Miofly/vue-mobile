@@ -96,6 +96,8 @@
         <view class="empty"></view>
         <!--骨架屏-->
         <m-skeleton bg-color="rgb(250, 250, 250)" :loading="loading" :animation="true" el-color="#e5e5e5" :border-radius="10"></m-skeleton>
+        <!--动效-->
+        <image class="dx" :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]" style="width: 200rpx" :src="baseConfig.dx" ></image>
 
         <m-modal :closeShow="false" bgColor="transparent" :closeSize="40" :descSize="30" padding="0" radius="30rpx" :maskClosable="false"
                  :status.sync="modalStatus" :showTitle="false" title="" desc="" modalTop="200rpx" :titleSize="40"
@@ -126,11 +128,13 @@
 <!--                    放弃领取-->
 <!--                </view>-->
             </view>
+
             <view style="background-color: transparent!important;position: relative">
                 <image @click="statusTwo=false" :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
                        :src="baseConfig.closeImg" style="width: 76rpx;margin-top: 100rpx"></image>
             </view>
         </m-modal>
+
     </view>
 </template>
 
@@ -156,7 +160,7 @@ export default class index extends Vue {
         text: '/static/images/text.png',
         avatar: '/static/images/avatar.png',
         qdjl: '/static/images/qdjl.png',
-
+        dx: 'https://e-static.oss-cn-shanghai.aliyuncs.com/img/wfd/sign.gif',
         cjbj: '/static/images/buqiank.png',
     }
 
@@ -185,8 +189,6 @@ export default class index extends Vue {
                 // 用户点击了【关闭广告】按钮
                 if (res && res.isEnded) {
                     // 正常播放结束，可以下发游戏奖励
-                    this.adStatus = true
-                    this.getAward()
                 } else {
                     this.$mio.mioRoot.showToast('视频未观看完成')
                     // 播放中途退出，不下发游戏奖励
@@ -321,5 +323,6 @@ export default class index extends Vue {
         .sign_explain_con{font-size: 16px;font-weight: 400;color: #4D1B0F;line-height: 48rpx;margin-top: 28rpx}
     }
     .empty{height: 28rpx;width: 100%}
+    .dx{position: fixed;bottom: 50rpx;right: 10rpx;}
 }
 </style>

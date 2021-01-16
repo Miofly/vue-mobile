@@ -93,7 +93,7 @@ var Ad = {
             sign: 'bFwbxLAzwd5F4DOPS2hO',
         }, function (res) {
             if (res.code == 200) {
-
+                location.href = dUrl[0];
             }
         }, {'ACT-USER-ID': getParam('user_id')})
 
@@ -106,7 +106,7 @@ var Ad = {
                 url: wm_base_url_click + 'charging',
                 data: { ad_material_id: ad_material_id, ad_position_id: pid },
                 success: function (res) {
-                    location.href =  dUrl[0];
+                    // location.href = clickUrl[0];
                 },
                 error: function (err) {
                     console.log(err);
@@ -190,9 +190,19 @@ var Ad = {
             var checkFun = Ad.throttle(function () {
                 if (Ad.isElementInViewport(div)) {
                     window.removeEventListener('scroll', checkFun, true);
-                    monitorUrl.forEach(function (url) {
-                        Ad.send(url);
-                    });
+                    $.ajax({
+                        type: 'get',
+                        url:
+                            wm_base_url +
+                            'ad_show/?ad_position_id=' +
+                            positionId +
+                            '&ad_material_id=' +
+                            materialId,
+                        success: function (res) {},
+                        error: function (err) {
+                            console.log(err);
+                        },
+                    })
                 }
             }, 200);
 
@@ -327,9 +337,9 @@ var Ad = {
                     $.extend(res, {
                         date: Ad.getDate(), //日期
                         page: params.page, //日期
-                        ad_platform: '0',
-                        ad_material_id: '0',
-                        readNum: Ad.random(100000, 500000) //阅读数
+                        readNum: Ad.random(100000, 500000), //阅读数
+                        ad_platform: 0,
+                        ad_material_id: 0
                     })
                 );
                 $('#dataList').append(html)

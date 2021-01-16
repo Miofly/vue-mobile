@@ -105,6 +105,7 @@ export default class mescrollSwiper extends mixins(scrollMixins) {
         }
         this.dataLists = this.dataLists.concat(curPageData) // 追加新数据
         setTimeout(() => { // 接口请求太快，展示数据样式延迟500ms,要不太丑
+            // @ts-ignore
             this.mescroll.endByPage(curPageLen, totalSize) // 接口返回的是否有下一页 总页数/总数据量/是否有下一页
         }, 500)
     }
