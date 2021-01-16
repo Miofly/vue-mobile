@@ -112,7 +112,7 @@ module.exports = {
 			},
             '/mio': { // mock 自定义接口
                 target: process.env.VUE_APP_BASE_API,
-                changeOrigin: true, // needed for virtual hosted sites
+                changeOrigin: true, // 允许跨域
                 ws: true, // proxy websockets
                 pathRewrite: {
                     '^/mio': ''
