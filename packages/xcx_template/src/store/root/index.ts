@@ -15,7 +15,7 @@ import { Module, VuexModule } from 'vuex-module-decorators'
 @Module({ name: 'root', namespaced: true, stateFactory: true })
 export default class Root extends VuexModule {
     ggkz: boolean = false
-    uuid: number = 0
+    uuid: any = ''
 
     ptgg: string = 'adunit-00e1022d0ea25478'
     jlgg: string = 'adunit-c032eda868cde7c8'

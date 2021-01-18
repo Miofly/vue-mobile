@@ -22,8 +22,17 @@ const commonGet = (url, showLoading = true) => ajax({
     showLoading
 })
 
+const commonGetOther = (url, showLoading = true) => ajax({
+    url: `https://88umr.cn/api${url}`,
+    getHeader: {
+        'Content-Type': 'json'
+    },
+    showLoading
+})
+
 
 export {
+    commonGetOther,
     commonPost,
     commonGet
 }

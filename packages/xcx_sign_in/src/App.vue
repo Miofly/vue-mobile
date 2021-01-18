@@ -1,6 +1,6 @@
 <script>
 /* eslint-disable */
-import {commonGetOther} from "../../xcx_lottery/src/api";
+import {commonGet} from "@/api";
 
 export default {
     onLaunch(e) {
@@ -10,10 +10,8 @@ export default {
         // #endif
     },
     onShow(e) {
-
-
         console.log(e, 'onShow：页面展示')
-        const data = commonGetOther('/toggle/checkin').then(res => {
+        commonGet('/toggle/checkin').then(res => {
             console.log(res)
             this.$store.state.root.ggkz = res.data
             if (this.$store.state.root.ggkz == 1) {
@@ -27,7 +25,7 @@ export default {
 
         this.$store.state.center.uuid = e.query.uuid
         if (e.query.uuid == undefined) {
-            if (this.$mio.mioRoot.getStorageSync('uuid') == undefined || this.$mio.mioRoot.getStorageSync('uuid') == '') {
+            if (this.$mio.mioRoot.getStorageSync('uuid') == null || this.$mio.mioRoot.getStorageSync('uuid') == undefined || this.$mio.mioRoot.getStorageSync('uuid') == '') {
                 this.$store.state.center.uuid = 60
             } else {
                 this.$store.state.center.uuid = this.$mio.mioRoot.getStorageSync('uuid')
@@ -35,6 +33,8 @@ export default {
         } else{
             this.$mio.mioRoot.setStorage('uuid', e.query.uuid)
         }
+
+
         // if (e.shareTicket!=undefined) {
         //     this.$store.state.center.type = 3
         //     console.log('从群进入 type:', this.$store.state.center.type)

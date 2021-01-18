@@ -27,7 +27,7 @@ export default {
 
         this.$store.state.root.uuid = e.query.uuid
         if (e.query.uuid == undefined) {
-            if (this.$mio.mioRoot.getStorageSync('uuid') == undefined || this.$mio.mioRoot.getStorageSync('uuid') == '') {
+            if (this.$mio.mioRoot.getStorageSync('uuid') == null || this.$mio.mioRoot.getStorageSync('uuid') == undefined || this.$mio.mioRoot.getStorageSync('uuid') == '') {
                 this.$store.state.root.uuid = 60
             } else {
                 this.$store.state.root.uuid = this.$mio.mioRoot.getStorageSync('uuid')

@@ -34,14 +34,12 @@ import {mapState, mapGetters, mapActions} from 'vuex' export default {
 */
 import Vue from 'vue'
 import Vuex from 'vuex'
-import center from './center'
 import root from './root'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     modules: {
-        center,
         root
     }
 })
