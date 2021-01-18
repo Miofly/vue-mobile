@@ -32,3 +32,15 @@ paths:
     /getSwitch:
         get:
             operationId: getSwitch
+    /getArticles:
+        get:
+            operationId: getArticles
+    /createArticle:
+        post:
+            operationId: createArticle
+    /updateArticle:
+        post:
+            operationId: updateArticle
+    /deleteArticle:
+        post:
+            operationId: deleteArticle
