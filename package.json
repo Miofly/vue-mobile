@@ -6,6 +6,8 @@
         "packages/*"
     ],
     "dependencies": {
+        "element-ui": "^2.14.0",
+        "async-validator": "^1.11.5",
         "@dcloudio/uni-app-plus": "^2.0.0-29820201110001",
         "@dcloudio/uni-h5": "^2.0.0-29820201110001",
         "@dcloudio/uni-helper-json": "*",

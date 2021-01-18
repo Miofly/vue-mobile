@@ -199,7 +199,7 @@ module.exports = {
         'no-div-regex': 2, // 禁止除法操作符显式的出现在正则表达式开始的位置
         'no-else-return': 2, // 禁止 if 语句中 return 语句之后有 else 块
         'no-empty-pattern': 2, // 禁止使用空解构模式
-        'no-eq-null': 2, // 禁止在没有类型检查操作符的情况下与 null 进行比较
+        'no-eq-null': 0, // 禁止在没有类型检查操作符的情况下与 null 进行比较
         'no-eval': 2, // 禁用 eval()
         'no-extend-native': 2, // 禁止扩展原生类型
         'no-extra-bind': 2, // 禁止不必要的 .bind() 调用
@@ -242,7 +242,7 @@ module.exports = {
         'no-with': 2, // 禁用 with 语句
 
         'prefer-promise-reject-errors': 2, // 要求使用 Error 对象作为 Promise 拒绝的原因
-        radix: 2, // 强制在 parseInt() 使用基数参数
+        radix: 0, // 强制在 parseInt() 使用基数参数
         'require-await': 2, // 禁止使用不带 await 表达式的 async 函数
         'vars-on-top': 2, // 要求所有的 var 声明出现在它们所在的作用域顶部
         'wrap-iife': 2, // 要求 IIFE 使用括号括起来

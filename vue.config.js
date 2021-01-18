@@ -11,6 +11,21 @@ require('events').EventEmitter.defaultMaxListeners = 0  // eslint-disable-line
 // 	includes: ['path', 'name', 'meta']
 // })
 
+function getIpAddress () { // 获取真实IP地址
+	const interfaces = os.networkInterfaces()
+	for (const devName in interfaces) {
+		if (devName == 'WLAN') {
+			const iface = interfaces[devName]
+			for (let i = 0; i < iface.length; i++) {
+				const alias = iface[i]
+				if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
+					return alias.address
+				}
+			}
+		}
+	}
+}
+
 function resolve (dir) {
     return path.join(__dirname, dir)
 }
@@ -92,6 +107,7 @@ module.exports = {
         // config.plugin('provide').use(tfPages.webpack.DefinePlugin, [{ ROUTES: JSON.stringify(tfPages.routes) }])
     },
     devServer: { // 开发环境跨域处理
+		host: getIpAddress(),
     	open: true,
         proxy: {
             //

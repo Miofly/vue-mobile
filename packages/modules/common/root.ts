@@ -10,7 +10,6 @@ const roots = {
 		// @ts-ignore
 		uni.showToast({ title, icon, duration, mask })
 	},
-
 	// loading设置
 	showLoading (title: string = '正在加载', mask: boolean = true): void {
 		uni.showLoading({
@@ -596,6 +595,79 @@ const roots = {
 				typeof func === 'function' && func()
 			}, wait)
 		}
+	},
+	conver (limit) {
+		let size = ''
+		if (limit < 0.1 * 1024) { // 如果小于0.1KB转化成B
+			size = `${limit.toFixed(2)}B`
+		} else if (limit < 0.1 * 1024 * 1024) { // 如果小于0.1MB转化成KB
+			size = `${(limit / 1024).toFixed(2)}KB`
+		} else if (limit < 0.1 * 1024 * 1024 * 1024) { // 如果小于0.1GB转化成MB
+			size = `${(limit / (1024 * 1024)).toFixed(2)}MB`
+		} else { // 其他转化成GB
+			size = `${(limit / (1024 * 1024 * 1024)).toFixed(2)}GB`
+		}
+		
+		const sizestr = `${size}`
+		const len = sizestr.indexOf('.')
+		const dec = sizestr.substr(len + 1, 2)
+		if (dec == '00') { // 当小数点后为00时 去掉小数部分
+			return sizestr.substring(0, len) + sizestr.substr(len + 3, 2)
+		}
+		return sizestr
+	},
+	timeCompute (allTime: number) {
+		// @ts-ignore
+		const day = parseInt((allTime / (1000 * 60 * 60 * 24)))
+		// @ts-ignore
+		let hour = parseInt((allTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+		// @ts-ignore
+		let minutes = parseInt((allTime % (1000 * 60 * 60)) / (1000 * 60))
+		// @ts-ignore
+		let seconds = parseInt((allTime % (1000 * 60)) / 1000)
+		// @ts-ignore
+		hour = hour < 10 ? (`0${hour}`) : hour
+		// @ts-ignore
+		minutes = minutes < 10 ? (`0${minutes}`) : minutes
+		// @ts-ignore
+		seconds = seconds < 10 ? (`0${seconds}`) : seconds
+		const newDay = day == 0 ? '' : `${day}天`
+		return `${newDay}${hour}:${minutes}:${seconds}`
+	},
+	isEmpty (str) {
+		if (str == '' || str == undefined || str == null) return true
+	},
+	setCookie (cname: string, cvalue: any, days?: number) {
+		let expires = ''
+		// @ts-ignore
+		if (days == 0 || days == '') {
+			expires = 'expires=Fri, 31 Dec 9999 23:59:59 GMT'
+		} else {
+			const d = new Date()
+			d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000))
+			expires = `expires=${d.toUTCString()}`
+		}
+		document.cookie = `${cname}=${cvalue};${expires};path=/`
+	},
+	getCookie (cname) {
+		const name = `${cname}=`
+		const ca = document.cookie.split(';')
+		for (let i = 0; i < ca.length; i++) {
+			let c = ca[i]
+			while (c.charAt(0) == ' ') {
+				c = c.substring(1)
+			}
+			if (c.indexOf(name) == 0) {
+				return c.substring(name.length, c.length)
+			}
+		}
+		return ''
+	},
+	delCookie (name) {
+		const date = new Date()
+		date.setTime(date.getTime() - 10000)
+		const cval = this.getCookie(name)
+		if (cval != null) document.cookie = `${name}=; expire=${date.toUTCString()}; path=/`
 	}
 }
 
