@@ -57,9 +57,9 @@ module.exports = {
         'typescript'
     ],
     rules: { // 配置定义在插件中的一个规则的时候，你必须使用 插件名/规则ID 的形式 vue/attribute-hyphenation
-        eqeqeq: 0, // 不要求使用 === 和 !==
-        camelcase: 0, // 不强制使用骆驼拼写法命名约定
-        indent: 0, // 不强制使用一致的缩进
+		eqeqeq: 0, // 不要求使用 === 和 !==
+		camelcase: 0, // 不强制使用骆驼拼写法命名约定
+		indent: [0, 4], // 不强制使用一致的缩进
         'no-console': 0, // 允许 console
         'no-control-regex': 0, // 禁止在正则表达式中使用控制字符
         'no-useless-escape': 0, // 不禁用不必要的转义字符
@@ -96,6 +96,7 @@ module.exports = {
         '@typescript-eslint/explicit-module-boundary-types': 0,
         '@typescript-eslint/no-empty-function': 0, // 允许空函数
         '@typescript-eslint/no-this-alias': 0, //
+
         // love
 		'import/no-duplicates': 0,
         'consistent-return': 0, // 不要求 return 语句要么总是指定返回的值，要么不指定
@@ -133,7 +134,7 @@ module.exports = {
         'no-nested-ternary': 0, // 不禁用嵌套的三元表达式
 		'no-multi-assign': 0, // 禁止连续赋值
 		'no-bitwise': 0, // 禁用按位运算符
-
+		'no-shadow': 0, // 不禁止变量声明与外层作用域的变量同名
 		// vue相关
         'vue/html-self-closing': 0,
         'vue/attribute-hyphenation': 0,
@@ -146,8 +147,10 @@ module.exports = {
         'vue/html-indent': 0,
         'vue/no-v-html': 0,
         'vue/html-closing-bracket-newline': 0,
+		'vue/html-closing-bracket-spacing': 0,
         'vue/valid-v-model': 0,
         'vue/no-use-v-if-with-v-for': 0,
+		'vue/comment-directive': 0,
         'vue/no-parsing-error': 0,
         // 与 JavaScript 代码中可能的错误或逻辑错误有关
         'for-direction': 2, // 强制 “for” 循环中更新子句的计数器朝着正确的方向移动
@@ -183,7 +186,7 @@ module.exports = {
         'require-atomic-updates': 2, // 禁止由于 await 或 yield的使用而可能导致出现竞态条件的赋值
         'use-isnan': 2, // 要求使用 isNaN() 检查 NaN
         'valid-typeof': 2, // 强制 typeof 表达式与有效的字符串进行比较
-
+		'no-process-exit': 0, // 不禁用 process.exit()
         // 这些规则是关于最佳实践的，帮助你避免一些问题
         'accessor-pairs': 2, // 强制 getter 和 setter 在对象中成对出现
         'block-scoped-var': 2, // 强制把变量的使用限制在其定义的作用域范围内
