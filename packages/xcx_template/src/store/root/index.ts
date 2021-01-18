@@ -17,9 +17,9 @@ export default class Root extends VuexModule {
     ggkz: boolean = false
     ggkzs: boolean = true
     master: boolean = false
-    ptgg: string = 'adunit-00e1022d0ea25478'
-    jlgg: string = 'adunit-31de5fd8a39e8a37'
-    cpgg: string = 'adunit-aeb64142b023c5f4'
-    spgg: string = 'adunit-b4b59ee060f44213'
+    ptgg: string = 'adunit-3999b6616115fdf2'
+    jlgg: string = 'adunit-d66cc4b7fd9de7a0'
+    cpgg: string = 'adunit-0179bafea0d0554f'
+    spgg: string = 'adunit-23bbf513de802fce'
     tpgg: string = 'adunit-649916b6ab77ef4f'
 }

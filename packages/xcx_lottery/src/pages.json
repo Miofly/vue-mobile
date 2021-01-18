@@ -3,7 +3,14 @@
         {
             "path": "pages/index/index",
             "style": {
-                "navigationBarTitleText": "书币大抽奖",
+                "navigationBarTitleText": "",
+                "navigationBarBackgroundColor": "#FE4111"
+            }
+        },
+        {
+            "path": "pages/index/index_new",
+            "style": {
+                "navigationBarTitleText": "主页",
                 "navigationBarBackgroundColor": "#FE4111"
             }
         },

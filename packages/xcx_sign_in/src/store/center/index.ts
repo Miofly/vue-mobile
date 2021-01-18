@@ -8,5 +8,5 @@ import { Module, VuexModule } from 'vuex-module-decorators'
 
 @Module({ name: 'Vehicle', namespaced: true, stateFactory: true })
 export default class Index extends VuexModule {
-
+    uuid: 0
 }

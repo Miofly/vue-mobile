@@ -1,5 +1,5 @@
 <template>
-    <view class="u-skeleton container">
+    <view class="u-skeleton container" v-if="ggkz">
         <!--用户信息-->
         <view class="user ">
             <view class="cu-avatar u-skeleton-circle fl"
@@ -292,6 +292,7 @@ export default class index extends Vue {
     // 获取初始数据
     async getData () {
         const { data, code } = await commonGet(`/checkin/cmain.html?uuid=${this.$store.state.center.uuid}`)
+        console.log(data)
         if (code == 200) {
             this.loading = false
             const { user, table } = data
@@ -312,18 +313,20 @@ export default class index extends Vue {
     }
 
     sing_in_btn () {
+
         this.$mio.mioRoot.throttle(() => {
             if (this.config.allow_option == 0) {
                 this.$mio.mioRoot.showToast('今日已无签到/补签次数')
                 return
             }
+            console.log('出发了吗')
             this.signIn(this.config.allow_option == 1 ? 0 : 2, this.config.current_day, 1)
         }, 2000)
     }
 
     // 签到
     signIn (state, day, temp?) {
-        this.$mio.mioRoot.throttle(() => {
+        // this.$mio.mioRoot.throttle(() => {
             console.log(`当前周期：${this.config.current_day} || 签到天：${day}`)
             if (this.config.current_day >= day) {
                 if (state == 0 && this.config.current_day == day) { // 待签到逻辑
@@ -349,8 +352,7 @@ export default class index extends Vue {
             } else {
                 console.log('不可签到')
             }
-        })
-
+        // })
     }
 
     getVideo (state) {

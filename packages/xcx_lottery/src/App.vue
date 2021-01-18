@@ -24,6 +24,13 @@ export default {
         const data = commonGetOther('/toggle/wheel').then(res => {
             console.log(res)
             this.$store.state.root.ggkz = res.data
+            if (this.$store.state.root.ggkz == 1) {
+                uni.setNavigationBarTitle({
+                    title: '书币大抽奖'
+                })
+            } else {
+                this.$mio.mioRoot.replace('/pages/index/index_new')
+            }
         })
 
 

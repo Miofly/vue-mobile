@@ -1,22 +1,24 @@
 import ajax from './ajax'
 // #ifdef MP-WEIXIN
-const default_url = process.env.VUE_APP_BASE_API
+const default_url = process.env.VUE_APP_BASE_API_WX
 // #endif
-const commonPost = (url, data = {}, showLoading = true) => ajax({
+const commonPost = (url, data?, headers?) => ajax({
     // #ifdef MP-WEIXIN
     // @ts-ignore
-    url: default_url + url,
+    // eslint-disable-next-line no-dupe-keys
+    url: default_url + url, // eslint-disable-next-line no-dupe-keys
     // #endif
     // #ifdef H5
     // @ts-ignore
+    // eslint-disable-next-line no-dupe-keys
     url,
     // #endif
-    method: 'POST',
     data,
-    showLoading
+    headers,
+    method: 'post',
 })
 
-const commonGet = (url, showLoading = true) => ajax({
+const commonGet = (url, headers?) => ajax({
     // #ifdef MP-WEIXIN
     // @ts-ignore
     url: default_url + url,
@@ -25,10 +27,7 @@ const commonGet = (url, showLoading = true) => ajax({
     // @ts-ignore
     url,
     // #endif
-    getHeader: {
-        'Content-Type': 'json'
-    },
-    showLoading
+    headers
 })
 
 export {

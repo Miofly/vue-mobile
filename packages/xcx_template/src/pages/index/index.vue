@@ -1,26 +1,35 @@
 <template>
-    <view :style="{backgroundImage: 'url('+ baseConfig.bg +')'}" class="text-center xcx_bg" style="">
+    <view class="u-skeleton container" v-if="ggkz">
 
+        <!--骨架屏-->
+        <m-skeleton bg-color="rgb(250, 250, 250)" :loading="loading" :animation="true" el-color="#e5e5e5" :border-radius="10"></m-skeleton>
     </view>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { commonPost, commonGet } from '@/api'
+import { State } from 'vuex-class'
 
 @Component({})
 export default class index extends Vue {
+    @State('spgg', { namespace: 'root' }) spgg
+    @State('ptgg', { namespace: 'root' }) ptgg
+    @State('cpgg', { namespace: 'root' }) cpgg
+    @State('jlgg', { namespace: 'root' }) jlgg
+    @State('ggkz', { namespace: 'root' }) ggkz
+
     baseConfig: any = {
         baseSrc: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/2.jpg',
-        bg: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg',
+        bg: '/static/images/bg.png',
         avatar: '/static/images/avatar.png',
     }
 
+    loading: boolean = true
     rewardedVideoAd: any = null
     interstitialAd: any = null
 
     created () {
-        console.log('初始化 created:')
         if (wx.createInterstitialAd) {
             this.rewardedVideoAd = wx.createRewardedVideoAd({
                 adUnitId: this.$store.state.root.jlgg
@@ -36,8 +45,6 @@ export default class index extends Vue {
                 // 用户点击了【关闭广告】按钮
                 if (res && res.isEnded) {
                     // 正常播放结束，可以下发游戏奖励
-                    this.adStatus = true
-                    this.getAward()
                 } else {
                     this.$mio.mioRoot.showToast('视频未观看完成')
                     // 播放中途退出，不下发游戏奖励
@@ -57,28 +64,28 @@ export default class index extends Vue {
                 console.log('插屏广告关闭')
             })
         }
+
         this.getData()
     }
 
+    // 获取初始数据
     async getData () {
-        const { data, code } = await commonGet('/getSignInData')
+        const { data, code } = await commonGet(`/checkin/cmain.html?uuid=${this.$store.state.center.uuid}`)
         console.log(data)
         if (code == 200) {
             this.loading = false
-            const { config, signInStatusLists } = data
-            this.config = config
-            this.signInStatusLists = signInStatusLists
+
         }
+    }
+
+    goRecord () {
+        this.$mio.mioRoot.throttle(() => {
+            this.$mio.mioRoot.push('/pages/index/record')
+        })
     }
 }
 </script>
 
-<style>
-.xcx_bg {
-    background-size: 100% 100%;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    padding-bottom: 30px;
-    background-repeat: no-repeat
-}
+<style lang="scss">
+
 </style>

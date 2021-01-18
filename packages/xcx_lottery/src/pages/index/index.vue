@@ -1,267 +1,267 @@
 <template>
-    <view class="text-center"
-          :style="{backgroundImage: 'url('+ baseConfig.bg +')'}"
-          style="background-size: 100% 100%;overflow-x: hidden;overflow-y: scroll
+    <view v-if="ggkz" class="text-center"
+              :style="{backgroundImage: 'url('+ baseConfig.bg +')'}"
+              style="background-size: 100% 100%;overflow-x: hidden;overflow-y: scroll
           ;padding-bottom: 30px;background-repeat: no-repeat">
-        <view style="height: auto;" class="text-center ">
-            <!-- 背景 -->
-            <view v-if="ggkz" class="margin-center" style="height: 150rpx;width: 690rpx;position: relative;top: 16rpx;
+            <view style="height: auto;" class="text-center ">
+                <!-- 背景 -->
+                <view v-if="ggkz" class="margin-center" style="height: 150rpx;width: 690rpx;position: relative;top: 16rpx;
             background: linear-gradient(90deg, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0.2) 100%);
             box-shadow: 1px 1px 2px 0px rgba(255, 255, 255, 0.23);border-radius: 8px;">
-                <!--头像-->
-                <view class="cu-avatar" :class="[false ? 'radius' : 'round']"
-                	  :style="{backgroundImage: 'url('+ user.headimgurl +')'}" style="width: 92rpx;height: 92rpx;border: 4rpx solid white;position: absolute;top: 28rpx;left: 28rpx">
-                	<view v-if="false" class="cu-tag badge">999</view>
+                    <!--头像-->
+                    <view class="cu-avatar" :class="[false ? 'radius' : 'round']"
+                          :style="{backgroundImage: 'url('+ user.headimgurl +')'}" style="width: 92rpx;height: 92rpx;border: 4rpx solid white;position: absolute;top: 28rpx;left: 28rpx">
+                        <view v-if="false" class="cu-tag badge">999</view>
+                    </view>
+                    <!--用户信息-->
+                    <view class="text-14 text-white full-width">
+                        <view style="position: absolute;top: 38rpx;left: 144rpx;color: rgba(255, 255, 255, 0.8)">{{user.nickname}}</view>
+                        <view style="position: absolute;top: 68rpx;left: 144rpx">书币余额<span class="text-24" style="color: rgba(255, 251, 18, 1);margin-right: 4rpx;margin-left: 16rpx">{{ user.money }}</span>书币</view>
+                    </view>
+                    <!--中奖纪录按钮-->
+                    <view style="position: absolute;top: 0;right: 28rpx;" @click="goRecord">
+                        <image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
+                               :src="baseConfig.zjjl" style="width: 84rpx"></image>
+                    </view>
                 </view>
-                <!--用户信息-->
-                <view class="text-14 text-white full-width">
-                    <view style="position: absolute;top: 38rpx;left: 144rpx;color: rgba(255, 255, 255, 0.8)">{{user.nickname}}</view>
-                    <view style="position: absolute;top: 68rpx;left: 144rpx">书币余额<span class="text-24" style="color: rgba(255, 251, 18, 1);margin-right: 4rpx;margin-left: 16rpx">{{ user.money }}</span>书币</view>
+
+                <!--书币文字图片-->
+                <view v-if="ggkz" style="position: relative;top: 72rpx;width: 100%;text-align: center;left: 50%;margin-left: -319rpx;">
+                    <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" width="638"
+                             :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
+                             :shape="['square', 'circle'][0]" :src="baseConfig.bt" bgColor="rgba(0, 0, 0, 1)">
+                        <view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
+                    </m-image>
+                    <!--                <image-->
+                    <!--                	:src="baseConfig.bt" style="width: 638rpx;height: 72rpx"></image>-->
                 </view>
-                <!--中奖纪录按钮-->
-                <view style="position: absolute;top: 0;right: 28rpx;" @click="goRecord">
-                    <image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
-                    	:src="baseConfig.zjjl" style="width: 84rpx"></image>
+
+                <!--剩余抽奖次数-->
+                <view v-if="ggkz" style="position: relative;top: 104rpx;color: rgba(255, 255, 255, 1)" class="text-16">
+                    今日剩余抽奖次数<span style="color: rgba(255, 251, 18, 1)">{{ unable }}</span>次
                 </view>
-            </view>
 
-            <!--书币文字图片-->
-            <view v-if="ggkz" style="position: relative;top: 72rpx;width: 100%;text-align: center;left: 50%;margin-left: -319rpx;">
-                <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" width="638"
-                		:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
-                		:shape="['square', 'circle'][0]" :src="baseConfig.bt" bgColor="rgba(0, 0, 0, 1)">
-                	<view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
-                </m-image>
-<!--                <image-->
-<!--                	:src="baseConfig.bt" style="width: 638rpx;height: 72rpx"></image>-->
-            </view>
-
-            <!--剩余抽奖次数-->
-            <view v-if="ggkz" style="position: relative;top: 104rpx;color: rgba(255, 255, 255, 1)" class="text-16">
-                今日剩余抽奖次数<span style="color: rgba(255, 251, 18, 1)">{{ unable }}</span>次
-            </view>
-
-            <!--转盘-->
-            <view class="main" style="padding-top: 150rpx;position: relative;margin-top: 50rpx">
-                <!--抽奖背景-->
-                <view :animation="animationData" class="margin-center round"
-                      style="position: relative;width: 600rpx;height: 600rpx;background-image: url(https://e-static.oss-cn-shanghai.aliyuncs.com/img/wfd/zhuanpan/zpbg.png);background-size: cover;z-index: 1">
-                    <view class="block"
-                          style="position: absolute;left: 0;top: 0;z-index: 1;width: 600rpx;height: 600rpx;border-radius: inherit;">
-<!--                        <view style="position: absolute;left: 0;top: 0;width: inherit;height: inherit;z-index: 99;">-->
-<!--                            &lt;!&ndash;线条颜色&ndash;&gt;-->
-<!--                            <view v-for="(item,index) in list"-->
-<!--                                  :key="index" :style="{transform:'rotate('+(index * width + width / 2)+'deg)'}"-->
-<!--                                  style="position: absolute;left: 300rpx;top: 0;width: 3rpx;height: 300rpx;-->
-<!--                            background-color: red;overflow: hidden;-webkit-transform-origin: 50% 300rpx;transform-origin: 50% 300rpx;"></view>-->
-<!--                        </view>-->
-                        <view style="position: absolute;left: 0;top: 0;width: inherit;height: inherit;z-index: 9999;">
-                            <view v-for="(iteml,index) in awards"
-                                  :key="index"
-                                  :style="{transform: 'rotate('+(index * width)+'deg)', zIndex:index, }" style="position: absolute;left: 0;top: 0;width: 100%;height: 100%;">
-                                <view :style="'transform:rotate('+(index )+')'"
-                                      class="margin-center text-center flex align-center"
-                                      style="position: relative;padding-top: 25rpx;-webkit-transform-origin: 50% 300rpx;
+                <!--转盘-->
+                <view class="main" style="padding-top: 150rpx;position: relative;margin-top: 50rpx">
+                    <!--抽奖背景-->
+                    <view :animation="animationData" class="margin-center round"
+                          style="position: relative;width: 600rpx;height: 600rpx;background-image: url(https://e-static.oss-cn-shanghai.aliyuncs.com/img/wfd/zhuanpan/zpbg.png);background-size: cover;z-index: 1">
+                        <view class="block"
+                              style="position: absolute;left: 0;top: 0;z-index: 1;width: 600rpx;height: 600rpx;border-radius: inherit;">
+                            <!--                        <view style="position: absolute;left: 0;top: 0;width: inherit;height: inherit;z-index: 99;">-->
+                            <!--                            &lt;!&ndash;线条颜色&ndash;&gt;-->
+                            <!--                            <view v-for="(item,index) in list"-->
+                            <!--                                  :key="index" :style="{transform:'rotate('+(index * width + width / 2)+'deg)'}"-->
+                            <!--                                  style="position: absolute;left: 300rpx;top: 0;width: 3rpx;height: 300rpx;-->
+                            <!--                            background-color: red;overflow: hidden;-webkit-transform-origin: 50% 300rpx;transform-origin: 50% 300rpx;"></view>-->
+                            <!--                        </view>-->
+                            <view style="position: absolute;left: 0;top: 0;width: inherit;height: inherit;z-index: 9999;">
+                                <view v-for="(iteml,index) in awards"
+                                      :key="index"
+                                      :style="{transform: 'rotate('+(index * width)+'deg)', zIndex:index, }" style="position: absolute;left: 0;top: 0;width: 100%;height: 100%;">
+                                    <view :style="'transform:rotate('+(index )+')'"
+                                          class="margin-center text-center flex align-center"
+                                          style="position: relative;padding-top: 25rpx;-webkit-transform-origin: 50% 300rpx;
                                       transform-origin: 50% 300rpx;flex-direction: column;">
-                                    <!--文字颜色-->
-                                    <text style="font-size: 32rpx;color: rgba(255, 48, 45, 1);" class="text-bold">{{ iteml.name }}</text>
-                                    <image :src="`/static/images/${iteml.icon}.png`" style="width: 92rpx;height: 92rpx;margin-top: 10rpx"></image>
+                                        <!--文字颜色-->
+                                        <text style="font-size: 32rpx;color: rgba(255, 48, 45, 1);" class="text-bold">{{ iteml.name }}</text>
+                                        <image :src="`/static/images/${iteml.icon}.png`" style="width: 92rpx;height: 92rpx;margin-top: 10rpx"></image>
+                                    </view>
                                 </view>
                             </view>
                         </view>
                     </view>
-                </view>
-                <!--抽奖按钮-->
-                <view v-if="btnDisabled == ''" id="wx" :class="btnDisabled" @tap="playReward" style="position: absolute;left: 260rpx;top: 290rpx;z-index: 3">
-                    <image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]"
-                    	:src="baseConfig.btn" style="height: 276rpx;animation: scale-upOne-zp 1s linear 0s infinite alternate;"></image>
-                </view>
+                    <!--抽奖按钮-->
+                    <view v-if="btnDisabled == ''" id="wx" :class="btnDisabled" @tap="playReward" style="position: absolute;left: 260rpx;top: 290rpx;z-index: 3">
+                        <image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]"
+                               :src="baseConfig.btn" style="height: 276rpx;animation: scale-upOne-zp 1s linear 0s infinite alternate;"></image>
+                    </view>
 
 
-                <view v-else :class="btnDisabled" style="position: absolute;left: 260rpx;top: 290rpx;z-index: 3">
-                    <m-image :borderRadius="10" :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" :shape="['square', 'circle'][0]"
-                             :showLoading="false" :src="baseConfig.btn2"
-                             duration="0"
-                             height="276">
-                        <view slot="error" class="text-white" style="font-size: 24rpx;">加载失败</view>
+                    <view v-else :class="btnDisabled" style="position: absolute;left: 260rpx;top: 290rpx;z-index: 3">
+                        <m-image :borderRadius="10" :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" :shape="['square', 'circle'][0]"
+                                 :showLoading="false" :src="baseConfig.btn2"
+                                 duration="0"
+                                 height="276">
+                            <view slot="error" class="text-white" style="font-size: 24rpx;">加载失败</view>
+                        </m-image>
+                    </view>
+
+                    <view :style="{backgroundImage: 'url('+ baseConfig.zpdx +')'}" class="margin-center round"
+                          style="position: absolute;width: 780rpx;height: 780rpx;background-size: cover;top: 58rpx;left: -16rpx;z-index:0">
+                    </view>
+                </view>
+
+                <view v-if="ggkz" style="position: relative;z-index: 3;margin-top: 80rpx">
+                    <view style="width: 100%;position: absolute;left: 50%;margin-left: -325rpx;text-align: justify;top: 32rpx">
+                        <image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
+                               src="/static/images/kuang.png" style="width: 650rpx;"></image>
+                    </view>
+
+                    <m-column-notice :autoplay="true" :duration="2000" :isCircular="true" :list="['恭喜用户 ***** 抽中VIP碎片', '恭喜用户 ***** 抽中50书币', '恭喜用户 ***** 抽中888书币', '恭喜用户 ***** 抽中30书币', '恭喜用户 ***** 抽中50书币', '恭喜用户 ***** 抽中888书币', '恭喜用户 ***** 抽中30书币']" :show="true"
+                                     :speed="160" bgColor="transparent"
+                                     borderRadius="10" style=""
+                                     color="rgba(255, 245, 150, 1)" mode="vertical">
+                    </m-column-notice>
+                </view>
+
+                <view style="margin-top: 28rpx;width: 92%;margin-left: 4%;">
+                    <ad v-if="ptgg && ggkz" ad-intervals="30" :unit-id="ptgg" style="text-align: left"></ad>
+                </view>
+
+                <!--我的奖品-->
+                <view v-if="ggkz" style="position: relative;width: 100%;margin-top: 40rpx" class="margin-center text-center">
+                    <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="336"
+                             :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]"
+                             :shape="['square', 'circle'][0]" :src="baseConfig.wdjp" bgColor="rgba(0, 0, 0, 1)">
+                        <view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
                     </m-image>
-                </view>
-
-                <view :style="{backgroundImage: 'url('+ baseConfig.zpdx +')'}" class="margin-center round"
-                      style="position: absolute;width: 780rpx;height: 780rpx;background-size: cover;top: 58rpx;left: -16rpx;z-index:0">
-                </view>
-            </view>
-
-            <view v-if="ggkz" style="position: relative;z-index: 3;margin-top: 80rpx">
-                <view style="width: 100%;position: absolute;left: 50%;margin-left: -325rpx;text-align: justify;top: 32rpx">
-                    <image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
-                           src="/static/images/kuang.png" style="width: 650rpx;"></image>
-                </view>
-
-                <m-column-notice :autoplay="true" :duration="2000" :isCircular="true" :list="['恭喜用户 ***** 抽中VIP碎片', '恭喜用户 ***** 抽中50书币', '恭喜用户 ***** 抽中888书币', '恭喜用户 ***** 抽中30书币', '恭喜用户 ***** 抽中50书币', '恭喜用户 ***** 抽中888书币', '恭喜用户 ***** 抽中30书币']" :show="true"
-                                 :speed="160" bgColor="transparent"
-                                 borderRadius="10" style=""
-                                 color="rgba(255, 245, 150, 1)" mode="vertical">
-                </m-column-notice>
-            </view>
-
-            <view style="margin-top: 28rpx;width: 92%;margin-left: 4%;">
-                <ad v-if="ptgg && ggkz" ad-intervals="30" :unit-id="ptgg" style="text-align: left"></ad>
-            </view>
-
-            <!--我的奖品-->
-            <view v-if="ggkz" style="position: relative;width: 100%;margin-top: 40rpx" class="margin-center text-center">
-                <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="336"
-                		:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]"
-                		:shape="['square', 'circle'][0]" :src="baseConfig.wdjp" bgColor="rgba(0, 0, 0, 1)">
-                	<view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
-                </m-image>
-                <!--手机进度-->
-                <view style="position: absolute;left: 112rpx;top: 280rpx">
-                    <m-progress :percent="(chip.iphone_chip/30)*100" percentColor="black"
-                                   borderStyle="0 solid red"
-                                   percentSize="15px" :striped="true" :stripedActive="true" inactiveColor="rgba(255, 214, 180, 1)"
-                                   :showPercent="true">
-                    </m-progress>
-                    <view style="margin-left: -12rpx;color: rgba(231, 79, 0, 1);vertical-align: top;width: 100rpx;float: right">
-                        <span style="color: rgba(231, 79, 0, 1);" class="text-14 text-bold">{{chip.iphone_chip}}</span>
-                        <span style="font-size: 24rpx;transform: scale(0.8)">/30</span>
-                    </view>
-                </view>
-                <!--vip进度-->
-                <view style="position: absolute;left: 456rpx;top: 280rpx">
-                    <m-progress :percent="(chip.vip_chip/10)*100" percentColor="black"
-                                   borderStyle="0 solid red"
-                                   percentSize="15px" :striped="true" :stripedActive="true" inactiveColor="rgba(255, 214, 180, 1)"
-                                   :showPercent="true">
-                    </m-progress>
-                    <view style="float: right;margin-left: -12rpx;color: rgba(231, 79, 0, 1);width: 100rpx;vertical-align: top"><span style="" class="text-14 text-bold">{{chip.vip_chip}}</span><span style="font-size: 24rpx;transform: scale(0.8);color: rgba(231, 79, 0, 1);">/10</span></view>
-                </view>
-            </view>
-
-            <!--中奖晒单-->
-            <view v-if="ggkz" style="background: rgba(255, 243, 237, 1);width: 690rpx;height: 578rpx;margin-top: 56rpx;position: relative;
-            padding-bottom: 32rpx;border-radius: 16rpx"
-                  class="text-center margin-center">
-                <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="80"
-                		:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" style="position: absolute;top: -16rpx;left: 106rpx"
-                		:shape="['square', 'circle'][0]" :src="baseConfig.zjsd" bgColor="rgba(0, 0, 0, 1)">
-                	<view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
-                </m-image>
-                <view class="margin-center" style="height: 150rpx;width: 690rpx;position: relative;top: 96rpx;">
-                    <!--头像-->
-                    <view class="cu-avatar" :class="[false ? 'radius' : 'round']"
-                          :style="{backgroundImage: 'url('+ comment.headimgurl +')'}" style="width: 68rpx;height: 68rpx;position: absolute;top: 28rpx;left: 32rpx">
-                        <view v-if="false" class="cu-tag badge">999</view>
-                    </view>
-                    <!--中奖用户信息-->
-                    <view class=" full-width" style="color: rgba(73, 54, 43, 1)">
-                        <view style="position: absolute;top: 20rpx;left: 124rpx;color: rgba(73, 54, 43, 1)" class="text-16 text-bold">{{comment.nickname}}</view>
-                        <view style="position: absolute;top: 68rpx;left: 124rpx">
-
-                            <image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
-                            	:src="baseConfig.dingwei" style="width: 18rpx"></image>
-                            <text class="text-12" style="color: rgba(73, 54, 43, 0.5);margin-left: 8rpx">{{ comment.location }}</text>
+                    <!--手机进度-->
+                    <view style="position: absolute;left: 112rpx;top: 280rpx">
+                        <m-progress :percent="(chip.iphone_chip/30)*100" percentColor="black"
+                                    borderStyle="0 solid red"
+                                    percentSize="15px" :striped="true" :stripedActive="true" inactiveColor="rgba(255, 214, 180, 1)"
+                                    :showPercent="true">
+                        </m-progress>
+                        <view style="margin-left: -12rpx;color: rgba(231, 79, 0, 1);vertical-align: top;width: 100rpx;float: right">
+                            <span style="color: rgba(231, 79, 0, 1);" class="text-14 text-bold">{{chip.iphone_chip}}</span>
+                            <span style="font-size: 24rpx;transform: scale(0.8)">/30</span>
                         </view>
                     </view>
-                    <!--时间-->
-                    <view style="position: absolute;top: 24rpx;right: 32rpx;color: rgba(73, 54, 43, 0.5)">
-                        {{ comment.create_at }}
+                    <!--vip进度-->
+                    <view style="position: absolute;left: 456rpx;top: 280rpx">
+                        <m-progress :percent="(chip.vip_chip/10)*100" percentColor="black"
+                                    borderStyle="0 solid red"
+                                    percentSize="15px" :striped="true" :stripedActive="true" inactiveColor="rgba(255, 214, 180, 1)"
+                                    :showPercent="true">
+                        </m-progress>
+                        <view style="float: right;margin-left: -12rpx;color: rgba(231, 79, 0, 1);width: 100rpx;vertical-align: top"><span style="" class="text-14 text-bold">{{chip.vip_chip}}</span><span style="font-size: 24rpx;transform: scale(0.8);color: rgba(231, 79, 0, 1);">/10</span></view>
                     </view>
                 </view>
-                <!--文字描述-->
-                <view class="text-16 line-two" style="letter-spacing: 0px;width: 628rpx;text-align: left;
-                color: rgba(73, 54, 43, 1);line-height: 48rpx;position: absolute;top: 220rpx;left: 32rpx">
-                    {{comment.content}}
-                </view>
-                <!--图片信息-->
-                <view v-if="comment.pic.length !== 2" class="flex justify-between" style="width: 628rpx;position: absolute;top: 340rpx;left: 32rpx">
-                    <view v-for="(item, index) in comment.pic" :key="index">
-                        <image @click="$mio.mioRoot.showImg(item)" :src="item" style="border-radius: 8rpx;width: 194rpx;height: 140rpx"></image>
-                    </view>
-                </view>
-                <view v-else class="flex justify-start" style="width: 628rpx;position: absolute;top: 340rpx;left: 32rpx">
-                    <view v-for="(item, index) in comment.pic" :key="index" :style="{marginLeft: index==1 ? 24 + 'rpx' : 0}">
-                        <image @click="$mio.mioRoot.showImg(item)" :src="item" style="border-radius: 8rpx;width: 194rpx;height: 140rpx"></image>
-                    </view>
-                </view>
-                <!--查看更多-->
-                <view @click="goMore">
-                    <text style="position: absolute;top: 510rpx;left: 35%"></text>
-                    <m-image duration="0" :showLoading="false" :borderRadius="0" bgColorError="rgba(0, 0, 0, 1)" height="30"
-                    		:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" style="position: absolute;top: 515rpx;left: 270rpx" @click="goMore"
-                    		:shape="['square', 'circle'][0]" :src="baseConfig.open" bgColor="rgba(0, 0, 0, 1)">
-                    	<view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
+
+                <!--中奖晒单-->
+                <view v-if="ggkz" style="background: rgba(255, 243, 237, 1);width: 690rpx;height: 578rpx;margin-top: 56rpx;position: relative;
+            padding-bottom: 32rpx;border-radius: 16rpx"
+                      class="text-center margin-center">
+                    <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="80"
+                             :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" style="position: absolute;top: -16rpx;left: 106rpx"
+                             :shape="['square', 'circle'][0]" :src="baseConfig.zjsd" bgColor="rgba(0, 0, 0, 1)">
+                        <view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
                     </m-image>
+                    <view class="margin-center" style="height: 150rpx;width: 690rpx;position: relative;top: 96rpx;">
+                        <!--头像-->
+                        <view class="cu-avatar" :class="[false ? 'radius' : 'round']"
+                              :style="{backgroundImage: 'url('+ comment.headimgurl +')'}" style="width: 68rpx;height: 68rpx;position: absolute;top: 28rpx;left: 32rpx">
+                            <view v-if="false" class="cu-tag badge">999</view>
+                        </view>
+                        <!--中奖用户信息-->
+                        <view class=" full-width" style="color: rgba(73, 54, 43, 1)">
+                            <view style="position: absolute;top: 20rpx;left: 124rpx;color: rgba(73, 54, 43, 1)" class="text-16 text-bold">{{comment.nickname}}</view>
+                            <view style="position: absolute;top: 68rpx;left: 124rpx">
+
+                                <image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
+                                       :src="baseConfig.dingwei" style="width: 18rpx"></image>
+                                <text class="text-12" style="color: rgba(73, 54, 43, 0.5);margin-left: 8rpx">{{ comment.location }}</text>
+                            </view>
+                        </view>
+                        <!--时间-->
+                        <view style="position: absolute;top: 24rpx;right: 32rpx;color: rgba(73, 54, 43, 0.5)">
+                            {{ comment.create_at }}
+                        </view>
+                    </view>
+                    <!--文字描述-->
+                    <view class="text-16 line-two" style="letter-spacing: 0px;width: 628rpx;text-align: left;
+                color: rgba(73, 54, 43, 1);line-height: 48rpx;position: absolute;top: 220rpx;left: 32rpx">
+                        {{comment.content}}
+                    </view>
+                    <!--图片信息-->
+                    <view v-if="comment.pic.length !== 2" class="flex justify-between" style="width: 628rpx;position: absolute;top: 340rpx;left: 32rpx">
+                        <view v-for="(item, index) in comment.pic" :key="index">
+                            <image @click="$mio.mioRoot.showImg(item)" :src="item" style="border-radius: 8rpx;width: 194rpx;height: 140rpx"></image>
+                        </view>
+                    </view>
+                    <view v-else class="flex justify-start" style="width: 628rpx;position: absolute;top: 340rpx;left: 32rpx">
+                        <view v-for="(item, index) in comment.pic" :key="index" :style="{marginLeft: index==1 ? 24 + 'rpx' : 0}">
+                            <image @click="$mio.mioRoot.showImg(item)" :src="item" style="border-radius: 8rpx;width: 194rpx;height: 140rpx"></image>
+                        </view>
+                    </view>
+                    <!--查看更多-->
+                    <view @click="goMore">
+                        <text style="position: absolute;top: 510rpx;left: 35%"></text>
+                        <m-image duration="0" :showLoading="false" :borderRadius="0" bgColorError="rgba(0, 0, 0, 1)" height="30"
+                                 :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" style="position: absolute;top: 515rpx;left: 270rpx" @click="goMore"
+                                 :shape="['square', 'circle'][0]" :src="baseConfig.open" bgColor="rgba(0, 0, 0, 1)">
+                            <view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
+                        </m-image>
+                    </view>
                 </view>
+
+                <!--规则-->
+                <view v-if="ggkz"  style="background: rgba(255, 243, 237, 1);width: 690rpx;height: auto;margin-top: 16rpx;position: relative;border-radius: 16rpx"
+                      class="text-center margin-center">
+                    <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="80"
+                             :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" style="position: absolute;top: -16rpx;left: 106rpx;"
+                             :shape="['square', 'circle'][0]" :src="baseConfig.wfsm" bgColor="rgba(0, 0, 0, 1)">
+                        <view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
+                    </m-image>
+                    <view class="text-left text-16" style="margin-top: 56rpx;padding: 86rpx 32rpx 32rpx 32rpx;line-height: 48rpx">
+                        1、每个账户每天最多有5次抽奖机会，每天0点刷新 <br>
+                        2、每天前两次可直接领取抽奖奖品，其他3次抽奖奖品需要通过观看小视频来领取 <br>
+                        3、书币及7天VIP会员中心抽中后自动发放至书城账号，可在中奖记录中查看 <br>
+                        4、用户可以通过完成本产品抽奖获得碎片，兑换手机需要集满30个碎片，兑换VIP需要集满10个碎片。用户兑换成功后，此前已获得该奖品碎片都将清零 <br>
+                        5、实物奖品请联系公众号内客服领取 <br>
+                        6、若发现用户恶意违规行为，开发者将有权取消其中奖资格 <br>
+                        7、本活动解释权由开发者所有，由任何疑问请联系公众号内客服
+                    </view>
+                </view>
+
+                <ad v-if="spgg" :unit-id="spgg" ad-type="video" ad-theme="white" style="margin-top: 38rpx;" class="text-left"></ad>
             </view>
 
-            <!--规则-->
-            <view v-if="ggkz"  style="background: rgba(255, 243, 237, 1);width: 690rpx;height: auto;margin-top: 16rpx;position: relative;border-radius: 16rpx"
-                  class="text-center margin-center">
-                <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="80"
-                         :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" style="position: absolute;top: -16rpx;left: 106rpx;"
-                         :shape="['square', 'circle'][0]" :src="baseConfig.wfsm" bgColor="rgba(0, 0, 0, 1)">
-                    <view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
-                </m-image>
-                <view class="text-left text-16" style="margin-top: 56rpx;padding: 86rpx 32rpx 32rpx 32rpx;line-height: 48rpx">
-                    1、每个账户每天最多有5次抽奖机会，每天0点刷新 <br>
-                    2、每天前两次可直接领取抽奖奖品，其他3次抽奖奖品需要通过观看小视频来领取 <br>
-                    3、书币及7天VIP会员中心抽中后自动发放至书城账号，可在中奖记录中查看 <br>
-                    4、用户可以通过完成本产品抽奖获得碎片，兑换手机需要集满30个碎片，兑换VIP需要集满10个碎片。用户兑换成功后，此前已获得该奖品碎片都将清零 <br>
-                    5、实物奖品请联系公众号内客服领取 <br>
-                    6、若发现用户恶意违规行为，开发者将有权取消其中奖资格 <br>
-                    7、本活动解释权由开发者所有，由任何疑问请联系公众号内客服
+            <m-modal :closeShow="false" bgColor="transparent" :closeSize="40" :descSize="30" padding="0" radius="30rpx" :maskClosable="false"
+                     :status.sync="modalStatus" :showTitle="false" title="" desc="" modalTop="200rpx" :titleSize="40"
+                     :showContent="false" descColor="#999d9c" titleColor="black" width="660rpx">
+                <view style="position: relative;left: 0;top: -180rpx;z-index: 889;">
+                    <!--                <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="660"-->
+                    <!--                         :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]"-->
+                    <!--                         style=""-->
+                    <!--                         :shape="['square', 'circle'][0]" src="/static/images/gyxz.png" bgColor="rgba(0, 0, 0, 1)">-->
+                    <!--                    <view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>-->
+                    <!--                </m-image>-->
+                    <image src="https://e-static.oss-cn-shanghai.aliyuncs.com/img/wfd/zhuanpan/gyxz.png" style="width: 660rpx;height: 660rpx;animation: rotate 4s linear 0s infinite;"></image>
                 </view>
-            </view>
 
-            <ad v-if="spgg" :unit-id="spgg" ad-type="video" ad-theme="white" style="margin-top: 38rpx;" class="text-left"></ad>
+                <view style="position: relative;margin-top: -580rpx;z-index: 900;display: block">
+                    <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)"
+                             :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]" style=""
+                             :shape="['square', 'circle'][0]" :src="baseConfig.cjbj" bgColor="rgba(0, 0, 0, 1)">
+                        <view slot="error" style="font-size: 24rpx;position: absolute;top: 0;left: 0" class="text-white">加载失败</view>
+                    </m-image>
+
+                    <view style="position: absolute;top: 160rpx;text-align: center;width: 100%;color: #B24A09;" class="text-30">
+                        抽中{{ awards[winningIndex - 1].name }}
+                    </view>
+
+                    <m-image @click="getAd()" duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="196"
+                             :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]"
+                             :shape="['square', 'circle'][0]" :src="unable == 5 || unable == 4 ? baseConfig.jlOne : baseConfig.jlTwo"
+                             style="position: absolute;top: 260rpx;left: 10%;width: 80%;height: 196rpx;">
+                        <view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
+                    </m-image>
+
+                    <view v-if="unable == 5 || unable == 4" @click="getAward" style="position: absolute;bottom: 30rpx;text-align: center;width: 100%;text-decoration: underline;color: rgba(178, 74, 9, 1)">
+                        直接领取
+                    </view>
+                    <view v-else @click="giveUp" style="position: absolute;bottom: 30rpx;text-align: center;width: 100%;text-decoration: underline;color: rgba(178, 74, 9, 1)">
+                        放弃领取
+                    </view>
+                </view>
+                <view style="background-color: transparent!important;position: relative">
+                    <image @click="statusTwo=false" :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
+                           :src="baseConfig.closeImg" style="width: 76rpx;margin-top: 100rpx"></image>
+                </view>
+            </m-modal>
         </view>
-
-        <m-modal :closeShow="false" bgColor="transparent" :closeSize="40" :descSize="30" padding="0" radius="30rpx" :maskClosable="false"
-                 :status.sync="modalStatus" :showTitle="false" title="" desc="" modalTop="200rpx" :titleSize="40"
-                 :showContent="false" descColor="#999d9c" titleColor="black" width="660rpx">
-            <view style="position: relative;left: 0;top: -180rpx;z-index: 889;">
-<!--                <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="660"-->
-<!--                         :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]"-->
-<!--                         style=""-->
-<!--                         :shape="['square', 'circle'][0]" src="/static/images/gyxz.png" bgColor="rgba(0, 0, 0, 1)">-->
-<!--                    <view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>-->
-<!--                </m-image>-->
-                <image src="https://e-static.oss-cn-shanghai.aliyuncs.com/img/wfd/zhuanpan/gyxz.png" style="width: 660rpx;height: 660rpx;animation: rotate 4s linear 0s infinite;"></image>
-            </view>
-
-        	<view style="position: relative;margin-top: -580rpx;z-index: 900;display: block">
-        		<m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)"
-        		         :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]" style=""
-        		         :shape="['square', 'circle'][0]" :src="baseConfig.cjbj" bgColor="rgba(0, 0, 0, 1)">
-        			<view slot="error" style="font-size: 24rpx;position: absolute;top: 0;left: 0" class="text-white">加载失败</view>
-        		</m-image>
-
-                <view style="position: absolute;top: 160rpx;text-align: center;width: 100%;color: #B24A09;" class="text-30">
-                    抽中{{ awards[winningIndex - 1].name }}
-                </view>
-
-                <m-image @click="getAd()" duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="196"
-                		:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]"
-                		:shape="['square', 'circle'][0]" :src="unable == 5 || unable == 4 ? baseConfig.jlOne : baseConfig.jlTwo"
-                         style="position: absolute;top: 260rpx;left: 10%;width: 80%;height: 196rpx;">
-                	<view slot="error" style="font-size: 24rpx;" class="text-white">加载失败</view>
-                </m-image>
-
-                <view v-if="unable == 5 || unable == 4" @click="getAward" style="position: absolute;bottom: 30rpx;text-align: center;width: 100%;text-decoration: underline;color: rgba(178, 74, 9, 1)">
-                    直接领取
-                </view>
-                <view v-else @click="giveUp" style="position: absolute;bottom: 30rpx;text-align: center;width: 100%;text-decoration: underline;color: rgba(178, 74, 9, 1)">
-                    放弃领取
-                </view>
-        	</view>
-        	<view style="background-color: transparent!important;position: relative">
-        		<image @click="statusTwo=false" :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
-        		       :src="baseConfig.closeImg" style="width: 76rpx;margin-top: 100rpx"></image>
-        	</view>
-        </m-modal>
-    </view>
 </template>
 
 <script lang="ts">
@@ -269,6 +269,8 @@ import { Component, Vue } from 'vue-property-decorator'
 import mColumnNotice from '../../components/m-column-notice/m-column-notice.vue'
 import mImage from '../../components/m-image/m-image.vue'
 import mModal from '../../components/m-modal/m-modal.vue'
+import newData from '../../static/zsQuestionNew.json'
+
 import {
     commonGet, commonPost
 } from '@/api'
@@ -288,6 +290,8 @@ export default class extends Vue {
     @State('ptgg', { namespace: 'root' }) ptgg
     @State('cpgg', { namespace: 'root' }) cpgg
     @State('ggkz', { namespace: 'root' }) ggkz
+
+    tempData: any = newData
 
     baseConfig: any = {
         zjjl: '/static/images/zjjl.png',
@@ -331,6 +335,7 @@ export default class extends Vue {
         console.log('created', this.$mio.mioRoot.getStorageSync('uuid'))
         console.log('created', this.$store.state.center.uuid)
         const data = await commonGet(`/wmain.html?uuid=${this.$store.state.center.uuid}&page=1&number=1`)
+
         console.log('请求是否成功：', data)
         if (data.code == 200) {
             const { awards, chip, comment, unable, user } = data.data

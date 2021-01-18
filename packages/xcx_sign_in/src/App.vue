@@ -1,5 +1,7 @@
 <script>
 /* eslint-disable */
+import {commonGetOther} from "../../xcx_lottery/src/api";
+
 export default {
     onLaunch(e) {
         console.log(e, 'onLaunch：初始化完成')
@@ -8,11 +10,25 @@ export default {
         // #endif
     },
     onShow(e) {
+
+
         console.log(e, 'onShow：页面展示')
+        const data = commonGetOther('/toggle/checkin').then(res => {
+            console.log(res)
+            this.$store.state.root.ggkz = res.data
+            if (this.$store.state.root.ggkz == 1) {
+                uni.setNavigationBarTitle({
+                    title: '签到送书币'
+                })
+            } else {
+                this.$mio.mioRoot.replace('/pages/index/index_new')
+            }
+        })
+
         this.$store.state.center.uuid = e.query.uuid
         if (e.query.uuid == undefined) {
             if (this.$mio.mioRoot.getStorageSync('uuid') == undefined || this.$mio.mioRoot.getStorageSync('uuid') == '') {
-                this.$store.state.center.uuid = 63
+                this.$store.state.center.uuid = 60
             } else {
                 this.$store.state.center.uuid = this.$mio.mioRoot.getStorageSync('uuid')
             }
