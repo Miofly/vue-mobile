@@ -9,7 +9,16 @@ export default {
     },
     onShow(e) {
         console.log(e, 'onShow：页面展示')
-
+        this.$store.state.center.uuid = e.query.uuid
+        if (e.query.uuid == undefined) {
+            if (this.$mio.mioRoot.getStorageSync('uuid') == undefined || this.$mio.mioRoot.getStorageSync('uuid') == '') {
+                this.$store.state.center.uuid = 63
+            } else {
+                this.$store.state.center.uuid = this.$mio.mioRoot.getStorageSync('uuid')
+            }
+        } else{
+            this.$mio.mioRoot.setStorage('uuid', e.query.uuid)
+        }
         // if (e.shareTicket!=undefined) {
         //     this.$store.state.center.type = 3
         //     console.log('从群进入 type:', this.$store.state.center.type)

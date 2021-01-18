@@ -14,7 +14,7 @@ import { Module, VuexModule, Mutation, Action, getModule } from 'vuex-module-dec
 
 @Module({ name: 'root', namespaced: true, stateFactory: true })
 export default class Root extends VuexModule {
-    ggkz: boolean = false
+    ggkz: number = 0
     ggkzs: boolean = true
     master: boolean = false
     ptgg: string = 'adunit-b642367df7368b68'

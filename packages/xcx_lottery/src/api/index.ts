@@ -22,6 +22,14 @@ const commonGet = (url, showLoading = true) => ajax({
     showLoading
 })
 
+const commonGetOther = (url, showLoading = true) => ajax({
+    url: `https://88umr.cn/api${url}`,
+    getHeader: {
+        'Content-Type': 'json'
+    },
+    showLoading
+})
+
 const goodGirlData: any = (type = 'Android', pageNum: number, pageSize: number) => ajax({
     url: `https://gank.io/api/v2/data/category/GanHuo/type/${type}/page/${pageNum}/count/${pageSize}`,
     getHeader: {
@@ -32,6 +40,7 @@ const goodGirlData: any = (type = 'Android', pageNum: number, pageSize: number) 
 
 
 export {
+    commonGetOther,
     goodGirlData,
     commonPost,
     commonGet

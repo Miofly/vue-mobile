@@ -1,6 +1,6 @@
 <script>
+import { commonGetOther } from '@/api'
 
-const WXBizDataCrypt = require('uJs/plugin/WXBizDataCrypt')
 /* eslint-disable */
 export default {
     onLaunch(e) {
@@ -19,7 +19,14 @@ export default {
         // #endif
     },
     onShow(e) {
+
         console.log(e, 'onShow：页面展示')
+        const data = commonGetOther('/toggle/wheel').then(res => {
+            console.log(res)
+            this.$store.state.root.ggkz = res.data
+        })
+
+
         this.$store.state.center.uuid = e.query.uuid
         if (e.query.uuid == undefined) {
             if (this.$mio.mioRoot.getStorageSync('uuid') == undefined || this.$mio.mioRoot.getStorageSync('uuid') == '') {
@@ -27,7 +34,7 @@ export default {
             } else {
                 this.$store.state.center.uuid = this.$mio.mioRoot.getStorageSync('uuid')
             }
-        } else{
+        } else {
             this.$mio.mioRoot.setStorage('uuid', e.query.uuid)
         }
     },
@@ -35,6 +42,11 @@ export default {
         console.log('onHide：应用页面隐藏')
     },
     methods: {
+        async init () {
+            console.log('没有执行')
+            const data = await commonGetOther('/toggle/wheel')
+            console.log(data)
+        },
         // #ifdef MP-WEIXIN
         autoUpdate: function () { // 自动更新
             var self = this

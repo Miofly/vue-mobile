@@ -4,7 +4,8 @@
             "path": "pages/index/index",
             "style": {
                 "navigationBarTitleText": "签到送书币",
-                "navigationBarBackgroundColor": "#FA5429"
+                "navigationBarBackgroundColor": "#FA5429",
+                "navigationBarTextStyle": "white"
             }
         },
         {
@@ -16,7 +17,7 @@
         }
     ],
     "globalStyle": {
-        "navigationBarTextStyle": "black",
+        "navigationBarTextStyle": "white",
         // #ifdef H5
         "navigationStyle": "custom",
         // #endif

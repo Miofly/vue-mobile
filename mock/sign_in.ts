@@ -1,50 +1,68 @@
 import { Request, Response } from 'express'
 
 const sign_in_datas: any = {
-	config: {
-		sign_in_nums: 2,
-		reissue_nums: 0,
-		balance: 9945145,
-		week_nums: 313,
-		continuous: true
+	user: {
+		nickname: '徐',
+		money: '1305',
+		headimgurl: 'http://thirdwx.qlogo.cn/mmopen/wbKdib81ny69kgwA0LCYD6NRBZJLz7kUXc5dKKe7V1VAkcyqsvG6KTmQcjWurlGCiaohsvHfeUa3ZOfEIHoLbv8g/132',
+		current_stage_coin: '20',
+		repair: '2',
+		current_day: 6,
+		allow_option: 0,
+		gift: 1,
+		checkin_days: 1
 	},
-	signInStatusLists: [
-		{
-			coin: '20',
-			status: 1,
-			name: '已签到'
+	table: {
+		1: {
+			day: '1',
+			is_repair: '0',
+			checked: '1',
+			coin: 20,
+			model: 3
 		},
-		{
-			coin: '30',
-			status: 0,
-			name: '未签到'
+		2: {
+			day: '2',
+			is_repair: '0',
+			checked: '0',
+			coin: 30,
+			model: 1
 		},
-		{
-			coin: '30',
-			status: 2,
-			name: '已错过'
+		3: {
+			day: '3',
+			is_repair: '0',
+			checked: '0',
+			coin: 40,
+			model: 2
 		},
-		{
-			coin: '30',
-			status: 3,
-			name: '点我补签'
+		4: {
+			day: '4',
+			is_repair: '0',
+			checked: '0',
+			coin: 50,
+			model: 2
 		},
-		{
-			coin: '30',
-			status: 0,
-			name: '未签到'
+		5: {
+			day: '5',
+			is_repair: '0',
+			checked: '0',
+			coin: 50,
+			model: 0
 		},
-		{
-			coin: '30',
-			status: 0,
-			name: '未签到'
+		6: {
+			day: '6',
+			is_repair: '0',
+			checked: '0',
+			coin: 50,
+			model: 0
 		},
-		{
-			coin: '30',
-			status: 0,
-			name: '未签到'
+		7: {
+			day: '7',
+			is_repair: '0',
+			checked: '0',
+			coin: 50,
+			model: 0
 		}
-	]
+	}
 }
 
 export const getSignInData = (req: Request, res: Response) => res.json({

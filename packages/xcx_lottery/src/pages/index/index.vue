@@ -5,7 +5,7 @@
           ;padding-bottom: 30px;background-repeat: no-repeat">
         <view style="height: auto;" class="text-center ">
             <!-- 背景 -->
-            <view class="margin-center" style="height: 150rpx;width: 690rpx;position: relative;top: 16rpx;
+            <view v-if="ggkz" class="margin-center" style="height: 150rpx;width: 690rpx;position: relative;top: 16rpx;
             background: linear-gradient(90deg, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0.2) 100%);
             box-shadow: 1px 1px 2px 0px rgba(255, 255, 255, 0.23);border-radius: 8px;">
                 <!--头像-->
@@ -26,7 +26,7 @@
             </view>
 
             <!--书币文字图片-->
-            <view style="position: relative;top: 72rpx;width: 100%;text-align: center;left: 50%;margin-left: -319rpx;">
+            <view v-if="ggkz" style="position: relative;top: 72rpx;width: 100%;text-align: center;left: 50%;margin-left: -319rpx;">
                 <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" width="638"
                 		:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
                 		:shape="['square', 'circle'][0]" :src="baseConfig.bt" bgColor="rgba(0, 0, 0, 1)">
@@ -37,7 +37,7 @@
             </view>
 
             <!--剩余抽奖次数-->
-            <view style="position: relative;top: 104rpx;color: rgba(255, 255, 255, 1)" class="text-16">
+            <view v-if="ggkz" style="position: relative;top: 104rpx;color: rgba(255, 255, 255, 1)" class="text-16">
                 今日剩余抽奖次数<span style="color: rgba(255, 251, 18, 1)">{{ unable }}</span>次
             </view>
 
@@ -92,7 +92,7 @@
                 </view>
             </view>
 
-            <view style="position: relative;z-index: 3;margin-top: 80rpx">
+            <view v-if="ggkz" style="position: relative;z-index: 3;margin-top: 80rpx">
                 <view style="width: 100%;position: absolute;left: 50%;margin-left: -325rpx;text-align: justify;top: 32rpx">
                     <image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
                            src="/static/images/kuang.png" style="width: 650rpx;"></image>
@@ -106,11 +106,11 @@
             </view>
 
             <view style="margin-top: 28rpx;width: 92%;margin-left: 4%;">
-                <ad v-if="ptgg" ad-intervals="30" :unit-id="ptgg" style="text-align: left"></ad>
+                <ad v-if="ptgg && ggkz" ad-intervals="30" :unit-id="ptgg" style="text-align: left"></ad>
             </view>
 
             <!--我的奖品-->
-            <view style="position: relative;width: 100%;margin-top: 40rpx" class="margin-center text-center">
+            <view v-if="ggkz" style="position: relative;width: 100%;margin-top: 40rpx" class="margin-center text-center">
                 <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="336"
                 		:mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]"
                 		:shape="['square', 'circle'][0]" :src="baseConfig.wdjp" bgColor="rgba(0, 0, 0, 1)">
@@ -140,7 +140,7 @@
             </view>
 
             <!--中奖晒单-->
-            <view style="background: rgba(255, 243, 237, 1);width: 690rpx;height: 578rpx;margin-top: 56rpx;position: relative;
+            <view v-if="ggkz" style="background: rgba(255, 243, 237, 1);width: 690rpx;height: 578rpx;margin-top: 56rpx;position: relative;
             padding-bottom: 32rpx;border-radius: 16rpx"
                   class="text-center margin-center">
                 <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="80"
@@ -197,7 +197,7 @@
             </view>
 
             <!--规则-->
-            <view style="background: rgba(255, 243, 237, 1);width: 690rpx;height: auto;margin-top: 16rpx;position: relative;border-radius: 16rpx"
+            <view v-if="ggkz"  style="background: rgba(255, 243, 237, 1);width: 690rpx;height: auto;margin-top: 16rpx;position: relative;border-radius: 16rpx"
                   class="text-center margin-center">
                 <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)" height="80"
                          :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][4]" style="position: absolute;top: -16rpx;left: 106rpx;"
@@ -215,7 +215,7 @@
                 </view>
             </view>
 
-            <ad v-if="spgg" :unit-id="spgg" ad-type="video" ad-theme="white" style="margin-top: 28rpx;" class="text-left"></ad>
+            <ad v-if="spgg" :unit-id="spgg" ad-type="video" ad-theme="white" style="margin-top: 38rpx;" class="text-left"></ad>
         </view>
 
         <m-modal :closeShow="false" bgColor="transparent" :closeSize="40" :descSize="30" padding="0" radius="30rpx" :maskClosable="false"
@@ -287,6 +287,7 @@ export default class extends Vue {
     @State('spgg', { namespace: 'root' }) spgg
     @State('ptgg', { namespace: 'root' }) ptgg
     @State('cpgg', { namespace: 'root' }) cpgg
+    @State('ggkz', { namespace: 'root' }) ggkz
 
     baseConfig: any = {
         zjjl: '/static/images/zjjl.png',

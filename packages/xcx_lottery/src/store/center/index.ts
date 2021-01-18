@@ -15,4 +15,5 @@ export default class Index extends VuexModule {
     ]
 
     uuid: 0
+    ggkz: 1
 }

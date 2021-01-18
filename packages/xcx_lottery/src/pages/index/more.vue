@@ -1,6 +1,6 @@
 <template>
     <mescroll-uni :down="downOption" :up="upOption" @down="downCallback"
-                  @emptyclick="emptyClick" @init="mescrollInit"
+                  @emptyclick="emptyClick" @init="mescrollInit" v-if="ggkz"
                   @up="upCallback" ref="mescrollRef" top="0" style="background: #ff5125!important;">
         <!--中奖晒单-->
         <view style="background: #ff5125!important;" class="text-white" v-for="(item, index) in dataLists" :key="index">
@@ -83,7 +83,7 @@ export default class mescrollSwiper extends mixins(scrollMixins) {
     @State('spgg', { namespace: 'root' }) spgg
     @State('ptgg', { namespace: 'root' }) ptgg
     @State('cpgg', { namespace: 'root' }) cpgg
-
+    @State('ggkz', { namespace: 'root' }) ggkz
 
     downOption: any = { // 下拉刷新的配置参数
         use: false, // 是否启用下拉刷新

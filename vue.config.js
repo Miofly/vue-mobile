@@ -96,7 +96,7 @@ module.exports = {
         proxy: {
             //
             '/dzp': {
-                target: 'http://book.wihens.com/api/wheel',
+                target: 'http://book.wihens.com/api',
                 changeOrigin: true, // 是否跨域
                 pathRewrite: {
                     '^/dzp': ''

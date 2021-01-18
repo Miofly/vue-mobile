@@ -6,8 +6,8 @@
         <!--中奖晒单-->
         <view class="bg-white flex justify-between" style="height: 154rpx;border-bottom: 1px solid #eeeeec;padding: 28rpx" v-for="(item, index) in dataLists" :key="index">
             <view>
-                <view class="text-24" style="color: #B24A09;letter-spacing: 1px;">{{item.duplicated == 1 ? item.coin + '书币' : item.name}}</view>
-                <view class="text-14" style="color: rgba(73, 54, 43, 0.5);margin-top: 8rpx">发放时间:{{item.create_at}}</view>
+                <view class="text-24" style="color: #B24A09;letter-spacing: 1px;">{{item.target_coin}}书币</view>
+                <view class="text-14" style="color: rgba(73, 54, 43, 0.5);margin-top: 8rpx">签到时间 :{{item.create_at}}</view>
             </view>
             <view class="text-14" style="color: #49362B;margin-top: 60rpx">
                 已发放
@@ -95,10 +95,10 @@ export default class mescrollSwiper extends mixins(scrollMixins) {
         const pageNum = page.num // 页码
         const pageSize = page.size // 页长
 
-        const { data } = await commonGet(`/articles?page=${pageNum}&pre_page=${pageSize}`) // 获取的数据
-        const curPageData = data.items // 当前页数据列表
+        const { data } = await commonGet(`/checkin/record.html?uuid=${this.$store.state.center.uuid}&page=${pageNum}&number=${pageSize}`) // 获取的数据
+        const curPageData = data.list // 当前页数据列表
         const curPageLen = curPageData.length // 当前页数据长度
-        const totalSize = data.total // 总数据条数
+        const totalSize = data.count // 总数据条数
 
         if (page.num == 1) { // 第一页需手动置空列表
             this.dataLists = []
