@@ -26,6 +26,9 @@ paths:
     /articles:
         get:
             operationId: getArticles
-    /checkin/cmain.html:
+    /getSignInData:
         get:
             operationId: getSignInData
+    /getSwitch:
+        get:
+            operationId: getSwitch

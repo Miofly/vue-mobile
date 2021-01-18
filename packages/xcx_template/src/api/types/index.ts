@@ -6,6 +6,6 @@ export interface AxiosRequestConfig {
     method?: string, // 请求方法
     cancelBefore?: boolean, // 是否强制取消上一个没完成的请求
     errHandle?: boolean, // 单独提示错误信息设置，为true全局提示无效
-        headers?: any, // get请求默认请求头
+    headers?: any, // get请求默认请求头
     showLoading?: boolean,
 }

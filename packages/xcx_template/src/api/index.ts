@@ -25,6 +25,7 @@ const commonGet = (url, headers?) => ajax({
     // #endif
     // #ifdef H5
     // @ts-ignore
+    // eslint-disable-next-line no-dupe-keys
     url,
     // #endif
     headers

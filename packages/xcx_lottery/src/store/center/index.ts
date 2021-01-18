@@ -14,5 +14,5 @@ export default class Index extends VuexModule {
         { name: 'two', type: 'moduleTwo' }
     ]
 
-    uuid: 0
+    uuid: number = 0
 }

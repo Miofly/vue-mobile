@@ -1,6 +1,8 @@
 <script>
 /* eslint-disable */
-import {commonGetOther} from "../../xcx_lottery/src/api";
+import {
+    commonGet
+} from '@/api'
 
 export default {
     onLaunch(e) {
@@ -11,7 +13,7 @@ export default {
     },
     onShow(e) {
         console.log(e, 'onShow：页面展示')
-        commonGetOther('/toggle/checkin').then(res => {
+        commonGet('/getSwitch').then(res => {
             console.log(res)
             this.$store.state.root.ggkz = res.data
             if (this.$store.state.root.ggkz == 1) {
@@ -23,12 +25,12 @@ export default {
             }
         })
 
-        this.$store.state.center.uuid = e.query.uuid
+        this.$store.state.root.uuid = e.query.uuid
         if (e.query.uuid == undefined) {
             if (this.$mio.mioRoot.getStorageSync('uuid') == undefined || this.$mio.mioRoot.getStorageSync('uuid') == '') {
-                this.$store.state.center.uuid = 60
+                this.$store.state.root.uuid = 60
             } else {
-                this.$store.state.center.uuid = this.$mio.mioRoot.getStorageSync('uuid')
+                this.$store.state.root.uuid = this.$mio.mioRoot.getStorageSync('uuid')
             }
         } else{
             this.$mio.mioRoot.setStorage('uuid', e.query.uuid)

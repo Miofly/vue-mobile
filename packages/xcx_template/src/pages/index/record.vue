@@ -34,7 +34,6 @@ import mImage from 'zj/m-image/m-image.vue'
 import mButton from 'zj/m-button/m-button.vue'
 import { State } from 'vuex-class'
 
-
 @Component({
     components: {
         // #ifdef H5
@@ -48,6 +47,8 @@ export default class mescrollSwiper extends mixins(scrollMixins) {
     @State('spgg', { namespace: 'root' }) spgg
     @State('ptgg', { namespace: 'root' }) ptgg
     @State('cpgg', { namespace: 'root' }) cpgg
+    @State('jlgg', { namespace: 'root' }) jlgg
+    @State('ggkz', { namespace: 'root' }) ggkz
 
     downOption: any = { // 下拉刷新的配置参数
         use: false, // 是否启用下拉刷新

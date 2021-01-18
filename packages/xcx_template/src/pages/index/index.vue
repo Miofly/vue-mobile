@@ -1,6 +1,6 @@
 <template>
     <view class="u-skeleton container" v-if="ggkz">
-
+        正常页面
         <!--骨架屏-->
         <m-skeleton bg-color="rgb(250, 250, 250)" :loading="loading" :animation="true" el-color="#e5e5e5" :border-radius="10"></m-skeleton>
     </view>
@@ -70,8 +70,8 @@ export default class index extends Vue {
 
     // 获取初始数据
     async getData () {
-        const { data, code } = await commonGet(`/checkin/cmain.html?uuid=${this.$store.state.center.uuid}`)
-        console.log(data)
+        const { data, code } = await commonGet(`/getSignInData?uuid=${this.$store.state.root.uuid}`)
+        console.log('初始数据：', data)
         if (code == 200) {
             this.loading = false
 

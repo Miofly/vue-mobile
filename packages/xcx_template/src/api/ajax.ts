@@ -76,8 +76,6 @@ function ajax (config: AxiosRequestConfig): any {
             // 发送get请求
             promise = sourceAxios({ method: 'GET', url, headers })
         } else {
-            console.log(headers)
-            console.log(data)
             // 发送post请求
             if (headers['content-type'] == 'application/x-www-form-urlencoded') { // eslint-disable-line
                 promise = sourceAxios({ method: 'POST', url, data: Qs.stringify(data), headers })
