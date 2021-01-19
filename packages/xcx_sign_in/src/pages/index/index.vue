@@ -64,7 +64,7 @@
                         <view v-if="item.model == 2" style="color: #FE4111" class="sign_list_item_name text-bold">
                             点我补签
                         </view>
-                        <view v-if="item.model == 3 && item.is_repair == 0" style="color: white" class="sign_list_item_name">
+                        <view v-if="item.model == 3" style="color: white" class="sign_list_item_name">
                             已签到
                         </view>
                         <image class="sign_list_item_img" :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
@@ -72,7 +72,7 @@
                         <view class="sign_list_item_coin"
                               :style="{color: item.model == 3 ? '#FFD7CD': '#999'}">{{item.coin}}书币</view>
                     </view>
-                    <view :style="{background: item.model == 3 ? '#FF582E': '#f7f5f5'}" @click="signIn(signInStatusLists[6].model, signInStatusLists[6].day)" v-else class="sign_list_item_other">
+                    <view :style="{background: item.model == 3 ? '#FF582E': '#f7f5f5'}" @click="signIn(1, 7)" v-else class="sign_list_item_other">
                         <view class="fl sign_list_item_other_text">
                             <view v-if="config.current_day != 7" class="sign_list_item_other_text_one">第7天</view>
                             <view v-else-if="config.current_day == 7 && signInStatusLists[6].model == 0" class="sign_list_item_other_text_one">待签到</view>
@@ -320,39 +320,35 @@ export default class index extends Vue {
                 return
             }
             console.log('出发了吗')
-            this.signIn(this.config.allow_option == 1 ? 0 : 2, this.config.current_day, 1)
+            this.signIn(1, 0)
         }, 2000)
     }
 
     // 签到
-    signIn (state, day, temp?) {
-        // this.$mio.mioRoot.throttle(() => {
-            console.log(`当前周期：${this.config.current_day} || 签到天：${day}`)
-            if (this.config.current_day >= day) {
-                if (state == 0 && this.config.current_day == day) { // 待签到逻辑
-                    this.modalStatus = true
-                    console.log('待签到')
-                    return
-                }
-                if (state == 1) {
-                    console.log('已错过')
-                }
-                if (state == 2) {
-                    if (temp == 1) {
-                        this.baseConfig.bqs = '/static/images/buqiank.png'
-                    } else {
-                        this.baseConfig.bqs = '/static/images/bqs.png'
-                    }
-                    this.modalStatusTwo = true
-                    console.log('待补签')
-                }
-                if (state == 3) {
-                    console.log('已签到')
-                }
-            } else {
-                console.log('不可签到')
+    signIn (temp?, day?) {
+        console.log(`当前周期：${this.config.current_day}`, `当前天:${day}`)
+        if (day <= this.config.current_day) {
+            if (this.config.allow_option == 1) {
+                this.modalStatus = true
+                console.log('待签到')
+                return
             }
-        // })
+
+            if (this.config.allow_option == 2) {
+                if (temp != 2) {
+                    this.baseConfig.bqs = '/static/images/buqiank.png'
+                } else {
+                    this.baseConfig.bqs = '/static/images/bqs.png'
+                }
+                this.modalStatusTwo = true
+            }
+
+        } else {
+            console.log('不在签到周期')
+        }
+
+
+
     }
 
     getVideo (state) {
@@ -364,7 +360,7 @@ export default class index extends Vue {
                     .then(() => this.rewardedVideoAd.show())
                     .catch(err => {
                         console.log(err)
-                        this.$mio.mioRoot.showToast('当前无视频拉取请直接领取')
+                        this.$mio.mioRoot.showToast('暂无视频，请稍后再试')
                     })
             })
         })
