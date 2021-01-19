@@ -6,8 +6,6 @@
         "packages/*"
     ],
     "dependencies": {
-        "element-ui": "^2.14.0",
-        "async-validator": "^1.11.5",
         "@dcloudio/uni-app-plus": "^2.0.0-29820201110001",
         "@dcloudio/uni-h5": "^2.0.0-29820201110001",
         "@dcloudio/uni-helper-json": "*",
@@ -110,7 +108,9 @@
         "ts-node-dev": "^1.0.0",
         "swagger-routes-express": "^3.2.1",
         "concurrently": "^5.3.0",
-        "stylus-loader": "^4.3.1"
+        "stylus-loader": "^4.3.1",
+        "element-ui": "^2.14.0",
+        "async-validator": "^1.11.5"
     },
     "browserslist": [
         "Android >= 4",
