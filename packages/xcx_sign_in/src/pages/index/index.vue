@@ -316,7 +316,7 @@ export default class index extends Vue {
 
         this.$mio.mioRoot.throttle(() => {
             if (this.config.allow_option == 0) {
-                this.$mio.mioRoot.showToast('今日已无签到/补签次数')
+                this.$mio.mioRoot.showToast('今日已签到')
                 return
             }
             console.log('出发了吗')
@@ -399,11 +399,11 @@ export default class index extends Vue {
     }
 
     getGiftBefore () {
-    	if (this.config.gift == 0 && this.config.current_day < 7) {
+    	if (this.config.gift == 0 && this.config.checkin_days < 7) {
     	    this.$mio.mioRoot.showToast('连续签到满7天才可以领取哟！')
             return
     	}
-        if (this.config.gift == 0 && this.config.current_day == 7) {
+        if (this.config.gift == 0 && this.config.checkin_days == 7) {
             this.$mio.mioRoot.showToast('已经领取过大礼包了！')
             return
         }

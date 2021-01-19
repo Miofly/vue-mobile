@@ -315,9 +315,9 @@ export default class index extends Vue {
                     }, 1000)
                     setTimeout(() => {
                         if (this.clean_num == 1) {
-                            this.promptText = '深度清理'
+                            this.promptText = '观看视频，深度清理'
                         } else {
-                            this.promptText = '开始清理'
+                            this.promptText = '观看视频，开始清理'
                         }
 
                         if (this.clean_num == 2) {
