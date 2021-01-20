@@ -12,7 +12,7 @@ import { commonPost, commonGet } from '@/api'
 import { State } from 'vuex-class'
 
 @Component({})
-export default class index extends Vue {
+export default class extends Vue {
     @State('spgg', { namespace: 'root' }) spgg
     @State('ptgg', { namespace: 'root' }) ptgg
     @State('cpgg', { namespace: 'root' }) cpgg

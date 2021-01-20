@@ -122,7 +122,7 @@ boxShadow: '0px 2px 8px 0px rgba(255, 96, 57, 0.57), 0px 1px 4px 0px rgba(255, 2
 import { Component, Vue } from 'vue-property-decorator'
 import { State } from 'vuex-class'
 @Component({})
-export default class extends Vue {
+export default class index extends Vue {
     baseConfig: any = {
         baseSrc: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg',
         sonicSrc: 'https://e-static.oss-cn-shanghai.aliyuncs.com/img/wfd/xcx_bak/shengbo@2x.png',
