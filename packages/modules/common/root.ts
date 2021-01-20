@@ -11,7 +11,7 @@ const roots = {
 		uni.showToast({ title, icon, duration, mask })
 	},
 	// loading设置
-	showLoading (title: string = '正在加载', mask: boolean = true): void {
+	showLoading (title: string = '正在加载', mask: boolean = false): void {
 		uni.showLoading({
 			title,
 			mask // 防止触摸穿透

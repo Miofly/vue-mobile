@@ -14,7 +14,7 @@ const Qs = require('qs')
 axios.defaults.baseURL = process.env.VUE_APP_BASE_API // 优先级比axios实例要低
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8'
 axios.defaults.withCredentials = false // 允许axios请求携带cookie等凭证
-
+axios.defaults.timeout = 15000
 // 创建一个 axios 实例 ==> instanceOne
 const instanceOne = axios.create()
 instanceOne.defaults.baseURL = '' // 实例的baseurl
@@ -98,6 +98,8 @@ function ajax (config: AxiosRequestConfig): any {
                 console.log('请求失败', resMess)
             }
         }).catch((err) => { // 失败了调用reject()
+        	uni.hideLoading()
+	        root.showToast('网络错误！请稍后再试...')
             reject(err)
         })
     })

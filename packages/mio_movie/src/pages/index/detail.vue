@@ -1,5 +1,5 @@
 <template>
-    <view class="bg-white">
+    <view class="bg-white" v-if="ggkz">
         <ad v-if="ptgg" ad-intervals="30" :unit-id="ptgg" style="margin-top: 28rpx"></ad>
         <view ref="test" class="u-skeleton container padding">
             <view>{{videoTitle}}</view>
@@ -8,8 +8,9 @@
             <view>{{dtLang}}</view>
 
         </view>
-        <video id="myVideo" style="width: 100%" :src="src" controls page-gesture :poster="posterImg" :title="videoTitle">
-
+        <video :id="myVideoId" style="width: 100%" :src="src" enable-play-gesture="true"
+               controls :custom-cache="false" :poster="posterImg" :title="videoTitle"
+               show-mute-btn="true" @waiting="videoWait" @loadedmetadata="loadedmetadata">
         </video>
 
         <view>
@@ -57,7 +58,9 @@ export default class detail extends Vue {
     loading: boolean = true
     rewardedVideoAd: any = null
     interstitialAd: any = null
-
+	
+	myVideoId: string = 'video'
+	
     videoContext: any = null
     index_new: number = 0
     index_new_two: number = 0
@@ -79,7 +82,6 @@ export default class detail extends Vue {
     }
 
     created (e) {
-
         if (wx.createInterstitialAd) {
             this.rewardedVideoAd = wx.createRewardedVideoAd({
                 adUnitId: this.$store.state.root.jlgg
@@ -119,11 +121,25 @@ export default class detail extends Vue {
         }
 
     }
-
+	
+	videoWait (e) {
+		console.log(e)
+	}
+	
+	loadedmetadata (e) {
+		uni.hideLoading()
+	}
+	
     play (url, index) {
         this.index_new = index
     	this.src = url
-        this.videoContext.play()
+    	this.myVideoId = `video${index}`
+	    this.videoContext = uni.createVideoContext(`video${index}`)
+	    this.videoContext.play()
+	    this.$mio.mioRoot.showLoading('正在加载视频')
+	    setTimeout(() => {
+	        uni.hideLoading()
+	    }, 10000)
         this.interstitialAd.show().catch(() => {
         	// 失败重试
         	this.interstitialAd.load()
@@ -146,10 +162,9 @@ export default class detail extends Vue {
 
     copy (url, index) {
         this.index_new_two = index
-    	console.log(url)
         setTimeout(() => {
             this.$mio.mioRoot.copyText(url, () => {
-                console.log(1)
+	            this.$mio.mioRoot.showToast('复制成功')
             })
         }, 15000)
         this.rewardedVideoAd.show().catch(() => {
@@ -211,10 +226,12 @@ export default class detail extends Vue {
             }
         }
 
-
-
-        this.videoContext = uni.createVideoContext('myVideo')
-        this.src = this.mvDetailData[0].url
+        this.videoContext = uni.createVideoContext('video')
+        this.src = this.mvDetailDataMU[0].url
+	    this.$mio.mioRoot.showLoading('正在加载视频')
+	    setTimeout(() => {
+		    uni.hideLoading()
+	    }, 10000)
         this.videoContext.play()
         console.log(this.dtTitle)
         console.log(this.videoTitle)

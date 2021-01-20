@@ -1,5 +1,5 @@
 <template>
-    <scroll-view class="full-height" scroll-y>
+    <scroll-view class="full-height" scroll-y v-if="ggkz">
         <!--.test>view>view>view{height: 100%;} ssBackIndex表示是否需要搜索页列表 true不需要template v-slot:detail-->
         <m-search-update :hotKeywordList="['胡歌', '战狼', '小红花', '周星驰']"
                          :hotStatus="true" :ssBackIndex="false" @question="questionListFn"
@@ -15,14 +15,14 @@
                 </view>
             </template>
             <template v-slot:detail>
-                <ad v-if="ptgg" ad-intervals="30" :unit-id="ptgg" style="margin-top: 28rpx"></ad>
+                <ad v-if="ptgg" ad-intervals="30" :unit-id="ptgg" style="margin-top: 68rpx;width: 100vw"></ad>
 
                 <view :key="index" style="display: flex;flex-direction: row;align-items: flex-start;"
                       v-for="(item, index) in answerQuestion">
                     <view class="u-column" @click="goRecord(item.url)">
                         <view class="demo-warter flex justify-between" style="position: relative">
                             <view>{{item.name}}</view>
-                            <view style="background-color: #2979ff;color: white;padding: 5px 10px;border-radius: 10px">测试</view>
+                            <view style="background-color: #2979ff;color: white;padding: 5px 10px;border-radius: 10px">播放</view>
                         </view>
                     </view>
                 </view>
@@ -151,6 +151,7 @@ export default class extends Vue {
     }
 
     async loadOkSearch (keyword) { // ok资源网搜索
+	    this.answerQuestion = []
         this.$mio.mioRoot.showLoading('正在加载')
         const okIndex = await commonGet(`/index.php?m=vod-search&wd=${keyword}&submit=search`)
         uni.hideLoading()

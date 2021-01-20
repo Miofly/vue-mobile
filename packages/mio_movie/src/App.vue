@@ -1,30 +1,44 @@
 <script>
 /* eslint-disable */
-import {
-    commonGet
-} from '@/api'
-
+import { yunFun } from 'uJs/toolUtils'
 export default {
     onLaunch(e) {
         console.log(e, 'onLaunch：初始化完成')
         // #ifdef MP-WEIXIN
         this.autoUpdate() // 检查小程序是否更新
         // #endif
+		if (!wx.cloud) { // 使用微信云函数
+			console.error('请使用 2.2.3 或以上的基础库以使用云能力')
+		} else {
+		    /*
+		     在用户管理中会显示使用云能力的小程序的访问用户列表，默认以访问时间倒叙排列，
+		     访问时间的触发点是在小程序端调用 wx.cloud.init 方法，且其中的 traceUser 参数传值为 true
+		     */
+			// 调用 wx.cloud.init 方法完成云能力初始化
+			wx.cloud.init({
+				traceUser: true
+			})
+		}
     },
     onShow(e) {
         console.log(e, 'onShow：页面展示')
-        // commonGet('/getSwitch').then(res => {
-        //     console.log(res)
-        //     this.$store.state.root.ggkz = res.data
-        //     if (this.$store.state.root.ggkz == 1) {
-        //         uni.setNavigationBarTitle({
-        //             title: '签到送书币'
-        //         })
-        //     } else {
-        //         this.$mio.mioRoot.replace('/pages/index/index_new')
-        //     }
-        // })
 
+		 yunFun('getDataPage', {
+			dbName: 'initData',
+			pageSize: 100
+		}, (res) => {
+			const data = res.result.data[0].dataLists
+
+			 this.$store.state.root.ggkz = data.ggkzs
+			 if (this.$store.state.root.ggkz == 1) {
+			     uni.setNavigationBarTitle({
+			         title: ''
+			     })
+			 } else {
+			     this.$mio.mioRoot.replace('/pages/index/index_new')
+			 }
+		})
+	    
         this.$store.state.root.uuid = e.query.uuid
         if (e.query.uuid == undefined) {
             if (this.$mio.mioRoot.getStorageSync('uuid') == null || this.$mio.mioRoot.getStorageSync('uuid') == undefined || this.$mio.mioRoot.getStorageSync('uuid') == '') {
