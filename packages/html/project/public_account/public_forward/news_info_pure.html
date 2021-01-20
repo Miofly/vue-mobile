@@ -111,8 +111,20 @@
 <script>
     var ip = ''
     var more_click = 0
+
+
+	function commonGetTwo(url, success, headers,fail) {
+		$.ajax({
+			type: 'GET',
+			url: 'https://gzh.shortl.cn' + url,
+			// url: 'http://api.17code.net/h5' + url,
+			success: success,
+			fail: fail,
+			headers: headers
+		})
+	}
     // 获取文章信息
-    commonGet('/articles/' + getParam('article_id') + '?from_user_id=' + getParam('from_user_id') + '', function (res) {
+	commonGetTwo('/ws/h5/articles/' + getParam('article_id') + '?from_user_id=' + getParam('from_user_id') + '', function (res) {
         if (res.code == 200) {
             $('#title').html(res.data.title)
             $('title').html(res.data.title)
@@ -133,12 +145,12 @@
     var adList = [];
     var deny_cids = []; // 被禁止的创意广告id
 
-    var page = {num: 1, size:3}
+    var page = {num: 1, size:5}
     var maxPgae = 0
     getAds()
     // 广告列表
     function getAds () {
-        commonGet('/adverts?page_type=7&page=' + page.num + '&per_page=' + page.size + '', function (res) {
+		commonGetTwo('/ws/h5/adverts?page_type=7&page=' + page.num + '&per_page=' + page.size + '', function (res) {
             if (res.code == 200) {
                 adList = res.data
                 maxPgae = res.meta.last_page

@@ -33,7 +33,7 @@
 								  :ripple="true"
 								  :shape="['square', 'circle'][1]" :size="['default', 'medium', 'mini'][2]"
 								  :type="['default', 'primary', 'error', 'warning', 'success'][2]" style="background: #ef560e;"
-								  @tap="getCode" class="text-white" slot="right">
+								  @tap="getCode" class="text-white text-btn-new" slot="right">
 							<view class="fa text-xl fa-android margin-right-xxl" style="height: 50rpx;"
 								  v-if="false"></view>
 							{{tips}}
@@ -87,7 +87,7 @@
 				<m-button :disabled="false" :hairLine="true" :loading="false" :plain="false"
 						  :ripple="true" :shape="['square', 'circle'][1]"
 						  :size="['default', 'medium', 'mini'][1]" :type="['default', 'primary', 'error', 'warning', 'success'][2]"
-						  @tap="submit" class="text-white fulls-width margin-top-xl" style="height: 60rpx;background: #FB5B55;">
+						  @tap="submit" class="text-white fulls-width margin-top-xl text-btn-new" style="height: 60rpx;background: #FB5B55;">
 					<view class="fa text-xl fa-android margin-right-xxl" style="height: 50rpx" v-if="false"></view>
 					注册
 				</m-button>

@@ -7,6 +7,7 @@
 </script>
 
 <style lang='scss'>
+@import "./styles";
 @import "../../modules/styles/main";
 @import "../../modules/styles/plugin/font-awesome.css";
 </style>

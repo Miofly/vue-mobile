@@ -11,7 +11,7 @@
 					  class="fixed-top  full-width"
 					  v-if="headerFixCon" style="background: white">
 					<view :style="{height: headerHeight + 'rpx'}">
-						<view style="background: rgb(251, 207, 36);padding-bottom: 12%">
+						<view style="background: linear-gradient(154deg, #69ABFE 0%, #3274FE 100%);padding-bottom: 12%">
 
 							<view class="padding-top-xxl padding-left-xl">
 								<view class="fl">
@@ -20,7 +20,7 @@
 										<view class="cu-tag badge" v-if="false">999</view>
 									</view>
 								</view>
-								<view class="margin-top-sm fl margin-left-xl" style="font-size: 16px;font-weight: bolder;color: black;width: 300rpx">
+								<view class="margin-top-sm fl margin-left-xl" style="font-size: 16px;font-weight: bolder;color: white;width: 300rpx">
 									<text>{{$mio.mioRoot.emptyPaading(headerInfos.teamName, '团队')}}</text>
 									<text class="margin-left-lg inline-block text-center" style="font-size: 12px;color: black;width: 120rpx;
 									height: 42rpx;line-height: 42rpx;background: white;border-radius: 14px;">
@@ -29,7 +29,7 @@
 								</view>
 
 								<view class="padding-top-bottom" style="border-radius: 10px;
-								color:black;display: inline-block;margin-left: 42rpx">
+								color:white;display: inline-block;margin-left: 42rpx">
 									{{$mio.mioRoot.emptyPaading(headerInfos.teamSlogan, '正在加载团队口号...')}}
 								</view>
 							</view>

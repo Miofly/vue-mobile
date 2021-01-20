@@ -11,7 +11,7 @@
 					  class="fixed-top text-center full-width"
 					  v-if="headerFixCon" style="background: white">
 					<view :style="{height: headerHeight + 'rpx'}">
-						<view class="full-width text-xl text-center" style="background: rgb(251, 207, 36);height: 100rpx;color: black;line-height: 100rpx;padding: 0!important;">
+						<view class="full-width hxbg text-xl text-center" style="background: linear-gradient(154deg, #69ABFE 0%, #3274FE 100%);height: 100rpx;color: black;line-height: 100rpx;padding: 0!important;">
 							<view @click="$mio.mioRoot.back()" style="line-height: 100rpx"></view>
 							排行
 						</view>

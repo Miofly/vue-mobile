@@ -23,7 +23,7 @@
 						<m-button slot="right" :hairLine="true" :loading="false" :plain="false" :ripple="true" :disabled="false"
 								  :shape="['square', 'circle'][1]" :size="['default', 'medium', 'mini'][2]"
 								  :type="['default', 'primary', 'error', 'warning', 'success'][2]" style="background: #ef560e;"
-								  @tap="getCode" class="text-white" :customStyle="{fontSize: '12px'}">
+								  @tap="getCode" class="text-white text-btn-new" :customStyle="{fontSize: '12px'}">
 							<view class="fa text-xl fa-android margin-right-xxl" style="height: 50rpx" v-if="false"></view>
 							{{tips}}
 						</m-button>
@@ -44,7 +44,7 @@
 				<m-button :hairLine="true" :loading="false" :plain="false" :ripple="true"
 						  :shape="['square', 'circle'][1]" :size="['default', 'medium', 'mini'][1]"
 						  :type="['default', 'primary', 'error', 'warning', 'success'][2]" :disabled="false"
-						  @tap="submit" class="text-white fulls-width margin-top-xl" style="height: 60rpx;background: #FB5B55;">
+						  @tap="submit" class="text-white text-btn-new fulls-width margin-top-xl" style="height: 60rpx;background: #FB5B55;">
 					<view class="fa text-xl fa-android margin-right-xxl" style="height: 50rpx" v-if="false"></view>
 					修改密码
 				</m-button>

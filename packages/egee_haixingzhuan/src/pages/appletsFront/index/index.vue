@@ -8,7 +8,7 @@
 					  class="fixed-top text-center full-width"
 					  v-if="headerFixCon" style="">
 					<view :style="{height: headerHeight + 'rpx'}">
-						<view style="background: rgb(251, 207, 36);">
+						<view style="background: linear-gradient(154deg, #69ABFE 0%, #3274FE 100%);">
 							<view class="flex justify-between text-center" style="padding-bottom: 100rpx">
 								<view class="margin-top-xl margin-left-lower" style="font-size: 14px;color: white;width: 50vw">
 									<view :class="[false ? 'radius' : 'round', ['sm', 'lg', 'xl', ''][2]]" class="cu-avatar"
@@ -76,7 +76,7 @@
 				  style="position: fixed;bottom: 60px;z-index: 999999999;width: 70vw;margin-left: 15vw">
 				<m-button @tap="getShortChain" :hairLine="true" :loading="false" :plain="false" :ripple="true" :disabled="false"
 						  :shape="['square', 'circle'][1]" :size="['default', 'medium', 'mini'][0]"
-						  :type="['default', 'primary', 'error', 'warning', 'success'][2]" style="width: 70vw;height: 100rpx;background:rgb(251, 207, 36);border-radius: 24px;box-shadow: 0px 0px 10px 0px rgba(226, 192, 59, 1);"
+						  :type="['default', 'primary', 'error', 'warning', 'success'][2]" style="width: 70vw;height: 100rpx;background:linear-gradient(154deg, #69ABFE 0%, #3274FE 100%);border-radius: 24px;box-shadow: 0px 0px 10px 0px rgba(226, 192, 59, 1);"
 						  class="text-solid-black" :customStyle="{fontSize: '16px'}">
 					<view class="fa text-xl fa-android margin-right-xxl" style="height: 50rpx" v-if="false"></view>
 					批量获取链接

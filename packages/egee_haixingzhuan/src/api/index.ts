@@ -1,26 +1,37 @@
 import ajax from './ajax'
-
-const appletsPost = (url, data = {}, showLoading = true): any => ajax({
-    // url: `http://new-lz-test.52eja.com:443/api/${url}`,
-    // url: `http://api.xiyouzhuan2020.com/api/${url}`,
-    url: `http://api.xiyouzhuan2020.com/api/${url}`,
-    method: 'POST',
+// #ifdef MP-WEIXIN
+const default_url = process.env.VUE_APP_BASE_API_WX
+// #endif
+const appletsPost = (url, data?, headers?) => ajax({
+    // #ifdef MP-WEIXIN
+    // @ts-ignore
+    // eslint-disable-next-line no-dupe-keys
+    url: default_url + url, // eslint-disable-next-line no-dupe-keys
+    // #endif
+    // #ifdef H5
+    // @ts-ignore
+    // eslint-disable-next-line no-dupe-keys
+    url,
+    // #endif
     data,
-    showLoading
+    headers,
+    method: 'post',
 })
 
-const appletsGet = (url, params, showLoading = true): any => ajax({
-    // url: `http://new-lz-test.52eja.com:443/api/${url}`,
-    // url: `http://api.xiyouzhuan2020.com/api/${url}`,
-    url: `http://api.xiyouzhuan2020.com/api/${url}`,
-    params,
-    getHeader: {
-        'Content-Type': 'json'
-    },
-    showLoading
+const appletsGet = (url, headers?) => ajax({
+    // #ifdef MP-WEIXIN
+    // @ts-ignore
+    url: default_url + url,
+    // #endif
+    // #ifdef H5
+    // @ts-ignore
+    // eslint-disable-next-line no-dupe-keys
+    url,
+    // #endif
+    headers
 })
 
 export {
-    appletsGet,
-    appletsPost,
+	appletsPost,
+	appletsGet
 }

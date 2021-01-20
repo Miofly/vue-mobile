@@ -10,7 +10,7 @@
 		<view class="padding" style="border: 1px solid #eee">
 			<view>今日视频总计费次数：{{total_clickOne}}</view>
 			<scroll-view scroll-x>
-				<lineChart :xData="dataOneHour" :yData="dataOneClick"></lineChart>
+				<m-lineChart :xData="dataOneHour" :yData="dataOneClick"></m-lineChart>
 			</scroll-view>
 		</view>
 		<view class="padding" style="border: 1px solid #eee">
@@ -19,20 +19,20 @@
 				<m-button :hairLine="true" :loading="false" :plain="false" :ripple="true" :disabled="false"
 						  :shape="['square', 'circle'][1]" :size="['default', 'medium', 'mini'][2]"
 						  :type="['default', 'primary', 'error', 'warning', 'success'][2]"
-						  @tap="onShowDatePicker('range')" class="text-white fr" :customStyle="{fontSize: '14px', background: '#ef560e'}">
+						  @tap="onShowDatePicker('range')" class="text-white fr text-btn-new" :customStyle="{fontSize: '14px', background: '#ef560e'}">
 					<view class="fa text-xl fa-calendar-o margin-right-xxl " style="height: 50rpx" v-if="false"></view>
 					选择日期范围
 				</m-button>
 			</view>
 			<scroll-view scroll-x>
-				<lineChart v-if="lineStatus" :width="lineWidth" :xData="dataTwoHour" :yData="dataTwoClick"></lineChart>
+				<m-lineChart v-if="lineStatus" :width="lineWidth" :xData="dataTwoHour" :yData="dataTwoClick"></m-lineChart>
 			</scroll-view>
 		</view>
 
 		<m-calendar v-model="showPicker" ref="calendar" @change="change" :mode="['date', 'range'][1]"
 					start-text="开始" end-text="结束" range-color="#2979ff" active-bg-color="#2979ff"
 					:minDate="''"
-					:maxDate="$mio.miotime.dateShift({ time: 0, showDate: true, showTime: false, noSign: false, noSpace: false, monthNum: 'no', showYear: true, china: false })"
+					:maxDate="$mio.mioTime.dateShift({ time: 0, showDate: true, showTime: false, noSign: false, noSpace: false, monthNum: 'no', showYear: true, china: false })"
 					range-bg-color="rgba(41,121,255,0.13)" btn-type="primary">
 		</m-calendar>
 	</view>

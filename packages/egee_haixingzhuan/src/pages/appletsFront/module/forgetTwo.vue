@@ -24,7 +24,7 @@
 						<m-button slot="right" :hairLine="true" :loading="false" :plain="false" :ripple="true" :disabled="false"
 								  :shape="['square', 'circle'][1]" :size="['default', 'medium', 'mini'][2]"
 								  :type="['default', 'primary', 'error', 'warning', 'success'][2]" style="background: #ef560e;"
-								  @tap="getCode" class="text-white" :customStyle="{fontSize: '12px'}">
+								  @tap="getCode" class="text-white text-btn-new" :customStyle="{fontSize: '12px'}">
 							<view class="fa text-xl fa-android margin-right-xxl" style="height: 50rpx" v-if="false"></view>
 							{{tips}}
 						</m-button>
@@ -45,7 +45,7 @@
 				<m-button :hairLine="true" :loading="false" :plain="false" :ripple="true"
 						  :shape="['square', 'circle'][1]" :size="['default', 'medium', 'mini'][1]"
 						  :type="['default', 'primary', 'error', 'warning', 'success'][2]" :disabled="false"
-						  @tap="submit" class="text-white fulls-width margin-top-xl" style="height: 60rpx;background: #FB5B55;">
+						  @tap="submit" class="text-white fulls-width margin-top-xl text-btn-new" style="height: 60rpx;background: #FB5B55;">
 					<view class="fa text-xl fa-android margin-right-xxl" style="height: 50rpx" v-if="false"></view>
 					修改密码
 				</m-button>
@@ -55,10 +55,10 @@
 									 changeText="X秒重新获取" endText="再次获取" ref="uCode"
 									 startText="获取验证码"></m-verification-code>
 
-				<view class="flex justify-between margin-top-xl padding-left-right-sm">
-					<text class="textNew-red" @tap="$mio.mioRoot.push('/pages/appletsFront/user/login')">已有账号</text>
-					<text class="textNew-red" @tap="$mio.mioRoot.push('/pages/appletsFront/user/reg')">注册账号</text>
-				</view>
+<!--				<view class="flex justify-between margin-top-xl padding-left-right-sm">-->
+<!--					<text class="textNew-red" @tap="$mio.mioRoot.push('/pages/appletsFront/user/login')">已有账号</text>-->
+<!--					<text class="textNew-red" @tap="$mio.mioRoot.push('/pages/appletsFront/user/reg')">注册账号</text>-->
+<!--				</view>-->
 			</view>
 		</view>
 	</view>

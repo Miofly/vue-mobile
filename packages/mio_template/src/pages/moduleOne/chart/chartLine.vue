@@ -13,7 +13,7 @@
 <script lang="ts">
 	// #ifdef H5
     import { Component, Vue } from 'vue-property-decorator'
-    import lineChart from 'zj/lineChart/lineChart.vue'
+    import lineChart from 'zj/m-lineChart/lineChart.vue'
 
     @Component({
         components: {

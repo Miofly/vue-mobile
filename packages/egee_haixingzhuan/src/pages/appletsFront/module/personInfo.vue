@@ -8,7 +8,7 @@
 			<view v-for="(item, index) in lists" :key="index" class="cu-item">
 				<view class="content padding-tb-sm">
 					<view>
-						<text class="margin-left" style="color: #ef560e;">{{ item.name }}：</text>
+						<text class="margin-left" >{{ item.name }}：</text>
 					</view>
 				</view>
 

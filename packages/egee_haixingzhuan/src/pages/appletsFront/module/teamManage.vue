@@ -27,7 +27,7 @@
 			<m-button :hairLine="true" :loading="false" :plain="false" :ripple="true" :disabled="false"
 					  :shape="['square', 'circle'][1]" :size="['default', 'medium', 'mini'][0]"
 					  :type="['default', 'primary', 'error', 'warning', 'success'][2]" style="background: #ef560e;"
-					  @tap="giveSlogan" class="text-white margin-top-xxl" :customStyle="{fontSize: '14px'}">
+					  @tap="giveSlogan" class="text-white margin-top-xxl text-btn-new" :customStyle="{fontSize: '14px'}">
 				<view class="fa text-xl fa-android margin-right-xxl" style="height: 50rpx" v-if="false"></view>
 				发布
 			</m-button>
@@ -37,7 +37,7 @@
 			团队今日视频总计费次数：{{total_clickOne}}
 		</view>
 		<scroll-view scroll-x>
-			<lineChart :xData="dataOneHour" :yData="dataOneClick"></lineChart>
+			<m-lineChart :xData="dataOneHour" :yData="dataOneClick"></m-lineChart>
 		</scroll-view>
 
 	</view>

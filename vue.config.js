@@ -134,6 +134,13 @@ module.exports = {
                     '^/mio': ''
                 }
             },
+			'/hxz': {
+				target: 'http://api.lezhuan2020.cn/api',
+				changeOrigin: true, // 是否跨域
+				pathRewrite: {
+					'^/hxz': ''
+				}
+			},
 			'/tp': {
 				target: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la',
 				changeOrigin: true, // 是否跨域
