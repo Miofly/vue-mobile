@@ -48,7 +48,7 @@
 			</view>
 		</view>
 
-		<scroll-view scroll-y style="height: 100vw" class="margin-top-twenty padding-bottom-twenty">
+		<scroll-view scroll-y style="height: 100vw" class="margin-top-twenty">
 			<view class="cu-list menu  padding-bottom-thirty" :class="[false?'sm-border':'']">
 				<view @tap="listFn(item.name)" v-for="(item, index) in ($mio.mioRoot.getLocalData('is_team_captain') == 1 ? menuList : menuLists)" :key="index" class="cu-item">
 					<view class="content padding-tb-sm">
@@ -62,26 +62,28 @@
 			</view>
 		</scroll-view>
 
-
-		<modal :closeShow="true" :closeSize="40" :descSize="30" :maskClosable="true" :status.sync="status"
-			   :titleSize="40" desc="" descColor="#999d9c" title="退出后将无法继续转发赚钱" titleColor="black" width="90vw">
-			<view class="text-center margin-top-xxl flex justify-around">
-				<m-button :hairLine="true" :loading="false" :plain="false" :ripple="true" :disabled="false"
-						  :shape="['square', 'circle'][1]" :size="['default', 'medium', 'mini'][1]"
-						  :type="['default', 'primary', 'error', 'warning', 'success'][2]"
-						  @tap="status = false" class="text-white fulls-width margin-top-xxl" style="height: 60rpx;background: #FB5B55;">
-					<view class="fa text-xl fa-android margin-right-xxl" style="height: 50rpx" v-if="false"></view>
-					取消
-				</m-button>
-				<m-button :hairLine="true" :loading="false" :plain="false" :ripple="true" :disabled="false"
-						  :shape="['square', 'circle'][1]" :size="['default', 'medium', 'mini'][1]"
-						  :type="['default', 'primary', 'error', 'warning', 'success'][2]"
-						  @tap="handClick" class="text-white fulls-width margin-top-xxl margin-left-xxl" style="height: 60rpx">
-					<view class="fa text-xl fa-android margin-right-xxl" style="height: 50rpx" v-if="false"></view>
-					确认
-				</m-button>
-			</view>
-		</modal>
+	    <m-modal :closeShow="true" closeColor="black" bgColor="white" :closeSize="40" :descSize="30" :maskClosable="true" :status.sync="status"
+	    	   title="退出后将无法继续转发赚钱" desc="确定退出吗？" modalTop="0rpx" :titleSize="40" descColor="#999d9c" titleColor="black"
+	    	   width="90vw" padding="20" radius="30rpx" :showTitle="true" :showContent="true">
+	    	<view class="text-center">
+	    		<view class="flex justify-around  padding-bottom">
+	    			<m-button :hairLine="true" :loading="false" :plain="false" :ripple="true" :disabled="false"
+	    					  :shape="['square', 'circle'][1]" :size="['default', 'medium', 'mini'][1]"
+	    					  :type="['default', 'primary', 'error', 'warning', 'success'][2]" style=""
+	    					  @click="handClick" class="text-white" :customStyle="{fontSize: '14px'}">
+	    				<view class="fa text-xl fa-android margin-right-xxl" style="height: 50rpx" v-if="false"></view>
+	    				确认
+	    			</m-button>
+	    			<m-button :hairLine="true" :loading="false" :plain="false" :ripple="true" :disabled="false"
+	    					  :shape="['square', 'circle'][1]" :size="['default', 'medium', 'mini'][1]"
+	    					  :type="['default', 'primary', 'error', 'warning', 'success'][1]" style=""
+	    					  @click="status = false" class="text-white" :customStyle="{fontSize: '14px'}">
+	    				<view class="fa text-xl fa-android margin-right-xxl" style="height: 50rpx" v-if="false"></view>
+	    				取消
+	    			</m-button>
+	    		</view>
+	    	</view>
+	    </m-modal>
     </view>
 </template>
 
@@ -184,6 +186,12 @@
                     url: '/pages/appletsFront/module/teamManage'
                 })
             }
+	        if (name == '余额提现') {
+		        // this.router.push({name: 'teamManage'})
+		        uni.navigateTo({
+			        url: '/pages/appletsFront/module/with-draw'
+		        })
+	        }
         }
 	}
 </script>

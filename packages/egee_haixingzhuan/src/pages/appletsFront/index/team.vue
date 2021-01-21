@@ -73,7 +73,7 @@
 							<image src="/static/images/lbVideo/paihangbang.png" style="width: 72rpx;height: 100rpx">
 							</image>
 						</view>
-						<m-swiperTab :fullWidth="leftCon == false && rightCon == false ? '100vw' : '70vw'" :isBold="true"
+						<swiperTab :fullWidth="leftCon == false && rightCon == false ? '100vw' : '70vw'" :isBold="true"
 								   :tabHeight="tabHeight - 12" :tabLists.sync="tabLists"
 								   :tagRight="20" :tagStatus="true" :tagTop="0" :underLineHeight="10"
 								   :underLineWidth="50 + '%'" activeColor="black" activeSize="16px"
@@ -82,7 +82,7 @@
 								   lineRadius="10px"
 								   ref="swiperTab" tagBg="red" textSize="12px"
 								   v-model="tabClick" style="">
-						</m-swiperTab>
+						</swiperTab>
 						<!--tab栏右侧需要的内容-->
 						<view v-if="rightCon">
 							<image src="/static/images/lbVideo/paihangbang.png"

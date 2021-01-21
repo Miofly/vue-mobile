@@ -109,6 +109,15 @@
         },
         {
             "path": "pages/appletsFront/module/with-draw-record"
+        },
+        {
+            "path": "pages/appletsFront/module/with-draw"
+        },
+        {
+            "path": "pages/appletsFront/module/with-draw-record"
+        },
+        {
+            "path": "pages/appletsFront/module/with-draw-verification"
         }
     ],
     "globalStyle": {
@@ -116,7 +125,7 @@
         // #ifdef H5
         "navigationStyle": "custom",
         // #endif
-        "navigationBarTitleText": "西游转",
+        "navigationBarTitleText": "海星转",
         "navigationBarBackgroundColor": "#F8F8F8",
         "backgroundColor": "#F8F8F8"
     },
