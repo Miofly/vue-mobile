@@ -1,13 +1,13 @@
 <template>
 	<view class="container">
-		<swiper :circular="circular" :duration="duration" :easing-function="easingFunction"
+		<swiper :circular="true" :duration="duration" :easing-function="easingFunction"
 		        @animationfinish="animationfinish" class="video-swiper"
 		        current="1" vertical>
 			<!-- curQueue 循环会导致video重新插入，objectFit 不可变更 -->
 			<swiper-item :key="index" v-for="(item, index) in curQueue" >
 				<view>{{item.id}}{{item.url}}</view>
 				<video ref="myVideo" :data-id="item.id" :data-index="index" :id="'video_' + index" :loop="loop"
-				       preload="metadata" :controls="controls"
+				       preload="metadata" :controls="controls" autoplay
 				       :object-fit="item.objectFit || 'cover'" :src="`${item.url}`" class="video_item" >
 				</video>
 			</swiper-item>
@@ -23,14 +23,14 @@ export default {
 			nextQueue: [],
 			prevQueue: [],
 			curQueue: [],
-			
+
 			circular: false,
 			last: 1,
 			change: -1,
-			
+
 			invalidUp: 0,
 			invalidDown: 0,
-			
+
 			videoContexts: [],
 
 			controls: true,
@@ -45,8 +45,8 @@ export default {
 			handler: function observer() {
 				console.log(arguments)
 				const newVal = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-				console.log('下一个视频:', this.$mio.mioRoot.gsh(newVal))
-				this.videoListChangedFun1(newVal);
+				console.log('视频列表', this.$mio.mioRoot.gsh(newVal))
+				this.videoListChange(newVal);
 			},
 			immediate: false,
 			deep: true
@@ -74,21 +74,17 @@ export default {
 		]
 	},
 	methods: {
-		videoListChangedFun1 (newVal) {
-			var _this = this;
-
-			var data = this;
-			newVal.forEach(function (item) {
-				data.nextQueue.push(item);
-			});
-			// console.log('this.nextQueue666', _this.nextQueue)
-			if (data.curQueue.length === 0) {
-				_this.curQueue = _this.nextQueue.splice(0, 3)
-				_this.playCurrent(1);
-				// console.log('this.curQueue1', this.curQueue)
+		videoListChange (newVal) {
+			newVal.forEach((item) => {
+				this.nextQueue.push(item);
+			})
+			if (this.curQueue.length === 0) {
+				this.curQueue = this.nextQueue.splice(0, 3)
+				for (const item of this.curQueue) {
+				    console.log('curQueue', item.id)
+				}
+				this.playCurrent(1)
 			}
-			// console.log('this.nextQueue2', _this.nextQueue)
-			// console.log('this.curQueue3', _this.curQueue)
 		},
 		animationfinish (e) {
 			console.log('滑到的索引：', e.detail.current)
@@ -103,7 +99,7 @@ export default {
 					var change = (this.change + 1) % 3;
 					var add = this.nextQueue.shift();
 					var remove = this.curQueue[change];
-					console.log(add)
+					console.log('add', this.$mio.mioRoot.gsh(add))
 					if (add) {
 						this.prevQueue.push(remove);
 						this.curQueue[change] = add;
@@ -116,7 +112,7 @@ export default {
 				}
 			}
 			if (direction == 'down') {
-			
+
 			}
 		},
 		animationfinishBak (e) {
@@ -141,9 +137,9 @@ export default {
 			// 	}
 			// });
 			// var direction = diff === 1 || diff === -2 ? 'up' : 'down';
-	 
+
 			if (direction === 'up') {
-				
+
 				for (let i = 0; i < curQueue.length; i++) {
 					console.log('pre', curQueue[i].id, curQueue[i].url)
 				}
