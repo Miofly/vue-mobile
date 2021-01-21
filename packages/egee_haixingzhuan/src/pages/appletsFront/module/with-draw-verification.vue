@@ -2,7 +2,7 @@
 	<view class="bg-white">
 		<view class="full-width text-xl text-center text-bold text-white"
 		      style="height: 100rpx;line-height: 100rpx;padding: 0!important;position: fixed;top: 0;left: 0;z-index: 999999;background: #E54D42;">
-			<view @click="tu.back()" class="fa fa-angle-left fa-2x fl margin-left text-white"
+			<view @click="$mio.mioRoot.back()" class="fa fa-angle-left fa-2x fl margin-left text-white"
 			      style="line-height: 100rpx"></view>
 			提现信息验证
 		</view>
@@ -99,7 +99,7 @@ export default {
 		this.isNeed = option.isNeed
 	},
 	async created(option) {
-		const {data} = await commonPost('/my/assets_auth')
+		const {data} = await appletsPost('/my/assets_auth')
 		this.name = data.name
 		this.mobile = data.mobile
 		this.license = data.license
@@ -153,7 +153,7 @@ export default {
 				return
 			}
 
-			const {data, code} = await commonPost('/my/handle_assets_auth',{name:this.name, mobile: this.mobile, license: this.license, bank: this.bank})
+			const {data, code} = await appletsPost('/my/handle_assets_auth',{name:this.name, mobile: this.mobile, license: this.license, bank: this.bank})
 			if (code == 200) {
 				if (this.isNeed == 1) {
 					location.href = data.contract_url

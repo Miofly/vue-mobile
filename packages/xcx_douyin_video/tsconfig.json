@@ -1,0 +1,40 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        // 解析非相对模块名的基准目录。
+        "paths": {
+            // 指定特殊模块的路径 配合 baseUrl 使用
+            "@/*": [
+                "./src/*"
+            ],
+            "uJs/*": [
+                "../modules/common/*"
+            ],
+            "zj/*": [
+                "../modules/components/*"
+            ],
+            "json/*": [
+                "../modules/static/json/*"
+            ],
+            "ys/*": [
+                "../modules/styles/*"
+            ]
+        },
+        // 编译过程中需要引入的库文件的列表
+        "lib": [
+            "esnext",
+            "dom",
+            "dom.iterable",
+            "scripthost",
+            "es2015",
+            "es5"
+        ]
+    },
+    "include": [
+        "src/*",
+        "src/*/*",
+        "../../node_modules/miniprogram-api-typings/types/wx/lib.wx.api.d.ts",
+        "../../node_modules/@dcloudio/types/uni-app/uni.d.ts"
+    ]
+}

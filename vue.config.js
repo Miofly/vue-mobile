@@ -135,7 +135,14 @@ module.exports = {
                 }
             },
 			'/hxz': {
-				target: 'http://api.lezhuan2020.cn/api',
+				target: 'http://api.hxz2020.com',
+				changeOrigin: true, // 是否跨域
+				pathRewrite: {
+					'^/hxz': ''
+				}
+			},
+			'/hxz': {
+				target: 'http://api.hxz2020.com',
 				changeOrigin: true, // 是否跨域
 				pathRewrite: {
 					'^/hxz': ''

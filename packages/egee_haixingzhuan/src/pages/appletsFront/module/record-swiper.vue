@@ -122,10 +122,8 @@ export default class mescrollSwiper extends mixins(scrollMixins) {
 	}
 
 	async upCallback (page) {
-		this.nowType = this.tabLists[this.i].type // 获取当前点击的tab的类型
 		const pageNum = page.num // 页码
 		const pageSize = page.size // 页长
-		console.log('数据类型：', this.nowType, '|', '页码：', pageNum, '|', '页长：', pageSize)
 
 		const data = await appletsPost('/my/withdraw_list', { status: this.i, page: page.num, per_page: page.size}) // 默认数据
 		const curPageData = data.data.data

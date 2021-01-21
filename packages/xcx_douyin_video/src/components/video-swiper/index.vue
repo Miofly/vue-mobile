@@ -7,11 +7,12 @@
 			<swiper-item :key="index" v-for="(item, index) in curQueue">
 				<view>{{index}}{{item.url}}</view>
 				<view>{{item.id}}</view>
-				<video :data-id="item.id" :data-index="index" :id="'video_' + index" :loop="loop"
-					   :object-fit="item.objectFit || 'cover'" :src="item.url" @ended="onEnded" @error="onError"
+				<video ref="myVideo" :data-id="item.id" :data-index="index" :id="'video_' + index" :loop="loop"
+				       preload="metadata"
+				       :object-fit="item.objectFit || 'cover'" :src="`${item.url}#=30`" @ended="onEnded" @error="onError"
+				       :controls="controls"
 					   @loadedmetadata="onLoadedMetaData" @pause="onPause" @play="onPlay" @progress="onProgress"
-					   @timeupdate="onTimeUpdate" @waiting="onWaiting" class="video_item" controls
-					   enable-play-gesture enable-progress-gesture show-center-play-btn="false">
+					   @timeupdate="onTimeUpdate" @waiting="onWaiting" class="video_item" >
 				</video>
 			</swiper-item>
 		</swiper>
@@ -37,6 +38,10 @@
 
         components: {},
         props: {
+			controls: {
+				type: Boolean,
+				default: true
+			},
             duration: {
                 type: Number,
                 default: 500
@@ -67,11 +72,17 @@
             }
         },
         beforeMount: function attached() {
-            this._videoContexts = [uni.createVideoContext('video_0', this), uni.createVideoContext('video_1', this), uni.createVideoContext('video_2', this)];
+        	setInterval(() => {
+        	    console.log(this.$refs.myVideo)
+        	}, 2000)
+            this._videoContexts = [
+            	uni.createVideoContext('video_0', this),
+	            uni.createVideoContext('video_1', this),
+	            uni.createVideoContext('video_2', this)
+            ];
         },
         methods: {
             videoListChangedFun1: function _videoListChanged1(newVal) {
-                console.log(newVal, '121212121212')
                 var _this = this;
 
                 var data = this;

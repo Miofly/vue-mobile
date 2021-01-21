@@ -77,11 +77,11 @@ function ajax (config: AxiosRequestConfig): any {
             promise = sourceAxios({ method: 'GET', url, headers })
         } else {
             // 发送post请求
-            if (headers['content-type'] == 'application/x-www-form-urlencoded') { // eslint-disable-line
-                promise = sourceAxios({ method: 'POST', url, data: Qs.stringify(data), headers })
-            } else {
+            // if (headers['content-type'] == 'application/x-www-form-urlencoded') { // eslint-disable-line
+            //     promise = sourceAxios({ method: 'POST', url, data: Qs.stringify(data), headers })
+            // } else {
                 promise = sourceAxios({ method: 'POST', url, data, headers })
-            }
+            // }
         }
 
         promise.then((response) => {

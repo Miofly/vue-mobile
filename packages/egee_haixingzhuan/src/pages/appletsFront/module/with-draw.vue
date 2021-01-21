@@ -61,7 +61,7 @@
 						<image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
 						       src="/static/images/lz/zhifubao@2x.png"
 						       style="width: 60rpx"></image>
-						<text style="vertical-align: top;" class="margin-left-xxl">{{ tu.getLocalData('realName') }} {{alipay_account}}</text>
+						<text style="vertical-align: top;" class="margin-left-xxl">{{ $mio.mioRoot.getLocalData('realName') }} {{alipay_account}}</text>
 					</view>
 					<view @tap="modalStatusThree=true" style="background: #E54D42;text-align: center;color: white;border-radius: 16px;width: 218rpx;height: 56rpx;line-height: 56rpx">更改账号</view>
 				</view>
@@ -97,7 +97,33 @@
 				       style="width: 430rpx;height: 92rpx"></image>
 			</view>
 
-			<m-modal id="mone" :custom="true" :show="modalStatus" content="这是内容" title="标题" style="padding: 0!important;">
+<!--			<m-modal :closeShow="true" closeColor="black" bgColor="white" :closeSize="40" :descSize="30" :maskClosable="true" :status.sync="modalStatus"-->
+<!--				   title="这是标题" desc="这是描述" modalTop="0rpx" :titleSize="40" descColor="#999d9c" titleColor="black"-->
+<!--				   width="90vw" padding="20" radius="30rpx" :showTitle="false" :showContent="true">-->
+<!--				<view class="text-center margin-top-xxl">-->
+<!--					<view>-->
+<!--						-->
+<!--					</view>-->
+<!--					<view class="flex justify-around margin-top-xl">-->
+<!--						<m-button :hairLine="true" :loading="false" :plain="false" :ripple="true" :disabled="false"-->
+<!--								  :shape="['square', 'circle'][1]" :size="['default', 'medium', 'mini'][1]"-->
+<!--								  :type="['default', 'primary', 'error', 'warning', 'success'][2]" style=""-->
+<!--								  @click="modalStatus = false" class="text-white" :customStyle="{fontSize: '14px'}">-->
+<!--							<view class="fa text-xl fa-android margin-right-xxl" style="height: 50rpx" v-if="false"></view>-->
+<!--							确认-->
+<!--						</m-button>-->
+<!--						<m-button :hairLine="true" :loading="false" :plain="false" :ripple="true" :disabled="false"-->
+<!--								  :shape="['square', 'circle'][1]" :size="['default', 'medium', 'mini'][1]"-->
+<!--								  :type="['default', 'primary', 'error', 'warning', 'success'][1]" style=""-->
+<!--								  @click="modalStatus = false" class="text-white" :customStyle="{fontSize: '14px'}">-->
+<!--							<view class="fa text-xl fa-android margin-right-xxl" style="height: 50rpx" v-if="false"></view>-->
+<!--							取消-->
+<!--						</m-button>-->
+<!--					</view>-->
+<!--				</view>-->
+<!--			</m-modal>-->
+			
+			<m-modal id="mone" :closeShow="false" :custom="true" :status.sync="modalStatus" :showTitle="false" content="这是内容" :showContent="false" title="标题" style="padding: 0!important;">
 				<view style="height: 164rpx;line-height: 164rpx;color: #333333;font-weight: bold;font-size: 18px;text-align: center">您余额不足，快去赚钱吧～</view>
 				<view style="width: 100%;height: 2px;background: #eee;"></view>
 				<view @tap="modalStatus=false" style="height: 100rpx;text-align: center;color: #E54D42;font-size: 18px;line-height: 100rpx">
@@ -105,7 +131,8 @@
 				</view>
 			</m-modal>
 
-			<m-modal class="mtwo" :custom="true" :show="modalStatusTwo" content="这是内容" title="标题" style="padding: 0px!important;position: relative">
+			
+			<m-modal class="mtwo" :closeShow="false" :custom="true" :status.sync="modalStatusTwo" :showTitle="false" :showContent="false" content="这是内容" title="标题" style="padding: 0px!important;position: relative">
 				<view style="height: 164rpx;line-height: 192rpx;color: #333333;font-weight: bold;font-size: 18px;text-align: center">绑定账户</view>
 				<view style="height: 100rpx" class="margin-top-xl">
 					<view class="fl text-red" style="font-size: 16px;color: #333333;width: 184rpx;height: 80rpx;line-height: 80rpx;margin-left: 36rpx;font-weight: bold">支付宝账户:</view>
@@ -131,7 +158,7 @@
 				</view>
 			</m-modal>
 
-			<m-modal class="mtwo" :custom="true" :show="modalStatusThree" content="这是内容" title="标题" style="padding: 0px!important;position: relative">
+			<m-modal class="mtwo" :closeShow="false" :custom="true" :status.sync="modalStatusThree" :showTitle="false" :showContent="false" content="这是内容" title="标题" style="padding: 0px!important;position: relative">
 				<view style="height: 164rpx;line-height: 192rpx;color: #333333;font-weight: bold;font-size: 18px;text-align: center">更改账户</view>
 				<view style="height: 100rpx" class="margin-top-xl">
 					<view class="fl text-red" style="font-size: 16px;color: #333333;width: 184rpx;height: 80rpx;line-height: 80rpx;margin-left: 36rpx;font-weight: bold">支付宝账户:</view>
@@ -157,7 +184,7 @@
 				</view>
 			</m-modal>
 
-			<m-modal :custom="true" :show="modalStatusFour" content="这是内容" title="确认提现？" style="padding: 0!important;">
+			<m-modal :custom="true" :closeShow="false" :status.sync="modalStatusFour" :showTitle="false" :showContent="false" content="这是内容" title="确认提现？" style="padding: 0!important;">
 				<view style="height: 164rpx;line-height: 164rpx;color: #333333;font-weight: bold;font-size: 18px;text-align: center">确认提现？</view>
 				<view style="width: 100%;height: 1px;background: #eee;"></view>
 				<view class="flex" style="height: 100rpx;text-align: center;color: #E54D42;font-size: 18px;line-height: 100rpx">
@@ -170,7 +197,7 @@
 				</view>
 			</m-modal>
 
-			<m-modal id="mfive" :custom="true" :show="modalStatusFive" content="这是内容" title="确认提现？" style="padding: 0!important;">
+			<m-modal id="mfive" :closeShow="false" :custom="true" :status.sync="modalStatusFive" :showTitle="false" :showContent="false" content="这是内容" title="确认提现？" style="padding: 0!important;">
 				<view style="height: 164rpx;line-height: 164rpx;color: #333333;font-weight: bold;font-size: 18px;text-align: center">
 					当前操作需跳转至
 					<text>电子合同签署页面</text>
@@ -264,7 +291,7 @@ export default {
 	methods: {
 		infoUpdate () {
 			uni.navigateTo({
-				url: '/pages/index/module/with-draw-verification'
+				url: '/pages/appletsFront/module/with-draw-verification'
 			})
 		},
 		async goWithDraw () {
@@ -300,7 +327,7 @@ export default {
 					// this.alipay_account_status = data.alipay_account_status
 					if (this.need_auth) {
 						uni.navigateTo({
-							url: '/pages/index/module/with-draw-verification?isNeed=1'
+							url: '/pages/appletsFront/module/with-draw-verification?isNeed=1'
 						})
 					} else {
 						this.modalStatusFour = true
@@ -313,7 +340,7 @@ export default {
 		goSigned () {
 			this.modalStatusFive = false
 			uni.navigateTo({
-				url: '/pages/index/module/with-draw-verification?isNeed=1'
+				url: '/pages/appletsFront/module/with-draw-verification?isNeed=1'
 			})
 		},
 		async bindAlipay () {
@@ -343,7 +370,7 @@ export default {
 		},
 		goRecord () {
 			uni.navigateTo({
-				url: '/pages/index/module/with-draw-record'
+				url: '/pages/appletsFront/module/with-draw-record'
 			})
 		},
 		cancelThree () {
@@ -354,8 +381,8 @@ export default {
 			this[val] = ''
 		},
 		goWeixin () {
-			this.tu.getClipboardData(this.wechat)
-			this.tu.jumpWX()
+			this.$mio.mioRoot.copyText(this.wechat)
+			this.$mio.mioRoot.jumpWX()
 		},
 		chooseMoney (index) {
 			this.moneyIndex = index
@@ -364,12 +391,12 @@ export default {
 		onUnLoad () {
 			// this.router.replace({name: 'lz_home'})
 			uni.redirectTo({
-				url: '/pages/index/index/home'
+				url: '/pages/appletsFront/home'
 			});
 		},
 		testOne () {
 			uni.redirectTo({
-				url: '/pages/index/index/home'
+				url: '/pages/appletsFront/home'
 			});
 		},
 		test (e) {

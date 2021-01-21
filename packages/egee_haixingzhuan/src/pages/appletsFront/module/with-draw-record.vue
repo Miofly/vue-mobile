@@ -2,7 +2,7 @@
 	<view class="full-height" id="parent">
 		<view class="full-width text-xl text-center"
 		      style="position: fixed;top: 0;left: 0;height: 100rpx;line-height: 100rpx;padding: 0!important;background: #E54D42;color: white;z-index: 999999999">
-			<view @click="tu.back()" class="fa fa-angle-left fa-2x fl margin-left" style="line-height: 100rpx"></view>
+			<view @click="$mio.mioRoot.back()" class="fa fa-angle-left fa-2x fl margin-left" style="line-height: 100rpx"></view>
 			提现记录
 			<app-tabs v-model="tabIndex" :tabs="tabs" :fixed="false"></app-tabs>
 		</view>

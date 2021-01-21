@@ -11,7 +11,7 @@ import { AxiosRequestConfig } from './types'
 const Qs = require('qs')
 
 // axios 默认配置
-axios.defaults.baseURL = `${process.env.VUE_APP_BASE_API}/api` // 优先级比axios实例要低
+axios.defaults.baseURL = process.env.VUE_APP_BASE_API // 优先级比axios实例要低
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8'
 axios.defaults.withCredentials = false // 允许axios请求携带cookie等凭证
 
@@ -19,11 +19,15 @@ axios.defaults.withCredentials = false // 允许axios请求携带cookie等凭证
 const instanceOne = axios.create()
 instanceOne.defaults.baseURL = '' // 实例的baseurl
 
-axios.interceptors.request.use(config => {
-	const token = localStorage.getItem('TOKEN_KEY')
-	config.headers.Authorization = `${token}`
-	return config
-}, error => Promise.reject(error))
+axios.interceptors.request.use(
+    config =>
+        // #ifdef H5
+        // const token = localStorage.getItem('TOKEN_KEY')
+        // config.headers.Authorization = `${token}`
+        // #endif
+        config
+    , error => Promise.reject(error)
+)
 
 // 响应拦截器
 axios.interceptors.response.use(response => {
@@ -34,16 +38,16 @@ axios.interceptors.response.use(response => {
             localStorage.removeItem('TOKEN_KEY')
             setTimeout(() => {
                 uni.reLaunch({
-                    url: '/pages/appletsFront/user/login'
+                    url: '/pages/moduleOne/appletsFront/user/login'
                 })
                 // Router.replaceAll({name: 'login'})
-            }, 500)
+            }, 2000)
         } else {
             console.log(response.data.message)
             root.showToast(response.data.message)
         }
     }
-    response.data.data.token && localStorage.setItem('TOKEN_KEY', response.data.data.token)
+    // response.data.data.token && localStorage.setItem('TOKEN_KEY', response.data.data.token)
     // #endif
     return response
 }, (error) => {
@@ -73,11 +77,11 @@ function ajax (config: AxiosRequestConfig): any {
             promise = sourceAxios({ method: 'GET', url, headers })
         } else {
             // 发送post请求
-            // if (headers['content-type'] == 'application/x-www-form-urlencoded') { // eslint-disable-line
-            //     promise = sourceAxios({ method: 'POST', url, data: Qs.stringify(data), headers })
-            // } else {
-                promise = sourceAxios({ method: 'POST', url, data, headers })
-            // }
+	        // if (headers['content-type'] == 'application/x-www-form-urlencoded') { // eslint-disable-line
+	        //     promise = sourceAxios({ method: 'POST', url, data: Qs.stringify(data), headers })
+	        // } else {
+	        promise = sourceAxios({ method: 'POST', url, data, headers })
+	        // }
         }
 
         promise.then((response) => {
