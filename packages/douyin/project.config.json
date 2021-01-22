@@ -1,0 +1,66 @@
+{
+  "description": "项目配置文件。",
+  "packOptions": {
+    "ignore": []
+  },
+  "setting": {
+    "urlCheck": true,
+    "es6": true,
+    "enhance": false,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": true,
+    "coverView": true,
+    "nodeModules": true,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": false,
+    "useMultiFrameRuntime": false,
+    "useApiHook": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "useIsolateContext": true,
+    "useCompilerModule": true,
+    "userConfirmedUseCompilerModuleSwitch": false,
+    "packNpmManually": false,
+    "packNpmRelationList": []
+  },
+  "compileType": "miniprogram",
+  "libVersion": "2.9.4",
+  "appid": "wx334807f17dfcbd1f",
+  "projectname": "%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%8B%93%E5%B1%95%E7%BB%84%E4%BB%B6%E5%BA%93",
+  "isGameTourist": false,
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "condition": {
+    "miniprogram": {
+      "current": -1,
+      "list": [
+        {
+          "id": -1,
+          "name": "example/video-swiper/video-swiper",
+          "pathName": "example/video-swiper/video-swiper"
+        },
+        {
+          "id": -2,
+          "name": "example/emoji/emoji",
+          "pathName": "example/emoji/emoji"
+        },
+        {
+          "id": -3,
+          "name": "example/index-list/index-list",
+          "pathName": "example/index-list/index-list"
+        }
+      ]
+    }
+  }
+}
