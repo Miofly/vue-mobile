@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html style="width: 100%;height: 100%">
+<title></title>
+<meta charset="UTF-8"/>
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no"/>
+<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+<link rel="stylesheet" href="./css/back_ret2.css"/>
+<script src="./js/jquery.js"></script>
+<script src="./js/ad.js?v=10005"></script>
+<script src="./js/EventEmitter.min.js"></script>
+<script src="./js/art-template.js"></script>
+<script src="./js/ret.js"></script>
+<script>
+	@php echo $bd_script; @endphp
+
+	var title = "{{$title}}";
+	$('title').html(title);
+
+	function gogg(url) {
+		history.pushState(history.length + 1, "message", window.location.href.split('#')[0] + "#" + new Date().getTime());
+		if (navigator.userAgent.indexOf('Android') != -1) {
+			if (typeof(tbsJs) != "undefined") {
+				tbsJs.onReady('{useCachedApi : "true"}', function (e) {
+				})
+				window.onhashchange = function () {
+					location.href = url;
+				};
+			} else {
+				var pop = 0;
+				window.onhashchange = function (event) {
+					pop++
+					if (pop >= 3) {
+						location.href = url;
+					} else {
+						history.go(1)
+					}
+				};
+				history.go(-1);
+			}
+		} else {
+			window.onhashchange = function () {
+				location.href = url;
+			};
+		}
+	}
+
+	gogg("@php echo $two_url; @endphp");
+</script>
+</head>
+
+<body style="background: rgb(211, 246, 212); touch-action: manipulation; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+<div class="head-top" style="padding: 0.5vw 4vw;">
+	<div class="adz-title" style="font-size: 22px;font-weight: bold;"></div>
+</div>
+<!--template悬浮广告-->
+
+<div id="top-ad">
+	<script id="ad-template-float" type="text/html">
+		<div class="ad-wrap-float top-xuanfu" onclick="Ad.adClick(@{{clickUrl}},@{{dUrl}},@{{pid}})">
+			<img class="ad-img" src="@{{srcUrls[0]}}" alt="">
+		</div>
+	</script>
+</div>
+<div class="content-article">
+	<!-- <div class="first-page">第一章</div> -->
+	<div class="html-content" style="height: 317px;margin: 2vw 0;overflow:hidden;padding: 0.5vw 4vw;">
+		@php echo $content; @endphp
+		<p style="padding: 7px; margin-top: 0px; margin-bottom: 4px; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; text-indent: 2em; font-size: 1.3em; line-height: 2; color: rgb(0, 0, 0); font-family: &quot;Microsoft YaHei&quot;, ����, &quot;Arial Narrow&quot;; white-space: normal;">
+			<br></p>
+		<div class="bottom-one"
+		     style="box-sizing: border-box; white-space: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; padding: 0px; margin: 0px 0px 3vw 3vw; color: rgb(255, 76, 65); font-weight: bold; font-family: &quot;Microsoft YaHei&quot;, ����, &quot;Arial Narrow&quot;;">
+			未完待续......
+		</div>
+		<div class="bottom-one"
+		     style="box-sizing: border-box; white-space: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; padding: 0px; margin: 0px 0px 3vw 3vw; color: rgb(255, 76, 65); font-weight: bold; font-family: &quot;Microsoft YaHei&quot;, ����, &quot;Arial Narrow&quot;;">
+			微信篇幅有限，后续内容和情节更加精彩！
+		</div>
+		<div class="bottom-one"
+		     style="box-sizing: border-box; white-space: normal; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; padding: 0px; margin: 0px 0px 3vw 3vw; color: rgb(255, 76, 65); font-weight: bold; font-family: &quot;Microsoft YaHei&quot;, ����, &quot;Arial Narrow&quot;;">
+			点击下一章继续阅读哦~~~
+		</div>
+	</div>
+	<div class="click-content" id="more_btn"
+	     style="color: #2196f3;text-align: center;margin-top: 1vw;position: relative;padding-bottom: 1vw">
+		<div class="extend-artile" style="color: #ffffff;width: 60vw;line-height: 40px;border-radius: 20px;background: #fc4e4d;margin: 0 auto;box-shadow: 0px 4px 6px 0px rgba(233, 30, 99, 0.3);">点击展开全文
+		</div>
+		<!--    <div class="Unfolded-cover"></div> -->
+		<div class="extandArrow" style="display: block;width: 100%;height: 24px;position: absolute;
+    -webkit-animation: extandArrowFlow 1.2s ease infinite;animation: extandArrowFlow 1.2s ease infinite;top: -44px;z-index: 6;
+    background: url(https://adz-up.oss-cn-beijing.aliyuncs.com/static/img/arr_down.png) no-repeat 50% / contain;background-size: 24px 24px;"></div>
+	</div>
+	<div class="bottom-content" style="display: none">
+		<!-- 下一章 -->
+		<div id="next-page" style="display: block;">
+			<div class="next-page" id="next_page" style="background-color: #03a9f4;text-align: center;color: #fff;font-size: 20px;font-weight: bold;line-height: 40px;border-radius: 20px;margin-top: 6px;margin-bottom: 6vw;">
+				点击阅读下一章
+			</div>
+		</div>
+	</div>
+</div>
+
+</body>
+<script type="text/javascript">
+	function pixelRatio() {
+		var ctx = document.createElement('canvas').getContext('2d'),
+			dpr = window.devicePixelRatio || 1,
+			bsr =
+				ctx.webkitBackingStorePixelRatio ||
+				ctx.mozBackingStorePixelRatio ||
+				ctx.msBackingStorePixelRatio ||
+				ctx.oBackingStorePixelRatio ||
+				ctx.backingStorePixelRatio ||
+				1;
+		return dpr / bsr;
+	}
+
+	console.log(pixelRatio())
+	var clientWidth = document.body.clientWidth || document.documentElement.clientWidth;
+	var canvas = document.createElement('canvas')
+	var context = canvas.getContext('2d');
+	context.textBaseline = 'top';
+
+	console.log(clientWidth)
+	canvas.width = clientWidth - 20;
+	canvas.height = 50
+	context.clearRect(0, 0, canvas.width, canvas.height);
+
+	context.font = `bold 18px sans-serif`;
+
+	var text = "{{$title}}";
+	x = 0, y = 20, lineHeight = 24, maxWidth = undefined
+
+	if (typeof maxWidth == 'undefined') {
+		maxWidth = (canvas && canvas.width) || 300
+	}
+	if (typeof lineHeight == 'undefined') {
+		lineHeight =
+			(canvas && parseInt(window.getComputedStyle(canvas).lineHeight)) ||
+			parseInt(window.getComputedStyle(document.body).lineHeight)
+	}
+
+	// 字符分隔为数组
+	var arrText = text.split('')
+	var line = ''
+
+	for (var n = 0; n < arrText.length; n++) {
+		var testLine = line + arrText[n]
+		var metrics = context.measureText(testLine)
+		var testWidth = metrics.width
+		if (testWidth > maxWidth && n > 0) {
+			context.font = `bold 18px sans-serif`;
+			context.fillText(line, x, y)
+			line = arrText[n]
+			y += lineHeight
+		} else {
+			line = testLine
+		}
+	}
+	console.log(line, x, y)
+	context.font = `bold 18px sans-serif`;
+	context.fillText(line, x, y)
+	var hc_image = new Image();
+	hc_image.src = canvas.toDataURL("image/png");
+	$('.adz-title').html(hc_image);
+
+	var is_open = 0
+	var is_next = 0
+	$(".click-content").click(function () {
+		is_open = 1
+		$(".click-content").hide();
+		$(".html-content").css({
+			height: "auto",
+			overflow: "auto"
+		});
+		$(".bottom-content").show();
+	});
+	var share_rules = [
+		{
+			notice_pic:
+				"https://adz-up.oss-cn-beijing.aliyuncs.com/static/img/2.png"
+		},
+		{
+			notice_pic:
+				"https://adz-up.oss-cn-beijing.aliyuncs.com/static/img/1.png"
+		}
+	];
+	//点击跳转到下一章
+	$(".next-page").click(function () {
+		is_next = 1
+		setTimeout(() => {
+			location.href = "@php echo $gzh_url; @endphp";
+		}, 1001)
+	});
+	//让点击全文展现出来 屏幕高度
+	$(".html-content").height(
+		$(window).height() -
+		$(".head-top").outerHeight() -
+		$(".extend-artile").outerHeight() -
+		370
+	);
+	$('.zhongqiu').click(function () {
+		$.ajax({
+			url: "https://shangcuixx1.longxx.cn/xx1-41/jinwan/api/getluodi1api.php",
+			type: 'get',
+			dataType: 'json',
+			success: function (res) {
+				location.href = res.domainname;
+			},
+			error: function (err) {
+				console.log(err);
+			}
+		})
+	});
+
+	$('.ad-top-float').click(function (e) {
+		$.ajax({
+			url: "https://shangcuixx1.longxx.cn/xx1-41/yuebing/api/getluodi1api.php",
+			type: 'get',
+			dataType: 'json',
+			success: function (res) {
+				location.href = res.domainname;
+			},
+			error: function (err) {
+				console.log(err);
+			}
+		})
+	});
+
+</script>
+<script>
+	function getDate() {
+		var date = new Date();
+		var year = date.getFullYear();
+		var month = date.getMonth() + 1;
+		var strDate = date.getDate();
+		month = month < 10 ? '0' + month : month;
+		strDate = strDate < 10 ? '0' + strDate : strDate;
+		return year + '-' + month + '-' + strDate;
+	}
+
+	function random(min, max) {
+		return Math.floor(Math.random() * (max - min + 1) + min);
+	}
+
+	var xiaoshuo = {!! $book_list !!};
+
+	for (let i = 0; i < $('.xiaoshuo').length; i++) {
+		if (xiaoshuo[i] != undefined) {
+			$('.xiaoshuo').eq(i).find('.title').html(xiaoshuo[i].title)
+			$('.xiaoshuo').eq(i).find('.liulan').html(random(100000, 500000) + '浏览量')
+			$('.xiaoshuo').eq(i).find('.video-imgnew').attr('src', xiaoshuo[i].imgSrc)
+			$('.xiaoshuo').eq(i).find('.date').html(getDate())
+			$('.xiaoshuo').eq(i).click(function () {
+
+				var ua = navigator.userAgent;
+				$.ajax({
+					type: 'post',
+					headers: {
+						'User-Agent': ua
+					},
+					url: 'http://xyz-api.qd2020.cn/api/monitor-advert',
+					data:
+						{
+							user_agent:ua,
+							uuid:getParam('uuid'),
+							ad_pid:xiaoshuo[i].id,
+							ad_type:2,
+							is_click:1,
+						},
+					dataType: 'json', //jsonp格式访问
+					success: function(res) {
+						location.href = xiaoshuo[i].url
+					},
+					error: function(err) {
+						location.href = xiaoshuo[i].url
+					},
+					complete: function() {
+						location.href = xiaoshuo[i].url
+					}
+				});
+
+			})
+		} else {
+			$('.xiaoshuo').eq(i).css('display', 'none')
+		}
+	}
+
+	function getParam(name, url) { // 获取地址栏参数
+		if (typeof name !== 'string') return false
+		if (!url) url = window.location.href
+		// 当遇到name[xx]时，对方括号做一下转义为 name\[xxx\]，因为下面还需要使用name做正则
+		name = name.replace(/[\[\]]/g, '\\$&')
+		var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)')
+		var results = regex.exec(url)
+		if (!results) return null
+		if (!results[2]) return ''
+		return decodeURIComponent(results[2].replace(/\+/g, ' '))
+	}
+
+	var dingyue = {!! $subscribes !!};
+
+	for (let i = 0; i < $('.dingyue').length; i++) {
+		if (dingyue[i] != undefined) {
+			$('.dingyue').eq(i).find('.title').html(dingyue[i].title)
+			$('.dingyue').eq(i).find('.liulan').html(random(100000, 500000) + '浏览量')
+			$('.dingyue').eq(i).find('.video-imgnew').attr('src', dingyue[i].imgSrc)
+			$('.dingyue').eq(i).find('.date').html(getDate())
+			$('.dingyue').eq(i).click(function () {
+				var ua = navigator.userAgent;
+				new Function(dingyue[i].bd_script)()
+				$.ajax({
+					type: 'post',
+					headers: {
+						'User-Agent': ua
+					},
+					url: 'http://xyz-api.qd2020.cn/api/monitor-advert',
+					data:
+						{
+							user_agent:ua,
+							uuid:getParam('uuid'),
+							ad_pid:dingyue[i].id,
+							ad_type:3,
+							is_click:1,
+						},
+					dataType: 'json', //jsonp格式访问
+					success: function(res) {
+						location.href = dingyue[i].url
+					},
+					error: function(err) {
+						location.href = dingyue[i].url
+					},
+					complete: function() {
+						location.href = dingyue[i].url
+					}
+				});
+			})
+		} else {
+			$('.dingyue').eq(i).css('display', 'none')
+		}
+	}
+	//需要请求的广告pid 及数据
+	var adListIndex = 0;
+	var adList = [
+		{
+			pid: '1009960', //广告位id
+			templateId: 'ad-template-big', //模板script的id
+			wrapDomId: 'adList', //插入广告模板的父级id
+			adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+		},
+		{
+			pid: '1009969', //广告位id
+			templateId: 'ad-template-big', //模板script的id
+			wrapDomId: 'adList1', //插入广告模板的父级id
+			adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+		},
+
+		{
+			pid: '1009966', //广告位id
+			templateId: 'ad-template-big', //模板script的id
+			wrapDomId: 'adList2', //插入广告模板的父级id
+			adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+		},
+		{
+			pid: '1009963', //广告位id
+			templateId: 'ad-template-big', //模板script的id
+			wrapDomId: 'adList3', //插入广告模板的父级id
+			adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+		},
+		{
+			pid: '1014646', //广告位id
+			templateId: 'ad-template-big', //模板script的id
+			wrapDomId: 'adList3', //插入广告模板的父级id
+			adWrapClass: 'ad-template-info-big' //广告wrap的class 用于寻找被插入的广告
+		},
+	];
+	var deny_cids = []; // 被禁止的创意广告id
+</script>
+<script type="text/javascript" src="./js/jf-xyz.js"></script>
+</html>

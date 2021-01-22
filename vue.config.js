@@ -112,7 +112,7 @@ module.exports = {
         proxy: {
             //
             '/dzp': {
-                target: 'http://book.wihens.com/api',
+                target: 'https://88umr.cn/api',
                 changeOrigin: true, // 是否跨域
                 pathRewrite: {
                     '^/dzp': ''

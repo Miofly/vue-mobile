@@ -1,0 +1,140 @@
+{
+    "pages": [
+        {
+            "path": "pages/appletsFront/home",
+            "name": "app-home"
+        },
+        {
+            "path": "pages/appletsFront/index/index",
+            "name": "app-index"
+        },
+        {
+            "path": "pages/appletsFront/index/index-swiper",
+            "name": "app-index-swiper"
+        },
+        {
+            "path": "pages/appletsFront/index/index-swiper-two",
+            "name": "app-index-swiper-two"
+        },
+        {
+            "path": "pages/appletsFront/index/rank",
+            "name": "app-rank"
+        },
+        {
+            "path": "pages/appletsFront/index/rank-swiper",
+            "name": "app-rank-swiper"
+        },
+        {
+            "path": "pages/appletsFront/index/rank-swiper-two",
+            "name": "app-rank-swiper-two"
+        },
+        {
+            "path": "pages/appletsFront/index/team",
+            "name": "app-team"
+        },
+        {
+            "path": "pages/appletsFront/index/teamSwiperTab",
+            "name": "app-teamSwiperTab"
+        },
+        {
+            "path": "pages/appletsFront/index/team-swiper",
+            "name": "app-team-swiper"
+        },
+        {
+            "path": "pages/appletsFront/index/team-swiper-two",
+            "name": "app-team-swiper-two"
+        },
+        {
+            "path": "pages/appletsFront/index/user",
+            "name": "app-user"
+        },
+        {
+            "path": "pages/appletsFront/module/addItem",
+            "name": "app-addItem"
+        },
+        {
+            "path": "pages/appletsFront/module/chart",
+            "name": "app-chart"
+        },
+        {
+            "path": "pages/appletsFront/module/config",
+            "name": "app-config"
+        },
+        {
+            "path": "pages/appletsFront/module/forgetTwo",
+            "name": "app-forgetTwo"
+        },
+        {
+            "path": "pages/appletsFront/module/memberRank",
+            "name": "app-memberRank"
+        },
+        {
+            "path": "pages/appletsFront/module/memberRank-swiper",
+            "name": "app-memberRank-swiper"
+        },
+        {
+            "path": "pages/appletsFront/module/memberRank-swiper-two",
+            "name": "app-memberRank-swiper-two"
+        },
+        {
+            "path": "pages/appletsFront/module/personChart",
+            "name": "app-personChart"
+        },
+        {
+            "path": "pages/appletsFront/module/personChartTwo",
+            "name": "app-personChartTwo"
+        },
+        {
+            "path": "pages/appletsFront/module/personInfo",
+            "name": "app-personInfo"
+        },
+        {
+            "path": "pages/appletsFront/module/teamManage",
+            "name": "app-teamManage"
+        },
+        {
+            "path": "pages/appletsFront/user/forget",
+            "name": "app-forget"
+        },
+        {
+            "path": "pages/appletsFront/user/login",
+            "name": "app-login"
+        },
+        {
+            "path": "pages/appletsFront/user/reg",
+            "name": "app-reg"
+        },
+        {
+            "path": "pages/appletsFront/module/with-draw"
+        },
+        {
+            "path": "pages/appletsFront/module/with-draw-record"
+        },
+        {
+            "path": "pages/appletsFront/module/with-draw"
+        },
+        {
+            "path": "pages/appletsFront/module/with-draw-record"
+        },
+        {
+            "path": "pages/appletsFront/module/with-draw-verification"
+        }
+    ],
+    "globalStyle": {
+        "navigationBarTextStyle": "black",
+        // #ifdef H5
+        "navigationStyle": "custom",
+        // #endif
+        "navigationBarTitleText": "海星转",
+        "navigationBarBackgroundColor": "#F8F8F8",
+        "backgroundColor": "#F8F8F8"
+    },
+    "easycom": {
+        "autoscan": true,
+        "custom": {
+            // #ifdef H5
+            "^m-(.*)": "zj/m-$1/m-$1.vue"
+            // #endif
+        }
+    }
+}
