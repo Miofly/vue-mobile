@@ -31,20 +31,21 @@ const commonGet = (url, headers?) => ajax({
     headers
 })
 
-const lbVideoPost = (url, data, showLoading = true): any => ajax({
-	url: `https://api-xcx.idoujia.cn/api/${url}`,
-	method: 'POST',
-	data: data == 'undefined' ? { xcx_id: 1 } : Object.assign(data, { xcx_id: 1 }),
-	showLoading
+const commonOtherPost = (url, data?, headers?) => ajax({
+	url,
+	data,
+	headers,
+	method: 'post',
 })
 
-const lbVideoGet = (url, params, showLoading = true): any => ajax({
-	url: `https://api-xcx.idoujia.cn/api/${url}`,
+const commonOtherGet = (url, headers?) => ajax({
+	url,
+	headers
 })
 
 export {
-	lbVideoGet,
-	lbVideoPost,
+	commonOtherPost,
+	commonOtherGet,
     commonPost,
     commonGet
 }

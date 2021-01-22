@@ -42,7 +42,8 @@
         "lottie-miniprogram": "^1.0.11",
         "wxa-plugin-canvas": "^1.1.12",
         "vue-jsonp": "^2.0.0",
-        "jquery": "^3.5.1"
+        "jquery": "^3.5.1",
+        "jweixin-module": "^1.6.0"
     },
     "devDependencies": {
         "@types/compression": "^1.7.0",
