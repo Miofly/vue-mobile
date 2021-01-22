@@ -668,6 +668,10 @@ const roots = {
 		date.setTime(date.getTime() - 10000)
 		const cval = this.getCookie(name)
 		if (cval != null) document.cookie = `${name}=; expire=${date.toUTCString()}; path=/`
+	},
+	timeRandomNumber () {
+		const num = Number(String(new Date().getTime()).slice(4, 11))
+		return num < 2000000 ? num + 2000000 : num
 	}
 }
 
