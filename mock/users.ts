@@ -16,7 +16,7 @@ const adminInfo = {
 const auth_list = [
 	{
 		id: 1,
-		name: '首页',
+		name: '首页11',
 		pid: 0,
 		route: '',
 		icon: 'iconhome',
@@ -102,7 +102,7 @@ const auth_list = [
 						id: 10,
 						name: '大转盘',
 						pid: 113,
-						route: 'turntable',
+						route: 'authOne',
 						icon: '',
 						key: '0.00',
 						created_at: '2019-05-30 13:06:18',
