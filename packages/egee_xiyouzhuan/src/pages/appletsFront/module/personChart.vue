@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="full-width text-xl text-center" style="height: 100rpx;line-height: 100rpx;padding: 0!important;">
+		<view class="full-width text-xl text-center" style="background: rgb(251, 207, 36);height: 100rpx;line-height: 100rpx;padding: 0!important;">
 			<view @click="$mio.mioRoot.back()" class="fa fa-angle-left fa-2x fl margin-left" style="line-height: 100rpx"></view>
 			<view>点击明细
 				<view @tap="tzChart" class="fr margin-right fa fa-bars" style="margin-top: 4%">

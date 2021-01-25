@@ -1,7 +1,7 @@
 <template>
 	<view class="bg-white">
 		<view class="full-width text-xl text-center"
-			  style="height: 100rpx;line-height: 100rpx;padding: 0!important;">
+			  style="background: rgb(251, 207, 36);height: 100rpx;line-height: 100rpx;padding: 0!important;">
 			<view @click="$mio.mioRoot.back()" class="fa fa-angle-left fa-2x fl margin-left"
 				  style="line-height: 100rpx"></view>
 			<view>新增标题</view>
@@ -31,27 +31,52 @@
 				</view>
 			</view>
 		</view>
-		<modal :closeShow="true" :closeSize="40" :descSize="30" :maskClosable="true" :status.sync="status"
-			   :titleSize="40" desc="" descColor="#999d9c" title="确认要删除图片吗？" titleColor="black" width="90vw">
-			<view class="text-center flex justify-between">
-				<m-button :disabled="false" :hairLine="true" :loading="false" :plain="false" :ripple="true"
-						  :shape="['square', 'circle'][1]" :size="['default', 'medium', 'mini'][1]"
-						  :type="['default', 'primary', 'error', 'warning', 'success'][2]"
-						  @tap="status = false" class="text-white fulls-width margin-top-xxl"
-						  style="height: 60rpx;background: #FB5B55;">
-					<view class="fa text-xl fa-android margin-right-xxl" style="height: 50rpx" v-if="false"></view>
-					取消
-				</m-button>
-				<m-button :disabled="false" :hairLine="true" :loading="false" :plain="false" :ripple="true"
-						  :shape="['square', 'circle'][1]" :size="['default', 'medium', 'mini'][1]"
-						  :type="['default', 'primary', 'error', 'warning', 'success'][2]"
-						  @tap="handleClick" class="text-white fulls-width margin-top-xxl margin-left-xxl"
-						  style="height: 60rpx">
-					<view class="fa text-xl fa-android margin-right-xxl" style="height: 50rpx" v-if="false"></view>
-					确认
-				</m-button>
+		<m-modal :closeShow="true" closeColor="black" bgColor="white" :closeSize="40" :descSize="30" :maskClosable="true" :status.sync="status"
+			   title="确认要删除图片吗?" desc="这是描述" modalTop="0rpx" :titleSize="40" descColor="#999d9c" titleColor="black"
+			   width="90vw" padding="20" radius="30rpx" :showTitle="true" :showContent="false">
+			<view class="text-center margin-top-xxl">
+				<view>
+				
+				</view>
+				<view class="flex justify-around margin-top-xl padding-bottom">
+					<m-button :hairLine="true" :loading="false" :plain="false" :ripple="true" :disabled="false"
+							  :shape="['square', 'circle'][1]" :size="['default', 'medium', 'mini'][1]"
+							  :type="['default', 'primary', 'error', 'warning', 'success'][2]" style=""
+							  @click="handleClick" class="text-white" :customStyle="{fontSize: '14px'}">
+						<view class="fa text-xl fa-android margin-right-xxl" style="height: 50rpx" v-if="false"></view>
+						确认
+					</m-button>
+					<m-button :hairLine="true" :loading="false" :plain="false" :ripple="true" :disabled="false"
+							  :shape="['square', 'circle'][1]" :size="['default', 'medium', 'mini'][1]"
+							  :type="['default', 'primary', 'error', 'warning', 'success'][1]" style=""
+							  @click="status = false" class="text-white" :customStyle="{fontSize: '14px'}">
+						<view class="fa text-xl fa-android margin-right-xxl" style="height: 50rpx" v-if="false"></view>
+						取消
+					</m-button>
+				</view>
 			</view>
-		</modal>
+		</m-modal>
+<!--		<m-modal :closeShow="true" :closeSize="40" :descSize="30" :maskClosable="true" :status.sync="status"-->
+<!--			   :titleSize="40" desc="" descColor="#999d9c" title="确认要删除图片吗？" titleColor="black" width="90vw">-->
+<!--			<view class="text-center flex justify-between">-->
+<!--				<m-button :disabled="false" :hairLine="true" :loading="false" :plain="false" :ripple="true"-->
+<!--						  :shape="['square', 'circle'][1]" :size="['default', 'medium', 'mini'][1]"-->
+<!--						  :type="['default', 'primary', 'error', 'warning', 'success'][2]"-->
+<!--						  @tap="status = false" class="text-white fulls-width margin-top-xxl"-->
+<!--						  style="height: 60rpx;background: #FB5B55;">-->
+<!--					<view class="fa text-xl fa-android margin-right-xxl" style="height: 50rpx" v-if="false"></view>-->
+<!--					取消-->
+<!--				</m-button>-->
+<!--				<m-button :disabled="false" :hairLine="true" :loading="false" :plain="false" :ripple="true"-->
+<!--						  :shape="['square', 'circle'][1]" :size="['default', 'medium', 'mini'][1]"-->
+<!--						  :type="['default', 'primary', 'error', 'warning', 'success'][2]"-->
+<!--						  @tap="handleClick" class="text-white fulls-width margin-top-xxl margin-left-xxl"-->
+<!--						  style="height: 60rpx">-->
+<!--					<view class="fa text-xl fa-android margin-right-xxl" style="height: 50rpx" v-if="false"></view>-->
+<!--					确认-->
+<!--				</m-button>-->
+<!--			</view>-->
+<!--		</m-modal>-->
 
 		<view class="padding">
 			<m-button :hairLine="true" :loading="false" :plain="false" :ripple="true" :disabled="false"

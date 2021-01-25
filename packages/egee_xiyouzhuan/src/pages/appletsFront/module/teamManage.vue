@@ -1,7 +1,7 @@
 <template>
 	<view class="bg-white">
 		<view class="full-width text-xl text-center"
-			  style="height: 100rpx;line-height: 100rpx;padding: 0!important;">
+			  style="background: rgb(251, 207, 36);height: 100rpx;line-height: 100rpx;padding: 0!important;">
 			<view @click="$mio.mioRoot.back()" class="fa fa-angle-left fa-2x fl margin-left"
 				  style="line-height: 100rpx"></view>
 			团队管理
