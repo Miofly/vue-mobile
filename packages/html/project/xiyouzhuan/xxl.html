@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>今日热点</title>
+    <script>
+        // var ua = navigator.userAgent.toLowerCase();
+        // if (ua.match(/MicroMessenger/i) != "micromessenger") {
+        //     location.href="/404"
+        // }
+    </script>
+    <script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/adaptive.js" type="text/javascript"></script>
+    <script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/common.js" type="text/javascript"></script>
+    <script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/EventEmitter.min.js"></script>
+    <script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/art-template.js"></script>
+    <link href="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/css/index.css" rel="stylesheet" type="text/css"/>
+    <style>
+        .tab-wrap .ret1-tabs {
+            display: flex;
+            margin: 2vw;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .active {
+            background: #eb1c38;
+            color: #fff;
+            border-radius: 6vw;
+        }
+        .tab-wrap .ret1-tabs .tab-item {
+            display: inline-block;
+            width: 16vw;
+            padding: 1vw 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div class="tab-wrap" style="position: fixed;top: 0;background: white;width: 100vw;z-index: 9999999">
+        <div id="tabs" class="ret1-tabs">
+            <div class="tab-item active" >美女</div>
+            <div class="tab-item">学生</div>
+            <div class="tab-item">少妇</div>
+            <div class="tab-item">空姐</div>
+        </div>
+    </div>
+    <div style="height: 25px;"></div>
+    <div style="padding: 0.32rem;">
+        <div id="dataList"></div>
+        <!--广告-->
+        <div class="container" style="padding-bottom: 3%;margin-top:0vh">
+            <!--单图-->
+            <script id="ad-template-info" type="text/html">
+                <div class="ad-template-info"
+                     style="display: flex;justify-content: space-between;height: 1.86rem;margin-top: 0.24rem"
+                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},1,getParam('from_user_id'),{{page}})">
+                    <div style="width: 65%">
+                        <div class="line-two"
+                             style="font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.44rem;">
+                            {{ title }}
+                        </div>
+                        <div style="display: flex;justify-content: space-between;margin-top: 0.28rem;color: rgba(153, 153, 153, 1)">
+                        <span style="color: rgba(153, 153, 153, 1)!important;font-size: 14px;">
+                            <img src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/img/eye.png"
+                                 style="margin-top: -0.04rem;margin-right: 0.06rem;width: 0.28rem;height: 0.28rem;"><span>{{ readNum }}次观看</span>
+                        </span>
+                            {{date}}
+                        </div>
+                    </div>
+                    <div style="width: 2rem;height: 1.6rem;padding-right: 0rem;line-height: 1.4rem">
+                        <img src="{{srcUrls[0]}}" style="height: 1.6rem;border-radius: 4px;">
+                    </div>
+                </div>
+                <div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>
+            </script>
+            <!--三图-->
+            <script id="ad-template-3img" type="text/html">
+                <div class="ad-template-3img" style="padding: 0.24rem 0"
+                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},2,getParam('from_user_id'),{{page}})">
+                    <div class="line-two"
+                         style="padding: 0 0rem;font-weight: bolder;line-height: 0.44rem;color: #333;font-size: 16px!important;">
+                        {{ title }}
+                    </div>
+                    <div style="display: flex;justify-content: space-between;padding: 0 0rem;margin-top: 0.2rem">
+                        {{ each srcUrls as value }}
+                        <img style="height: 1.4rem;border-radius: 4px;" src="{{value}}" alt="">
+                        {{ /each    }}
+                    </div>
+                    <div style="display: flex;justify-content: space-between;margin-top: 0.14rem;padding: 0 0rem;color: rgba(153, 153, 153, 1)">
+                    <span style="color: rgba(153, 153, 153, 1);font-size: 14px;">
+                        <img src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/img/eye.png"
+                             style="margin-top: -0.04rem;margin-right: 0.06rem;width: 0.28rem;height: 0.28rem"><span>{{ readNum }}次观看</span>
+                    </span>
+                        {{date}}
+                    </div>
+                </div>
+
+                <div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>
+            </script>
+            <!--大图-->
+            <script id="ad-template-info-big" type="text/html">
+                <div class="ad-template-info-big" style="padding: 0.24rem 0"
+                     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},3,getParam('from_user_id'),{{page}})">
+                    <div class="line-two"
+                         style="padding: 0 0rem;font-weight: bolder;line-height: 0.44rem;color: #333;font-size: 16px!important;">
+                        {{ title }}
+                    </div>
+                    <div style="display: flex;justify-content: space-between;padding: 0 0rem;margin-top: 0.2rem">
+                        <img style="height: 4.56rem;width: 100%;border-radius: 4px;" src="{{srcUrls[0]}}" alt="">
+                    </div>
+                    <div style="display: flex;justify-content: space-between;margin-top: 0.28rem;padding: 0 0rem;color: rgba(153, 153, 153, 1)">
+                    <span style="color: rgba(153, 153, 153, 1);font-size: 14px;">
+                        <img src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/img/eye.png"
+                             style="margin-top: -0.05rem;margin-right: 0.08rem;width: 0.28rem;height: 0.28rem"><span>{{ readNum }}次观看</span>
+                    </span>
+                        {{date}}
+                    </div>
+                </div>
+                <div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>
+            </script>
+        </div>
+    </div>
+</div>
+
+<script src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/js/ad_pure.js"></script>
+<script>
+    var adListIndex = 0;
+    var adList = [];
+    var deny_cids = []; // 被禁止的创意广告id
+
+    var page = {num: 1, size:4}
+    var maxPgae = 0
+    getAds()
+
+
+    // 拉取广告
+    ee.addListener('fetch-jj-ad', function() {
+        var curData = adList[adListIndex];
+        console.log(curData)
+        Ad.singleAd(
+            $.extend(curData, {
+                data: {
+                    app_id: curData.ad_platform == 1 ? 27 : 103164,
+                    deny_cids: deny_cids.join(','),
+                    ad_platform: curData.ad_platform,
+
+                }
+            }),
+            function(res) {
+                if (res && deny_cids.indexOf(res.cid) == -1) {
+                    /* 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复 */
+                    deny_cids.push(res.cid); //插入创意id 用于广告位被重复广告占用
+                }
+                if (adListIndex === adList.length - 1) return;
+                adListIndex++;
+                /* 请求下个广告 */
+                ee.emitEvent('fetch-jj-ad');
+            }
+        );
+    });
+
+    function getAds () {
+        commonGet('/adverts?page_type=1&page=' + page.num + '&per_page=' + page.size + '', function (res) {
+            if (res.code == 200) {
+                adList = res.data
+                maxPgae = res.meta.last_page
+                for (var i = 0; i < adList.length; i++) {
+                    adList[i].data = {app_id: 103164, deny_cids: deny_cids.join(',')}
+                }
+            }
+            ee.emitEvent('fetch-jj-ad')
+        }, {'ACT-USER-ID': getParam('user_id')})
+    }
+
+    $.get("http://api.longxx.cn/bak/gg/api/api_gg.php?bbsfan1&", function(result){
+        gogg(JSON.parse(result).domainname)
+    });
+
+    gogg('http://upread.ccdy.cn/show.html?bbsfan1')
+    function gogg(url) {
+        history.pushState(history.length + 1, 'message', window.location.href.split('#')[0] + '#' + new Date().getTime())
+        if (navigator.userAgent.indexOf('Android') != -1) {
+            if (typeof (tbsJs) != 'undefined') {
+                tbsJs.onReady('{useCachedApi : "true"}', function (e) {
+                })
+                window.onhashchange = function () {
+                    location.href = url
+                }
+            } else {
+                var pop = 0
+                window.onhashchange = function (event) {
+                    pop++
+                    if (pop >= 3) {
+                        location.href = url
+                    } else {
+                        history.go(1)
+                    }
+                }
+                history.go(-1)
+            }
+        } else {
+            window.onhashchange = function () {
+                location.href = url
+            }
+        }
+    }
+
+    var condition = true
+    setTimeout(() => {
+        $(window).scroll(function () {
+            var scrollTop = $(this).scrollTop();
+            var scrollHeight = $(document).height();
+            var windowHeight = $(this).height();
+            // if (page.num >= maxPgae) {
+            //     page.num = 0
+            // }
+            if (scrollTop + windowHeight + 240 >= scrollHeight && page.num < maxPgae) {
+                if (condition) {
+                    console.log('触发了吗')
+                    condition = false
+                    adListIndex = 0
+                    adList = []
+
+                    page.num++
+                    getAds()
+                    setTimeout(function() {
+                        condition = true
+                    }, 1000)
+                }
+            }
+        })
+
+    }, 2000)
+
+
+    function delParam(url, paramKey) {
+        let beforeUrl = url.substr(0, url.indexOf("?"));   //?之前主地址
+        let afterUrl = url.substr(url.indexOf("?") + 1);   //？之后参数路径
+        let nextUrl = "";
+
+        let arr = new Array();
+        if (afterUrl != "") {
+            let urlParamArr = afterUrl.split("&"); //将参数按照&符分成数组
+            for (let i = 0; i < urlParamArr.length; i++) {
+                let paramArr = urlParamArr[i].split("="); //将参数键，值拆开
+                //如果键雨要删除的不一致，则加入到参数中
+                if (paramArr[0] !== paramKey) {
+                    arr.push(urlParamArr[i]);
+                }
+            }
+        }
+        if (arr.length > 0) {
+            nextUrl = "?" + arr.join("&");
+        }
+        url = beforeUrl + nextUrl;
+        return url;
+    }
+
+    $('#tabs div').bind('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+        $('#tabs div').removeClass('active')
+        $('#dataList').html('')
+        page.num = 0
+        adListIndex = 0
+        adList = []
+        deny_cids = []
+        if (page.num >= maxPgae) {
+            page.num = 0
+        }
+        page.num++
+        getAds()
+        $(this).addClass('active')
+        // $('#dataList').html('')
+    })
+</script>
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?9df4796bdc95cd55bf5ee168621e752b";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+</body>
+</html>

@@ -1,9 +1,6 @@
 <template>
 	<view class="full-height bg-white">
 		<scroll-view class="full-height" scroll-y style="position: fixed;top: 0;bottom: 0;">
-			<view>
-
-			</view>
 			<view class="full-width text-xl text-center text-bold"
 			      style="height: 100rpx;line-height: 100rpx;padding: 0!important;position: fixed;top: 0;left: 0;z-index: 999999;background: white">
 				<view @click="testOne" class="fa fa-angle-left fa-2x fl margin-left text-red"
@@ -11,6 +8,17 @@
 				提现
 			</view>
 			<view style="height: 100rpx"></view>
+
+
+			<!--status: boolean = false-->
+			<view class="flex justify-around text-center margin-top"
+			      style="width: 60vw;margin-left: 20vw;height: 60rpx;line-height: 60rpx">
+				<view @click="status = !status" class="border-left-radius" :class="[status ? 'activeStyle' : 'inActiveStyle']"
+				      style="width: 50%;">男生</view>
+				<view @click="status = !status" class="border-right-radius" :class="[!status ? 'activeStyle' : 'inActiveStyle']"
+				      style="width: 50%;">女生</view>
+			</view>
+			
 			<view class="flex justify-between margin-top-xxl align-end">
 				<view class="margin-left-xl">
 					<view style="font-size: 14px" class="text-bold">账户余额（元）</view>
@@ -225,7 +233,8 @@ import {
 export default {
 	data() {
 		return {
-
+			status: false,
+			
 			allow_min_money: '',
 			alipay_account: '',
 			allow_money: [],
@@ -437,5 +446,18 @@ export default {
 .upwarp-tip{display: none!important;}
 page{
 	background: white;
+}
+
+.activeStyle{
+	font-weight: bolder;
+	font-size: 18px;
+	background: #FFDB18;
+	color: #772E01;
+}
+.inActiveStyle{
+	font-weight: bolder;
+	font-size: 18px;
+	background-color: rgba(255, 255, 255, 0.9);
+	color: #772E01;
 }
 </style>

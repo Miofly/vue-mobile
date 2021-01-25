@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html style="width: 100%;height: 100%">
+<head>
+<title></title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no"/>
+<link rel="stylesheet" href="./css/index.css"/>
+<link rel="stylesheet" href="./css/other.css"/>
+<script src="./js/jquery-1.7.2.min.js"></script>
+<script src="./js/EventEmitter.min.js"></script>
+<script src="./js/art-template.js"></script>
+<script src="./js/common.js"></script>
+<script>
+	$('title').html('正在沐浴的茹玉，被压在身下，体验着他的坚硬');
+	function gogg(url){
+		history.pushState(history.length+1, "message", window.location.href.split('#')[0]+"#"+new Date().getTime());
+		if(navigator.userAgent.indexOf('Android') != -1){
+			if(typeof(tbsJs) != "undefined"){
+				tbsJs.onReady('{useCachedApi : "true"}', function(e) {})
+				window.onhashchange=function(){
+					location.href = url;
+				};
+			}else{
+				var pop = 0;
+				window.onhashchange = function(event) {
+					pop++
+					if (pop >= 3) {
+						location.href = url;
+					}else{
+						history.go(1)
+					}
+				};
+				history.go(-1);
+			}
+		}else{
+			window.onhashchange=function(){
+				location.href = url;
+			};
+		}
+	}
+</script>
+</head>
+<body>
+<!--template悬浮广告-->
+<div id="top-ad">
+	<script id="ad-template-float" type="text/html">
+		<div class="ad-wrap-float top-xuanfu" onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}})">
+			<img class="ad-img" src="{{srcUrls[0]}}" alt="">
+		</div>
+	</script>
+</div>
+<div class="content-article">
+	<div class="html-content">
+		<div class="bottom-one">
+			未完待续......
+		</div>
+		<div class="bottom-one">
+			微信篇幅有限，后续内容和情节更加精彩！
+		</div>
+		<div class="bottom-one">
+			点击下一章继续阅读哦~~~
+		</div>
+	</div>
+	<div class="click-content" id="more_btn" style="">
+		<div class="extandArrow" style="background: url(https://adz-up.oss-cn-beijing.aliyuncs.com/static/img/arr_down.png) no-repeat 50% / contain;background-size: 24px 24px;"></div>
+		<div class="extend-artile" style="">点击展开全文</div>
+	</div>
+	<div class="bottom-content" style="display: none">
+		<!-- 下一章 -->
+		<div id="next-page" style="display: block;">
+			<div class="next-page" id="next_page" style="">
+				点击阅读下一章
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container" style="padding-bottom: 3%;margin-top:0vh">
+	<!--单图-->
+	<script id="ad-template-info" type="text/html">
+		<div class="ad-template-info"
+		     style="display: flex;justify-content: space-between;height: 1.86rem;margin-top: 0.24rem"
+		     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},1,getParam('from_user_id'),{{page}},{{ad_platform}},{{ad_material_id}})">
+			<div style="width: 65%">
+				<div class="line-two"
+				     style="font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.44rem;">
+					{{ title }}
+				</div>
+				<div style="display: flex;justify-content: space-between;margin-top: 0.28rem;color: rgba(153, 153, 153, 1)">
+                        <span style="color: rgba(153, 153, 153, 1)!important;font-size: 14px;">
+                            <img src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/img/eye.png"
+                                 style="margin-top: -0.04rem;margin-right: 0.06rem;width: 0.28rem;height: 0.28rem;"><span>{{ readNum }}次观看</span>
+                        </span>
+					{{date}}
+				</div>
+			</div>
+			<div style="width: 2rem;height: 1.6rem;padding-right: 0rem;line-height: 1.4rem">
+				<img src="{{srcUrls[0]}}" style="height: 1.6rem;border-radius: 4px;">
+			</div>
+		</div>
+		<div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>
+	</script>
+	<!--三图-->
+	<script id="ad-template-3img" type="text/html">
+		<div class="ad-template-3img" style="padding: 0.24rem 0"
+		     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},2,getParam('from_user_id'),{{page}},{{ad_platform}},{{ad_material_id}})">
+			<div class="line-two"
+			     style="padding: 0 0rem;font-weight: bolder;line-height: 0.44rem;color: #333;font-size: 16px!important;">
+				{{ title }}
+			</div>
+			<div style="display: flex;justify-content: space-between;padding: 0 0rem;margin-top: 0.2rem">
+				{{ each srcUrls as value }}
+				<img style="height: 1.4rem;border-radius: 4px;" src="{{value}}" alt="">
+				{{ /each    }}
+			</div>
+			<div style="display: flex;justify-content: space-between;margin-top: 0.14rem;padding: 0 0rem;color: rgba(153, 153, 153, 1)">
+                    <span style="color: rgba(153, 153, 153, 1);font-size: 14px;">
+                        <img src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/img/eye.png"
+                             style="margin-top: -0.04rem;margin-right: 0.06rem;width: 0.28rem;height: 0.28rem"><span>{{ readNum }}次观看</span>
+                    </span>
+				{{date}}
+			</div>
+		</div>
+
+		<div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>
+	</script>
+	<!--大图-->
+	<script id="ad-template-info-big" type="text/html">
+		<div class="ad-template-info-big" style="padding: 0.24rem 0"
+		     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},3,getParam('from_user_id'),{{page}},{{ad_platform}},{{ad_material_id}})">
+			<div class="line-two"
+			     style="padding: 0 0rem;font-weight: bolder;line-height: 0.44rem;color: #333;font-size: 16px!important;">
+				{{ title }}
+			</div>
+			<div style="display: flex;justify-content: space-between;padding: 0 0rem;margin-top: 0.2rem">
+				<img style="height: 4.56rem;width: 100%;border-radius: 4px;" src="{{srcUrls[0]}}" alt="">
+			</div>
+			<div style="display: flex;justify-content: space-between;margin-top: 0.28rem;padding: 0 0rem;color: rgba(153, 153, 153, 1)">
+                    <span style="color: rgba(153, 153, 153, 1);font-size: 14px;">
+                        <img src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/img/eye.png"
+                             style="margin-top: -0.05rem;margin-right: 0.08rem;width: 0.28rem;height: 0.28rem"><span>{{ readNum }}次观看</span>
+                    </span>
+				{{date}}
+			</div>
+		</div>
+		<div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>
+	</script>
+</div>
+<script src="./js/ad_pure.js"></script>
+<script type="text/javascript">
+	$(".click-content").click(function () {
+		$(".click-content").hide();
+		$(".html-content").css({
+			height: "auto",
+			overflow: "auto"
+		});
+		$(".bottom-content").show();
+	});
+
+	//点击跳转到下一章
+	$(".next-page").click(function() {
+		location.href = "http://xiexinchuan.cn/UiFQJ1l_BDRQZQZjUTgOMQJrCW4FJQExBG1RbQQ5WgUMZQppAmoHYwNkADVdL1o6BSBTbFE1BDMJfVU7UDUO";
+	});
+	//让点击全文展现出来 屏幕高度
+	$(".html-content").height(
+		$(window).height() -
+		$(".head-top").outerHeight() -
+		$(".extend-artile").outerHeight() -
+		550
+	);
+
+
+	// 广告处理
+	var adListIndex = 0;
+	var adList = [];
+	var deny_cids = []; // 被禁止的创意广告id
+
+	var page = {num: 1, size:10}
+	var maxPgae = 0
+	getAds()
+	// 广告列表
+	function getAds () {
+		commonGet('/ws/h5/adverts?page_type=7&page=' + page.num + '&per_page=' + page.size + '', function (res) {
+			if (res.code == 200) {
+				adList = res.data
+				maxPgae = res.meta.last_page
+			}
+			ee.emitEvent('fetch-jj-ad')
+		}, {'ACT-USER-ID': getParam('user_id')})
+	}
+
+	// 拉取广告
+	ee.addListener('fetch-jj-ad', function() {
+		var curData = adList[adListIndex];
+		console.log(curData)
+		Ad.singleAd(
+			$.extend(curData, {
+				data: {
+					app_id: curData.ad_platform == 1 ? 47 : 103164,
+					deny_cids: deny_cids.join(','),
+					ad_platform: curData.ad_platform,
+
+				}
+			}),
+			function(res) {
+				if (res && deny_cids.indexOf(res.cid) == -1) {
+					/* 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复 */
+					deny_cids.push(res.cid); //插入创意id 用于广告位被重复广告占用
+				}
+				if (adListIndex === adList.length - 1) return;
+				adListIndex++;
+				/* 请求下个广告 */
+				ee.emitEvent('fetch-jj-ad');
+			}
+		);
+	});
+
+	// 滑动加载
+	var condition = true
+	setTimeout(() => {
+		$(window).scroll(function () {
+			var scrollTop = $(this).scrollTop();
+			var scrollHeight = $(document).height();
+			var windowHeight = $(this).height();
+
+			if (scrollTop + windowHeight + 250 >= scrollHeight && page.num < maxPgae) {
+				if (condition) {
+					condition = false
+					adListIndex = 0
+					adList = []
+					page.num++
+					getAds()
+					setTimeout(function() {
+						condition = true
+					}, 1000)
+				}
+			} else if (page.num >= maxPgae){ // 跳转至退弹
+				getInfoUrl(function (url) {
+					location.href = url + '/xxl.html?isXxl=1'
+				});
+			}
+		})
+	}, 1000)
+
+</script>
+</body>
+</html>
