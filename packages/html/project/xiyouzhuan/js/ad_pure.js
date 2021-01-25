@@ -38,7 +38,7 @@ var Ad = {
 					},
 					data
 				),
-				dataType: 'jsonp', //jsonp格式访问
+				dataType: 'jsonp', //jsonp鏍煎紡璁块棶
 				success: function (res) {
 					callback && callback(null, res);
 				},
@@ -53,25 +53,8 @@ var Ad = {
 	},
 	adClick: function (clickUrl, dUrl, pid, type, user_id, page, ad_platform,ad_material_id) {
 		var ua = navigator.userAgent;
-		commonPost('/adClickStat', {
-			ua: ua,
-			pid: pid,
-			type: type,
-			user_id: user_id,
-			oa_id: getParam('oa_id'),
-			page: page,
-			ad_platform: ad_platform,
-			sign: 'bFwbxLAzwd5F4DOPS2hO',
-		}, function (res) {
-			if (res.code == 200) {
-				location.href = dUrl[0];
-			}
-		}, {'ACT-USER-ID': getParam('user_id')})
 
-		if (getParam('isXxl') != 1) {
-			ws.send(JSON.stringify({pid: pid, event: 'adClick'}));
-		}
-		if (ad_platform == 1) { // 固价广告逻辑
+		if (ad_platform == 1) { // 鍥轰环骞垮憡閫昏緫
 			$.ajax({
 				type: 'post',
 				url: wm_base_url_click + 'charging',
@@ -98,31 +81,6 @@ var Ad = {
 		}
 
 	},
-
-	/**
-	 * 获取年月日
-	 */
-	getDate: function () {
-		var date = new Date();
-		var year = date.getFullYear();
-		var month = date.getMonth() + 1;
-		var strDate = date.getDate();
-		month = month < 10 ? '0' + month : month;
-		strDate = strDate < 10 ? '0' + strDate : strDate;
-		return year + '-' + month + '-' + strDate;
-	},
-
-	/**
-	 * 获取范围随机数
-	 */
-	random: function (min, max) {
-		return Math.floor(Math.random() * (max - min + 1) + min);
-	},
-
-	/**
-	 * 判断元素是否在可视区
-	 * 用于广告曝光率
-	 */
 	isElementInViewport: function (el) {
 		if (typeof jQuery === 'function' && el instanceof jQuery) {
 			el = el[0];
@@ -132,14 +90,8 @@ var Ad = {
 		var n = window.innerHeight || document.documentElement.clientHeight;
 		return rect.top <= n && rect.top + rect.height >= 0;
 	},
-
-	/**
-	 * 监测曝光率
-	 * div 广告dom
-	 * monitorUrl 广告曝光接口
-	 */
 	checkMonitor: function (div, monitorUrl, ad_platform, positionId, materialId) {
-		if (ad_platform == 1) { // 固价广告逻辑
+		if (ad_platform == 1) { // 固价
 			var isInViewport = Ad.isElementInViewport(div);
 			if (isInViewport) {
 				$.ajax({
@@ -178,7 +130,6 @@ var Ad = {
 			}, 200);
 
 			window.addEventListener('scroll', checkFun, true);
-
 		} else {
 			var isInViewport = Ad.isElementInViewport(div);
 			if (isInViewport) {
@@ -187,7 +138,6 @@ var Ad = {
 				});
 				return;
 			}
-
 			var checkFun = Ad.throttle(function () {
 				if (Ad.isElementInViewport(div)) {
 					window.removeEventListener('scroll', checkFun, true);
@@ -196,15 +146,9 @@ var Ad = {
 					});
 				}
 			}, 200);
-
 			window.addEventListener('scroll', checkFun, true);
 		}
-
 	},
-
-	/**
-	 * 节流
-	 */
 	throttle: function (func, wait, options) {
 		var context, args, result;
 		var timeout = null;
@@ -219,7 +163,7 @@ var Ad = {
 		return function () {
 			var now = new Date().getTime();
 			if (!previous && options.leading === false) previous = now;
-			// 计算剩余时间
+			// 璁＄畻鍓╀綑鏃堕棿
 			var remaining = wait - (now - previous);
 			context = this;
 			args = arguments;
@@ -232,32 +176,49 @@ var Ad = {
 				result = func.apply(context, args);
 				if (!timeout) context = args = null;
 			} else if (!timeout && options.trailing !== false) {
-				// options.trailing=true时，延时执行func函数
+				// options.trailing=true鏃讹紝寤舵椂鎵цfunc鍑芥暟
 				timeout = setTimeout(later, remaining);
 			}
 			return result;
 		};
 	},
-
-	/**
-	 * 发送请求
-	 */
 	send: function (url) {
 		var img = document.createElement('img');
 		img.src = url;
 		img.style.display = 'none';
 		document.body.appendChild(img);
 	},
-
-	/**
-	 * pid 广告位id
-	 * templateId 模板script的id
-	 * wrapDomId 插入广告模板的父级id
-	 * adWrapClass 广告wrap的class 用于寻找被插入的广告
-	 * data 拓展的数据
-	 * @param {*} params
-	 */
 	singleAd: function (params, callback) {
+		var listDom = document.getElementById("dataList");
+		var liDom = document.createElement("div");
+		liDom.setAttribute('id', 'ad_new_'+ adListIndex)
+		listDom.appendChild(liDom);
+		var otherHtml = ''
+		if (otherId < gzh.length) {
+			otherHtml = '<div class="ad-template-info"' +
+				'     style="display: flex;justify-content: space-between;height: 1.86rem;margin-top: 0.24rem"' +
+				'     onclick="">' +
+				'<div style="width: 65%">' +
+				'<div class="line-two"' +
+				'     style="font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.44rem;">'+ gzh[otherId].title +'</div>' +
+				'<div style="display: flex;justify-content: space-between;margin-top: 0.28rem;color: rgba(153, 153, 153, 1)">' +
+				'<span style="color: rgba(153, 153, 153, 1)!important;font-size: 14px;">' +
+				'    <img src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/img/eye.png"' +
+				'         style="margin-top: -0.04rem;margin-right: 0.06rem;width: 0.28rem;height: 0.28rem;"><span>'+ random(100000, 500000) +'次观看</span>' +
+				'</span>' + getDate() + '</div>' +
+				'</div>' +
+				'<div style="width: 2rem;height: 1.6rem;padding-right: 0rem;line-height: 1.4rem">' +
+				'<img src="' + gzh[otherId].imgSrc +' " style="height: 1.6rem;border-radius: 4px;">' +
+				'</div>' +
+				'</div>' +
+				'<div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>'
+		}
+
+		if (adListIndex > 1 && adListIndex % 2 != 0) {
+			otherId++
+			$('#ad_new_'+ adListIndex +'').append(otherHtml)
+		}
+
 		if (params.ad_platform == 1) {
 			var pid = params.pid,
 				templateId = params.adWrapClass,
@@ -278,19 +239,19 @@ var Ad = {
 					ad_platform: 1
 				}
 
-				//获取模板生成的html
+				//鑾峰彇妯℃澘鐢熸垚鐨刪tml
 				var html = template(
 					templateId,
 					$.extend(new_res, {
-						date: Ad.getDate(), //日期
-						page: params.page, //日期
-						readNum: Ad.random(100000, 500000) //阅读数
+						date: getDate(),
+						page: params.page,
+						readNum: random(100000, 500000)
 					})
 				);
-				$('#dataList').append(html)
-				// 查询被插入的广告 用于曝光监测
-				var currAd = $('#dataList' + ' .' + adWrapClass + ':last')[0];
-				//启动广告曝光监测
+
+				$('#ad_new_'+ adListIndex +'').append(html)
+
+				var currAd = $('#ad_new_'+ adListIndex + ' .' + adWrapClass + ':last')[0];
 				Ad.checkMonitor(currAd, res.data.links, 1, params.pid, res.data.ad_material_id);
 			});
 		} else {
@@ -302,19 +263,20 @@ var Ad = {
 			Ad.fetchAd($.extend({pid: pid}, data), function (err, res) {
 				callback && callback(res);
 				if (err) return;
-				//获取模板生成的html
 				var html = template(
 					templateId,
 					$.extend(res, {
-						date: Ad.getDate(), //日期
-						page: params.page, //日期
-						readNum: Ad.random(100000, 500000) //阅读数
+						date: getDate(),
+						page: params.page,
+						readNum: random(100000, 500000),
+						ad_platform: 0,
+						ad_material_id: 0
 					})
 				);
-				$('#dataList').append(html)
-				// 查询被插入的广告 用于曝光监测
-				var currAd = $('#dataList' + ' .' + adWrapClass + ':last')[0];
-				//启动广告曝光监测
+
+				$('#ad_new_'+ adListIndex +'').append(html)
+
+				var currAd = $('#ad_new_'+ adListIndex + ' .' + adWrapClass + ':last')[0];
 				Ad.checkMonitor(currAd, res.monitorUrl);
 			});
 		}
@@ -323,16 +285,19 @@ var Ad = {
 };
 
 
-function getParam(name, url) { // 获取地址栏参数
+function getParam(name, url) {
 	if (typeof name !== 'string') return false
 	if (!url) url = window.location.href
-	// 当遇到name[xx]时，对方括号做一下转义为 name\[xxx\]，因为下面还需要使用name做正则
 	name = name.replace(/[\[\]]/g, '\\$&')
 	var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)')
 	var results = regex.exec(url)
 	if (!results) return null
 	if (!results[2]) return ''
 	return decodeURIComponent(results[2].replace(/\+/g, ' '))
+}
+
+function random (min, max) {
+	return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 function getDate() {
@@ -349,7 +314,7 @@ function random(min, max) {
 	return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function makeRandomArr(arrList, num) { // 随机取出数组元素
+function makeRandomArr(arrList, num) {
 	if (num > arrList.length) {
 		num = arrList.length // eslint-disable-line
 	}

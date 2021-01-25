@@ -74,3 +74,7 @@ body {
 	margin-top: 6px;
 	margin-bottom: 6vw;
 }
+
+#dataList{
+	padding: 0.25rem;
+}

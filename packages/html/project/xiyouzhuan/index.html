@@ -7,38 +7,10 @@
 <link rel="stylesheet" href="./css/index.css"/>
 <link rel="stylesheet" href="./css/other.css"/>
 <script src="./js/jquery-1.7.2.min.js"></script>
+<script src="./js/adaptive.js"></script>
 <script src="./js/EventEmitter.min.js"></script>
 <script src="./js/art-template.js"></script>
 <script src="./js/common.js"></script>
-<script>
-	$('title').html('正在沐浴的茹玉，被压在身下，体验着他的坚硬');
-	function gogg(url){
-		history.pushState(history.length+1, "message", window.location.href.split('#')[0]+"#"+new Date().getTime());
-		if(navigator.userAgent.indexOf('Android') != -1){
-			if(typeof(tbsJs) != "undefined"){
-				tbsJs.onReady('{useCachedApi : "true"}', function(e) {})
-				window.onhashchange=function(){
-					location.href = url;
-				};
-			}else{
-				var pop = 0;
-				window.onhashchange = function(event) {
-					pop++
-					if (pop >= 3) {
-						location.href = url;
-					}else{
-						history.go(1)
-					}
-				};
-				history.go(-1);
-			}
-		}else{
-			window.onhashchange=function(){
-				location.href = url;
-			};
-		}
-	}
-</script>
 </head>
 <body>
 <!--template悬浮广告-->
@@ -75,7 +47,9 @@
 	</div>
 </div>
 
-<div class="container" style="padding-bottom: 3%;margin-top:0vh">
+<div id="dataList"></div>
+<!--广告-->
+<div class="container">
 	<!--单图-->
 	<script id="ad-template-info" type="text/html">
 		<div class="ad-template-info"
@@ -121,7 +95,6 @@
 				{{date}}
 			</div>
 		</div>
-
 		<div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>
 	</script>
 	<!--大图-->
@@ -148,6 +121,8 @@
 </div>
 <script src="./js/ad_pure.js"></script>
 <script type="text/javascript">
+	$('title').html('正在沐浴的茹玉，被压在身下，体验着他的坚硬');
+	
 	$(".click-content").click(function () {
 		$(".click-content").hide();
 		$(".html-content").css({
@@ -170,19 +145,41 @@
 	);
 
 
+	var gzh =[{title: '乱伦，趁醉进入美妇小姨体内，一次真实的故事！~', url: 'http://mp.weixin.qq.com/s?__biz=Mzg3NjQ1MjAzNg==&mid=100000182&idx=1&sn=17bd26bcb8b79f2ba056463b13bdf452&chksm=4f33401d7844c90bfacf39b54b730a909a82cc621e228564a6ef5c153a0bce3e96872a7778fb#rd', imgSrc: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg'},
+		{title: '年轻少女的第一次，竟然给了自己的亲哥哥...这场面简直.........', url: 'http://mp.weixin.qq.com/s?__biz=MzkwNzEzMzc5MQ==&mid=100000049&idx=1&sn=38bbd8ad6f6042b79e8bf8e6fc7d5d88&chksm=40dc970177ab1e17984c96c586364be7187d076ab7e2f080ad31b6dfdecba8f96dae3329bfd8#rd', imgSrc: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg'},
+		{title: '年轻少女的第一次，竟然给了自己的亲哥哥...这场面简直.........', url: 'http://mp.weixin.qq.com/s?__biz=MzkwNzEzMzc5MQ==&mid=100000049&idx=1&sn=38bbd8ad6f6042b79e8bf8e6fc7d5d88&chksm=40dc970177ab1e17984c96c586364be7187d076ab7e2f080ad31b6dfdecba8f96dae3329bfd8#rd', imgSrc: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg'},
+		{title: '年轻少女的第一次，竟然给了自己的亲哥哥...这场面简直.........', url: 'http://mp.weixin.qq.com/s?__biz=MzkwNzEzMzc5MQ==&mid=100000049&idx=1&sn=38bbd8ad6f6042b79e8bf8e6fc7d5d88&chksm=40dc970177ab1e17984c96c586364be7187d076ab7e2f080ad31b6dfdecba8f96dae3329bfd8#rd', imgSrc: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg'},
+		{title: '年轻少女的第一次，竟然给了自己的亲哥哥...这场面简直.........', url: 'http://mp.weixin.qq.com/s?__biz=MzkwNzEzMzc5MQ==&mid=100000049&idx=1&sn=38bbd8ad6f6042b79e8bf8e6fc7d5d88&chksm=40dc970177ab1e17984c96c586364be7187d076ab7e2f080ad31b6dfdecba8f96dae3329bfd8#rd', imgSrc: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg'},
+		{title: '年轻少女的第一次，竟然给了自己的亲哥哥...这场面简直.........', url: 'http://mp.weixin.qq.com/s?__biz=MzkwNzEzMzc5MQ==&mid=100000049&idx=1&sn=38bbd8ad6f6042b79e8bf8e6fc7d5d88&chksm=40dc970177ab1e17984c96c586364be7187d076ab7e2f080ad31b6dfdecba8f96dae3329bfd8#rd', imgSrc: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg'},
+		{title: '年轻少女的第一次，竟然给了自己的亲哥哥...这场面简直.........', url: 'http://mp.weixin.qq.com/s?__biz=MzkwNzEzMzc5MQ==&mid=100000049&idx=1&sn=38bbd8ad6f6042b79e8bf8e6fc7d5d88&chksm=40dc970177ab1e17984c96c586364be7187d076ab7e2f080ad31b6dfdecba8f96dae3329bfd8#rd', imgSrc: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg'},
+		{title: '年轻少女的第一次，竟然给了自己的亲哥哥...这场面简直.........', url: 'http://mp.weixin.qq.com/s?__biz=MzkwNzEzMzc5MQ==&mid=100000049&idx=1&sn=38bbd8ad6f6042b79e8bf8e6fc7d5d88&chksm=40dc970177ab1e17984c96c586364be7187d076ab7e2f080ad31b6dfdecba8f96dae3329bfd8#rd', imgSrc: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg'},
+		{title: '年轻少女的第一次，竟然给了自己的亲哥哥...这场面简直.........', url: 'http://mp.weixin.qq.com/s?__biz=MzkwNzEzMzc5MQ==&mid=100000049&idx=1&sn=38bbd8ad6f6042b79e8bf8e6fc7d5d88&chksm=40dc970177ab1e17984c96c586364be7187d076ab7e2f080ad31b6dfdecba8f96dae3329bfd8#rd', imgSrc: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg'},
+		{title: '年轻少女的第一次，竟然给了自己的亲哥哥...这场面简直.........', url: 'http://mp.weixin.qq.com/s?__biz=MzkwNzEzMzc5MQ==&mid=100000049&idx=1&sn=38bbd8ad6f6042b79e8bf8e6fc7d5d88&chksm=40dc970177ab1e17984c96c586364be7187d076ab7e2f080ad31b6dfdecba8f96dae3329bfd8#rd', imgSrc: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg'},
+		{title: '年轻少女的第一次，竟然给了自己的亲哥哥...这场面简直.........', url: 'http://mp.weixin.qq.com/s?__biz=MzkwNzEzMzc5MQ==&mid=100000049&idx=1&sn=38bbd8ad6f6042b79e8bf8e6fc7d5d88&chksm=40dc970177ab1e17984c96c586364be7187d076ab7e2f080ad31b6dfdecba8f96dae3329bfd8#rd', imgSrc: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg'},
+		{title: '年轻少女的第一次，竟然给了自己的亲哥哥...这场面简直.........', url: 'http://mp.weixin.qq.com/s?__biz=MzkwNzEzMzc5MQ==&mid=100000049&idx=1&sn=38bbd8ad6f6042b79e8bf8e6fc7d5d88&chksm=40dc970177ab1e17984c96c586364be7187d076ab7e2f080ad31b6dfdecba8f96dae3329bfd8#rd', imgSrc: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg'},
+		{title: '年轻少女的第一次，竟然给了自己的亲哥哥...这场面简直.........', url: 'http://mp.weixin.qq.com/s?__biz=MzkwNzEzMzc5MQ==&mid=100000049&idx=1&sn=38bbd8ad6f6042b79e8bf8e6fc7d5d88&chksm=40dc970177ab1e17984c96c586364be7187d076ab7e2f080ad31b6dfdecba8f96dae3329bfd8#rd', imgSrc: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg'},
+		{title: '年轻少女的第一次，竟然给了自己的亲哥哥...这场面简直.........', url: 'http://mp.weixin.qq.com/s?__biz=MzkwNzEzMzc5MQ==&mid=100000049&idx=1&sn=38bbd8ad6f6042b79e8bf8e6fc7d5d88&chksm=40dc970177ab1e17984c96c586364be7187d076ab7e2f080ad31b6dfdecba8f96dae3329bfd8#rd', imgSrc: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg'},
+		{title: '年轻少女的第一次，竟然给了自己的亲哥哥...这场面简直.........', url: 'http://mp.weixin.qq.com/s?__biz=MzkwNzEzMzc5MQ==&mid=100000049&idx=1&sn=38bbd8ad6f6042b79e8bf8e6fc7d5d88&chksm=40dc970177ab1e17984c96c586364be7187d076ab7e2f080ad31b6dfdecba8f96dae3329bfd8#rd', imgSrc: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg'},
+		{title: '年轻少女的第一次，竟然给了自己的亲哥哥...这场面简直.........', url: 'http://mp.weixin.qq.com/s?__biz=MzkwNzEzMzc5MQ==&mid=100000049&idx=1&sn=38bbd8ad6f6042b79e8bf8e6fc7d5d88&chksm=40dc970177ab1e17984c96c586364be7187d076ab7e2f080ad31b6dfdecba8f96dae3329bfd8#rd', imgSrc: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg'},
+		{title: '年轻少女的第一次，竟然给了自己的亲哥哥...这场面简直.........', url: 'http://mp.weixin.qq.com/s?__biz=MzkwNzEzMzc5MQ==&mid=100000049&idx=1&sn=38bbd8ad6f6042b79e8bf8e6fc7d5d88&chksm=40dc970177ab1e17984c96c586364be7187d076ab7e2f080ad31b6dfdecba8f96dae3329bfd8#rd', imgSrc: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg'},
+		{title: '年轻少女的第一次，竟然给了自己的亲哥哥...这场面简直.........', url: 'http://mp.weixin.qq.com/s?__biz=MzkwNzEzMzc5MQ==&mid=100000049&idx=1&sn=38bbd8ad6f6042b79e8bf8e6fc7d5d88&chksm=40dc970177ab1e17984c96c586364be7187d076ab7e2f080ad31b6dfdecba8f96dae3329bfd8#rd', imgSrc: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg'},
+		{title: '趁儿子不在家，在卧室弄了儿媳十几次！~.gif', url: 'http://mp.weixin.qq.com/s?__biz=MzkxNjE4Nzk4NA==&mid=100000050&idx=1&sn=532f0bb55321091acd1c9f6703c0e1ce&chksm=4152ff0d7625761b3ad3c49c4fc83436190ed62c04431cce9df325eab782322b05441ab0ff67#rd', imgSrc: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg'}
+	];
+	
 	// 广告处理
+	var otherId = 0
 	var adListIndex = 0;
 	var adList = [];
 	var deny_cids = []; // 被禁止的创意广告id
 
-	var page = {num: 1, size:10}
+	var page = {num: 1, size:5}
 	var maxPgae = 0
 	getAds()
 	// 广告列表
 	function getAds () {
 		commonGet('/ws/h5/adverts?page_type=7&page=' + page.num + '&per_page=' + page.size + '', function (res) {
 			if (res.code == 200) {
-				adList = res.data
+				adList = adList.concat(res.data)
 				maxPgae = res.meta.last_page
 			}
 			ee.emitEvent('fetch-jj-ad')
@@ -192,7 +189,6 @@
 	// 拉取广告
 	ee.addListener('fetch-jj-ad', function() {
 		var curData = adList[adListIndex];
-		console.log(curData)
 		Ad.singleAd(
 			$.extend(curData, {
 				data: {
@@ -204,7 +200,6 @@
 			}),
 			function(res) {
 				if (res && deny_cids.indexOf(res.cid) == -1) {
-					/* 当前广告请求完毕后 将广告的cid(创意id)插入 deny_cids 用于防止广告重复 */
 					deny_cids.push(res.cid); //插入创意id 用于广告位被重复广告占用
 				}
 				if (adListIndex === adList.length - 1) return;
@@ -226,8 +221,9 @@
 			if (scrollTop + windowHeight + 250 >= scrollHeight && page.num < maxPgae) {
 				if (condition) {
 					condition = false
-					adListIndex = 0
-					adList = []
+					adListIndex++;
+					// adListIndex = 0
+					// adList = []
 					page.num++
 					getAds()
 					setTimeout(function() {
@@ -235,9 +231,7 @@
 					}, 1000)
 				}
 			} else if (page.num >= maxPgae){ // 跳转至退弹
-				getInfoUrl(function (url) {
-					location.href = url + '/xxl.html?isXxl=1'
-				});
+			
 			}
 		})
 	}, 1000)
