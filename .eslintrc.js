@@ -255,19 +255,17 @@ module.exports = {
         'no-delete-var': 2, // 禁止删除变量
         'no-label-var': 2, // 不允许标签与变量同名
         'no-restricted-globals': 2, // 禁用特定的全局变量
-        'no-shadow': 2, // 禁止变量声明与外层作用域的变量同名
         'no-shadow-restricted-names': 2, // 禁止将标识符定义为受限的名字
         'no-undef': 2, // 禁用未声明的变量，除非它们在?/*global*/?注释中被提到
         'no-undef-init': 2, // 禁止将变量初始化为?undefined
         'no-use-before-define': 2, // 禁止在变量定义之前使用它们
         // 这些规则是关于Node.js 或 在浏览器中使用CommonJS 的：
-        'callback-return': 2, // 强制数组方法的回调函数中有 return 语句
+        'callback-return': 0, // 强制数组方法的回调函数中有 return 语句
         'handle-callback-err': 2, // 要求回调函数中有容错处理
         'no-buffer-constructor': 2, // 禁用?Buffer()?构造函数
         'no-mixed-requires': 2, // 禁止混合常规变量声明和?require?调用
         'no-new-require': 2, // 禁止调用?require?时使用?new?操作符
         'no-path-concat': 2, // 禁止对?__dirname?和?__filename?进行字符串连接
-        'no-process-exit': 2, // 禁用?process.exit()
         'no-restricted-modules': 2, // 禁用通过?require?加载的指定模块
         // 这些规则是关于风格指南的，而且是非常主观的：
         'array-bracket-newline': 2, // 在数组开括号后和闭括号前强制换行
@@ -346,7 +344,7 @@ module.exports = {
         'object-shorthand': 2, // 要求或禁止对象字面量中方法和属性使用简写语法
         'prefer-arrow-callback': 2, // 要求回调函数使用箭头函数
         'prefer-const': 2, // 要求使用?const?声明那些声明后不再被修改的变量
-        'prefer-destructuring': 2, // 优先使用数组和对象解构
+        'prefer-destructuring': 0, // 优先使用数组和对象解构
         'prefer-numeric-literals': 2, // 禁用 parseInt() 和 Number.parseInt()，使用二进制，八进制和十六进制字面量
         'prefer-rest-params': 2, // 要求使用剩余参数而不是?arguments
         'prefer-spread': 2, // 要求使用扩展运算符而非? .apply()
