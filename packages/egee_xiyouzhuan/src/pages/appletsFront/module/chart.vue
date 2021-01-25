@@ -8,14 +8,14 @@
 		</view>
 
 		<view class="padding" style="border: 1px solid #eee">
-			<view>今日视频总计费次数：{{total_clickOne}}</view>
+			<view>今日视频总收益：{{total_clickOne}}</view>
 			<scroll-view scroll-x>
 				<m-lineChart :xData="dataOneHour" :yData="dataOneClick"></m-lineChart>
 			</scroll-view>
 		</view>
 		<view class="padding" style="border: 1px solid #eee">
 			<view>
-				{{mytime}}总计费次数:{{total_clickTwo}}
+				{{mytime}}总收益:{{total_clickTwo}}
 				<m-button :hairLine="true" :loading="false" :plain="false" :ripple="true" :disabled="false"
 						  :shape="['square', 'circle'][1]" :size="['default', 'medium', 'mini'][2]"
 						  :type="['default', 'primary', 'error', 'warning', 'success'][2]"

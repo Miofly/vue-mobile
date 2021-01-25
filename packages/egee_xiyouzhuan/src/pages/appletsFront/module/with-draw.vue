@@ -8,8 +8,6 @@
 				提现
 			</view>
 			<view style="height: 100rpx"></view>
-
-
 			<!--status: boolean = false-->
 			<view class="flex justify-around text-center margin-top"
 			      style="width: 60vw;margin-left: 20vw;height: 60rpx;line-height: 60rpx">

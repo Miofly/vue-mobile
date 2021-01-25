@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+</head>
+<body>
+<script>
+	/*
+	 Proxy 可以理解成，在目标对象之前架设一层“拦截”，外界对该对象的访问，都必须先通过这层拦截，因此提供了一种机制，可以对外界的访问进行过滤和改写
+	 Proxy 对象的所有用法，都是上面这种形式，不同的只是handler参数的写法。
+	 其中，new Proxy()表示生成一个Proxy实例，target参数表示所要拦截的目标对象，handler参数也是一个对象，用来定制拦截行为。
+
+
+	 */
+	var obj = new Proxy({}, {
+		get: function (target, propKey, receiver) {
+			console.log(`getting ${propKey}!`);
+			return Reflect.get(target, propKey, receiver);
+		},
+		set: function (target, propKey, value, receiver) {
+			console.log(`setting ${propKey}!`);
+			return Reflect.set(target, propKey, value, receiver);
+		}
+	});
+
+	obj.count = 1
+	//  setting count!
+	++obj.count
+	//  getting count!
+	//  setting count!
+	//  2
+</script>
+</body>
+</html>

@@ -1,7 +1,15 @@
 // Watcher.js
 // 导入 Dep ，为了往 Dep 类上挂载静态属性
 import Dep from "./Dep.js"
+/*
+ 可以看到 Watcher 类中有一个惊人的操作，就是在 getValue 方法中。
+ 每当我们 new Watcher 的时候，会自动调用这个方法，并且给 Dep 添加静态属性 target 指向实例对象本身，获取之后将其移除。
 
+ 可能你看到这里后觉得这并没有什么稀奇的，还会觉得多此一举。如果是这样，我来提醒你一点，你忽略了中间的取值操作：this.vm[key]。
+ 这是在取值，取值不就会触发 getter 方法吗，那在取值的这一步操作中就刚好可以获取到 Dep.target 的值了，并且取值后它就不存在了，这是为了防止同一依赖被收集多次，造成重复的更新。
+ 顺着这个思路我们就应该回到 `Observer` 类中来使用依赖收集器来添加依赖了。我们需要在 `getter` 中收集依赖，在 `setter` 中通知依赖更新。
+
+ */
 export default class Watcher {
     constructor(vm, expr, callback) {
         this.vm = vm

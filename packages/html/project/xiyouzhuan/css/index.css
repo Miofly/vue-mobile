@@ -493,7 +493,7 @@ img {
 body {
 	margin: 0;
 	padding: 0;
-	background-color: #fff!important
+	background: #d3f8d7;
 }
 
 .article-wrap {
@@ -814,7 +814,7 @@ body,html {
 }
 
 .container {
-	padding-bottom: 35vw
+	display: flex;justify-content: space-between;margin-top: 0.24rem
 }
 
 .acticle_title {

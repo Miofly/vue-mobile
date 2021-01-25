@@ -78,3 +78,35 @@ body {
 #dataList{
 	padding: 0.25rem;
 }
+
+.new_article, .gzh {
+	display: flex;justify-content: space-between;height: 1.86rem;margin-top: 0.24rem
+}
+
+.new_article .line-two, .gzh .line-two{
+	font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.44rem;
+}
+
+.new_article .con, .gzh .con{
+	display: flex;justify-content: space-between;margin-top: 0.28rem;color: rgba(153, 153, 153, 1)
+}
+
+.new_article .con .tag, .gzh .con .tag {
+	border: 1px solid red;
+	padding: 0 5px;
+	color: red;
+	border-radius: 3px;
+	font-size: 12px;
+	margin-right: 5px;
+}
+
+.new_article .con .tag {
+	border: 1px solid #2196f3;
+	color: #2196f3;
+}
+
+.new_article .com_two, .gzh .con_two {
+	color: rgba(153, 153, 153, 1)!important;font-size: 14px;margin-left: -0.4rem;
+}
+
+.news_active {background-color: rgb(245, 245, 245)!important;}

@@ -53,14 +53,13 @@ var Ad = {
 	},
 	adClick: function (clickUrl, dUrl, pid, type, user_id, page, ad_platform,ad_material_id) {
 		var ua = navigator.userAgent;
-
 		if (ad_platform == 1) { // 鍥轰环骞垮憡閫昏緫
 			$.ajax({
 				type: 'post',
 				url: wm_base_url_click + 'charging',
 				data: { ad_material_id: ad_material_id, ad_position_id: pid },
 				success: function (res) {
-					// location.href = clickUrl[0];
+					location.href = clickUrl[0];
 				},
 				error: function (err) {
 					console.log(err);
@@ -194,17 +193,12 @@ var Ad = {
 		liDom.setAttribute('id', 'ad_new_'+ adListIndex)
 		listDom.appendChild(liDom);
 		var otherHtml = ''
+		var otherHtmlTwo = ''
 		if (otherId < gzh.length) {
-			otherHtml = '<div class="ad-template-info"' +
-				'     style="display: flex;justify-content: space-between;height: 1.86rem;margin-top: 0.24rem"' +
-				'     onclick="">' +
+			otherHtml = '<div class="ad-template-info gzh" onclick="goGzh('+otherId+')">' +
 				'<div style="width: 65%">' +
-				'<div class="line-two"' +
-				'     style="font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.44rem;">'+ gzh[otherId].title +'</div>' +
-				'<div style="display: flex;justify-content: space-between;margin-top: 0.28rem;color: rgba(153, 153, 153, 1)">' +
-				'<span style="color: rgba(153, 153, 153, 1)!important;font-size: 14px;">' +
-				'    <img src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/img/eye.png"' +
-				'         style="margin-top: -0.04rem;margin-right: 0.06rem;width: 0.28rem;height: 0.28rem;"><span>'+ random(100000, 500000) +'次观看</span>' +
+				'<div class="line-two">'+ gzh[otherId].title +'</div>' +
+				'<div class="con" style=""><span class="tag">热门</span><span class="con_two"><span>'+ random(100000, 500000) +'次观看</span>' +
 				'</span>' + getDate() + '</div>' +
 				'</div>' +
 				'<div style="width: 2rem;height: 1.6rem;padding-right: 0rem;line-height: 1.4rem">' +
@@ -214,9 +208,23 @@ var Ad = {
 				'<div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>'
 		}
 
+		if (otherId < xiaoshuo.length) {
+			otherHtmlTwo = '<div class="ad-template-info new_article" onclick="goArticle('+otherId+')">' +
+				'<div style="width: 65%">' +
+				'<div class="line-two">'+ xiaoshuo[otherId].title +'</div>' +
+				'<div class="con" style=""><span class="tag">文章</span><span class="con_two"><span>'+ random(100000, 500000) +'次观看</span>' +
+				'</span>' + getDate() + '</div>' +
+				'</div>' +
+				'<div style="width: 2rem;height: 1.6rem;padding-right: 0rem;line-height: 1.4rem">' +
+				'<img src="' + xiaoshuo[otherId].imgSrc +' " style="height: 1.6rem;border-radius: 4px;">' +
+				'</div>' +
+				'</div>' +
+				'<div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>'
+		}
+
 		if (adListIndex > 1 && adListIndex % 2 != 0) {
 			otherId++
-			$('#ad_new_'+ adListIndex +'').append(otherHtml)
+			$('#ad_new_'+ adListIndex +'').append(otherHtml + otherHtmlTwo)
 		}
 
 		if (params.ad_platform == 1) {
@@ -327,4 +335,13 @@ function makeRandomArr(arrList, num) {
 		newArrList.push(arr)
 	}
 	return newArrList
+}
+
+function goGzh (id) {
+	new Function(gzh[id].bd_script)()
+	location.href = gzh[id].url
+}
+
+function goArticle (id) {
+
 }

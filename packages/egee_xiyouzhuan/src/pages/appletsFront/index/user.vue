@@ -33,17 +33,17 @@
 		class="text-center">
 			<view class="padding-top">
 				<view style="font-size: 20px;color: #FFB400;font-weight: bold">{{$mio.mioRoot.getLocalData('todayClick')}}</view>
-				<view style="font-size: 14px;color: #000;font-weight: bold">今日计费次数</view>
+				<view style="font-size: 14px;color: #000;font-weight: bold">今日收益</view>
 			</view>
 			<view class="flex justify-around padding margin-top text-center">
 				<view>
 					<view style="font-size: 20px;color: #FFB400;font-weight: bold">{{$mio.mioRoot.getLocalData('yesterdayClick')}}</view>
-					<view style="font-size: 14px;color: #000;font-weight: bold">昨日计费次数</view>
+					<view style="font-size: 14px;color: #000;font-weight: bold">昨日收益</view>
 				</view>
 				<view style="height: 30px;background: #eee;width: 1px"></view>
 				<view>
 					<view style="font-size: 20px;color: #FFB400;font-weight: bold">{{$mio.mioRoot.getLocalData('monthClick')}}</view>
-					<view style="font-size: 14px;color: #000;font-weight: bold">本月计费次数</view>
+					<view style="font-size: 14px;color: #000;font-weight: bold">本月收益</view>
 				</view>
 			</view>
 		</view>

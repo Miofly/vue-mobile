@@ -13,7 +13,7 @@
 							<!--<view class="text-sm">{{item.name}}</view>-->
 						<!--</view>-->
 					<!--</view>-->
-					<!--<view class="width-eighty fr text-red ">总计费次数：{{item.effective_click_total}}</view>-->
+					<!--<view class="width-eighty fr text-red ">总收益：{{item.effective_click_total}}</view>-->
 				<!--</view>-->
 				<!--<view v-show="false" class="fa fa-angle-right fa-2x margin-left text-gray"></view>-->
 			<!--</view>-->
@@ -24,7 +24,7 @@
 				<view class="content">
 					<view class="fl">{{index + 1}}</view>
 					<view class="fl margin-left">{{item.name}}</view>
-					<view class="fr text-red">总计费次数：{{item.effective_click_total}}</view>
+					<view class="fr text-red">总收益：{{item.effective_click_total}}</view>
 				</view>
 				<view v-show="false" class="fa fa-angle-right fa-2x margin-left text-gray"></view>
 			</view>

@@ -81,7 +81,7 @@
 		<view class="padding">
 			<m-button :hairLine="true" :loading="false" :plain="false" :ripple="true" :disabled="false"
 					  :shape="['square', 'circle'][1]" :size="['default', 'medium', 'mini'][0]"
-					  :type="['default', 'primary', 'error', 'warning', 'success'][2]" style="background: #ef560e;"
+					  :type="['default', 'primary', 'error', 'warning', 'success'][2]" style="background: #fbcf24;"
 					  @tap="submit" class="text-white" :customStyle="{fontSize: '14px'}">
 				<view class="fa text-xl fa-android margin-right-xxl" style="height: 50rpx" v-if="false"></view>
 				提交

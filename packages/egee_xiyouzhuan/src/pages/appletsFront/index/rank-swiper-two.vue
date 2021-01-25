@@ -8,7 +8,7 @@
 				<view class="content">
 					<view class="fl" style="line-height: 50px;">{{index + 1}}</view>
 					<view class="fl margin-left">{{item.member_name}}<br> <span style="font-size: 14px">{{item.team_name}}</span></view>
-					<view class="fr " style="line-height: 50px;color:#F41032">总计费次数：{{item.effective_click_total}}</view>
+					<view class="fr " style="line-height: 50px;color:#F41032">总收益：{{item.effective_click_total}}</view>
 				</view>
 				<view v-show="false" class="fa fa-angle-right fa-2x margin-left text-gray"></view>
 			</view>

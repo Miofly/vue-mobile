@@ -45,7 +45,7 @@
 									<view style="font-size: 14px;color: #000;font-weight: bold">
 										{{this.$store.state.xcx.phIndex == 0 ? '今日':
 										this.$store.state.xcx.phIndex == 1 ? '昨日' : this.$store.state.xcx.phIndex == 2 ?
-										'本周' : this.$store.state.xcx.phIndex == 3 ? '本月' : ''}}计费次数
+										'本周' : this.$store.state.xcx.phIndex == 3 ? '本月' : ''}}收益
 									</view>
 								</view>
 							</view>

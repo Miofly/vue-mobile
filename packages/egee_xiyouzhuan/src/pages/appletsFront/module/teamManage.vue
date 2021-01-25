@@ -34,7 +34,7 @@
 		</view>
 
 		<view class="margin-bottom margin-left" style="overflow: hidden!important;">
-			团队今日视频总计费次数：{{total_clickOne}}
+			团队今日视频总收益：{{total_clickOne}}
 		</view>
 		<scroll-view scroll-x>
 			<m-lineChart :xData="dataOneHour" :yData="dataOneClick"></m-lineChart>
