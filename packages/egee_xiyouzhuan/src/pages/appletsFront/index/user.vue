@@ -42,16 +42,16 @@
 				<view>
 					<view style="font-size: 26px;color: #FFB400;font-weight: bold">{{$mio.mioRoot.getLocalData('yesterdayClick')}}</view>
 					<view style="font-size: 14px;color: #000;font-weight: bold">今日收益</view>
-					<view class="flex justify-around" style="margin-top: 10rpx">
+					<view class="flex justify-between" style="margin-top: 10rpx">
 						<view class="text-14" style="color: #333"><view style="margin-left: 4px;color: #EE8700">2131231</view><view>点击</view></view>
 						<view class="text-14" style="color: #333"><view style="margin-left: 4px;color: #EE8700">2131231</view><view>分成</view></view>
 					</view>
 				</view>
-				<view style="height: 30px;background: #eee;width: 1px"></view>
+				<view style="height: 50px;background: #eee;width: 1px;margin-top: 50rpx"></view>
 				<view>
 					<view style="font-size: 26px;color: #FFB400;font-weight: bold">{{$mio.mioRoot.getLocalData('monthClick')}}</view>
 					<view style="font-size: 14px;color: #000;font-weight: bold">可提现余额</view>
-					<view class="flex justify-around" style="margin-top: 10rpx">
+					<view class="flex justify-between" style="margin-top: 10rpx">
 						<view class="text-14" style="color: #333"><view style="margin-left: 4px;color: #EE8700">2131231</view><view>点击</view></view>
 						<view class="text-14" style="color: #333"><view style="margin-left: 4px;color: #EE8700">2131231</view><view>分成</view></view>
 					</view>
