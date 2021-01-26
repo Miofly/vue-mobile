@@ -1,9 +1,10 @@
 <template>
 	<view class="full-height" id="parent">
 		<view class="full-width text-xl text-center"
-		      style="position: fixed;top: 0;left: 0;height: 100rpx;line-height: 100rpx;padding: 0!important;background: #E54D42;color: white;z-index: 999999999">
+		      style="background-color: rgb(251, 207, 36);font-size: 18px;position: fixed;top: 0;left: 0;height: 100rpx;line-height: 100rpx;padding: 0!important;z-index: 999999999">
 			<view @click="$mio.mioRoot.back()" class="fa fa-angle-left fa-2x fl margin-left" style="line-height: 100rpx"></view>
-			提现记录
+			<text v-if="$mio.mioRoot.getLocalData('withdraw_status') == 1">点击收益提现记录</text>
+			<text v-else>分成收益提现记录</text>
 			<app-tabs v-model="tabIndex" :tabs="tabs" :fixed="false"></app-tabs>
 		</view>
 		<view class="full-height" style="margin-top: 188rpx">
@@ -19,7 +20,6 @@
 				<swiper-item>
 					<mescroll-item ref="stThree" :url="url" :parmas="parmas" :i="2" :index="tabIndex" :tabs="tabs"></mescroll-item>
 				</swiper-item>
-
 			</swiper>
 		</view>
 	</view>

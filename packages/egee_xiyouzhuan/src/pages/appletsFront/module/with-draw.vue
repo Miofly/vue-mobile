@@ -1,81 +1,69 @@
 <template>
-	<view class="full-height bg-white">
+	<view class="full-height" style="background-color: #f5f6f7">
 		<scroll-view class="full-height" scroll-y style="position: fixed;top: 0;bottom: 0;">
-			<view class="full-width text-xl text-center text-bold"
-			      style="height: 100rpx;line-height: 100rpx;padding: 0!important;position: fixed;top: 0;left: 0;z-index: 999999;background: white">
-				<view @click="testOne" class="fa fa-angle-left fa-2x fl margin-left text-red"
-				      style="line-height: 100rpx"></view>
+			<view class="full-width text-center text-bold with_header">
+				<view @click="testOne" class="fa fa-angle-left fa-2x fl margin-left" style="line-height: 100rpx"></view>
 				提现
 			</view>
 			<view style="height: 100rpx"></view>
-			<!--status: boolean = false-->
-			<view class="flex justify-around text-center margin-top"
-			      style="width: 60vw;margin-left: 20vw;height: 60rpx;line-height: 60rpx">
-				<view @click="status = !status" class="border-left-radius" :class="[status ? 'activeStyle' : 'inActiveStyle']"
-				      style="width: 50%;">男生</view>
-				<view @click="status = !status" class="border-right-radius" :class="[!status ? 'activeStyle' : 'inActiveStyle']"
-				      style="width: 50%;">女生</view>
+			<view class="flex justify-around text-center with_tab bg-white align-center">
+				<view @click="changeTab" :class="[status ? 'activeStyle' : 'inActiveStyle']">点击收益余额</view>
+				<view @click="changeTab" :class="[!status ? 'activeStyle' : 'inActiveStyle']">分成收益余额</view>
+			</view>
+
+			<view class="auth_img" @tap="infoUpdate">
+				<text>个人认证信息</text>
+				<image :src="auth_src"></image>
 			</view>
 			
-			<view class="flex justify-between margin-top-xxl align-end">
-				<view class="margin-left-xl">
-					<view style="font-size: 14px" class="text-bold">账户余额（元）</view>
-					<view style="font-size: 38px;color: #F30A30;font-weight: bolder" class="margin-top-xxl">{{ balance }}</view>
+			<view class="flex justify-between money bg-white">
+				<view class="money_one">
+					<view style="font-size: 14px" class="text-bold money_balance">账户余额（元）</view>
+					<view style="font-size: 38px;color: #F30A30;font-weight: bolder" class="">{{ balance }}</view>
 				</view>
-				<view @tap="goRecord" style="border-radius: 15px;border: 1px solid #E54D42;width: 176rpx;height: 60rpx;color: #E54D42;
-				text-align: center;line-height: 60rpx"
-				      class="margin-right-xl margin-bottom">
+				<view @tap="goRecord" class="margin-right-xl record">
 					提现记录
 				</view>
 			</view>
 
-			<view v-if="need_auth!=1" style="width: 100%;text-align: center;margin-left: 40rpx" class="">
-				<view @tap="infoUpdate" style="color: #E54D42;border-radius: 15px;border: 1px solid #E54D42;width: 266rpx;height: 60rpx;text-align: center;line-height: 60rpx"
-				      class="margin-right-xl margin-bottom">
-					个人认证信息修改
+			<view class="money_set">
+				<view class="flex text-center flex-wrap justify-around">
+					<view v-for="(item, index) in allow_money" :key="index" class="text-center">
+						<view @tap="chooseMoney(index)" :style="{color: moneyIndex==index? 'black' : 'black', background: moneyIndex==index? '#FACA36' : '#F5F6F7'}" class="item text-bold">
+							{{ item.label.replace('元', '') }}
+							<text style="font-size: 18px;font-weight: normal" class="margin-left">元</text>
+						</view>
+					</view>
 				</view>
-			</view>
 
-			<view class="flex text-center flex-wrap justify-around margin-top-ten">
-				<view v-for="(item, index) in allow_money" :key="index" style="width: 200rpx;height: 180rpx" class="text-center">
-					<view @tap="chooseMoney(index)" :style="{color: moneyIndex==index? 'white' : 'red', background: moneyIndex==index? '#E54D42' : 'rgb(249, 249, 249)'}"
-					      style="border: 1px solid rgb(239, 239, 239);border-radius: 35px;height: 140rpx;width: 200rpx;line-height: 140rpx;font-size: 30px;"
-					      class="margin-top-xxl text-bold">
-						{{ item.label.replace('元', '') }}
-						<text style="font-size: 19px;font-weight: normal" class="margin-left-xxl">元</text>
+				<view class="fulls-width with_method">
+					<text style="font-size: 16px;" class="text-left text-bold">提现方式</text>
+
+					<view style="margin-top: 26rpx" class="account">
+						<view v-if="alipay_account==null||alipay_account==''" class="flex justify-around align-center">
+							<view style="height: 60rpx;line-height: 60rpx;width: 200rpx" class="margin-right-ten">
+								<image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
+								       src="/static/images/lz/zhifubao@2x.png"
+								       style="width: 60rpx"></image>
+								<text style="vertical-align: top;" class="margin-left-xxl">未绑定</text>
+							</view>
+							<view @tap="modalStatusThree=true" style="background: #FACA36;text-align: center;color: black;border-radius: 4px;width: 180rpx;height: 56rpx;line-height: 56rpx">绑定账号</view>
+						</view>
+						<view v-else style="position: relative">
+							<view class="zfb">
+								<image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
+									src="/static/images/lz/zhifubao@2x.png" style="width: 60rpx"></image>
+							</view>
+							<text style="" class="">{{ $mio.mioRoot.getLocalData('realName') }} {{alipay_account}}</text>
+							<view class="btn" @tap="modalStatusThree=true" style="">更改账号</view>
+						</view>
 					</view>
 				</view>
 			</view>
 
-			<view class="fulls-width text-center text-bold">
-				<view style="font-size: 16px;" class="margin-bottom">提现方式</view>
-				<view style="background: #E54D42;border-radius: 17px;height: 68rpx;width: 244rpx;margin: 0 auto;line-height: 68rpx" class="text-white">支付宝</view>
-			</view>
-
-			<view class="margin-top-xl">
-				<view v-if="alipay_account==null||alipay_account==''" class="flex justify-around align-center margin-top-xl">
-					<view style="height: 60rpx;line-height: 60rpx;width: 200rpx" class="margin-right-ten">
-						<image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
-						       src="/static/images/lz/zhifubao@2x.png"
-						       style="width: 60rpx"></image>
-						<text style="vertical-align: top;" class="margin-left-xxl">未绑定</text>
-					</view>
-					<view @tap="modalStatusThree=true" style="background: #E54D42;text-align: center;color: white;border-radius: 16px;width: 218rpx;height: 56rpx;line-height: 56rpx">绑定账号</view>
-				</view>
-				<view v-else class="flex justify-around align-center margin-top-xl">
-					<view style="height: 60rpx;line-height: 60rpx;width: 400rpx" class="">
-						<image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
-						       src="/static/images/lz/zhifubao@2x.png"
-						       style="width: 60rpx"></image>
-						<text style="vertical-align: top;" class="margin-left-xxl">{{ $mio.mioRoot.getLocalData('realName') }} {{alipay_account}}</text>
-					</view>
-					<view @tap="modalStatusThree=true" style="background: #E54D42;text-align: center;color: white;border-radius: 16px;width: 218rpx;height: 56rpx;line-height: 56rpx">更改账号</view>
-				</view>
-			</view>
-
-			<view class="margin-top-xxl margin-left">
-				<view style="color: #666666;font-size: 14px">注意事项</view>
-				<view style="color: #666666;font-size: 14px" class="margin-top-sm">
+			<view class="" style="margin-top: 20rpx;height: auto;background-color: white;padding: 30rpx">
+				<view style="color: #666666;font-size: 16px;font-weight: bolder">注意事项:</view>
+				<view style="color: #666666;font-size: 14px;margin-top: 28rpx" class="">
 					1.每人每天提现{{frequency}}次，审核工作日时间{{timeSection}}
 				</view>
 				<view style="color: #666666;font-size: 14px" class="margin-top-sm">
@@ -84,12 +72,12 @@
 				<view style="color: #666666;font-size: 14px" class="margin-top-sm">
 					3.提现成功后可在支付宝-我的-账单查看到账详情
 				</view>
-			</view>
 
-			<view class="flex justify-between align-center margin-top-xl">
-				<view style="font-size: 14px;color: #E54D42;" class="margin-left">客服微信：{{ wechat }}</view>
-				<view @tap="goWeixin" style="width: 219rpx;height: 56rpx;border-radius: 16px;border: 1px solid #E54D42;text-align: center;line-height: 56rpx;color: #E54D42" class="margin-right-xl">
-					复制打开微信
+				<view class="flex justify-between align-center" style="margin-top: 48rpx">
+					<view style="font-size: 16px;color: #FFB400;" class="">客服微信：{{ wechat }}</view>
+					<view @tap="goWeixin" style="width: 219rpx;height: 56rpx;border-radius: 16px;border: 1px solid #FFB400;text-align: center;line-height: 56rpx;color: #FFB400" class="margin-right-xl">
+						复制打开微信
+					</view>
 				</view>
 			</view>
 
@@ -100,36 +88,11 @@
 			<view style="position: fixed;bottom: 50rpx;width: 100%;left: 0;text-align: center" @tap="withdraw" class="">
 				<image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
 				       src="/static/images/lz/lijitixian@2x.png"
-				       style="width: 430rpx;height: 92rpx"></image>
+				       style="width: 690rpx;height: 100rpx"></image>
 			</view>
-
-<!--			<m-modal :closeShow="true" closeColor="black" bgColor="white" :closeSize="40" :descSize="30" :maskClosable="true" :status.sync="modalStatus"-->
-<!--				   title="这是标题" desc="这是描述" modalTop="0rpx" :titleSize="40" descColor="#999d9c" titleColor="black"-->
-<!--				   width="90vw" padding="20" radius="30rpx" :showTitle="false" :showContent="true">-->
-<!--				<view class="text-center margin-top-xxl">-->
-<!--					<view>-->
-<!--						-->
-<!--					</view>-->
-<!--					<view class="flex justify-around margin-top-xl">-->
-<!--						<m-button :hairLine="true" :loading="false" :plain="false" :ripple="true" :disabled="false"-->
-<!--								  :shape="['square', 'circle'][1]" :size="['default', 'medium', 'mini'][1]"-->
-<!--								  :type="['default', 'primary', 'error', 'warning', 'success'][2]" style=""-->
-<!--								  @click="modalStatus = false" class="text-white" :customStyle="{fontSize: '14px'}">-->
-<!--							<view class="fa text-xl fa-android margin-right-xxl" style="height: 50rpx" v-if="false"></view>-->
-<!--							确认-->
-<!--						</m-button>-->
-<!--						<m-button :hairLine="true" :loading="false" :plain="false" :ripple="true" :disabled="false"-->
-<!--								  :shape="['square', 'circle'][1]" :size="['default', 'medium', 'mini'][1]"-->
-<!--								  :type="['default', 'primary', 'error', 'warning', 'success'][1]" style=""-->
-<!--								  @click="modalStatus = false" class="text-white" :customStyle="{fontSize: '14px'}">-->
-<!--							<view class="fa text-xl fa-android margin-right-xxl" style="height: 50rpx" v-if="false"></view>-->
-<!--							取消-->
-<!--						</m-button>-->
-<!--					</view>-->
-<!--				</view>-->
-<!--			</m-modal>-->
 			
-			<m-modal id="mone" :closeShow="false" :custom="true" :status.sync="modalStatus" :showTitle="false" content="这是内容" :showContent="false" title="标题" style="padding: 0!important;">
+			<m-modal :closeShow="false" :custom="true" :status.sync="modalStatus" :showTitle="false" content="这是内容"
+			         :showContent="false" title="标题" padding="0">
 				<view style="height: 164rpx;line-height: 164rpx;color: #333333;font-weight: bold;font-size: 18px;text-align: center">您余额不足，快去赚钱吧～</view>
 				<view style="width: 100%;height: 2px;background: #eee;"></view>
 				<view @tap="modalStatus=false" style="height: 100rpx;text-align: center;color: #E54D42;font-size: 18px;line-height: 100rpx">
@@ -138,7 +101,9 @@
 			</m-modal>
 
 			
-			<m-modal class="mtwo" :closeShow="false" :custom="true" :status.sync="modalStatusTwo" :showTitle="false" :showContent="false" content="这是内容" title="标题" style="padding: 0px!important;position: relative">
+			<m-modal class="mtwo" :closeShow="false" :custom="true" :status.sync="modalStatusTwo" :showTitle="false"
+			         :showContent="false" content="这是内容" title="标题"
+			         width="90vw" padding="20">
 				<view style="height: 164rpx;line-height: 192rpx;color: #333333;font-weight: bold;font-size: 18px;text-align: center">绑定账户</view>
 				<view style="height: 100rpx" class="margin-top-xl">
 					<view class="fl text-red" style="font-size: 16px;color: #333333;width: 184rpx;height: 80rpx;line-height: 80rpx;margin-left: 36rpx;font-weight: bold">支付宝账户:</view>
@@ -164,11 +129,12 @@
 				</view>
 			</m-modal>
 
-			<m-modal class="mtwo" :closeShow="false" :custom="true" :status.sync="modalStatusThree" :showTitle="false" :showContent="false" content="这是内容" title="标题" style="padding: 0px!important;position: relative">
-				<view style="height: 164rpx;line-height: 192rpx;color: #333333;font-weight: bold;font-size: 18px;text-align: center">更改账户</view>
-				<view style="height: 100rpx" class="margin-top-xl">
-					<view class="fl text-red" style="font-size: 16px;color: #333333;width: 184rpx;height: 80rpx;line-height: 80rpx;margin-left: 36rpx;font-weight: bold">支付宝账户:</view>
-					<view style="width: 402rpx;height: 80rpx;border-radius: 20px;border: 1px solid #E54D42;line-height: 80rpx;margin-left: 230rpx" class="">
+			<m-modal class="mtwo" :closeShow="false" :custom="true" :status.sync="modalStatusThree" :showTitle="false" width="90vw" padding="20"
+			         :showContent="false" content="" title="">
+				<view style="color: #333333;font-weight: bold;font-size: 18px;text-align: center;margin-top: 1rem">更改账户</view>
+				<view style="height: 100rpx;margin-left: 1rem;" class="margin-top-xl">
+					<view class="fl text-red" style="font-size: 16px;color: #333333;width: 184rpx;height: 80rpx;line-height: 80rpx;font-weight: bold">支付宝账户:</view>
+					<view style="width: 402rpx;height: 80rpx;border-radius: 20px;border: 1px solid #E54D42;line-height: 80rpx;margin-left: 200rpx" class="">
 						<view v-show="alipay_account_old" class="fa fa-close fr margin-right-xxl"
 						      @tap="delVals('alipay_account_old')" style="line-height: 80rpx"></view>
 						<input :adjust-position="false" style="height: 80rpx;line-height: 80rpx;text-indent: 20px;font-size: 14px"
@@ -190,7 +156,7 @@
 				</view>
 			</m-modal>
 
-			<m-modal :custom="true" :closeShow="false" :status.sync="modalStatusFour" :showTitle="false" :showContent="false" content="这是内容" title="确认提现？" style="padding: 0!important;">
+			<m-modal :custom="true" :closeShow="false" :status.sync="modalStatusFour" :showTitle="false" :showContent="false" content="这是内容" title="确认提现？" padding="0">
 				<view style="height: 164rpx;line-height: 164rpx;color: #333333;font-weight: bold;font-size: 18px;text-align: center">确认提现？</view>
 				<view style="width: 100%;height: 1px;background: #eee;"></view>
 				<view class="flex" style="height: 100rpx;text-align: center;color: #E54D42;font-size: 18px;line-height: 100rpx">
@@ -203,7 +169,7 @@
 				</view>
 			</m-modal>
 
-			<m-modal id="mfive" :closeShow="false" :custom="true" :status.sync="modalStatusFive" :showTitle="false" :showContent="false" content="这是内容" title="确认提现？" style="padding: 0!important;">
+			<m-modal id="mfive" :closeShow="false" :custom="true" :status.sync="modalStatusFive" :showTitle="false" :showContent="false" content="这是内容" title="确认提现？" padding="0">
 				<view style="height: 164rpx;line-height: 164rpx;color: #333333;font-weight: bold;font-size: 18px;text-align: center">
 					当前操作需跳转至
 					<text>电子合同签署页面</text>
@@ -231,7 +197,9 @@ import {
 export default {
 	data() {
 		return {
-			status: false,
+			auth_src: '/static/images/haixing/auth.png',
+			
+			status: true,
 			
 			allow_min_money: '',
 			alipay_account: '',
@@ -276,26 +244,32 @@ export default {
 			total_clickOne: 0,
 		}
 	},
-	async created() {
-		// document.body.removeEventListener('touchmove', function (evt) { // 禁止微信浏览器拖动
-		// 	evt.preventDefault()
-		// }, {passive: false})
-		const {data} = await appletsPost('/my/account_balance')
-		this.allow_min_money = data.allow_min_money
-		this.alipay_account = data.alipay_account
-		this.alipay_account_old = data.alipay_account
-		this.allow_money = data.allow_money
-		this.balance = data.balance
-		this.frequency = data.frequency
-		this.wechat = data.wechat
-		this.member_id = data.member_id
-		this.need_auth = data.need_auth
-		this.work_time = JSON.parse(data.work_time)
-		this.timeSection = `${this.work_time[0]}-${this.work_time[1]}`
-
-		console.log(Object.keys(this.allow_money))
+	created() {
+		this.getClick()
 	},
 	methods: {
+		changeTab () {
+			this.status = !this.status
+			if (this.status) {
+			    this.getClick()
+			}
+		},
+		async getClick () {
+			this.$mio.mioRoot.showLoading('正在加载')
+			const {data} = await appletsPost('/my/account_balance')
+			uni.hideLoading()
+			this.allow_min_money = data.allow_min_money
+			this.alipay_account = data.alipay_account
+			this.alipay_account_old = data.alipay_account
+			this.allow_money = data.allow_money
+			this.balance = data.balance
+			this.frequency = data.frequency
+			this.wechat = data.wechat
+			this.member_id = data.member_id
+			this.need_auth = data.need_auth
+			this.work_time = JSON.parse(data.work_time)
+			this.timeSection = `${this.work_time[0]}-${this.work_time[1]}`
+		},
 		infoUpdate () {
 			uni.navigateTo({
 				url: '/pages/appletsFront/module/with-draw-verification'
@@ -376,8 +350,9 @@ export default {
 			}
 		},
 		goRecord () {
+			localStorage.setItem('withdraw_status', this.status ? 1 : 0)
 			uni.navigateTo({
-				url: '/pages/appletsFront/module/with-draw-record'
+				url: `/pages/appletsFront/module/with-draw-record`
 			})
 		},
 		cancelThree () {
@@ -437,7 +412,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+.with_header{background: rgb(251, 207, 36);height: 100rpx;line-height: 100rpx;padding: 0!important;position: fixed;top: 0;left: 0;z-index: 999999;font-size: 18px}
+
 >>>.mio-modal-box{padding: 0!important;}
 >>>.mtwo .mio-modal-box{width: 90%!important;}
 >>>#mfive .mio-modal-box{width: 98%!important;}
@@ -445,17 +422,56 @@ export default {
 page{
 	background: white;
 }
+.with_tab {
+	height: 108rpx;line-height: 60rpx;
+	view{width: 346rpx;height: 72rpx;font-size: 18px;color: #333;line-height: 72rpx;border-radius: 12rpx}
+}
+
+.auth_img{
+	width: 100%;position: relative;height: 76rpx;
+	text {position: absolute;top: 18rpx;left: 88rpx;font-size: 16px;font-weight: 500;letter-spacing: 1px;z-index: 1;color: #FFB400;}
+	image{height: 76rpx;width: 100%}
+}
+.money{
+	height: 190rpx;
+	.money_balance{margin-top: 36rpx}
+    .money_one{margin-left: 30rpx}
+	.record{border-radius: 15px;border: 1px solid #FFB400;width: 176rpx;height: 60rpx;color: black;text-align: center;line-height: 60rpx;margin-top: 86rpx}
+}
+
+.money_set{
+	margin-top: 20rpx;background-color: white;height: 462rpx;
+	.item{border: 1px solid rgb(239, 239, 239);border-radius: 16rpx;height: 104rpx;width: 214rpx;line-height: 104rpx;font-size: 30px;margin-top: 24rpx}
+}
+
+.with_method {
+	margin-top: 48rpx;
+	text{margin-left: 30rpx}
+}
 
 .activeStyle{
-	font-weight: bolder;
+	font-weight: bold;
 	font-size: 18px;
 	background: #FFDB18;
 	color: #772E01;
 }
 .inActiveStyle{
-	font-weight: bolder;
 	font-size: 18px;
 	background-color: rgba(255, 255, 255, 0.9);
 	color: #772E01;
 }
+
+.account {
+    .zfb{
+        position: absolute;left: 30rpx;top: 0
+    }
+	text{
+        position: absolute;left: 90rpx;top: 6rpx;font-size: 18px;
+	}
+	.btn {
+		position: absolute;right: 30rpx;
+        ;background: #FACA36;text-align: center;color: black;border-radius: 4px;width: 180rpx;height: 56rpx;line-height: 56rpx
+	}
+}
+
 </style>

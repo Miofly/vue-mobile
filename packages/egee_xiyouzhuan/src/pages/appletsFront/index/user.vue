@@ -29,38 +29,51 @@
 			<view style="color: rgb(239, 86, 14);font-size: 12px">邀请码：{{$mio.mioRoot.getLocalData('own_invite_code')}}</view>
 		</view>
 
-		<view style="background: white;box-shadow: 0 2px 4px 0 #D3D1C9;width: 90%;margin-left: 5%;border-radius: 12px;position: absolute;top: 230rpx"
-		class="text-center">
-			<view class="padding-top">
-				<view style="font-size: 20px;color: #FFB400;font-weight: bold">{{$mio.mioRoot.getLocalData('todayClick')}}</view>
-				<view style="font-size: 14px;color: #000;font-weight: bold">今日收益</view>
+		<view style="background: white;box-shadow: 0 2px 4px 0 #D3D1C9;width: 90%;height: auto;margin-left: 5%;border-radius: 12px;position: absolute;top: 230rpx" class="text-center">
+			<view class="">
+				<view style="font-size: 34px;color: #EE8700;font-weight: bold;">{{$mio.mioRoot.getLocalData('todayClick')}}</view>
+				<view style="font-size: 14px;color: #333;font-weight: bold">累计收益</view>
 			</view>
-			<view class="flex justify-around padding margin-top text-center">
+			<view class="flex justify-around" style="margin-top: 10rpx;border-bottom: 1px solid #eee;padding-bottom: 24rpx">
+				<view class="text-14" style="color: #333"><text>点击</text><text style="margin-left: 4px;color: #EE8700">2131231</text></view>
+				<view class="text-14" style="color: #333"><text>分成</text><text style="margin-left: 4px;color: #EE8700">2131231</text></view>
+			</view>
+			<view class="flex justify-around text-center" style="margin-top: 10rpx;padding-bottom: 15rpx">
 				<view>
-					<view style="font-size: 20px;color: #FFB400;font-weight: bold">{{$mio.mioRoot.getLocalData('yesterdayClick')}}</view>
-					<view style="font-size: 14px;color: #000;font-weight: bold">昨日收益</view>
+					<view style="font-size: 26px;color: #FFB400;font-weight: bold">{{$mio.mioRoot.getLocalData('yesterdayClick')}}</view>
+					<view style="font-size: 14px;color: #000;font-weight: bold">今日收益</view>
+					<view class="flex justify-around" style="margin-top: 10rpx">
+						<view class="text-14" style="color: #333"><view style="margin-left: 4px;color: #EE8700">2131231</view><view>点击</view></view>
+						<view class="text-14" style="color: #333"><view style="margin-left: 4px;color: #EE8700">2131231</view><view>分成</view></view>
+					</view>
 				</view>
 				<view style="height: 30px;background: #eee;width: 1px"></view>
 				<view>
-					<view style="font-size: 20px;color: #FFB400;font-weight: bold">{{$mio.mioRoot.getLocalData('monthClick')}}</view>
-					<view style="font-size: 14px;color: #000;font-weight: bold">本月收益</view>
+					<view style="font-size: 26px;color: #FFB400;font-weight: bold">{{$mio.mioRoot.getLocalData('monthClick')}}</view>
+					<view style="font-size: 14px;color: #000;font-weight: bold">可提现余额</view>
+					<view class="flex justify-around" style="margin-top: 10rpx">
+						<view class="text-14" style="color: #333"><view style="margin-left: 4px;color: #EE8700">2131231</view><view>点击</view></view>
+						<view class="text-14" style="color: #333"><view style="margin-left: 4px;color: #EE8700">2131231</view><view>分成</view></view>
+					</view>
 				</view>
 			</view>
 		</view>
 
-		<scroll-view scroll-y style="height: 100vw" class="margin-top-twenty">
-			<view class="cu-list menu  padding-bottom-thirty" :class="[false?'sm-border':'']">
-				<view @tap="listFn(item.name)" v-for="(item, index) in ($mio.mioRoot.getLocalData('is_team_captain') == 1 ? menuList : menuLists)" :key="index" class="cu-item">
-					<view class="content padding-tb-sm">
-						<view>
-							<image :src="`/static/images/haixing/${item.icon}.png`" style="width: 50rpx;height: 50rpx"></image>
-							<text class="margin-left">{{ item.name }}</text>
-						</view>
-					</view>
-					<view v-show="true" class="fa fa-angle-right margin-left" style="color: #999999;font-size: 20px"></view>
-				</view>
-			</view>
-		</scroll-view>
+
+	    <scroll-view scroll-y style="height: 100vw;margin-top: 260rpx" class="padding-bottom-forty">
+		    <view class="cu-list menu  padding-bottom-thirty" :class="[false?'sm-border':'']">
+			    <view @tap="listFn(item.name)" v-for="(item, index) in ($mio.mioRoot.getLocalData('is_team_captain') == 1 ? menuList : menuLists)" :key="index" class="cu-item">
+				    <view class="content padding-tb-sm">
+					    <view>
+						    <image :src="`/static/images/haixing/${item.icon}.png`" style="width: 50rpx;height: 50rpx"></image>
+						    <text class="margin-left">{{ item.name }}</text>
+					    </view>
+				    </view>
+				    <view v-show="true" class="fa fa-angle-right margin-left" style="color: #999999;font-size: 20px"></view>
+			    </view>
+		    </view>
+	    </scroll-view>
+
 
 	    <m-modal :closeShow="true" closeColor="black" bgColor="white" :closeSize="40" :descSize="30" :maskClosable="true" :status.sync="status"
 	    	   title="退出后将无法继续转发赚钱" desc="确定退出吗？" modalTop="0rpx" :titleSize="40" descColor="#999d9c" titleColor="black"
@@ -107,22 +120,23 @@
         status: boolean = false
 
         menuList: any = [
-            { icon: 'navicon', color: 'xyz', badge: 0, name: '点击明细' },
+	        { icon: 'money', color: 'xyz', badge: 0, name: '余额提现' },
+	
+	        { icon: 'navicon', color: 'xyz', badge: 0, name: '点击明细' },
             { icon: 'lock', color: 'xyz', badge: 0, name: '修改密码' },
             { icon: 'commenting', color: 'xyz', badge: 0, name: '联系客服' },
             { icon: 'power-off', color: 'xyz', badge: 0, name: '退出登录' },
             { icon: 'user-plus', color: 'xyz', badge: 0, name: '团队管理' },
           { icon: 'address-card', color: 'xyz', badge: 0, name: '个人资料' },
-          { icon: 'money', color: 'xyz', badge: 0, name: '余额提现' },
         ]
 
         menuLists: any = [
-            { icon: 'navicon', color: 'red', badge: 0, name: '点击明细' },
+	        { icon: 'money', color: 'red', badge: 0, name: '余额提现' },
+	        { icon: 'navicon', color: 'red', badge: 0, name: '点击明细' },
             { icon: 'lock', color: 'red', badge: 0, name: '修改密码' },
             { icon: 'commenting', color: 'red', badge: 0, name: '联系客服' },
             { icon: 'power-off', color: 'red', badge: 0, name: '退出登录' },
           	{ icon: 'address-card', color: 'red', badge: 0, name: '个人资料' },
-	        { icon: 'money', color: 'red', badge: 0, name: '余额提现' },
         ]
 
         created (): void {

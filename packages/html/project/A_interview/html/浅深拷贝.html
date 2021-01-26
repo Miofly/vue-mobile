@@ -15,7 +15,61 @@
         }
         return obj2
     }
-    var fxObj = {
+    
+    // 不考虑循环引用深拷贝
+	function clone(target) {
+		if (typeof target === 'object') {
+			let cloneTarget = Array.isArray(target) ? [] : {}
+			for (const key in target) {
+				cloneTarget[key] = clone(target[key]);
+			}
+			return cloneTarget;
+		} else {
+			return target;
+		}
+	}
+
+	// 考虑循环引用
+    // 检查map中有无克隆过的对象
+    // 有 - 直接返回
+    // 没有 - 将当前对象作为key，克隆对象作为value进行存储  继续克隆
+	function cloneTwo(target, map = new Map()) {
+		if (typeof target === 'object') {
+			let cloneTarget = Array.isArray(target) ? [] : {}
+			if (map.get(target)) {
+				return map.get(target);
+			}
+			map.set(target, cloneTarget);
+			for (const key in target) {
+				cloneTarget[key] = clone(target[key]);
+			}
+			return cloneTarget;
+		} else {
+			return target;
+		}
+	}
+
+	// 升级版循环引用 WeakMap
+    // 弱引用与强引用相对，是指不能确保其引用的对象不会被垃圾回收器回收的引用。 一个对象若只被弱引用所引用，则被认为是不可访问（或弱可访问）的，并因此可能在任何时刻被回收。
+    // 认创建一个对象：const obj = {}，就默认创建了一个强引用的对象，我们只有手动将obj = null，它才会被垃圾回收机制进行回收，如果是弱引用对象，垃圾回收机制会自动帮我们回收。
+	function cloneThree(target, map = new WeakMap()) {
+		if (typeof target === 'object') {
+			let cloneTarget = Array.isArray(target) ? [] : {}
+			if (map.get(target)) {
+				return map.get(target);
+			}
+			map.set(target, cloneTarget);
+			for (const key in target) {
+				cloneTarget[key] = clone(target[key]);
+			}
+			return cloneTarget;
+		} else {
+			return target;
+		}
+	}
+
+
+		var fxObj = {
         age: 18,
         nature: ['smart', 'good'],
         names: {
@@ -26,13 +80,16 @@
             console.log('fx is a great girl')
         }
     }
-    var newfxObj = simpleCopy(fxObj)
+    var newfxObj = cloneTwo(fxObj)
     newfxObj.age = 8
     newfxObj.nature.push('why')
     newfxObj.names.name1 = 'why fx'
     newfxObj.love = function () {
         console.log('fx is 18 years old')
     }
+	newfxObj.fxObj = fxObj
+    console.log('newfxObj', newfxObj)
+    
     console.log(fxObj.age) // 18 基本数据类型不会改变
     console.log(fxObj.nature) //  ["smart", "good", "why"] 引用类型会改变
     console.log(fxObj['names']) // {name1: "why fx", name2: "xka"} 引用类型会改变

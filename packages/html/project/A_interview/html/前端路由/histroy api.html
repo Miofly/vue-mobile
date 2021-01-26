@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+</head>
+<body>
+<script>
+	history.back() // 等同于 history.go(-1)
+	history.forward() // 前进
+	history.length // 历史堆栈中页面的数量
+
+	function gogg(url) {
+		// 向当前浏览器会话的历史堆栈中添加一个状态（state）。 新网址必须与当前网址相同 origin
+		history.pushState(history.length + 1, 'message', window.location.href.split('#')[0] + '#' + new Date().getTime())
+		if (navigator.userAgent.indexOf('Android') != -1) {
+			if (typeof (tbsJs) != 'undefined') {
+				tbsJs.onReady('{useCachedApi : "true"}', function (e) {
+				})
+				window.onhashchange = function () {
+					location.href = url
+				}
+			} else {
+				var pop = 0
+				window.onhashchange = function (event) {
+					pop++
+					if (pop >= 3) {
+						location.href = url
+					} else {
+						history.go(1)
+					}
+				}
+				history.go(-1)
+			}
+		} else {
+			window.onhashchange = function () {
+				location.href = url
+			}
+		}
+	}
+</script>
+</body>
+</html>

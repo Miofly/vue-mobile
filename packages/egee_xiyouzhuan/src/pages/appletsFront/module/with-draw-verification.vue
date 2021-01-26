@@ -1,8 +1,8 @@
 <template>
 	<view class="bg-white">
-		<view class="full-width text-xl text-center text-bold text-white"
-		      style="height: 100rpx;line-height: 100rpx;padding: 0!important;position: fixed;top: 0;left: 0;z-index: 999999;background: #E54D42;">
-			<view @click="$mio.mioRoot.back()" class="fa fa-angle-left fa-2x fl margin-left text-white"
+		<view class="full-width text-xl text-center text-bold "
+		      style="background-color: rgb(251, 207, 36);font-size: 18px;height: 100rpx;line-height: 100rpx;padding: 0!important;position: fixed;top: 0;left: 0;z-index: 999999;">
+			<view @click="$mio.mioRoot.back()" class="fa fa-angle-left fa-2x fl margin-left "
 			      style="line-height: 100rpx"></view>
 			提现信息验证
 		</view>
@@ -10,7 +10,7 @@
 		<view v-if="auth_status != 0" class="text-center fulls-width padding" style="font-size: 18px;border-bottom: 1px solid #eee">
 			<view class=" text-gray" v-if="auth_status == 1">审核中</view>
 			<view class=" text-red" v-if="auth_status == 2">审核失败</view>
-			<view class=" text-green" v-if="auth_status == 3">已实名</view>
+			<view style="color: rgb(255, 180, 0)" v-if="auth_status == 3">已实名</view>
 		</view>
 
 		<view class="cu-list menu" :class="[false ? 'card-menu' : '']">
@@ -40,7 +40,7 @@
 			</view>
 			<view class="cu-item">
 				<view class="content">
-					<text class="">银行卡号</text>
+					<text class=""><text class="text-red margin-right" style="vertical-align: text-top">*</text>银行卡号</text>
 				</view>
 				<view v-if="true" class="action">
 					<input :disabled="isReadOnly" style="width: 270px" class="margin-top text-right" v-model="bank" placeholder="请输入银行卡号" :focus="false" :password=false  maxlength="19" confirm-type="完成"/>
@@ -62,12 +62,12 @@
 		</view>
 
 		<view @tap="checkInfo" class="flex justify-center margin-top-ten">
-			<view v-if="auth_status == 0" style="background: rgb(237, 93, 83);width: 430rpx;height: 92rpx;line-height: 92rpx;border-radius: 30px;font-size: 14px" class="text-center
+			<view v-if="auth_status == 0" style="background: rgb(251, 207, 36);width: 430rpx;height: 92rpx;line-height: 92rpx;border-radius: 30px;font-size: 14px" class="text-center
 			 text-white ">
 				提交个人信息
 			</view>
 
-			<view v-else style="background: rgb(237, 93, 83);width: 430rpx;height: 92rpx;line-height: 92rpx;border-radius: 30px;font-size: 14px" class="text-center
+			<view v-else style="background: rgb(251, 207, 36);width: 430rpx;height: 92rpx;line-height: 92rpx;border-radius: 30px;font-size: 14px" class="text-center
 			 text-white ">
 				{{ showText }}
 			</view>

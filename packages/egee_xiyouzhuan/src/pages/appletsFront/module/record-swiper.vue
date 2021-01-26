@@ -9,24 +9,22 @@
 				  @down="downCallback" @up="upCallback" @emptyclick="emptyClick" style="background: white">
 		<!-- 数据列表 -->
 		<view v-for="(item, index) in dataLists" :key="index" class="flex justify-between align-center"
-		      style="height: 126rpx;border-bottom: 1px solid #eee">
+		      style="height: 142rpx;border-bottom: 1px solid #eee">
 			<view class="" style="width: 75%">
-				<image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
-				       src="/static/images/lz/zhifubao@2x.png"
-				       style="width: 60rpx;margin-top: 12rpx" class="fl margin-left"></image>
-				<view class="fl margin-left">
-					<view style="color: #333333;font-size: 16px;">支付宝提现 金额：{{ item.money }}元</view>
-					<view v-if="i<3" style="font-size: 14px;color: #999999">
-						{{ item.status==0 || item.status==2 ? '进行中' : item.status==1||item.status==3 ? '失败': '已完成' }}
+<!--				<image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"-->
+<!--				       src="/static/images/lz/zhifubao@2x.png"-->
+<!--				       style="width: 60rpx;margin-top: 12rpx" class="fl margin-left"></image>-->
+				<view class="fl" style="margin-left: 28rpx">
+<!--					<view style="color: #333333;font-size: 16px;">支付宝提现 金额：{{ item.money }}元</view>-->
+					<view style="color: #333333;font-size: 22px;font-weight: bold">{{ item.money }}元</view>
+					<view style="font-size: 14px;color: #333">
+						点击收益
 					</view>
-					<view v-else >
-						{{ item.status==0 || item.status==2 ? '进行中' : item.status==1||item.status==3 ? '失败': '已完成' }}
-					</view>
+					
 				</view>
-
 			</view>
 			<view class="margin-right">
-				<view v-if="i<3" style="font-size: 16px;color: #333333;" :style="{color: item.status==1||item.status==3? 'red' : 'green' }">
+				<view v-if="i<3" style="font-size: 18px;color: #FFB400;" :style="{color: item.status==1||item.status==3? 'red' : '#FFB400' }">
 					{{ item.status==0 || item.status==2 ? '进行中' : item.status==1||item.status==3 ? '失败': '已完成' }}
 				</view>
 				<view v-else :style="{color: item.status==1||item.status==3? 'red' : 'green' }">
@@ -122,20 +120,25 @@ export default class mescrollSwiper extends mixins(scrollMixins) {
 	}
 
 	async upCallback (page) {
-		const pageNum = page.num // 页码
-		const pageSize = page.size // 页长
-
-		const data = await appletsPost('/my/withdraw_list', { status: this.i, page: page.num, per_page: page.size}) // 默认数据
-		const curPageData = data.data.data
-		const curPageLen = curPageData.length
-		// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
-		const last_page = curPageData.length
-		if (page.num == 1) this.dataLists = [] // 如果是第一页需手动置空列表
-		this.dataLists = this.dataLists.concat(curPageData) // 追加新数据
+		if (localStorage.getItem('withdraw_status') == 1) {
+			const pageNum = page.num // 页码
+			const pageSize = page.size // 页长
+			
+			const data = await appletsPost('/my/withdraw_list', { status: this.i, page: page.num, per_page: page.size}) // 默认数据
+			const curPageData = data.data.data
+			const curPageLen = curPageData.length
+			// 接口返回的当前页数据长度 (如列表有26个数据,当前页返回8个,则curPageLen=8)
+			const last_page = curPageData.length
+			if (page.num == 1) this.dataLists = [] // 如果是第一页需手动置空列表
+			this.dataLists = this.dataLists.concat(curPageData) // 追加新数据
+			
+			setTimeout(() => { // 接口请求太快，展示数据样式延迟500ms,要不太丑
+				this.mescroll.endByPage(curPageLen, last_page)
+			}, 500)
+		} else {
 		
-		setTimeout(() => { // 接口请求太快，展示数据样式延迟500ms,要不太丑
-			this.mescroll.endByPage(curPageLen, last_page)
-		}, 500)
+		}
+		
 	}
 }
 </script>

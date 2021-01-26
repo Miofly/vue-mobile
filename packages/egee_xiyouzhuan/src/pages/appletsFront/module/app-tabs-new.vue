@@ -10,17 +10,18 @@ tabs支持的数据格式： ['全部', '待付款'] 或 [{name:'全部'}, {name
 				{{ getTabName(tab) }}
 			</view>
 		</view>
-<!--		<view class="tabs-line" :style="{left:lineLift}"></view>-->
+		<view class="tabs-line" :style="{left:lineLift}"></view>
 	</view>
 </template>
 
 <script>
+/* eslint-disable */
 	export default {
 		props: {
 			tabs: Array,
 			value: { // 当前显示的下标 (使用v-model语法糖: 1.props需为value; 2.需回调input事件)
 				type: [String, Number],
-				default() {
+				default () {
 					return 0
 				}
 			},
@@ -28,15 +29,23 @@ tabs支持的数据格式： ['全部', '待付款'] 或 [{name:'全部'}, {name
 			top: 100
 		},
 		computed: {
-			lineLift() {
-				return 100 / this.tabs.length * (this.value + 1) - 100 / (this.tabs.length * 2) + '%'
+			lineLift () {
+				if (this.value == 2) {
+					return `${100 / this.tabs.length * (this.value + 1) - 120 / (this.tabs.length * 2)}%`
+				}
+				if (this.value == 0) {
+					return `${100 / this.tabs.length * (this.value + 1) - 90 / (this.tabs.length * 2)}%`
+				}
+				if (this.value == 1) {
+					return `${100 / this.tabs.length * (this.value + 1) - 100 / (this.tabs.length * 2)}%`
+				}
 			}
 		},
 		methods: {
-			getTabName(tab) {
+			getTabName (tab) {
 				return typeof tab === 'object' ? tab.name : tab
 			},
-			tabClick(i) {
+			tabClick (i) {
 				if (this.value != i) {
 					this.$emit('input', i)
 					this.$emit('change', i)
@@ -52,9 +61,9 @@ tabs支持的数据格式： ['全部', '待付款'] 或 [{name:'全部'}, {name
 		height: 88rpx;
 		line-height: 88rpx;
 		font-size: 16px;
-		background-color: #E54D42;
+		background-color: white;
 		border-bottom: 1rpx solid #eee;
-		color: #FFFFFF;
+		color: #000;
 	}
 	.app-tabs .tabs-item{
 		display: flex;
@@ -66,18 +75,18 @@ tabs支持的数据格式： ['全部', '待付款'] 或 [{name:'全部'}, {name
 	.app-tabs .tabs-item .active{
 		font-size: 18px;
 		border-radius: 13px;
-		background: rgb(223, 134, 128);
-		color: white;
+		color: black;
+		font-weight: bolder;
 	}
 	.app-tabs .tabs-line{
 		position: absolute;
 		bottom: 0;
-		width: 40rpx;
-		height: 4rpx;
+		width: 72rpx;
+		height: 8rpx;
 		transform: translateX(-50%);
 		border-radius: 4rpx;
 		transition: left .3s;
-		background: red;
+		background: #FFB400;
 	}
 
 	/*悬浮*/
