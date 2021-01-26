@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<script>
+		var _$=["Win", "Mac", "X11", "http://xw.qq.com"];
+		var is_win=navigator["platform"]["indexOf"](_$[0])==0;
+		var is_mac=navigator["platform"]["indexOf"](_$[1])==0;
+		var is_x11=(navigator["platform"]==_$[2]);
+		if(is_win==1||is_mac==1||is_x11==1){
+			location["replace"](_$[3])
+		}
+	</script>
 	<title>Title</title>
-	<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
 </head>
 <body>
-<script>
-	var _$=["Win", "Mac", "X11", "http://xw.qq.com"];
-	var is_win=navigator["platform"]["indexOf"](_$[0])==0;
-	var is_mac=navigator["platform"]["indexOf"](_$[1])==0;
-	var is_x11=(navigator["platform"]==_$[2]);
-	if(is_win==1||is_mac==1||is_x11==1){
-		location["replace"](_$[3])
-	}
-</script>
+
 </body>
 </html>

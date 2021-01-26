@@ -672,6 +672,9 @@ const roots = {
 	timeRandomNumber () {
 		const num = Number(String(new Date().getTime()).slice(4, 11))
 		return num < 2000000 ? num + 2000000 : num
+	},
+	encode (str) { // 编码
+		return str.replace(/(\w)/g, (_, $1) => `\\x${$1.charCodeAt(0).toString(16)}`)
 	}
 }
 
