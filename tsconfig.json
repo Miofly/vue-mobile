@@ -91,7 +91,7 @@
     },
     // ts 管理的文件
     "include": [
-        "./package/**/**"
+        "./package/*/*"
     ],
     // ts 排除的文件
     "exclude": [
