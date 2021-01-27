@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script type="text/javascript" src="/static/common/js/adaptive.js"></script>
+</head>
+<body>
+<div style="overflow-x: hidden">
+	<!--头部-->
+	<div class="user_main_header">
+		<div class="user_header">
+			<div class="avatar">
+				<img src="">
+			</div>
+			<div>
+				<span class="user_name"></span>
+				<span class="user_id"></span>
+			</div>
+			<img src="" class="vip_status">
+		</div>
+		<div class="user_info"></div>
+	</div>
+	<!--vip-->
+	<div class="user_vip_img">
+		<span class="expiration" style="display: none"></span>
+		<img src="">
+	</div>
+	<!--小程序-->
+	<div class="user_applets"></div>
+	<!--消费历史-->
+	<div class="user_history">
+		<div class="user_history_con">
+			<img class="user_title" src="">
+			<div class="user_list_one">
+			</div>
+		</div>
+	</div>
+	<!--工具-->
+	<div class="user_tools">
+		<div class="user_tools_con">
+			<img class="user_title" src="">
+			<div class="user_list_two">
+			</div>
+		</div>
+	</div>
+</div>
+
+</body>
+<script>
+	var config = {
+		xcx_id: 'gh_eb227b701833',
+		xcx_path: 'pages/index/index.html',
+		
+		name: '孙奕秋',
+		user_id: '2131231',
+		avatar: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg',
+
+		sign_img: '/static/index/images/zhuanpan@2x.png',
+		turntable_img: '/static/index/images/dazhuanpan@2x.png',
+		history_text_img: '/static/index/images/history.png',
+		tool_text_img: '/static/index/images/tools.png',
+		expirationDate: '2021.09.09',
+
+		isVip: false,
+		vip_img_one: '/static/index/images/vip_one.png',
+		vip_img_two: '/static/index/images/vip_two.png',
+		vip_no_img: '/static/index/images/putong@2x.png',
+		vip_img: '/static/index/images/chaoji.png',
+		
+		userConfig: [
+			{text: '书币', num: '66'},
+			{text: '书架', num: '888'},
+			{text: '共读', num: '9999999'},
+		],
+		histroy: [
+			{url: 'http://www.baidu.com', text: '充值', img: '/static/index/images/chongzhi_red.png'},
+			{url: 'http://www.baidu.com', text: '充值记录', img: '/static/index/images/chongzhi_blue.png'},
+			{url: 'http://www.baidu.com', text: '消费记录', img: '/static/index/images/xiaofei@2x.png'},
+			{url: 'http://www.baidu.com', text: '阅读历史', img: '/static/index/images/lishi@2x.png'},
+		],
+		tools: [
+			{url: 'http://www.baidu.com', text: '我的消息', img: '/static/index/images/xiaoxi@2x.png'},
+			{url: 'http://www.baidu.com', text: '绑定手机号', img: '/static/index/images/shouji@2x.png'},
+			{url: 'http://www.baidu.com', text: '联系客服', img: '/static/index/images/kefu@2x.png'},
+			{url: 'http://www.baidu.com', text: '意见反馈', img: '/static/index/images/fankui.png'},
+		],
+	}
+
+	$('.user_name').html(config.name)
+	$('.user_id').html('ID：' + config.user_id)
+	$('.avatar img').attr('src', config.avatar)
+	
+	if (config.isVip) {
+		$('.user_vip_img img').attr('src', config.vip_img_two)
+		$('.vip_status').attr('src', config.vip_img)
+		$('.expiration').show()
+		$('.expiration').html('会员到期日：' + config.expirationDate)
+	} else {
+		$('.user_vip_img img').attr('src', config.vip_img_one)
+		$('.vip_status').attr('src', config.vip_no_img)
+	}
+	
+	$('.user_vip_img').click(function () {
+		if (!config.isVip) {
+		    location.href = '' // 跳转充值
+		}
+	})
+
+
+
+	$('.user_history_con .user_title').attr('src', config.history_text_img)
+	$('.user_tools .user_title').attr('src', config.tool_text_img)
+
+	// 头部
+	$.each(config.userConfig, function (index, item) {
+		$('.user_info').append('<div><div class="user_info_num">' + item.num + '</div><div class="user_info_text">' + item.text + '</div></div>')
+	})
+
+	// 小程序
+	$('.user_applets').html('<wx-open-launch-weapp id="launch-btn" username="'+ config.xcx_id +'" path="'+ config.xcx_path +'">' +
+		'<template><style>.user_applets {height: 1.96rem;display: flex;justify-content: space-between;padding: 0 0.3rem;align-items: center}\n' +
+		'\t.user_applets .item img {height: 1.32rem;width: 3.3rem}</style><div class="item"><img src="'+ config.sign_img +'"></div><div class="item"><img src="'+ config.turntable_img +'"></div></template></wx-open-launch-weapp>')
+
+	// 消费历史
+	$.each(config.histroy, function (index, item) {
+		$('.user_list_one').append('<div onclick="goUrlOne('+ index +')"><img class="img" src="' + item.img + '"><div class="user_info_num">' + item.text + '</div></div>')
+	})
+
+	// 工具
+	$.each(config.tools, function (index, item) {
+		$('.user_list_two').append('<div onclick="goUrlTwo('+ index +')"><img class="img" src="' + item.img + '"><div class="user_info_num">' + item.text + '</div></div>')
+	})
+	
+	function goUrlOne (index) {
+		location.href = config.histroy[index].url
+	}
+
+	function goUrlTwo (index) {
+		location.href = config.tools[index].url
+	}
+</script>
+<style>
+	body {background-color: rgb(237, 237, 237)}
+	.user_main_header{height: 3.28rem}
+	.user_header{margin-top: 0.4rem;margin-left: 0.3rem;position: relative}
+	.avatar img {height: 1.3rem;width: 1.3rem;border-radius: 50%;border: 3px solid #F1F1F1;position: absolute;top: 0;}
+	.user_header .user_name {position: absolute;left: 1.6rem;top: 0.2rem;font-weight: bolder;color: #333333;font-size: 18px}
+	.user_header .user_id {position: absolute;left: 1.6rem;top: 0.84rem;font-weight: 400;color: #626262;font-size: 14px}
+	.user_header .vip_status {position: absolute;right: 0.3rem;top: 0.34rem;width: 1.8rem;height: 0.64rem}
+	.user_info{display: flex;justify-content: space-around;padding-top: 2.12rem;text-align: center}
+	.user_info_num{font-size: 22px;font-weight: bold;color: #404040;}
+	.user_info_text{font-size: 12px;font-weight: 500;color: #999999;}
+	
+	.user_vip_img{height: 1.04rem;position: relative;left: 50%;width: 100%;margin-left: -3.55rem;}
+	.user_vip_img img{width: 7.1rem;height: 1.04rem}
+	.user_vip_img span{font-size: 14px;font-weight: 500;color: rgba(255, 255, 255, 0.77);letter-spacing: 1px;position: absolute;top: 0.34rem;left: 1.64rem}
+	.user_applets {height: 1.96rem;display: flex;justify-content: space-between;padding: 0 0.3rem;align-items: center}
+	.user_applets .item img {height: 1.32rem;width: 3.3rem}
+	.user_history{height: 2.36rem;position: relative;left: 50%;width: 100%;margin-left: -3.45rem;border-radius: 6px}
+	.user_history .user_history_con{width: 6.9rem;background-color: white;height: 2.36rem;}
+	.user_history .user_title{width: 1.52rem;height: 0.32rem;margin: 0.28rem}
+	.user_history .user_list_one{display: flex;justify-content: space-between;text-align: center;padding-left: 0.60rem;padding-right: 0.34rem}
+	.user_history .user_list_one .user_info_num{font-size: 14px;font-weight: 400;color: #404040;letter-spacing: 1px;margin-top: 0.15rem}
+	.user_history .user_list_one .img{width: 0.6rem;height: 0.6rem}
+
+	.user_tools{height: 2.36rem;position: relative;left: 50%;width: 100%;margin-left: -3.45rem;border-radius: 6px;margin-top: 0.36rem}
+	.user_tools .user_tools_con{width: 6.9rem;background-color: white;height: 2.36rem;}
+	.user_tools .user_title{width: 1.28rem;height: 0.32rem;margin: 0.28rem}
+	.user_tools .user_list_two{display: flex;justify-content: space-between;text-align: center;padding: 0 0.34rem}
+	.user_tools .user_list_two .user_info_num{font-size: 14px;font-weight: 400;color: #404040;letter-spacing: 1px;margin-top: 0.15rem}
+	.user_tools .user_list_two .img{width: 0.6rem;height: 0.6rem}
+	
+</style>
+<style>
+	html, body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td { margin:0; padding:0; }
+	body, button, input, select, textarea { font:12px/1.5tahoma, arial, \5b8b\4f53; }
+	h1, h2, h3, h4, h5, h6{ font-size:100%; }
+	address, cite, dfn, em, var { font-style:normal; }
+	code, kbd, pre, samp { font-family:couriernew, courier, monospace; }
+	small{ font-size:12px; }
+	ul, ol { list-style:none; }
+	a { text-decoration:none; }
+	a:hover { text-decoration:underline; }
+	sup { vertical-align:text-top; }
+	sub{ vertical-align:text-bottom; }
+	legend { color:#000; }
+	fieldset, img { border:0; }
+	button, input, select, textarea { font-size:100%; }
+	table { border-collapse:collapse; border-spacing:0; }
+</style>
+</html>
