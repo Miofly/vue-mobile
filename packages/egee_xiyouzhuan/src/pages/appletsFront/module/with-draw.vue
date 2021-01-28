@@ -350,6 +350,7 @@ export default {
 			}
 		},
 		goRecord () {
+			thl
 			localStorage.setItem('withdraw_status', this.status ? 1 : 0)
 			uni.navigateTo({
 				url: `/pages/appletsFront/module/with-draw-record`

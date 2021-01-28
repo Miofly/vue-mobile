@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+	<script type="text/javascript" src="./adaptive.js"></script>
+	<script type="text/javascript" src="./mescroll.min.js"></script>
+	<link href="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/css/mescroll.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="consume_header">
+	<img src="./static/index/images/back.png">
+	<span>消费记录</span>
+</div>
+<div class="blank"></div>
+<div id="mescroll" class="mescroll">
+	<div id="dataList"></div>
+</div>
+<script>
+	function commonGet(url, success, headers,fail) {
+		$.ajax({
+			type: 'GET',
+			url: 'https://gzh.shortl.cn/h5' + url,
+			// url: 'http://api.17code.net/h5' + url,
+			success: success,
+			fail: fail,
+			headers: headers
+		})
+	}
+
+	var mescroll = new MeScroll("mescroll", {
+		down: {
+			use: false
+		},
+		up: {
+			offset: 200,
+			auto: true,
+			page: {num:0, size:10},//每次加载1条数据,模拟loadFull
+			callback: getListData, //上拉回调,此处可简写; 相当于 callback: function (page) { getListData(page); }
+			isBounce: false, //此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
+			clearEmptyId: "dataList", //1.下拉刷新时会自动先清空此列表,再加入数据; 2.无任何数据时会在此列表自动提示空
+			toTop: { //配置回到顶部按钮
+				// src: "../res/img/mescroll-totop.png", //默认滚动到1000px显示,可配置offset修改
+				//offset : 1000
+			},
+			htmlNodata: '<p class="upwarp-nodata" style="font-size: 14px;color: #CCCCCC;">———————  我已经 到底了  ———————</p>'
+		}
+	});
+
+	function getListData(page) {
+		commonGet('/articles?page=' + page.num + '&per_page=' + page.size + '',
+			function (res) {
+				var data = res.data
+				var total = res.meta.total
+				mescroll.endSuccess(data.length, total);
+				setListData(data, page);
+			})
+	}
+
+	function setListData(curPageData, page) {
+		var listDom = document.getElementById("dataList");
+		for (var i = 0; i < curPageData.length; i++) {
+			var item = curPageData[i];
+			console.log(item)
+			var str = '<div class="consume_item">' +
+				'<div><div class="consume_name">' + strEllipsis(item.name, 8) + '</div><div class="consume_title">' + strEllipsis(item.title, 15) + '</div></div>' +
+				'<div><div class="consume_coin">' + item.coin + '</div><div class="consume_time">' + item.time + '</div></div>' +
+				'<div class="consume_border"></div>' +
+				'</div>';
+			var liDom = document.createElement("div");
+			liDom.setAttribute('id', 'adIndex'+ (i+1 + (page.num - 1)*page.size) +'')
+			liDom.innerHTML = str;
+			listDom.appendChild(liDom);
+		}
+	}
+
+	function strEllipsis(str, length) {
+		if (str == undefined) return
+		return String(str).length > length ? `${str.slice(0, length)}...` : str
+	}
+</script>
+<style>
+	.consume_header{height: 0.92rem;background-color: #FF7932;width: 100%;position: fixed;text-align: center;line-height: 0.92rem;color: white;z-index: 999}
+	.consume_header img{height: 0.32rem;width: 0.32rem;position: absolute;top: 0.3rem;left: 0.3rem}
+	.consume_header span{height: 0.92rem;background-color: #FF7932;width: 100%;font-size: 16px;}
+	.blank{height: 0.92rem}
+	.consume_item{position: relative;height: 1.42rem;}
+	.consume_item .consume_name{position: absolute;top: 0.28rem;left: 0.28rem;font-size: 16px;font-weight: 500;color: #333333;}
+	.consume_item .consume_title{position: absolute;top: 0.84rem;left: 0.28rem;font-size: 14px;font-weight: 400;color: #999999;}
+	.consume_item .consume_coin{position: absolute;top: 0.28rem;right: 0.28rem;font-size: 18px;font-weight: 500;color: #FF7932;}
+	.consume_item .consume_time{position: absolute;top: 0.84rem;right: 0.28rem;font-size: 14px;font-weight: 400;color: #999999;}
+	.consume_item .consume_border{position: absolute;top: 1.4rem;left: 4%;height: 1px;background-color: #f7f7f7;width: 92%}
+</style>
+<style>
+	html, body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td { margin:0; padding:0; }
+	body, button, input, select, textarea { font:12px/1.5tahoma, arial, \5b8b\4f53; }
+	h1, h2, h3, h4, h5, h6{ font-size:100%; }
+	address, cite, dfn, em, var { font-style:normal; }
+	code, kbd, pre, samp { font-family:couriernew, courier, monospace; }
+	small{ font-size:12px; }
+	ul, ol { list-style:none; }
+	a { text-decoration:none; }
+	a:hover { text-decoration:underline; }
+	sup { vertical-align:text-top; }
+	sub{ vertical-align:text-bottom; }
+	legend { color:#000; }
+	fieldset, img { border:0; }
+	button, input, select, textarea { font-size:100%; }
+	table { border-collapse:collapse; border-spacing:0; }
+</style>
+</body>
+</html>

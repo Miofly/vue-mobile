@@ -5,8 +5,8 @@
 	<title>Title</title>
 	<script type="text/javascript" src="/static/common/js/adaptive.js"></script>
 </head>
-<body>
-<div style="overflow-x: hidden">
+<body style="position: fixed;top: 0;left: 0">
+<div style="overflow-x: hidden;">
 	<!--头部-->
 	<div class="user_main_header">
 		<div class="user_header">
@@ -107,8 +107,6 @@
 		}
 	})
 
-
-
 	$('.user_history_con .user_title').attr('src', config.history_text_img)
 	$('.user_tools .user_title').attr('src', config.tool_text_img)
 
@@ -120,7 +118,7 @@
 	// 小程序
 	$('.user_applets').html('<wx-open-launch-weapp id="launch-btn" username="'+ config.xcx_id +'" path="'+ config.xcx_path +'">' +
 		'<template><style>.user_applets {height: 1.96rem;display: flex;justify-content: space-between;padding: 0 0.3rem;align-items: center}\n' +
-		'\t.user_applets .item img {height: 1.32rem;width: 3.3rem}</style><div class="item"><img src="'+ config.sign_img +'"></div><div class="item"><img src="'+ config.turntable_img +'"></div></template></wx-open-launch-weapp>')
+		'\t.user_applets .item img {height: 1.32rem;width: 50%}</style><div class="item"><img src="'+ config.sign_img +'"></div><div class="item"><img src="'+ config.turntable_img +'"></div></template></wx-open-launch-weapp>')
 
 	// 消费历史
 	$.each(config.histroy, function (index, item) {

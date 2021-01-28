@@ -119,7 +119,9 @@ export default class mescrollSwiper extends mixins(scrollMixins) {
 		})
 	}
 
+	
 	async upCallback (page) {
+		// @ts-ignore
 		if (localStorage.getItem('withdraw_status') == 1) {
 			const pageNum = page.num // 页码
 			const pageSize = page.size // 页长
