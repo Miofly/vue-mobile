@@ -16,7 +16,7 @@
  *"warn" or 1 - 将规则视为一个警告（不会影响退出码）
  *"error" or 2 - 将规则视为一个错误 (退出码为1)
  *3、同一目录下 .eslintrc 和 package.json 同时存在，.eslintrc 优先级高会被使用，package.json 文件将不会被使用。
- */
+*/
 module.exports = {
 
     /**

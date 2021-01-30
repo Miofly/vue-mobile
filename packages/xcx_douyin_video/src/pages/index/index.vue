@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<swiper :circular="circular" :duration="duration" :easing-function="easingFunction"
-		        @animationfinish="animationfinish" class="video-swiper"
+		        @animationfinish="animationfinish" class="video-swiper" @change="test2"
 		        :current="current" vertical>
 			<!-- curQueue 循环会导致video重新插入，objectFit 不可变更 -->
 			<swiper-item :key="index" v-for="(item, index) in curQueue" >
@@ -15,7 +15,7 @@
 				<video :ref="`myVideo${index}`" :data-id="item.id" :data-index="index" :id="'video_' + index" :loop="loop"
 				       preload="metadata" :controls="controls" autoplay :muted="muted" @play="videoPlay" :page-gesture="false"
 				       :show-center-play-btn="false" :enable-play-gesture="true"
-				       :object-fit="item.objectFit || 'cover'" :src="`${item.url}`" class="video_item" >
+				       :object-fit="item.objectFit || 'cover'" :src="`${item.video_url}`" class="video_item" >
 				</video>
 			</swiper-item>
 		</swiper>
@@ -25,10 +25,9 @@
 <script lang="ts">
 import { Component, Prop, Vue, PropSync, Ref, Watch } from 'vue-property-decorator'
 import {
-    commonOtherGet
+    commonOtherGet, commonGet
 } from '@/api'
-const jweixin = require('jweixin-module')
-
+// const jweixin = require('jweixin-module')
 @Component({})
 export default class extends Vue {
 	nextQueue: any = []
@@ -49,6 +48,8 @@ export default class extends Vue {
 	page: number = 1
 	per_page: number = 10
 	muted: boolean = true
+	page: number = 1
+	per_page: number = 10
 	
 	@Watch('videoList', { immediate: false, deep: false })
 	onChangeValue () {
@@ -57,35 +58,13 @@ export default class extends Vue {
 		this.videoListChange(newVal)
 	}
 	
-	beforeMount () {
-		this.videoContexts = [
-			uni.createVideoContext('video_0', this),
-			uni.createVideoContext('video_1', this),
-			uni.createVideoContext('video_2', this)
-		]
-	}
-	
 	mounted () {
-		// this.getVideoData()
-		this.videoList = [
-			{ id: 1, url: 'https://img.cdn.aliyun.dcloud.net.cn/guide/uniapp/%E7%AC%AC1%E8%AE%B2%EF%BC%88uni-app%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D%EF%BC%89-%20DCloud%E5%AE%98%E6%96%B9%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B@20181126-lite.m4v', img: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/1.jpg' },
-			{ id: 2, url: 'https://txmov2.a.yximgs.com/upic/2020/11/26/17/BMjAyMDExMjYxNzM5MThfOTA1MjAyNTU5XzM5ODE4NzAzODkwXzFfMw==_b_B2d8216aabed7d01b5179dc53c8d05380.mp4?clientCacheKey=3xgmx743cr4yyic_b.mp4&tt=b&di=31ea48b0&bp=13380%22', img: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/2.jpg' },
-			{ id: 3, url: 'http://vfx.mtime.cn/Video/2019/03/19/mp4/190319125415785691.mp4', img: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/3.jpg' },
-			{ id: 4, url: 'http://vfx.mtime.cn/Video/2019/03/17/mp4/190317150237409904.mp4', img: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/4.jpg' },
-			{ id: 5, url: 'http://vfx.mtime.cn/Video/2019/03/14/mp4/190314223540373995.mp4', img: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/5.jpg' },
-			{ id: 6, url: 'http://vfx.mtime.cn/Video/2019/03/14/mp4/190314102306987969.mp4', img: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/6.jpg' },
-			{ id: 7, url: 'http://vfx.mtime.cn/Video/2019/03/13/mp4/190313094901111138.mp4', img: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/7.jpg' },
-			{ id: 8, url: 'http://vfx.mtime.cn/Video/2019/03/12/mp4/190312143927981075.mp4', img: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/8.jpg' },
-			{ id: 9, url: 'http://vfx.mtime.cn/Video/2019/03/12/mp4/190312083533415853.mp4', img: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/9.jpg' },
-			{ id: 10, url: 'http://vfx.mtime.cn/Video/2019/03/09/mp4/190309153658147087.mp4', img: 'https://6d69-miofly-k1xjk-1303051262.tcb.qcloud.la/images/glnz/10jpg' }
-		]
-		
-		
+		this.getVideoData()
 	}
 	
 	async getVideoData () {
-		const { data, code } = await commonOtherGet(`https://api-xcx.idoujia.cn/api/short-play/choice-list?type=1&classify_id=0&gesture=up&page=${this.page}&per_page=${this.per_page}&xcx_id=42`)
-		this.videoList = data.data
+		const { data, code } = await commonGet(`/getVideoList?page=${this.page}&per_page=${this.per_page}`)
+		this.videoList = data.items
 	}
 	
 	videoListChange (newVal) {
@@ -107,10 +86,11 @@ export default class extends Vue {
 		}, 1000)
 	}
 	
-	animationfinish (e) {
+	test2 (e) {
 		this.current = e.detail.current
 		const { current } = e.detail
 		const diff = current - this.last
+		
 		if (diff == 0) return
 		this.last = current
 		this.playCurrent(current)
@@ -120,7 +100,6 @@ export default class extends Vue {
 				const change = (this.change + 1) % 3
 				const add = this.nextQueue.shift()
 				const remove = this.curQueue[change]
-				// console.log('add', this.$mio.mioRoot.gsh(add))
 				if (add) {
 					this.prevQueue.push(remove)
 					this.curQueue[change] = add
@@ -160,6 +139,15 @@ export default class extends Vue {
 		for (let i = 0; i < this.curQueue.length; i++) {
 			console.log(this.curQueue[i].id)
 		}
+	}
+	
+	test (event) {
+		// console.log(event)
+		// console.log(event.detail.dy)
+	}
+	
+	animationfinish (e) {
+	
 	}
 	
 	playCurrent (current) { // 播放视频且暂停其他视频播放

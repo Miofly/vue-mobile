@@ -13,17 +13,17 @@ export default {
     },
     onShow(e) {
         // console.log(e, 'onShow：页面展示')
-        commonGet('/getSwitch').then(res => {
-            // console.log(res)
-            this.$store.state.root.ggkz = res.data
-            if (this.$store.state.root.ggkz == 1) {
-                uni.setNavigationBarTitle({
-                    title: '签到送书币'
-                })
-            } else {
-                this.$mio.mioRoot.replace('/pages/index/index_new')
-            }
-        })
+        // commonGet('/getSwitch').then(res => {
+        //     // console.log(res)
+        //     this.$store.state.root.ggkz = res.data
+        //     if (this.$store.state.root.ggkz == 1) {
+        //         uni.setNavigationBarTitle({
+        //             title: '签到送书币'
+        //         })
+        //     } else {
+        //         this.$mio.mioRoot.replace('/pages/index/index_new')
+        //     }
+        // })
 
         this.$store.state.root.uuid = e.query.uuid
         if (e.query.uuid == undefined) {

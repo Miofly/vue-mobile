@@ -44,3 +44,6 @@ paths:
     /deleteArticle:
         post:
             operationId: deleteArticle
+    /getVideoList:
+        get:
+            operationId: getVideoList

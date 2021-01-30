@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" style="overflow-x: hidden!important;">
+<head>
+	<meta charset="UTF-8">
+	<style>
+		body,html{width: 100%;height: 100%;font-family: "PingHei",STHeitiSC-Light,"Lucida Grande","Lucida Sans Unicode","Helvetica,Arial,Verdana","sans-serif","Microsoft Yahei"}
+		body{background-color:rgb(237,237,237)}.user_main_header{height:3.28rem}.user_header{margin-top:0.4rem;margin-left:0.3rem;position:relative}.avatar img{height:1.3rem;width:1.3rem;border-radius:50%;border:3px solid #F1F1F1;position:absolute;top:0;}.user_header .user_name{position:absolute;left:1.6rem;top:0.2rem;font-weight:bolder;color:#333333;font-size:18px}.user_header .user_id{position:absolute;left:1.6rem;top:0.84rem;font-weight:400;color:#626262;font-size:14px}.user_header .vip_status{position:absolute;right:0.3rem;top:0.34rem;width:1.8rem;height:0.64rem}.user_info{display:flex;justify-content:space-around;padding-top:2.12rem;text-align:center}.user_info_num{font-size:22px;font-weight:bold;color:#404040;}.user_info_text{font-size:12px;font-weight:500;color:#999999;}.user_vip_img{height:1.04rem;position:relative;left:50%;width:100%;margin-left:-3.55rem;}.user_vip_img img{width:7.1rem;height:1.04rem}.user_vip_img span{font-size:14px;font-weight:500;color:rgba(255,255,255,0.77);letter-spacing:1px;position:absolute;top:0.34rem;left:1.64rem}.user_applets{height:1.96rem;display:flex;justify-content:space-between;padding:0 0.3rem;align-items:center}.user_applets .item img{height:1.32rem;width:3.3rem}.user_history{height:2.36rem;position:relative;left:50%;width:100%;margin-left:-3.45rem;border-radius:6px}.user_history .user_history_con{width:6.9rem;background-color:white;height:2.36rem;}.user_history .user_title{width:1.52rem;height:0.32rem;margin:0.28rem}.user_history .user_list_one{display:flex;justify-content:space-between;text-align:center;padding-left:0.60rem;padding-right:0.34rem}.user_history .user_list_one .user_info_num{font-size:14px;font-weight:400;color:#404040;letter-spacing:1px;margin-top:0.15rem}.user_history .user_list_one .img{width:0.6rem;height:0.6rem}.user_tools{height:2.36rem;position:relative;left:50%;width:100%;margin-left:-3.45rem;border-radius:6px;margin-top:0.36rem}.user_tools .user_tools_con{width:6.9rem;background-color:white;height:2.36rem;}.user_tools .user_title{width:1.28rem;height:0.32rem;margin:0.28rem}.user_tools .user_list_two{display:flex;justify-content:space-between;text-align:center;padding:0 0.34rem}.user_tools .user_list_two .user_info_num{font-size:14px;font-weight:400;color:#404040;letter-spacing:1px;margin-top:0.15rem}.user_tools .user_list_two .img{width:0.6rem;height:0.6rem}html,body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td{margin:0;padding:0;}body,button,input,select,textarea{font:12px/1.5 tahoma,arial,\5b8b\4f53;}h1,h2,h3,h4,h5,h6{font-size:100%;}address,cite,dfn,em,var{font-style:normal;}code,kbd,pre,samp{font-family:couriernew,courier,monospace;}small{font-size:12px;}ul,ol{list-style:none;}a{text-decoration:none;}a:hover{text-decoration:underline;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}legend{color:#000;}fieldset,img{border:0;}button,input,select,textarea{font-size:100%;}table{border-collapse:collapse;border-spacing:0;}
+		.relationNew-prop {
+			display:none
+		}
+		.relationNew {
+			position:relative
+		}
+		.relationNew>a {
+			position:absolute;
+			top:-0.2rem;
+			right:-1%
+		}
+		.relationNew>a img {
+			width:0.24rem;
+			height:0.24rem
+		}
+		.relationNew>h4 {
+			text-align:center;
+			font-size:18px;
+			color:#f60;
+			font-weight:bold
+		}
+		.relationNew .relationNewNumber {
+			position:relative;
+			background:#fdd5ba;
+			text-align:left;
+			border-radius:5px;
+			padding:5% 10%;
+			margin:0.2rem auto auto auto;
+			box-shadow:3px 3px 0 0 rgba(255,75,0,0.47)
+		}
+		.relationNew .relationNewNumber .imgKf {
+			position:absolute;
+			width:0.82rem;
+			height:0.7rem;
+			top:-0.7rem;
+			right:20%
+		}
+		.relationNew .relationNewNumber .imgKf img {
+			width:0.82rem;
+			height:0.7rem
+		}
+		.relationNew .relationNewNumber>p {
+			display:flex;
+			justify-content:flex-start;
+			align-items:center;
+			padding:0.1rem 0
+		}
+		.relationNew .relationNewNumber>p img {
+			width:0.34rem;
+			height:0.34rem
+		}
+		.relationNew .relationNewNumber>p>span {
+			font-size:15px;
+			color:#f60;
+			margin:0 0 0 0.3rem
+		}
+		.relationNewLayer .layui-m-layercont {
+			padding:5%!important
+		}
+	</style>
+	<script type="text/javascript" src="/static/index/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/plugins/layer_mobile/layer.js"></script>
+	<script type="text/javascript" src="/static/common/js/adaptive.js"></script>
+	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+	<script src="https://unpkg.com/@better-scroll/core@latest/dist/core.min.js"></script>
+<style>
+	body,html{width: 100%;height: 100%;font-family: "PingHei",STHeitiSC-Light,"Lucida Grande","Lucida Sans Unicode","Helvetica,Arial,Verdana","sans-serif","Microsoft Yahei"}
+	body{background-color:rgb(237,237,237)}.user_main_header{height:3.28rem}.user_header{margin-top:0.4rem;margin-left:0.3rem;position:relative}.avatar img{height:1.3rem;width:1.3rem;border-radius:50%;border:3px solid #F1F1F1;position:absolute;top:0;}.user_header .user_name{position:absolute;left:1.6rem;top:0.2rem;font-weight:bolder;color:#333333;font-size:18px}.user_header .user_id{position:absolute;left:1.6rem;top:0.84rem;font-weight:400;color:#626262;font-size:14px}.user_header .vip_status{position:absolute;right:0.3rem;top:0.34rem;width:1.8rem;height:0.64rem}.user_info{display:flex;justify-content:space-around;padding-top:2.12rem;text-align:center}.user_info_num{font-size:22px;font-weight:bold;color:#404040;}.user_info_text{font-size:12px;font-weight:500;color:#999999;}.user_vip_img{height:1.04rem;position:relative;left:50%;width:100%;margin-left:-3.55rem;}.user_vip_img img{width:7.1rem;height:1.04rem}.user_vip_img span{font-size:14px;font-weight:500;color:rgba(255,255,255,0.77);letter-spacing:1px;position:absolute;top:0.34rem;left:1.64rem}.user_applets{height:1.96rem;display:flex;justify-content:space-between;padding:0 0.3rem;align-items:center}.user_applets .item img{height:1.32rem;width:3.3rem}.user_history{height:2.36rem;position:relative;left:50%;width:100%;margin-left:-3.45rem;border-radius:6px}.user_history .user_history_con{width:6.9rem;background-color:white;height:2.36rem;}.user_history .user_title{width:1.52rem;height:0.32rem;margin:0.28rem}.user_history .user_list_one{display:flex;justify-content:space-between;text-align:center;padding-left:0.60rem;padding-right:0.34rem}.user_history .user_list_one .user_info_num{font-size:14px;font-weight:400;color:#404040;letter-spacing:1px;margin-top:0.15rem}.user_history .user_list_one .img{width:0.6rem;height:0.6rem}.user_tools{height:2.36rem;position:relative;left:50%;width:100%;margin-left:-3.45rem;border-radius:6px;margin-top:0.36rem}.user_tools .user_tools_con{width:6.9rem;background-color:white;height:2.36rem;}.user_tools .user_title{width:1.28rem;height:0.32rem;margin:0.28rem}.user_tools .user_list_two{display:flex;justify-content:space-between;text-align:center;padding:0 0.34rem}.user_tools .user_list_two .user_info_num{font-size:14px;font-weight:400;color:#404040;letter-spacing:1px;margin-top:0.15rem}.user_tools .user_list_two .img{width:0.6rem;height:0.6rem}html,body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td{margin:0;padding:0;}body,button,input,select,textarea{font:12px/1.5 tahoma,arial,\5b8b\4f53;}h1,h2,h3,h4,h5,h6{font-size:100%;}address,cite,dfn,em,var{font-style:normal;}code,kbd,pre,samp{font-family:couriernew,courier,monospace;}small{font-size:12px;}ul,ol{list-style:none;}a{text-decoration:none;}a:hover{text-decoration:underline;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}legend{color:#000;}fieldset,img{border:0;}button,input,select,textarea{font-size:100%;}table{border-collapse:collapse;border-spacing:0;}
+</style>
+	<script>
+		var current_page_info = '{$js_data|RAW}';
+		current_page_info = JSON.parse(current_page_info)
+	</script>
+	<style>
+		html {
+			position: fixed;
+			height: 100%;
+			overflow: hidden;
+		}
+
+		body {
+			font-family: sans-serif;
+			margin: 0;
+			width: 100vw;
+			height: 100vh;
+			overflow-x: hidden;
+			overflow-y: auto;
+			-webkit-overflow-scrolling: touch;
+			position: fixed;top: 0;left: 0;right: 0;bottom: 0;
+		}
+
+		.color-picker-main-container {
+			width: 100%;
+			font-size: 22px;
+
+			padding-bottom: 30px;
+		}
+
+		footer {
+			position: fixed;
+		}
+	</style>
+	<title>{$site_title}</title>
+</head>
+<body style="">
+<div class="color-picker-main-container" style="">
+	<div class="content">
+		<!--头部-->
+		<div style="" class="user_main_header">
+			<div class="user_header">
+				<div class="avatar">
+					<img src="{$page_data.avatar}" alt="头像"/>
+				</div>
+				<div>
+					<span class="user_name">{$page_data.nickname}</span>
+					<span class="user_id">{$page_data.user_id}</span>
+				</div>
+				{if condition="$page_data.is_vip"}
+				<img src="/static/index/images/chaoji.png" class="vip_status"/>
+				{else /}
+				<img src="/static/index/images/putong@2x.png" class="vip_status"/>
+				{/if}
+			</div>
+			<div class="user_info">
+				<div>
+					<div class="user_info_num">{$page_data.coin}</div>
+					<div class="user_info_text">书币</div>
+				</div>
+				<div>
+					<div class="user_info_num">{$page_data.book_number}</div>
+					<div class="user_info_text">书架</div>
+				</div>
+				<div>
+					<div class="user_info_num">{$page_data.read_number}</div>
+					<div class="user_info_text">共读</div>
+				</div>
+			</div>
+		</div>
+		<!--vip-->
+		<div class="user_vip_img" data-key="{$page_data.is_vip}" data-href="{:my_url('Charge/index')}">
+			{if condition="$page_data.is_vip eq 1"}
+			<span class="expiration">
+	    会员到期日：{$page_data.valid_at}
+	</span>
+			<img src="/static/index/images/vip_two.png" alt=""/>
+			{else /}
+			<span class="expiration" style="display: none"></span>
+			<img src="/static/index/images/vip_one.png" alt=""/>
+			{/if}
+		</div>
+		<!--小程序-->
+		<!--    <div class="user_applets" style=""></div>-->
+		<div style="position: relative;top: 0.28rem;-webkit-overflow-scrolling: touch;">
+			<div class="user_applets_new" style="position: absolute;top: 0;left: 4%"></div>
+			<div class="user_applets_new_one" style="position: absolute;top: 0;left: 52%"></div>
+		</div>
+		<!--消费历史-->
+		<div class="user_history" style="margin-top: 1.96rem;height: 2.5rem;-webkit-overflow-scrolling: touch;">
+			<div class="user_history_con" style="height: 2.5rem">
+				<img class="user_title" alt="" src="/static/index/images/history.png">
+				<div class="user_list_one">
+					<div class="page_forward" data-href="{:my_url('Charge/index')}">
+						<img alt="" class="img" src="/static/index/images/chongzhi_red.png"/>
+						<div class="user_info_num">充值</div>
+					</div>
+					<div class="page_forward" data-href="{:my_url('feedback')}">
+						<img alt="" class="img" src="/static/index/images/chongzhi_blue.png"/>
+						<div class="user_info_num">充值记录</div>
+					</div>
+					<div class="page_forward" data-href="{:my_url('feedback')}">
+						<img alt="" class="img" src="/static/index/images/xiaofei@2x.png"/>
+						<div class="user_info_num">消费记录</div>
+					</div>
+					<div class="page_forward" data-href="{:my_url('myHistory')}">
+						<img alt="" class="img" src="/static/index/images/lishi@2x.png"/>
+						<div class="user_info_num">阅读历史</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--工具-->
+		<div class="user_tools">
+			<div class="user_tools_con" style="height: 2.5rem">
+				<img class="user_title" alt="" src="/static/index/images/tools.png">
+				<div class="user_list_two">
+					<div class="page_forward" data-href="{:my_url('message')}">
+						<img alt="" class="img" src="/static/index/images/xiaoxi@2x.png"/>
+						<div class="user_info_num">我的消息</div>
+					</div>
+					<div class="page_forward" data-href="{:my_url('bindPhone')}">
+						<img alt="" class="img" src="/static/index/images/shouji@2x.png"/>
+						<div class="user_info_num">绑定手机号</div>
+					</div>
+					<div onclick="javascript:contactUs();">
+						<img alt="" class="img" src="/static/index/images/kefu@2x.png"/>
+						<div class="user_info_num">联系客服</div>
+					</div>
+					<div class="page_forward" data-href="{:my_url('feedback')}">
+						<img alt="" class="img" src="/static/index/images/fankui.png"/>
+						<div class="user_info_num">意见反馈</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+<footer>
+</footer>
+<div class="relationNew-prop" style="display: none">
+	<div class="relationNew">
+		<a href="javascript:;" onclick="javascript:layer.closeAll();"> <img src="/static/index/images/close.png" alt=""></a>
+		<h4>联系方式</h4>
+		<div class="relationNewNumber">
+			<div class="imgKf">
+				<img src="/static/index/images/face.png" alt="">
+			</div>
+			{notempty name="contact.qq"}
+			<p>
+				<img src="/static/index/images/QQ.png" alt="">
+				<span>QQ：{$contact.qq}</span>
+			</p>
+			{/notempty}
+			{notempty name="contact.wx"}
+			<p>
+				<img src="/static/index/images/mes.png" alt="">
+				<span>微信：{$contact.wx}</span>
+			</p>
+			{/notempty}
+			{notempty name="contact.tel"}
+			<p>
+				<img src="/static/index/images/tel.png" alt="">
+				<span>电话：{$contact.tel}</span>
+			</p>
+			{/notempty}
+		</div>
+	</div>
+</div>
+{:getBlock('cartoon_footer_new','other')}
+<script type="text/javascript" src="__IJS__/index.user.index.js"></script>
+<script>
+	let wrapper = document.querySelector('.color-picker-main-container')
+	let scroll = new BScroll(wrapper)
+	$('.user_applets_new').html('<wx-open-launch-weapp id="launch-btn" username="' + config.mina.checkin.appid + '" path="' + config.mina.checkin.path + '"><template>\n' +
+		'<style></style>\n' +
+		'<img style="height:66px;width: 50%;" src="https://e-static.oss-cn-shanghai.aliyuncs.com/img/wfd/book/qiandao.png"></template></wx-open-launch-weapp>')
+
+	$('.user_applets_new_one').html('<wx-open-launch-weapp id="launch-btn" username="' + config.mina.wheel.appid + '" path="' + config.mina.wheel.path + '"><template>\n' +
+		'<style></style>\n' +
+		'<img style="height:66px;width: 50%;" src="https://e-static.oss-cn-shanghai.aliyuncs.com/img/wfd/book/zhuanpan.png"></template></wx-open-launch-weapp>')
+</script>
+</body>
+</html>

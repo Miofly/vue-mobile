@@ -65,7 +65,7 @@ export default class mescrollSwiper extends mixins(scrollMixins) {
         auto: false, // 是否在初始化完毕之后自动执行一次下拉刷新的回调
         noMoreSize: 1, // 如果列表已无数据,可设置列表的总数量要大于1条才显示无更多数据
         textLoading: '正在玩命的加载...',
-        textNoMore: '没有纪录了...',
+        textNoMore: '没有记录了...',
         bgColor: 'transparent',
         textColor: 'gray',
         optSize: '16px',

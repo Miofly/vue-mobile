@@ -468,7 +468,14 @@ export default class extends Vue {
     // 领取
     getAward () {
         if (this.modalStatus) {
-            this.modalStatus = false
+	        this.interstitialAd.show().catch(() => {
+		        // 失败重试
+		        this.interstitialAd.load()
+		        .then(() => this.interstitialAd.show())
+		        .catch(err => {
+			        console.log(err)
+		        })
+	        })
             this.getAwardFn()
         }
     }
@@ -479,21 +486,22 @@ export default class extends Vue {
             this.chip = data.chip
             this.user.money = data.money
             this.unable = data.unable
+	        this.$mio.mioRoot.showToast('领取成功')
         }
-        this.$mio.mioRoot.showToast('领取成功')
-		this.interstitialAd.show().catch(() => {
-			// 失败重试
-			this.interstitialAd.load()
-				.then(() => this.interstitialAd.show())
-				.catch(err => {
-					console.log(err)
-				})
-		})
+	    this.modalStatus = false
     }
 
     giveUp () {
+    	this.$mio.mioRoot.showToast('正在领取')
         if (this.modalStatus) {
-            this.modalStatus = false
+	        this.interstitialAd.show().catch(() => {
+		        // 失败重试
+		        this.interstitialAd.load()
+		        .then(() => this.interstitialAd.show())
+		        .catch(err => {
+			        console.log(err)
+		        })
+	        })
             this.giveUpFn()
         }
 
@@ -504,14 +512,7 @@ export default class extends Vue {
         if (code == 200) {
             this.unable = data.unable
         }
-		this.interstitialAd.show().catch(() => {
-			// 失败重试
-			this.interstitialAd.load()
-				.then(() => this.interstitialAd.show())
-				.catch(err => {
-					console.log(err)
-				})
-		})
+	    this.modalStatus = false
     }
 }
 </script>

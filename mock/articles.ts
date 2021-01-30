@@ -36,7 +36,7 @@ for (let i = 0; i < articleCount; i++) {
 }
 
 export const getArticles = (req: Request, res: Response) => {
-	const { importance, type, title, page = 1, per_page = 20, sort } = req.query
+	const { importance, type, title, page = 1, per_page = 10, sort } = req.query
 
 	let mockList = articleList.filter(item => {
 		if (importance && item.importance !== Number(importance)) return false
