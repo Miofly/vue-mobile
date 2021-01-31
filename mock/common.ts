@@ -8,10 +8,15 @@ const selectList: any[] = [
 ]
 
 const switch_value = 1 // 开关变量
+const searchKeyList = ['胡歌', '战狼', '小红花', '周星驰']
+
+const initData = {
+	switch_value: 1,
+	searchKeyList: ['胡歌', '战狼', '小红花', '周星驰']
+}
 
 const videoList: any[] = []
 const videoCount = 100
-
 const videoListUrl = [
 	'http://vfx.mtime.cn/Video/2019/03/18/mp4/190318214226685784.mp4',
 	'http://vfx.mtime.cn/Video/2019/03/19/mp4/190319104618910544.mp4',
@@ -24,7 +29,6 @@ const videoListUrl = [
 	'http://vfx.mtime.cn/Video/2019/03/12/mp4/190312083533415853.mp4',
 	'http://vfx.mtime.cn/Video/2019/03/09/mp4/190309153658147087.mp4'
 ]
-
 for (let i = 0; i < videoCount; i++) {
 	videoList.push({
 		id: i,
@@ -34,6 +38,12 @@ for (let i = 0; i < videoCount; i++) {
 	})
 }
 
+// 开关接口
+export const getInitData = (req: Request, res: Response) => res.json({
+	code: 200,
+	data: initData,
+	message: '操作成功'
+})
 
 // 开关接口
 export const getSwitch = (req: Request, res: Response) => res.json({

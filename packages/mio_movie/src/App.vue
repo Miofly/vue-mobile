@@ -1,12 +1,14 @@
 <script>
 /* eslint-disable */
 import { yunFun } from 'uJs/toolUtils'
+import {
+	commonGet
+} from '@/api'
 export default {
     onLaunch(e) {
         console.log(e, 'onLaunch：初始化完成')
         // #ifdef MP-WEIXIN
         this.autoUpdate() // 检查小程序是否更新
-        // #endif
 		if (!wx.cloud) { // 使用微信云函数
 			console.error('请使用 2.2.3 或以上的基础库以使用云能力')
 		} else {
@@ -19,26 +21,32 @@ export default {
 				traceUser: true
 			})
 		}
-    },
-    onShow(e) {
+		this.share()
+		// #endif
+	},
+    async onShow(e) {
         console.log(e, 'onShow：页面展示')
-
-		 yunFun('getDataPage', {
+	    // #ifdef H5
+	    const { data, code } = await commonGet('/mio/getSwitch')
+		this.$store.state.root.ggkz = data
+	    // #endif
+	    
+	    // #ifdef MP-WEIXIN
+		yunFun('getDataPage', {
 			dbName: 'initData',
 			pageSize: 100
 		}, (res) => {
 			const data = res.result.data[0].dataLists
-
-			 this.$store.state.root.ggkz = data.ggkzs
-			 if (this.$store.state.root.ggkz == 1) {
-			     uni.setNavigationBarTitle({
-			         title: ''
-			     })
-			 } else {
-			     this.$mio.mioRoot.replace('/pages/index/index_new')
-			 }
+			this.$store.state.root.ggkz = data.ggkzs
+			if (this.$store.state.root.ggkz == 1) {
+				uni.setNavigationBarTitle({
+					title: ''
+				})
+			} else {
+				this.$mio.mioRoot.replace('/pages/index/index_new')
+			}
 		})
-	    
+	    // #endif
         this.$store.state.root.uuid = e.query.uuid
         if (e.query.uuid == undefined) {
             if (this.$mio.mioRoot.getStorageSync('uuid') == null || this.$mio.mioRoot.getStorageSync('uuid') == undefined || this.$mio.mioRoot.getStorageSync('uuid') == '') {

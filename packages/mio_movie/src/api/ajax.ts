@@ -11,7 +11,7 @@ import { AxiosRequestConfig } from './types'
 const Qs = require('qs')
 
 // axios 默认配置
-axios.defaults.baseURL = process.env.VUE_APP_BASE_API // 优先级比axios实例要低
+axios.defaults.baseURL = '' // 优先级比axios实例要低
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8'
 axios.defaults.withCredentials = false // 允许axios请求携带cookie等凭证
 axios.defaults.timeout = 15000

@@ -16,7 +16,6 @@
             </template>
             <template v-slot:detail>
                 <ad v-if="ptgg" ad-intervals="30" :unit-id="ptgg" style="margin-top: 68rpx;width: 100vw"></ad>
-
                 <view :key="index" style="display: flex;flex-direction: row;align-items: flex-start;"
                       v-for="(item, index) in answerQuestion">
                     <view class="u-column" @click="goRecord(item.url)">
@@ -27,24 +26,19 @@
                     </view>
                 </view>
                 <ad v-if="spgg" :unit-id="spgg" ad-type="video" ad-theme="white" style="margin-top: 28rpx"></ad>
-
             </template>
         </m-search-update>
     </scroll-view>
 </template>
 
 <script lang="ts">
-import newData from 'json/zsQuestion.json'
-import dataTwo from 'json/zsQuestionNew.json'
 import { Component, Vue } from 'vue-property-decorator'
 import { State } from 'vuex-class'
 // #ifdef H5
 import mSearchUpdate from 'zj/m-searchUpdate/m-searchUpdate.vue'
 // #endif
 import { commonGet } from '@/api'
-
 const cheerio = require('cheerio')
-
 @Component({
     components: {
         // #ifdef H5
@@ -140,20 +134,12 @@ export default class extends Vue {
         this.$mio.mioRoot.throttle(() => {
             this.loadOkSearch(val)
         }, 2000)
-        // this.answerQuestion = []
-        // this.answerQuestion = this.questionBanks.filter(item => { // eslint-disable-line
-        //     // #ifdef MP-WEIXIN
-        //     this.interstitialAd.show()
-        //     // #endif
-        //     return item.question.indexOf(val) !== -1
-        // })
-        // console.log(this.answerQuestion, 33333333)
     }
 
     async loadOkSearch (keyword) { // ok资源网搜索
 	    this.answerQuestion = []
         this.$mio.mioRoot.showLoading('正在加载')
-        const okIndex = await commonGet(`/index.php?m=vod-search&wd=${keyword}&submit=search`)
+        const okIndex = await commonGet(`/api/index.php?m=vod-search&wd=${keyword}&submit=search`)
         uni.hideLoading()
         const $ = cheerio.load(okIndex, { _useHtmlParser2: true })
         for (let i = 0; i < $('.xing_vb4 a').length; i++) {
