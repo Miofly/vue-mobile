@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html style="width: 100%;height: 100%">
+<head>
+<title></title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no"/>
+<script src="./js/jquery-1.7.2.min.js"></script>
+<script src="./js/adaptive.js"></script>
+<script src="./js/EventEmitter.min.js"></script>
+<script src="./js/art-template.js"></script>
+</head>
+<body>
+<div id="dataList"></div>
+<!--广告-->
+<div class="container">
+	<!--单图-->
+	<script id="ad-template-info" type="text/html">
+		<div class="ad-template-info"
+		     style="display: flex;justify-content: space-between;height: 1.86rem;margin-top: 0.24rem"
+		     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},1,getParam('from_user_id'),{{page}},{{ad_platform}},{{ad_material_id}})">
+			<div style="width: 65%">
+				<div class="line-two"
+				     style="font-size: 16px;color: #333333;font-weight: bolder;line-height: 0.44rem;">
+					{{ title }}
+				</div>
+				<div style="display: flex;justify-content: space-between;margin-top: 0.28rem;color: rgba(153, 153, 153, 1)">
+                        <span style="color: rgba(153, 153, 153, 1)!important;font-size: 14px;">
+                            <img src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/img/eye.png"
+                                 style="margin-top: -0.04rem;margin-right: 0.06rem;width: 0.28rem;height: 0.28rem;"><span>{{ readNum }}次观看</span>
+                        </span>
+					{{date}}
+				</div>
+			</div>
+			<div style="width: 2rem;height: 1.6rem;padding-right: 0rem;line-height: 1.4rem">
+				<img src="{{srcUrls[0]}}" style="height: 1.6rem;border-radius: 4px;">
+			</div>
+		</div>
+		<div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>
+	</script>
+	<!--三图-->
+	<script id="ad-template-3img" type="text/html">
+		<div class="ad-template-3img" style="padding: 0.24rem 0"
+		     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},2,getParam('from_user_id'),{{page}},{{ad_platform}},{{ad_material_id}})">
+			<div class="line-two"
+			     style="padding: 0 0rem;font-weight: bolder;line-height: 0.44rem;color: #333;font-size: 16px!important;">
+				{{ title }}
+			</div>
+			<div style="display: flex;justify-content: space-between;padding: 0 0rem;margin-top: 0.2rem">
+				{{ each srcUrls as value }}
+				<img style="height: 1.4rem;border-radius: 4px;" src="{{value}}" alt="">
+				{{ /each    }}
+			</div>
+			<div style="display: flex;justify-content: space-between;margin-top: 0.14rem;padding: 0 0rem;color: rgba(153, 153, 153, 1)">
+                    <span style="color: rgba(153, 153, 153, 1);font-size: 14px;">
+                        <img src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/img/eye.png"
+                             style="margin-top: -0.04rem;margin-right: 0.06rem;width: 0.28rem;height: 0.28rem"><span>{{ readNum }}次观看</span>
+                    </span>
+				{{date}}
+			</div>
+		</div>
+		<div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>
+	</script>
+	<!--大图-->
+	<script id="ad-template-info-big" type="text/html">
+		<div class="ad-template-info-big" style="padding: 0.24rem 0"
+		     onclick="Ad.adClick({{clickUrl}},{{dUrl}},{{pid}},3,getParam('from_user_id'),{{page}},{{ad_platform}},{{ad_material_id}})">
+			<div class="line-two"
+			     style="padding: 0 0rem;font-weight: bolder;line-height: 0.44rem;color: #333;font-size: 16px!important;">
+				{{ title }}
+			</div>
+			<div style="display: flex;justify-content: space-between;padding: 0 0rem;margin-top: 0.2rem">
+				<img style="height: 4.56rem;width: 100%;border-radius: 4px;" src="{{srcUrls[0]}}" alt="">
+			</div>
+			<div style="display: flex;justify-content: space-between;margin-top: 0.28rem;padding: 0 0rem;color: rgba(153, 153, 153, 1)">
+                    <span style="color: rgba(153, 153, 153, 1);font-size: 14px;">
+                        <img src="http://cp4gzh.oss-cn-shanghai.aliyuncs.com/static/img/eye.png"
+                             style="margin-top: -0.05rem;margin-right: 0.08rem;width: 0.28rem;height: 0.28rem"><span>{{ readNum }}次观看</span>
+                    </span>
+				{{date}}
+			</div>
+		</div>
+		<div style="height: 1px;background: #EEEEEE;width: 94vw;"></div>
+	</script>
+</div>
+<script src="./js/ad_pure.js"></script>
+<script type="text/javascript">
+	function commonGet(url, success, headers,fail) {
+		$.ajax({
+			type: 'GET',
+			url: 'https://gzh.shortl.cn' + url,
+			// url: 'http://api.17code.net/h5' + url,
+			success: success,
+			fail: fail,
+			headers: headers
+		})
+	}
+	// 广告处理
+	var otherId = 0
+	var adListIndex = 0;
+	var adList = [];
+	var deny_cids = []; // 被禁止的创意广告id
+
+	var page = {num: 1, size:1}
+	var maxPgae = 0
+	getAds()
+	// 广告列表
+	function getAds () {
+		commonGet('/ws/h5/adverts?page_type=7&page=' + page.num + '&per_page=' + page.size + '', function (res) {
+			if (res.code == 200) {
+				adList = adList.concat(res.data)
+				maxPgae = res.meta.last_page
+			}
+			ee.emitEvent('fetch-jj-ad')
+		}, {'ACT-USER-ID': getParam('user_id')})
+	}
+
+	// 拉取广告
+	ee.addListener('fetch-jj-ad', function() {
+		var curData = adList[adListIndex];
+		Ad.singleAd(
+			$.extend(curData, {
+				data: {
+					app_id: curData.ad_platform == 1 ? 47 : 103164,
+					deny_cids: deny_cids.join(','),
+					ad_platform: curData.ad_platform,
+				}
+			}),
+			function(res) {
+				if (res && deny_cids.indexOf(res.cid) == -1 && curData.ad_platform == 0) {
+					deny_cids.push(res.cid); //插入创意id 用于广告位被重复广告占用
+				}
+				if (adListIndex === adList.length - 1) return;
+				adListIndex++;
+				/* 请求下个广告 */
+				ee.emitEvent('fetch-jj-ad');
+			}
+		);
+	});
+</script>
+</body>
+</html>

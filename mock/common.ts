@@ -31,7 +31,6 @@ const videoListUrl = [
 ]
 for (let i = 0; i < videoCount; i++) {
 	videoList.push({
-		id: i,
 		title: faker.lorem.sentence(6, 10),
 		poster: faker.image.image(),
 		video_url: faker.random.arrayElement(videoListUrl)

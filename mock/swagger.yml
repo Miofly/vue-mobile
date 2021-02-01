@@ -47,3 +47,6 @@ paths:
     /getVideoList:
         get:
             operationId: getVideoList
+    /getAdList:
+        get:
+            operationId: getAdList

@@ -1,4 +1,5 @@
 export * from './users'
+export * from './book'
 export * from './common'
 export * from './articles'
 export * from './sign_in'
