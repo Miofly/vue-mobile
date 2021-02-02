@@ -47,6 +47,18 @@ paths:
     /getVideoList:
         get:
             operationId: getVideoList
-    /getAdList:
+    /ad/getList:
         get:
-            operationId: getAdList
+            operationId: getList
+    /ad/del:
+        get:
+            operationId: del
+    /ad/add:
+        post:
+            operationId: add
+    /ad/edit:
+        post:
+            operationId: edit
+    /ad/changeState:
+        post:
+            operationId: changeState

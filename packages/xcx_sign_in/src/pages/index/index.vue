@@ -174,7 +174,6 @@
             <view style="position: relative;left: 0;top: -180rpx;z-index: 889;" @click="modalStatusTwo = false">
                 <image src="https://e-static.oss-cn-shanghai.aliyuncs.com/img/wfd/zhuanpan/gyxz.png" style="width: 660rpx;height: 660rpx;animation: rotate 4s linear 0s infinite;"></image>
             </view>
-
             <view style="position: relative;margin-top: -580rpx;z-index: 900;display: block">
                 <m-image duration="0" :showLoading="false" :borderRadius="10" bgColorError="rgba(0, 0, 0, 1)"
                          :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
@@ -187,6 +186,18 @@
                 </image>
             </view>
         </m-modal>
+
+	    <m-modal :closeShow="false" bgColor="transparent" :closeSize="40" :descSize="30" padding="0" radius="30rpx" :maskClosable="true"
+	             :status.sync="modalStatusFour" :showTitle="false" title="" desc="" modalTop="0" :titleSize="40"
+	             :showContent="false" descColor="#999d9c" titleColor="black" width="664rpx">
+		    <view style="position: relative" @click="goTurntable">
+			   <image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
+			   	src="https://e-static.oss-cn-shanghai.aliyuncs.com/img/wfd/zhuanpan/zptp.png" style="width: 664rpx"></image>
+
+			    <image :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]"
+			           src="https://e-static.oss-cn-shanghai.aliyuncs.com/img/wfd/zhuanpan/ljcj.png" style="position: absolute;bottom: 100rpx;left: 15%;width: 70%;height: 196rpx;"></image>
+		    </view>
+	    </m-modal>
     </view>
 </template>
 
@@ -231,6 +242,7 @@ export default class index extends Vue {
     modalStatus: boolean = false
     modalStatusTwo: boolean = false
     modalStatusThree: boolean = false
+	modalStatusFour: boolean = false
 
     config: any = {}
     signInStatusLists: any = []
@@ -288,7 +300,23 @@ export default class index extends Vue {
 
         this.getData()
     }
-
+	
+	goTurntable () {
+    	console.log(112)
+		wx.navigateToMiniProgram({
+			appId: 'wx1725f08e072e0798',
+			path: `/pages/index/index?uuid=${this.$store.state.center.uuid}`,
+			extraData: {
+			},
+			success: res => {
+				console.log(res)
+			},
+			fail: err => {
+				console.log(err)
+			}
+		})
+	}
+    
     // 获取初始数据
     async getData () {
         const { data, code } = await commonGet(`/checkin/cmain.html?uuid=${this.$store.state.center.uuid}`)
@@ -313,13 +341,12 @@ export default class index extends Vue {
     }
 
     sing_in_btn () {
-
         this.$mio.mioRoot.throttle(() => {
             if (this.config.allow_option == 0) {
-                this.$mio.mioRoot.showToast('今日已签到')
+                // this.$mio.mioRoot.showToast('今日已签到')
+	            this.modalStatusFour = true
                 return
             }
-            console.log('出发了吗')
             this.signIn(1, 0)
         }, 2000)
     }
@@ -374,6 +401,7 @@ export default class index extends Vue {
                 this.modalStatus = false
                 this.getData()
                 this.$mio.mioRoot.showToast('领取成功')
+	            this.modalStatusFour = true
             }
             this.interstitialAd.show().catch(() => {
             	// 失败重试
@@ -394,6 +422,7 @@ export default class index extends Vue {
                 this.modalStatusTwo = false
                 this.getData()
                 this.$mio.mioRoot.showToast('补签成功')
+	            this.modalStatusFour = true
             }
         })
     }

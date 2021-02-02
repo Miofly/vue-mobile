@@ -7,6 +7,7 @@ const adListCount = 100
 for (let i = 0; i < adListCount; i++) {
 	adList.push({
 		id: i,
+		ad_platform: faker.random.number({ min: 0, max: 1 }),
 		pid: faker.random.number({ min: 10000, max: 19000 }),
 		state: faker.random.number({ min: 0, max: 1 }),
 		created_at: faker.date.past().getTime(),
@@ -15,14 +16,15 @@ for (let i = 0; i < adListCount; i++) {
 	})
 }
 
-export const getAdList = (req: Request, res: Response) => {
-	const { id, pid, state, page_type, page = 1, limit = 20, sort } = req.query
+export const getList = (req: Request, res: Response) => {
+	const { id, pid, state, page_type, ad_platform, page = 1, limit = 20, sort } = req.query
 
 	// @ts-ignore
 	let mockList: any = adList.filter(item => {
 		if (id && item.id.indexOf(id) < 0) return false
 		if (pid && item.pid.indexOf(pid) < 0) return false
-		if (state && item.state.indexOf(state) < 0) return false
+		if (state && item.state != state) return false
+		if (ad_platform && item.ad_platform != ad_platform) return false
 		if (page_type && item.page_type.indexOf(page_type) < 0) return false
 		return true
 	})
@@ -42,3 +44,27 @@ export const getAdList = (req: Request, res: Response) => {
 		}
 	})
 }
+
+// 删除
+export const del = (req: Request, res: Response) => res.json({
+	code: 200,
+	message: '删除成功'
+})
+
+// 新增
+export const add = (req: Request, res: Response) => res.json({
+	code: 200,
+	message: '操作成功'
+})
+
+// 编辑
+export const edit = (req: Request, res: Response) => res.json({
+	code: 200,
+	message: '操作成功'
+})
+
+// 变更状态
+export const changeState = (req: Request, res: Response) => res.json({
+	code: 200,
+	message: '操作成功'
+})
