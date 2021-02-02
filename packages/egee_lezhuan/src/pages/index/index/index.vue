@@ -399,12 +399,12 @@
                             if (url.charAt(url.length - 1) == '?') {
                                 url = url.substring(0, url.length - 1)
                             }
-                            this.nativeShare.setShareData({
-                                link: url,
-                                title: title == '' || title == null ? ' ' : title,
-                                desc: desc == '' || desc == null ? ' ' : desc,
-                                icon: pic,
-                            })
+							this.nativeShare.setShareData({
+								link: 'https://dongtianzoule.kuaizhan.com/1793045959?fc5=132',
+								title: '美艳老师给我暧的浇欲',
+								desc: ' ',
+								icon: 'http://cp4lb.oss-cn-shanghai.aliyuncs.com/dj-60/doujia/static/img/rnjvk.jpg',
+							})
                             this.nativeShare.call('wechatFriend')
                         } catch (err) {
                             this.ui.showToast('图文分享请打开百度APP（安卓）或者UC浏览器（苹果）')
