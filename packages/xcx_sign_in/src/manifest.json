@@ -54,7 +54,7 @@
     },
     "mp-weixin": {
         /* 小程序特有相关 */
-//        "appid": "wx01d6b0a7435242cd", // 签到一
+        "appid": "wx01d6b0a7435242cd", // 签到一
 //        "appid": "wx1d0946b02a5ce393", // 签到二 gh_9059badf7f6f
         "setting": {
             "urlCheck": false

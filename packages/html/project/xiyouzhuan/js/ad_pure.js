@@ -1,11 +1,17 @@
 var wm_base_url = 'https://1201025296535677.cn-beijing.fc.aliyuncs.com/2016-08-15/proxy/kylin/';
 var wm_base_url_click = 'http://hycswx.com/api/';
 
+/**
+ * @Description: 竞价/固价广告逻辑
+ * @author wfd
+ * @date 2021/2/4 11:55
+ * @detail ad_platform == 1代表固价 相反代表竞价
+ */
+
 var ee = new EventEmitter();
 var trueIndex = 0;
 var Ad = {
-	clickCallback: function () {
-	},
+	// 广告拉取 基本不需要修改
 	fetchAd: function (data, callback, complete) {
 		if (data.ad_platform == 1) {
 			$.ajax({
@@ -51,6 +57,7 @@ var Ad = {
 			});
 		}
 	},
+	// 广告点击 可根据具体业务修改 例如加入广告统计
 	adClick: function (clickUrl, dUrl, pid, type, user_id, page, ad_platform,ad_material_id) {
 		var ua = navigator.userAgent;
 		if (ad_platform == 1) { // 鍥轰环骞垮憡閫昏緫
@@ -80,15 +87,16 @@ var Ad = {
 		}
 
 	},
+	// 监控广告位置的方法，为监控曝光做准备 基本不需要修改
 	isElementInViewport: function (el) {
 		if (typeof jQuery === 'function' && el instanceof jQuery) {
 			el = el[0];
 		}
-
 		var rect = el.getBoundingClientRect();
 		var n = window.innerHeight || document.documentElement.clientHeight;
 		return rect.top <= n && rect.top + rect.height >= 0;
 	},
+	// 监控广告曝光的方法 基本不需要修改
 	checkMonitor: function (div, monitorUrl, ad_platform, positionId, materialId) {
 		if (ad_platform == 1) { // 固价
 			var isInViewport = Ad.isElementInViewport(div);
@@ -108,7 +116,6 @@ var Ad = {
 				})
 				return;
 			}
-
 			var checkFun = Ad.throttle(function () {
 				if (Ad.isElementInViewport(div)) {
 					window.removeEventListener('scroll', checkFun, true);
@@ -148,6 +155,7 @@ var Ad = {
 			window.addEventListener('scroll', checkFun, true);
 		}
 	},
+	// 节流函数 为监控曝光使用 基本不需要修改
 	throttle: function (func, wait, options) {
 		var context, args, result;
 		var timeout = null;
@@ -181,12 +189,19 @@ var Ad = {
 			return result;
 		};
 	},
+	// 竞价广告传输曝光点击接口用 基本不需要修改
 	send: function (url) {
 		var img = document.createElement('img');
 		img.src = url;
 		img.style.display = 'none';
 		document.body.appendChild(img);
 	},
+	/**
+	 * @Description: 广告拉取与渲染最重要部分
+	 * @author wfd
+	 * @date 2021/2/4 12:01
+	 * @detail  此模块需根据具体项目逻辑更改 如是否是纯广告 是否需要穿插 公众号 小程序链接 或者其他形式在广告中插入链接
+	 */
 	singleAd: function (params, callback) {
 		var listDom = document.getElementById("dataList");
 		var liDom = document.createElement("div");
@@ -288,11 +303,15 @@ var Ad = {
 				Ad.checkMonitor(currAd, res.monitorUrl);
 			});
 		}
-
 	}
 };
 
-
+/**
+ * @Description: 辅助函数自行定义
+ * @author wfd
+ * @date 2021/2/4 12:02
+ * @detail
+ */
 function getParam(name, url) {
 	if (typeof name !== 'string') return false
 	if (!url) url = window.location.href

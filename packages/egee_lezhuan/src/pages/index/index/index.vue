@@ -180,14 +180,14 @@
 </template>
 
 <script>
-    import {commonPost, publicGet} from '@/api'
+    import { commonPost, publicGet } from '@/api'
     import MescrollMixin from '../../../components/mescroll-uni/mescroll-mixins.js'
     import NativeShare from 'nativeshare'
-    import {mapState} from 'vuex'
+    import { mapState } from 'vuex'
 
     export default {
         mixins: [MescrollMixin],
-        data() {
+        data () {
             return {
                 current: 0,
                 items: [
@@ -255,13 +255,13 @@
                 radioVal: '26'
             }
         },
-        onUnload() {
+        onUnload () {
             // this.route.push({name: 'login'})
             uni.redirectTo({
                 url: '/pages/index/login/login'
             })
         },
-        async mounted() {
+        async mounted () {
             let test = localStorage.getItem('is_department_captain')
             let test1 = localStorage.getItem('is_team_captain')
 
@@ -293,52 +293,52 @@
             this.mess = data.data.notice
         },
         methods: {
-            closeModalTwo() {
+            closeModalTwo () {
                 this.tipMess = '正在加载...'
                 this.modalStatus = false
                 this.url_lists = []
                 this.tempVar = true
             },
-            radioChange: function (evt) {
+            radioChange (evt) {
                 console.log(evt.detail.value)
                 this.radioVal = evt.detail.value
             },
-            closeModal() {
+            closeModal () {
                 this.tipMess = '正在加载...'
                 this.tipMessTwo = '正在加载...'
                 this.modalStatusTwo = false
                 this.shortChain = ''
                 this.tempTwo = true
             },
-            modalWxTwo() {
+            modalWxTwo () {
                 this.tu.getClipboardData(this.shortChain)
                 this.tu.jumpWX()
                 this.shortChain = ''
                 this.modalStatusTwo = false
                 this.tempTwo = true
             },
-            copyTwo() {
+            copyTwo () {
                 this.tu.getClipboardData(this.shortChain)
                 this.modalStatusTwo = false
                 this.ui.showToast('复制成功')
                 this.shortChain = ''
                 this.tempTwo = true
             },
-            modalWx() {
-                var str = this.url_lists.join(',')
-                var test = str.replace(/,/g, '\n')
+            modalWx () {
+                const str = this.url_lists.join(',')
+                const test = str.replace(/,/g, '\n')
                 this.tu.getClipboardData(test)
                 this.tu.jumpWX()
             },
-            copyVal() {
-                var str = this.url_lists.join(',')
-                var test = str.replace(/,/g, '\n')
+            copyVal () {
+                const str = this.url_lists.join(',')
+                const test = str.replace(/,/g, '\n')
 
                 this.tu.getClipboardData(test)
                 this.modalStatus = false
                 this.ui.showToast('复制成功')
             },
-            async replace() {
+            async replace () {
                 this.tempVar = true
                 this.url_lists = []
                 const data = await commonPost('/title/title-share-batch', {
@@ -348,7 +348,7 @@
                 this.url_lists = data.data
                 this.tempVar = false
             },
-            async getShortChain() {
+            async getShortChain () {
                 this.modalStatus = true
                 const data = await commonPost('/title/title-share-batch', {
                     url_type: 0,
@@ -357,10 +357,10 @@
                 this.tempVar = false
                 this.url_lists = data.data
             },
-            async getLink(id) {
+            async getLink (id) {
                 this.modalStatusTwo = true
                 const data = await commonPost('/title/title-share', {
-                    id: id,
+                    id,
                     url_type: 0,
                     trans_product_id: this.radioVal
                 })
@@ -377,10 +377,10 @@
                 }
 
             },
-            async jumpWxUc(title, desc, pic, id) {
+            async jumpWxUc (title, desc, pic, id) {
                 this.ui.showLoading()
                 const data = await commonPost('/title/title-share', {
-                    id: id,
+                    id,
                     url_type: 0,
                     trans_product_id: this.radioVal
                 })
@@ -390,8 +390,7 @@
                     this.ui.showToast('获取失败，请重新获取')
                 } else if (data.data.substring(0, data.data.length - 1) == '') {
                     this.ui.showToast('获取失败，请重新获取')
-                } else {
-                    if (navigator.userAgent.toLowerCase().indexOf('micromessenger') !== -1) {
+                } else if (navigator.userAgent.toLowerCase().indexOf('micromessenger') !== -1) {
                         this.ui.showToast('图文分享请打开百度APP（安卓）或者UC浏览器（苹果）')
                         location.href = 'ucbrowser://http://web.lezhuan2020.cn'
                     } else {
@@ -411,13 +410,12 @@
                             location.href = 'ucbrowser://http://web.lezhuan2020.cn'
                         }
                     }
-                }
             },
-            async jumpWx(title, desc, pic, id) {
+            async jumpWx (title, desc, pic, id) {
                 this.tu.getClipboardData('http://web.lezhuan2020.cn')
                 this.ui.showLoading()
                 const data = await commonPost('/title/title-share', {
-                    id: id,
+                    id,
                     url_type: 0,
                     trans_product_id: this.radioVal
                 })
@@ -427,8 +425,7 @@
                     this.ui.showToast('获取失败，请重新获取')
                 } else if (data.data.substring(0, data.data.length - 1) == '') {
                     this.ui.showToast('获取失败，请重新获取')
-                } else {
-                    if (navigator.userAgent.toLowerCase().indexOf('micromessenger') !== -1) {
+                } else if (navigator.userAgent.toLowerCase().indexOf('micromessenger') !== -1) {
                         this.ui.showToast('图文分享请打开百度APP（安卓）或者UC浏览器（苹果）')
                         location.href = 'baiduboxapp://url=http://web.lezhuan2020.cn'
                     } else {
@@ -451,9 +448,8 @@
                             // location.href = 'baiduboxapp://s=http://web.lezhuan2020.cn'
                         }
                     }
-                }
             },
-            jumpPage() {
+            jumpPage () {
                 // console.log(31212)
                 // console.log(this.router)
                 // this.router.push({name: 'addItem'})
@@ -461,37 +457,37 @@
                     url: '/pages/index/module/addItem'
                 })
             },
-            personSwitch() {
+            personSwitch () {
                 if (this.status == true) {
                     this.ui.showLoading()
                     this.dataLists = []
                     this.status = false
-                    this.upCallback({num: 1, size: 15}, 1)
+                    this.upCallback({ num: 1, size: 15 }, 1)
                 }
             },
-            teamSwitch() {
+            teamSwitch () {
                 if (this.status == false) {
                     this.ui.showLoading()
                     this.dataLists = []
-                    this.upCallback({num: 1, size: 15}, 0)
+                    this.upCallback({ num: 1, size: 15 }, 0)
                     this.status = true
                 }
             },
-            downCallback() { // 下拉刷新的回调
+            downCallback () { // 下拉刷新的回调
                 if (this.status == false) {
-                    this.upCallback({num: 1, size: 15}, 1)
+                    this.upCallback({ num: 1, size: 15 }, 1)
                 }
                 if (this.status == true) {
-                    this.upCallback({num: 1, size: 15}, 0)
+                    this.upCallback({ num: 1, size: 15 }, 0)
                 }
                 // this.mescroll.resetUpScroll() // 重置列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
                 // 若整个downCallback方法仅调用mescroll.resetUpScroll(),则downCallback方法可删 (mixins已默认)
             },
-            async upCallback(page, common = 0) { // 上拉加载的回调
+            async upCallback (page, common = 0) { // 上拉加载的回调
                 console.log(page)
                 const pageNum = page.num // 页码, 默认从1开始
                 const pageSize = page.size // 页长, 默认每页10条
-                const data = await commonPost('/title/title-list', {common: common, page: pageNum, per_page: pageSize})
+                const data = await commonPost('/title/title-list', { common, page: pageNum, per_page: pageSize })
                 uni.hideLoading()
                 // 接口返回的当前页数据列表 (数组)
                 const curPageData = data.data.list.data

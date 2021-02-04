@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN">
+<head>
+	<title>分割大文件上传</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<style>
+		#test{
+			width: 200px;
+			height: 100px;
+			border: 1px solid green;
+			display: none;
+		}
+		#img{
+			width: 50px;
+			height: 50px;
+			display: none;
+		}
+		#upimg{
+			text-align: center;
+			font: 8px/10px '微软雅黑','黑体',sans-serif;
+			width: 300px;
+			height: 10px;
+			border: 1px solid green;
+		}
+		#load{
+			width: 0%;
+			height: 100%;
+			background: green;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+<form enctype="multipart/form-data" action="file.php" method="post">
+	<!--
+	<input type="file" name="pic" />
+	<div id="img"></div>
+	<input type="button" value="uploadimg" onclick="upimg();" /><br />
+	-->
+	<div id="upimg">
+		<div id="load"></div>
+	</div>
+	<input type="file" name="mof" multiple="multiple"/>
+	<input type="button" value="uploadfile" onclick="upfile();" />
+	<input type="submit" value="submit" />
+</form>
+<div id="test">
+	测试是否DIV消失
+</div>
+
+<script src="./jquery-3.3.1.min.js"></script>>
+<script type="text/javascript">
+	var dom=document.getElementsByTagName('form')[0];
+	dom.onsubmit=function(){
+		//return false;
+	}
+	var xhr=new XMLHttpRequest();
+	var fd;
+	var des=document.getElementById('load');
+	var num=document.getElementById('upimg');
+	var file;
+	const LENGTH=10*10*1024;
+	var start;
+	var end;
+	var blob;
+	var pecent;
+	var filename;
+	function upfile(){
+		start=0;
+		end=LENGTH+start;
+		file=document.getElementsByName('mof')[0].files[0];
+		if(!file){
+			alert('请选择文件');
+			return;
+		}
+		up();
+	}
+
+	function up(){
+		if(start<file.size){
+			start=end;
+			end=start+LENGTH;
+
+			console.log(start,end)
+			setTimeout('up()',1000);
+
+			xhr.open('POST','http://192.168.1.150:8080/ifacesrole/index.php?r=doctor/GenToken4QiNiu/Upload',true);
+			//xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+			xhr.onreadystatechange=function(){
+				if(this.readyState==4){
+					if(this.status>=200 &&this.status < 300){
+						if(this.responseText.indexOf('failed') >= 0){
+							//alert(this.responseText);
+							alert('文件发送失败，请重新发送');
+							des.style.width='0%';
+							//num.innerHTML='';
+							//clearInterval(clock);
+						}else{
+							//alert(this.responseText)
+							// pending=false;
+							start=end;
+							end=start+LENGTH;
+							setTimeout('up()',1000);
+						}
+					}
+				}
+			}
+			xhr.upload.onprogress=function(ev){
+				if(ev.lengthComputable){
+					pecent=100*(ev.loaded+start)/file.size;
+					if(pecent>100){
+						pecent=100;
+					}
+					//num.innerHTML=parseInt(pecent)+'%';
+					des.style.width=pecent+'%';
+					des.innerHTML = parseInt(pecent)+'%'
+				}
+			};
+
+			xhr.setRequestHeader('auth', '40ccc61ddf3cd72ace5801d8a19651cb');
+			xhr.setRequestHeader('Authorization', 'Bearer ueUAomFcnNkIqgMYj4X3a7BpQGWbyfRKVbMWvp9yxfncloCUEtrqOewR6415ds.eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImp0aSI6ImlmYWNlc21pbGUifQ.eyJpc3MiOiJ3d3cuaWZhY2VzbWlsZS5jb20iLCJhdWQiOiJ3d3cuaWZhY2VzbWlsZS5jb20iLCJqdGkiOiJpZmFjZXNtaWxlIiwiaWF0IjoxNTk4OTQ4ODcxLCJleHAiOjE1OTg5OTIwNzEsIm5iZiI6MTU5ODk0ODg3MSwiZGF0YSI6IntcInVzZXJfaW5mb1wiOntcInVzZXJfaWRcIjpcIjEwNDcxXCIsXCJ1c2VyX2Zyb21cIjpcIjJcIixcInJvbGVfaWRcIjpcIjE3XCIsXCJjbGllbnRfc2lkZVwiOlwiMTJcIn0sXCJpbnRlcmZhY2VcIjpbe1wibV9uYW1lXCI6XCJET0NUT1JcIixcImNfbmFtZVwiOlwiUEFUSUVOVFwiLFwiYV9uYW1lXCI6XCJQQVRJRU5USU5GT05FV1wifSx7XCJtX25hbWVcIjpcIkRPQ1RPUlwiLFwiY19uYW1lXCI6XCJQQVRJRU5UXCIsXCJhX25hbWVcIjpcIlVQREFURVBBVElFTlRcIn0se1wibV9uYW1lXCI6XCJET0NUT1JcIixcImNfbmFtZVwiOlwiUkVDSVBFTFwiLFwiYV9uYW1lXCI6XCJTRUxFQ1RSRUNJUEVMXCJ9LHtcIm1fbmFtZVwiOlwiQVBJX1RISVJEXCIsXCJjX25hbWVcIjpcIldPUktFUlwiLFwiYV9uYW1lXCI6XCJMT0dJTlwifSx7XCJtX25hbWVcIjpcIkFQSV9USElSRFwiLFwiY19uYW1lXCI6XCJXT1JLRVJcIixcImFfbmFtZVwiOlwiVEhJUkRQQVRJRU5UTElTVFwifSx7XCJtX25hbWVcIjpcIkFQSV9USElSRFwiLFwiY19uYW1lXCI6XCJXT1JLRVJcIixcImFfbmFtZVwiOlwiQUREVEhJUkRVUExPQURcIn0se1wibV9uYW1lXCI6XCJBUElfVEhJUkRcIixcImNfbmFtZVwiOlwiV09SS0VSXCIsXCJhX25hbWVcIjpcIlNFTEVDVFBBVElFTlRNT0RFTFwifV0sXCJhdXRoXCI6XCI0MGNjYzYxZGRmM2NkNzJhY2U1ODAxZDhhMTk2NTFjYlwifSJ9.CTLj3EvNPyKAUN1TQegNjbq2gOIDwT5GZWOY59SMBYA');
+
+			//分割文件核心部分slice
+			blob=file.slice(start,end);
+			fd=new FormData();
+			fd.append('file',blob);
+			xhr.send(fd);
+
+
+			//  let reader = new FileReader();
+			//  if (file) {
+			//   reader.readAsDataURL(file)
+			// }
+			//  reader.onload=function(e){
+			//   console.log(e.target.result);
+
+			//  }
+
+
+			// xhr.send(fd);
+		}else{
+		}
+	}
+
+	function change(){
+		des.style.width='0%';
+	}
+
+</script>
+</body>
