@@ -116,6 +116,8 @@
         <!--动效-->
         <view class="dxyy"></view>
         <image @click="getGiftBefore" class="dx" :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]" style="width: 160rpx" :src="baseConfig.dx"></image>
+	    
+        <image @click="goTurntable" class="dx1" :mode="['aspectFit', 'scaleToFill', 'aspectFill', 'widthFix', 'heightFix'][3]" style="width: 100rpx" :src="baseConfig.dx1"></image>
 
         <m-modal :closeShow="false" bgColor="transparent" :closeSize="40" :descSize="30" padding="0" radius="30rpx" :maskClosable="false"
                  :status.sync="modalStatus" :showTitle="false" title="" desc="" modalTop="0" :titleSize="40"
@@ -232,6 +234,7 @@ export default class index extends Vue {
         avatar: '/static/images/avatar.png',
         qdjl: '/static/images/qdjl.png',
         dx: 'https://e-static.oss-cn-shanghai.aliyuncs.com/img/wfd/sign1.gif',
+        dx1: '/static/images/choujiang@2x.png',
         jxnlk: '/static/images/jxnlk.png',
         zck: '/static/images/zck.png',
         qtk: '/static/images/qtk.png',
@@ -343,8 +346,8 @@ export default class index extends Vue {
     sing_in_btn () {
         this.$mio.mioRoot.throttle(() => {
             if (this.config.allow_option == 0) {
-                // this.$mio.mioRoot.showToast('今日已签到')
-	            this.modalStatusFour = true
+                this.$mio.mioRoot.showToast('今日已签到')
+	            // this.modalStatusFour = true
                 return
             }
             this.signIn(1, 0)
@@ -401,7 +404,7 @@ export default class index extends Vue {
                 this.modalStatus = false
                 this.getData()
                 this.$mio.mioRoot.showToast('领取成功')
-	            this.modalStatusFour = true
+	            // this.modalStatusFour = true
             }
             this.interstitialAd.show().catch(() => {
             	// 失败重试
@@ -422,7 +425,7 @@ export default class index extends Vue {
                 this.modalStatusTwo = false
                 this.getData()
                 this.$mio.mioRoot.showToast('补签成功')
-	            this.modalStatusFour = true
+	            // this.modalStatusFour = true
             }
         })
     }
@@ -545,6 +548,7 @@ export default class index extends Vue {
     }
     .empty{height: 28rpx;width: 100%}
     .dx{position: fixed;bottom: 100rpx;right: 54rpx;}
+    .dx1{position: fixed;bottom: 350rpx;right: 54rpx;}
     .dxyy{position: fixed;bottom: 120rpx;right: 54rpx;width: 160rpx;
         height: 160rpx;
         background: #FFAE00;
