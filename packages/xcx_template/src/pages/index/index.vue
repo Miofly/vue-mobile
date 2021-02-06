@@ -10,7 +10,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { commonPost, commonGet } from '@/api'
 import { State } from 'vuex-class'
-
+import { getAge } from 'mio-common-js'
 @Component({})
 export default class extends Vue {
     @State('spgg', { namespace: 'root' }) spgg
@@ -30,6 +30,8 @@ export default class extends Vue {
     interstitialAd: any = null
 
     created () {
+	    console.log(getAge('1995-09-26'))
+    	
         if (wx.createInterstitialAd) {
             this.rewardedVideoAd = wx.createRewardedVideoAd({
                 adUnitId: this.$store.state.root.jlgg

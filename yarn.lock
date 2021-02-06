@@ -7885,6 +7885,11 @@ mio-common-js@^1.0.16:
   resolved "https://registry.npmjs.org/mio-common-js/-/mio-common-js-1.0.16.tgz#8eb50b99eaaa9e0a3fd82eebdd7a3a4c15d510ae"
   integrity sha512-XKUQb1FFOhiIbT/sdOnPyy2OP2l56/PtQ6SgZN/x8Zpyd5Ydkvg5Do2v6djVxUcuZMLwciiqj5Oc/yvXSi9Xxw==
 
+mio-common-js@^1.0.18:
+  version "1.0.25"
+  resolved "https://registry.npmjs.org/mio-common-js/-/mio-common-js-1.0.25.tgz#6d22ee08569c93bd723e70f20c8d208fa2a8ea0d"
+  integrity sha512-PK5bhrmdV8ilRCEd3qSy5saz/sSUWd2F28gh1aOf+ZKp4TIfZCo2HSDPq6moFl3jqSHWsk+24pQCse2MS12kpQ==
+
 mississippi@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npm.taobao.org/mississippi/download/mississippi-3.0.0.tgz#ea0a3291f97e0b5e8776b363d5f0a12d94c67022"
