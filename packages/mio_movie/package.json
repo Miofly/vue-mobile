@@ -21,5 +21,8 @@
         "@dcloudio/vue-cli-plugin-uni": "^2.0.0-29820201110001",
         "@vue/cli-plugin-babel": "~4.5.0",
         "@vue/cli-plugin-typescript": "*"
+    },
+    "dependencies": {
+        "mio-common-js": "^1.0.16"
     }
 }
