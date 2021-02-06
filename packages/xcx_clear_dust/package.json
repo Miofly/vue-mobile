@@ -44,6 +44,7 @@
         "vuex-module-decorators": "^0.17.0"
     },
     "dependencies": {
+        "mio-common-js": "^1.0.16",
         "stylus-loader": "^4.3.1"
     }
 }
