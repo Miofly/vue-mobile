@@ -10,12 +10,17 @@
 	// var a = {name: 'fx', age: '18'}
 	// var b = {name: 'fx', age: '33', sex: 'boy'}
 
-	let a = [1, 2, 3, 4], b = [1, 2, 3, 5, 4, 6],
-		c = [...a, ...b],
-		d = new Set(c),
-		e = Array.from(d),
-		f = [...e.filter(_ => !a.includes(_)), ...e.filter(_ => !b.includes(_))]
-	console.log(f);//[5, 6]
+	let a = [1, 2, 3, 4, 7, {a: 1}]
+	let b = [1, 2, 3, 5, 4, 6, {a: 2}]
+	let c = [...a, ...b]
+	let d = new Set(c)
+	let e = Array.from(d)
+	console.log(e)
+	let f = [...e.filter(_ => !a.includes(_)), ...e.filter(_ => !b.includes(_))]
+	let g = [...e.filter(_ => a.includes(_)&&b.includes(_))]
+	
+	console.log('两个数组找出不相同的项：', f);
+	console.log('两个数组找出其中相同的项：', g);
 </script>
 </body>
 </html>

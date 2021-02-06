@@ -24,7 +24,7 @@ const arrDelBlank = (arr) => {
 const insertStr = (soure, start, newStr) => soure.substring(0, start) + newStr + soure.substring(start)
 
 // 检测字符串是否全为数字
-const isNumStr = (str) => {
+const isNumStr = (str: string) => {
 	let n = 0
 	for (let i = 0; i < str.length; i++) {
 		n = str.charCodeAt(i)
