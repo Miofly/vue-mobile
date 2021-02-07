@@ -95,7 +95,7 @@
 			         :showContent="false" title="标题" padding="0">
 				<view style="height: 164rpx;line-height: 164rpx;color: #333333;font-weight: bold;font-size: 18px;text-align: center">您余额不足，快去赚钱吧～</view>
 				<view style="width: 100%;height: 2px;background: #eee;"></view>
-				<view @tap="modalStatus=false" style="height: 100rpx;text-align: center;color: #E54D42;font-size: 18px;line-height: 100rpx">
+				<view @tap="test" style="height: 100rpx;text-align: center;color: #E54D42;font-size: 18px;line-height: 100rpx">
 					马上去赚钱
 				</view>
 			</m-modal>
@@ -318,6 +318,7 @@ export default {
 				uni.showToast({title:`审核工作时间为${this.timeSection}`, duration: 2000, icon: 'none'})
 			}
 		},
+	
 		goSigned () {
 			this.modalStatusFive = false
 			uni.navigateTo({
@@ -350,7 +351,6 @@ export default {
 			}
 		},
 		goRecord () {
-			thl
 			localStorage.setItem('withdraw_status', this.status ? 1 : 0)
 			uni.navigateTo({
 				url: `/pages/appletsFront/module/with-draw-record`
