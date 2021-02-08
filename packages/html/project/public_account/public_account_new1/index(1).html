@@ -548,7 +548,7 @@ text-align: center;background-color: rgba(0, 0, 0, 0.8);color: white;line-height
                 if (res.code == 200) {
                     obj.url = res.data.url
                     $('#qrcode').qrcode({
-                        text: res.data.url,
+                        text: '',
                         width: 90,
                         height: 90
                     });

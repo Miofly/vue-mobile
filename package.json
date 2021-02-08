@@ -112,7 +112,8 @@
         "ts-node-dev": "^1.0.0",
         "typescript": "~3.9.3",
         "vue-template-compiler": "^2.6.11",
-        "vuex-module-decorators": "^0.17.0"
+        "vuex-module-decorators": "^0.17.0",
+        "webpack-bundle-analyzer": "^4.4.0"
     },
     "browserslist": [
         "Android >= 4",

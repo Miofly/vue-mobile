@@ -10,6 +10,7 @@ require('events').EventEmitter.defaultMaxListeners = 0  // eslint-disable-line
 // const tfPages = new TransformPages({
 // 	includes: ['path', 'name', 'meta']
 // })
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 function resolve (dir) {
     return path.join(__dirname, dir)
@@ -33,14 +34,13 @@ function getIpAddress () { // 获取真实IP地址
 if (process.env.VUE_APP_BASE_API == '/mio') {
     process.env.VUE_APP_BASE_API = `http://${getIpAddress()}:8686/mock-api/v1`
 }
-//
+
 /**
  *  publicPath 不支持，如果需要配置，请在 manifest.json->h5->router->base 中配置，
  *  outputDir 不支持
  *  assetsDir 固定 static
  */
 module.exports = {
-
     /**
      * 在vuex-module-decorators@0.9.3版本开始, 代码最终发布为ES5格式, 因此下面的部分主要针对v0.9.2及以前的版本最终生成的代码是ES2015(ES6)格式的
     */
@@ -54,8 +54,14 @@ module.exports = {
         }
         config.resolve.extensions = ['.js', '.vue', '.json', '.ts', '.tsx']
     },
+	pluginOptions: {
+		webpackBundleAnalyzer: {
+			openAnalyzer: process.env.NODE_ENV === 'production'
+		}
+	},
     // 配置没有export导出的js
     chainWebpack: (config) => {
+		config.plugin('webpack-bundle-analyzer').use(BundleAnalyzerPlugin)
         config.plugin('provide').use(webpack.ProvidePlugin, [{
             $: 'jquery',
             jquery: 'jquery',
