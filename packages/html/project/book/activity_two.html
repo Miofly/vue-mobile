@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{$site_title}</title>
+	<script type="text/javascript" src="/static/common/js/adaptive.js"></script>
+</head>
+<body>
+<div class="charge_contain">
+	<img class="charge_bg" src="/static/index/activity/xtpc.png">
+	<img class="charge_btn" onclick="javascript:doPay('{$cur.id}');" src="/static/index/activity/xtpc_btn.png">
+	<div style="position:absolute;top:7.2rem;left:1.62rem;">
+		<span class="charge_num">{$cur.money}</span><span class="charge_num_text">元</span>
+	</div>
+
+	<div style="position:absolute;top:8.62rem;left:1.8rem;">
+		<span class="charge_num_one">{$cur.attach_prefix_coin}</span><span class="charge_num_two">+{$cur.attach_suffix_coin}书币={$cur.send_money}书币</span>
+	</div>
+	<span class="send_num">送{$cur.attach_money}元</span>
+</div>
+<script type="text/javascript" src="/static/index/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/index/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/static/plugins/layer_mobile/layer.js"></script>
+<script type="text/javascript" src="/static/index/js/common.min.js"></script>
+<script type="text/javascript" src="__IJS__/activity_index.min.js"></script>
+<style>
+	body{background-color:rgb(255,211,113)}.charge_contain{position:relative}.charge_contain .charge_bg{width:100%}.charge_contain .charge_btn{position:absolute;top:9.4rem;left:0.84rem;width:5.84rem;height:1rem}.charge_num{font-size:52px;font-family:DINAlternate-Bold,DINAlternate;font-weight:bold;color:#FB2B27;text-shadow: 2px 1px 4px rgba(194, 0, 0, 0.39);}.charge_num_text{margin-left: 0.05rem;font-size:18px;font-family:PingFangSC-Medium,PingFang SC;font-weight:500;color:#FB2B27;text-shadow:2px 1px 4px rgba(194,67,0,0.3);}.charge_num_one{font-size:16px;font-family:PingFangSC-Regular,PingFang SC;font-weight:400;color:#903200;}.send_num{position:absolute;top:7.66rem;left:4.94rem;font-size:16px;font-family:PingFangSC-Medium,PingFang SC;font-weight:500;color:#FFFFFF;}.charge_num_two{margin-left: 0.05rem;font-size:16px;font-family:PingFangSC-Regular,PingFang SC;font-weight:400;color:#FF7932;}.charge_rule_con{position:absolute;top:11.69rem;width:100%;padding-bottom:0.5rem}.charge_rule{display:flex;justify-content:center}.charge_rule_kuang{line-height:22px;width:6.34rem;background-color:rgb(226,78,0);border-radius:6px;padding:0.28rem;color:#FFE3D4;font-weight:500;font-size:12px}html,body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td{margin:0;padding:0;}body,button,input,select,textarea{font:12px/1.5tahoma,arial,\5b8b\4f53;}h1,h2,h3,h4,h5,h6{font-size:100%;}address,cite,dfn,em,var{font-style:normal;}code,kbd,pre,samp{font-family:couriernew,courier,monospace;}small{font-size:12px;}ul,ol{list-style:none;}a{text-decoration:none;}a:hover{text-decoration:underline;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}legend{color:#000;}fieldset,img{border:0;}button,input,select,textarea{font-size:100%;}table{border-collapse:collapse;border-spacing:0;}
+</style>
+</body>
+</html>
