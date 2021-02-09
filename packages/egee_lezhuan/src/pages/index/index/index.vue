@@ -31,16 +31,16 @@
 					style="position: fixed;top: 240rpx;left: 0;z-index: 9999;height: 60rpx">
 		</scrollMess>
 
-		<!--<view style="position: fixed;top: 300rpx;background: white;height: 100rpx;text-align: center;left: 0;width: 100%;z-index:999;">-->
-		<!--<span style="position: fixed;top: 330rpx;font-size: 18px;left: 20rpx">类型：</span>-->
-		<!--<radio-group @change="radioChange" style="text-align: center;display: inline-block;margin-top: 10rpx">-->
-		<!--<label v-for="(item, index) in items" :key="item.value"-->
-		<!--style="display: inline-block;margin-left: 30rpx">-->
-		<!--<radio :value="item.value" :checked="index === current"/>-->
-		<!--<view>{{item.name}}</view>-->
-		<!--</label>-->
-		<!--</radio-group>-->
-		<!--</view>-->
+		<view style="position: fixed;top: 300rpx;background: white;height: 100rpx;text-align: center;left: 0;width: 100%;z-index:999;">
+		<span style="position: fixed;top: 330rpx;font-size: 18px;left: 20rpx">类型：</span>
+		<radio-group @change="radioChange" style="text-align: center;display: inline-block;margin-top: 10rpx">
+		<label v-for="(item, index) in items" :key="item.value"
+		style="display: inline-block;margin-left: 30rpx">
+		<radio :value="item.value" :checked="index === current"/>
+		<view>{{item.name}}</view>
+		</label>
+		</radio-group>
+		</view>
 
 
 		<mescroll-uni :down="downOption" :up="upOption" @down="downCallback" @emptyclick="emptyClick"
@@ -199,22 +199,22 @@
                         value: '34',
                         name: '美女视频'
                     },
-                    // {
-                    //     value: '1',
-                    //     name: 'w.url'
-                    // },
-                    // {
-                    //     value: '5',
-                    //     name: 'w.url2'
-                    // },
-                    // {
-                    //     value: '4',
-                    //     name: 'sohu'
-                    // },
-                    // {
-                    //     value: '2',
-                    //     name: 'suo.im'
-                    // }
+                    {
+                        value: '1',
+                        name: 'w.url'
+                    },
+                    {
+                        value: '5',
+                        name: 'w.url2'
+                    },
+                    {
+                        value: '4',
+                        name: 'sohu'
+                    },
+                    {
+                        value: '2',
+                        name: 'suo.im'
+                    }
                 ],
                 tipMess: '正在加载...',
                 modalStatusTwo: false,
