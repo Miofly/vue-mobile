@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+</script>
+<script src="https://www.51qianduan.com/public/js/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+	function fixHeight() {
+		var headerHeight = $("#switcher").height();
+		if($(window).width() < 870){//判断页面宽度，手机版的时候则全部内容
+			$("#iframe").attr("height", $(window).height()+ "px");
+			//$("#by").attr("style", "height:"+$(window).height()+ "px");
+		}else{
+			$("#iframe").attr("height", $(window).height()-54+ "px");
+		}
+	}
+	$(window).resize(function () {
+		fixHeight();
+	}).resize();
+
+	$('.icon-pc').addClass('active');
+
+	$(".icon-mobile").click(function () {
+		$("#by").css("overflow-y", "auto");
+		$('#iframe-wrap').removeClass().addClass('mobile-width');
+		$('.icon-ipad,.icon-pc,.icon-mobile').removeClass('active');
+		$(this).addClass('active');
+		return false;
+	});
+
+
+	$(".icon-ipad").click(function () {
+		$("#by").css("overflow-y", "auto");
+		$('#iframe-wrap').removeClass().addClass('ipad-width');
+		$('.icon-ipad,.icon-pc,.icon-mobile').removeClass('active');
+		$(this).addClass('active');
+		return false;
+	});
+
+	$(".icon-pc").click(function () {
+		$("#by").css("overflow-y", "hidden");
+		$('#iframe-wrap').removeClass().addClass('full-width');
+		$('.icon-ipad,.icon-pc,.icon-mobile').removeClass('active');
+		$(this).addClass('active');
+		return false;
+	});
+});
+</script>
+<script type="text/javascript">
+function Responsive() {
+	if ( == true) $("#equipment").css("opacity", "100");
+	if ( == false) $("#equipment").css("opacity", "0");
+	$('#iframe-wrap').removeClass().addClass('full-width');
+	$('.icon-ipad,.icon-pc,.icon-mobile').removeClass('active');
+	$(this).addClass('active');
+	return false;
+};
+</script>
+<script type="text/javascript">
+</script>
+<style>
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}
+body{line-height:0.5}
+ol, ul{list-style:none}
+blockquote, q{quotes:none}
+blockquote:before, blockquote:after, q:before, q:after{content:'';content:none}
+:focus{outline:0}
+ins{text-decoration:none}
+del{text-decoration:line-through}
+table{border-collapse:collapse;border-spacing:0}
+a{text-decoration:none;color:#fff}
+body{font-family:"Kreon";font-weight:300;color:#444;background:#fff;}
+#switcher{height:54px;z-index:99999;position:fixed;width:100%;top:0;background:#444;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.center{width:100%;padding-top:0}
+.center ul li{float:left;position:relative}
+.top3,.top2{margin-left:30px; line-height:52px;color:#fff;font-family:"微软雅黑"}
+.top2{position:relative;margin-top:15px;font-size:12px;font-weight:normal;background-image:url(/app/article/images/view-erweima.png);background-repeat:no-repeat;background-position:3px center;height:22px;padding-left:25px;line-height:22px;border:1px solid #bbb;padding-right:5px;border-radius:3px;}
+.top2 .vm p{color:#808080;margin:7px 0 0 0; text-align:center;}
+.vm{position:absolute;top:22px;left:-1px;background-color:#fff;height:170px;width:150px;display:none;padding:30px;}
+.top2:hover .vm{display:block}
+.top3 a:hover{text-decoration:none;}
+li.top4 a,li.top5 a,li.top6 a{ font-size:13px;}
+li.top4{float:right!important;margin-right:30px; line-height:52px;}
+li.top4 a{ color:#f8bc06;}
+li.top5{float:right!important; margin-left:12px; margin-right:12px; color:#FFF; font-size:13px; line-height:52px;}
+li.top6{float:right!important; line-height:52px;color: #fff;font-size: 14px;}
+#iframe{margin-top:0}
+.icon-pc{margin-right:18px;margin-top:20px;width:17px;height:16px;background:url(/app/article/images/view-equipment-min.png) no-repeat;margin-left:10px;background-position:0 0;}
+.icon-ipad{margin-right:15px;margin-top:20px;width:17px;height:16px;background:url(/app/article/images/view-equipment-min.png) no-repeat;background-position:-24px 0}
+.icon-mobile{margin-right:15px;margin-top:20px;width:17px;height:16px;background:url(/app/article/images/view-equipment-min.png) no-repeat;background-position:-71px 0}
+.icon-pc:hover, .icon-pc.active{background-position:0 -16px}
+.icon-ipad:hover, .icon-ipad.active{background-position:-24px -16px}
+.icon-mobile:hover, .icon-mobile.active{background-position:-71px -16px}
+#iframe-wrap{height:100%;overflow:hidden;position:relative;top:54px;z-index:50}
+.ipad-width{height:960px!important;margin: 40px auto 90px;padding:175px 100px 114px 100px;width:785px;background:url(/app/article/images/view-equipment-max.png) no-repeat 0 0}
+.ipad-width iframe{height:960px!important}
+.mobile-width{height:417px!important;margin: 40px auto 90px;padding:125px 25px 159px 25px;width:337px;background:url(/app/article/images/view-equipment-max.png) no-repeat 0 -2217px}
+.mobile-width iframe{height:416px!important}
+#by{overflow-y:hidden}
+
+@media screen and (max-width:870px) {
+#switcher{display:none;}
+#iframe-wrap{top:0; bottom:0;}
+/*#equipment{ display:none;}
+.top2,.top4,.top5,.top6{ display:none;}
+.top3{ margin-left:10px; margin-right:10px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.center ul li{float:none;}*/
+/*小于640屏幕*/
+}
+</style>
+</head>
+<body id="by">
+<div id="switcher">
+	<div class="center">
+		<ul>
+			<div id="equipment">
+				<li><a href="javascript:"><div class="icon-pc active"></div></a></li>
+				<li><a href="javascript:"><div class="icon-ipad"></div></a></li>
+				<li><a href="javascript:"><div class="icon-mobile"></div></a></li>
+			</div>
+			<li class="top2">
+				<a href="#">手机二维码预览</a>
+				<div class="vm">
+					<div id="output"></div>
+					<p>扫一扫，直接在手机端打开</p>
+				</div>
+			</li>
+			<li class="top3">【<a href="https://www.51qianduan.com/article/style/2" class="blue">导航菜单</a> | <a href="https://www.51qianduan.com/article/cate/156" class="blue">滑动特效</a>】<a href="https://www.51qianduan.com/article/4725.html" title="html5仿手机侧边抽屉式滑动菜单效果代码演示">html5仿手机侧边抽屉式滑动菜单效果代码演示</a></li>
+			<script type="text/javascript">
+			jQuery('#output').qrcode({width:150,height: 150,text: window.location.href});
+			</script>
+			<li class="top4 active"><a href="https://www.51qianduan.com/article/4725.html">>>返回上页，即可下载</a></li>
+            <li class="top5">|</li>
+                        	                	<li class="top6"><a href="https://www.51qianduan.com/article/tag/147">滑动导航菜单</a></li>
+                                        	                	<li class="top6"><a href="https://www.51qianduan.com/article/tag/174">收缩导航菜单</a></li>
+                                        	                	<li class="top6"><a href="https://www.51qianduan.com/article/tag/225">二级导航菜单</a></li>
+                                        	                	<li class="top6"><a href="https://www.51qianduan.com/article/tag/148">滑动选项卡切换</a></li>
+                                        	                	<li class="top6"><a href="https://www.51qianduan.com/article/tag/175">文字收缩展开</a></li>
+                                        	                	<li class="top6"><a href="https://www.51qianduan.com/article/tag/226">下拉导航菜单</a></li>
+                                        	                	<li class="top6"><a href="https://www.51qianduan.com/article/tag/149">图片滑动</a></li>
+                                        	                	<li class="top6"><a href="https://www.51qianduan.com/article/tag/176">图片收缩展开</a></li>
+                                        	                        	                        	                        	                        	                        	                        	                        	                        	                        	                        	                        	                        	                        	                        	                        	                        	                        	                        	                        	                        	                        	                        <li class="top6">搜索标签：</li>
+		</ul>
+	</div>
+</div>
+
+
+
+<div id="iframe-wrap">
+<iframe id="iframe" src="https://www.51qianduan.com/uploadfile/article/1807/01/4725/index.html" frameborder="0" height="100%" width="100%"></iframe>
+</div>
+<script src="https://www.51qianduan.com/app/article/js/extend.func.js" type="text/javascript"></script>
+<div style="display:none;"><script src="https://s13.cnzz.com/z_stat.php?id=1273541249&web_id=1273541249" language="JavaScript"></script></div></body>
+</html>

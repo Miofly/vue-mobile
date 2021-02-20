@@ -11,9 +11,10 @@
 
  这里我们采用了文档碎片的方式将 DOM 储存起来，然后批量编译后追加回原来的容器中。这样做的好处就是避免大量的操作 DOM 引起性能力浪费，而是一次性的操作。
  之后的编译逻辑就在 compile 函数中展开了，我们需要遍历所有的节点，找出需要进行编译的节点，并且区分是编译模板还是指令：
-
-
  */
+
+import Watcher from "./Watcher.js"
+
 export default class Compile {
 	constructor(el, vm) {
 		this.el = el
@@ -58,8 +59,24 @@ export default class Compile {
 			Utils.text(node, content, this.vm)
 		}
 	}
-
-
+	// 编译元素标签
+	compileElement(node) {
+		// 获取所有的属性并且遍历
+		const attrs = Array.from(node.attributes)
+		attrs.forEach(attr => {
+			// 如果含有指令属性就进行解析
+			if (attr.name.startsWith('v-')) {
+				const name = attr.name.split('v-')[1]
+				const [directive, methodName] = name.split(':')
+				const value = attr.value
+				// 每一种指令对应一种解析方法
+				Utils[directive](node, value, this.vm, methodName)
+				// 最后标签上面丑陋的 v-xxx 属性
+				const removedDirective = methodName ? `v-${directive}:${methodName}` : ('v-' + directive)
+				node.removeAttribute(removedDirective)
+			}
+		})
+	}
 }
 
 const Utils = {

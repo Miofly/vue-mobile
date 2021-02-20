@@ -1,5 +1,6 @@
 var adaptive = {};
 (function (win, lib) {
+	console.log(lib)
     var doc = win.document;
     var docEl = doc.documentElement;
     var devicePixelRatio = win.devicePixelRatio;
