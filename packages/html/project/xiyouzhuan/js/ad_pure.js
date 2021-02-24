@@ -54,7 +54,7 @@ var Ad = {
 				complete: function () {
 					complete && complete();
 				}
-			});
+			})
 		}
 	},
 	// 广告点击 可根据具体业务修改 例如加入广告统计
@@ -85,7 +85,6 @@ var Ad = {
 				}, 300);
 			}
 		}
-
 	},
 	// 监控广告位置的方法，为监控曝光做准备 基本不需要修改
 	isElementInViewport: function (el) {
