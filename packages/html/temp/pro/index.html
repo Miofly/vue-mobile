@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<!-- saved from url=(0160)http://cps.qt853.cn/admin/goods/copywriting/10/%E5%A7%93%E5%90%8D%E6%B5%8B%E7%AE%97?_url=admin%2Fgoods%2Fcopywriting%2F10%2F%E5%A7%93%E5%90%8D%E6%B5%8B%E7%AE%97 -->
+<html lang="zh-CN" class="">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>获取文案</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+   <link  type="text/css" href="./index/daterangepicker.css">
+   <link  type="text/css" href="./index/all.css">
+   <link  type="text/css" href="./index/bootstrap-colorpicker.min.css">
+   <link  type="text/css" href="./index/bootstrap-datetimepicker.min.css">
+   <link  type="text/css" href="./index/fileinput.min.css">
+   <link  type="text/css" href="./index/select2.min.css">
+   <link  type="text/css" href="./index/ion.rangeSlider.css">
+   <link  type="text/css" href="./index/ion.rangeSlider.skinNice.css">
+   <link  type="text/css" href="./index/bootstrap-switch.min.css">
+   <link  type="text/css" href="./index/fontawesome-iconpicker.min.css">
+   <link  type="text/css" href="./index/bootstrap-duallistbox.min.css">
+   <link  type="text/css" href="./index/skin-blue-light.min.css">
+   <link  type="text/css" href="./index/bootstrap.min.css">
+   <link  type="text/css" href="./index/font-awesome.min.css">
+   <link  type="text/css" href="./index/laravel-admin.css">
+   <link  type="text/css" href="./index/nprogress.css">
+   <link  type="text/css" href="./index/sweetalert2.css">
+   <link  type="text/css" href="./index/nestable.css">
+   <link  type="text/css" href="./index/toastr.min.css">
+   <link  type="text/css" href="./index/bootstrap-editable.css">
+   <link  type="text/css" href="./index/fonts.css">
+   <link  type="text/css" href="./index/AdminLTE.min.css">
+
+   <link rel="stylesheet" type="text/css" href="./index/page_mp_article.css">
+   <link rel="stylesheet" type="text/css" href="./index/page_mp_article_improve_combo.css">
+    <style>
+      #editor-bar .dropdown-menu {
+        height: auto;
+        max-height: 400px;
+        overflow-x: hidden;
+      }
+      .nav .dropdown-menu {
+        border: 1px solid #d5d5d5;
+        box-shadow: 0 0px 5px #999999;
+      }
+      .dropdown-menu li.cover_li {
+        width: 24.3%;
+        display: inline-block;
+        text-align: center;
+        overflow: hidden;
+        height: 60px;
+      }
+      .dropdown-menu li.cover_li a {
+        width: 100%;
+        padding: 3px 0;
+      }
+      .dropdown-menu li.cover_li a:focus,
+      .dropdown-menu li.cover_li a:hover {
+        background: none;
+      }
+    </style>
+    <script src="./index/promise.min.js"></script>
+    <script src="./index/jQuery-2.1.4.min.js"></script>
+    <script src="./index/clipboard.min.js"></script>
+    <script src="./index/lodash.min.js"></script>
+    
+</head>
+<body cz-shortcut-listen="true" tcap-name="main" class="" style="padding-right: 0px;">
+<style>
+  .custom-wrapper{
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    display: none;
+  }
+  .custom-wrapper .left{
+    width: 60%;
+  }
+  .custom-wrapper .left .tips{
+    font-size: 12px;
+    color: #f00;
+  }
+  .custom-wrapper .right img{
+    width: 150px;
+  }
+
+</style>
+<!--<div class="modal fade" id="promoteLinkModal" data-controls-modal="promoteLinkModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="promoteLinkModal">-->
+<!--    <div class="modal-dialog" role="document" style="width:800px">-->
+<!--        <div class="modal-content">-->
+<!--        <div class="modal-header">-->
+<!--            <button id="cancelSmallBtn" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>-->
+<!--            <h4 class="modal-title">获取推广链接</h4>-->
+<!--        </div>-->
+<!--        <div class="modal-body">-->
+<!--            <div class="form-group">-->
+<!--              <label for="recipient-name" class="control-label">商品名称</label>-->
+<!--              <input type="text" class="form-control" id="goods_name" name="goods_name" required="" readonly="">-->
+<!--            </div>-->
+<!--            <div class="form-group channel_wrapper">-->
+<!--              <label for="recipient-name" class="control-label">渠道名称</label>-->
+<!--              <input type="text" class="form-control" id="channel_name" name="channel_name" required="" placeholder="请输入渠道名称">-->
+<!--            </div>-->
+<!--            <div class="custom-wrapper">-->
+<!--              <div class="left">-->
+<!--                <p>原文链接</p>-->
+<!--                <p style="font-weight:bold" class="native_url" id="toCopyNativeUrl"></p>-->
+<!--                <p class="tips">请务必使用上方链接作为文案的原文链接，不要使用微信中点开后手工复制的链接</p>-->
+<!--                <button type="button" class="btn btn-primary cpl-wrapper" data-toggle="copy-promote-link" data-clipboard-target="#toCopyNativeUrl">点击复制</button>-->
+<!--              </div>-->
+<!--              <div class="right">-->
+<!--                <img src="http://cps.qt853.cn/admin/goods/copywriting/10/%E5%A7%93%E5%90%8D%E6%B5%8B%E7%AE%97?_url=admin%2Fgoods%2Fcopywriting%2F10%2F%E5%A7%93%E5%90%8D%E6%B5%8B%E7%AE%97" alt="" class="native_url_qrcode">-->
+<!--              </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <input type="hidden" name="_token" value="AgCI2YruHc07fXHwpn2YPtSs74OxKSqGiJinkwTM">-->
+<!--        <div class="modal-footer">-->
+<!--            <button type="button" class="btn btn-primary create-link">生成推广链接</button>-->
+<!--            <a class="btn btn-primary to-download" target="_blank" href="javascript:void(0);" style="display:none;" download="qrcode.png">点击下载</a>-->
+<!--            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>-->
+<!--        </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<script>
+  $(function(){
+    /*创建链接*/
+    $('.create-link').on('click', function (e) {
+      var _this = $(this);
+      var goods_id = _this.attr('data-id');
+      var channel_name = $("input[name='channel_name']").val();
+      $.ajax({
+          url:"/admin/goods/create_native_url",
+          type:'post',
+          data:{
+              id:goods_id,
+              channel_name:channel_name,
+              _token:LA.token
+          },
+          dataType: 'json',
+          beforeSend:function(){
+              _this.attr('disabled','true');
+          },
+          success:function(res){
+              if(res.status){
+                $('.channel_wrapper').hide();
+                $("input[name='channel_name']").val('');
+                $('.custom-wrapper').css('display','flex');
+                $('.custom-wrapper .native_url').text(res.data.url);
+                $('.custom-wrapper .native_url_qrcode').attr('src',res.data.file_url);
+                $('.to-download').show().attr('href',res.data.file_url);
+                _this.removeAttr('disabled').hide();
+                toastr.success(res.message);
+              }else{
+                toastr.error(res.message);
+                _this.removeAttr('disabled');
+              }
+          },
+          error:function(res){
+              toastr.error(res.responseJSON.message);
+              _this.removeAttr('disabled');
+          }
+      });
+      var clipboard = new Clipboard('[data-toggle="copy-promote-link"]');
+      // 关闭框需要复原
+      $('#promoteLinkModal').on('hidden.bs.modal', function (event) {
+          $('.create-link').show();
+          $('.to-download').hide();
+          $('.custom-wrapper').css('display','none');
+          $('.channel_wrapper').show();
+          $(this).off('hidden.bs.modal');//去除绑定
+      });
+    });
+  })
+
+</script>
+  <div class="container">
+    <div class="rich_media">
+        <div class="rich_media_inner" style="padding-top:0">
+            <div class="rich_media_area_primary">
+                <h1 id="wx-article-title" class="rich_media_title">姓名中带有此字的人，财富卷土而来，家人都有福！</h1>
+                <div id="wx-article-all-content">
+                    <div id="wx-article-content-img"><div><img style="width:100%" src="./index/20181112100504584.png"></div></div>
+                    <div id="wx-article-content-img2" style="min-height: auto;margin-top:20px;"></div>
+                    <div class="rich_media_content" style="min-height: auto;margin-top:20px;">
+                        <div id="wx-article-content-title"></div>
+                        <div id="wx-article-content"><section data-role="outer" label="Powered by 135editor.com"><p><br></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); letter-spacing: 0.5px; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><span style="box-sizing: border-box !important; margin: 0px; padding: 0px; max-width: 100%; overflow-wrap: break-word !important; font-size: 15px;">人生就像下棋，下对了，全盘皆赢，下错了，一步错，步步错。</span></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); letter-spacing: 0.5px; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><br></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); letter-spacing: 0.5px; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><span style="box-sizing: border-box !important; margin: 0px; padding: 0px; max-width: 100%; overflow-wrap: break-word !important; font-size: 15px;">你是否走在对的人生道路上 ?</span></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><br></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); letter-spacing: 0.5px; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><span style="box-sizing: border-box !important; margin: 0px; padding: 0px; max-width: 100%; overflow-wrap: break-word !important; font-size: 15px;">八字是人的先天信息，无法更改，而姓名，这一伴随人一生的名片，也起着非常重要的作用。</span></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><br></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); letter-spacing: 0.5px; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><span style="box-sizing: border-box !important; margin: 0px; padding: 0px; max-width: 100%; overflow-wrap: break-word !important; font-size: 15px;">名字，对人的性格、心理等多方面具有重要的影响，那么怎样的名字才是符合自己的好名字，能带来好运的呢？</span></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><br></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); letter-spacing: 0.5px; text-align: center; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><img class="" data-copyright="0" data-ratio="0.66796875" data-s="300,640" data-type="jpeg" data-w="640" src="./index/640" data-tools-id="20616" style="margin: 0px; padding: 0px; max-width: 100%; height: 201px; z-index: -1; cursor: pointer; font-family: 微软雅黑, &quot;Microsoft YaHei&quot;, Arial, sans-serif; white-space: normal; background-color: rgb(255, 255, 255); border: 0px; vertical-align: middle; width: 304px; box-sizing: border-box !important; overflow-wrap: break-word !important;"></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><br></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); letter-spacing: 0.5px; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><span style="box-sizing: border-box !important; margin: 0px; padding: 0px; max-width: 100%; overflow-wrap: break-word !important; font-size: 15px;">在我国民间，流传着一个说法，即</span><span style="box-sizing: border-box !important; margin: 0px; padding: 0px; font-weight: 700; max-width: 100%; overflow-wrap: break-word !important;"><span style="box-sizing: border-box !important; margin: 0px; padding: 0px; max-width: 100%; overflow-wrap: break-word !important; font-size: 15px; color: #007AAA;">人的命中缺什么五行，就要在名字当中予以增补。</span></span></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); letter-spacing: 0.5px; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><br></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); letter-spacing: 0.5px; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><span style="box-sizing: border-box !important; margin: 0px; padding: 0px; max-width: 100%; overflow-wrap: break-word !important; font-size: 15px;">但五行又分为用神与忌神，也就是对命运有所助益和有所危害的五行，那么又该如何分辨呢？</span></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><br></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); letter-spacing: 0.5px; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><span style="box-sizing: border-box !important; margin: 0px; padding: 0px; font-weight: 700; max-width: 100%; overflow-wrap: break-word !important;"><span style="box-sizing: border-box !important; margin: 0px; padding: 0px; max-width: 100%; overflow-wrap: break-word !important; font-size: 15px;">举个例子来说：</span></span></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); letter-spacing: 0.5px; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><span style="box-sizing: border-box !important; margin: 0px; padding: 0px; font-weight: 700; max-width: 100%; overflow-wrap: break-word !important;"><span style="box-sizing: border-box !important; margin: 0px; padding: 0px; max-width: 100%; overflow-wrap: break-word !important; font-size: 15px;">如果命局中出现金木交战，就需要在名中补水。</span></span></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); letter-spacing: 0.5px; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><span style="box-sizing: border-box !important; margin: 0px; padding: 0px; font-weight: 700; max-width: 100%; overflow-wrap: break-word !important;"><span style="box-sizing: border-box !important; margin: 0px; padding: 0px; max-width: 100%; overflow-wrap: break-word !important; font-size: 15px;">如果命局中满盘木土相克，则就要名中补火。</span></span></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><br></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); letter-spacing: 0.5px; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><span style="box-sizing: border-box !important; margin: 0px; padding: 0px; max-width: 100%; overflow-wrap: break-word !important; font-size: 15px;">因此看似简单的八个字中蕴藏着无穷无尽的变化，补与不补要全面分析，根据</span><span style="box-sizing: border-box !important; margin: 0px; padding: 0px; font-weight: 700; max-width: 100%; overflow-wrap: break-word !important;"><span style="box-sizing: border-box !important; margin: 0px; padding: 0px; max-width: 100%; overflow-wrap: break-word !important; font-size: 15px; color: #007AAA;">八字中的五行平衡酌情而定</span></span><span style="box-sizing: border-box !important; margin: 0px; padding: 0px; max-width: 100%; overflow-wrap: break-word !important; font-size: 15px;">。</span></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); letter-spacing: 0.5px; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><br></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); letter-spacing: 0.5px; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important; text-align: center;"><img src="./index/7b0ab52ae497d66355b568538fc3514d556001.png" title="7b0ab52ae497d66355b568538fc3514d556001.png" alt="2019041605334495655.png" style="margin: 0px; padding: 0px; border: 0px; vertical-align: middle; max-width: 100%; text-align: center; box-sizing: border-box !important; height: auto !important; overflow-wrap: break-word !important;" data-ratio="1"></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); letter-spacing: 0.5px; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><br></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); letter-spacing: 0.5px; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><span style="box-sizing: border-box !important; margin: 0px; padding: 0px; max-width: 100%; overflow-wrap: break-word !important; font-size: 15px;">而且，名字的好坏是因人而异的，同样的名字用在不同的人身上，效果会大相径庭。</span></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><br></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); letter-spacing: 0.5px; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><span style="box-sizing: border-box !important; margin: 0px; padding: 0px; max-width: 100%; overflow-wrap: break-word !important; font-size: 15px;">命名的重要性，在于知命基础上的以名调命。需要结合个人八字，详细分析，才能有所定论。</span></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); letter-spacing: 0.5px; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><br></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); letter-spacing: 0.5px; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><span style="box-sizing: border-box !important; margin: 0px; padding: 0px; max-width: 100%; overflow-wrap: break-word !important; font-size: 15px;">你的名字又是否适合你呢？</span></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px 0.5em; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); letter-spacing: 0.5px; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><span style="box-sizing: border-box !important; margin: 0px; padding: 0px; max-width: 100%; overflow-wrap: break-word !important; font-size: 15px;"></span></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important; text-align: center;"><img src="./index/7b0ab52ae497d66355b568538fc3514d556001.png" title="7b0ab52ae497d66355b568538fc3514d556001.png" alt="2019041605334495655.png" style="margin: 0px; padding: 0px; border: 0px; vertical-align: middle; max-width: 100%; text-align: center; box-sizing: border-box !important; height: auto !important; overflow-wrap: break-word !important;" data-ratio="1"></p><p style="margin-top: 0px; margin-bottom: 0px; padding: 0px; max-width: 100%; clear: both; min-height: 1em; color: rgb(62, 62, 62); font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; box-sizing: border-box !important; overflow-wrap: break-word !important;"><br></p><p><br></p></section><p><br></p></div>
+                    </div>
+                    <div id="wx-article-temp-img"><div><img style="width:100%" src="./index/2018120406005124841.gif"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+<!--  <nav id="editor-bar" class="navbar navbar-default navbar-fixed-bottom">-->
+<!--      <div class="container">-->
+<!--          <div class="navbar-header">-->
+<!--              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#editor-menu" aria-expanded="false">-->
+<!--                  <span class="icon-bar"></span>-->
+<!--                  <span class="icon-bar"></span>-->
+<!--                  <span class="icon-bar"></span>-->
+<!--              </button>-->
+<!--          </div>-->
+<!--          <div class="collapse navbar-collapse" id="editor-menu">-->
+<!--              <ul class="nav navbar-nav">-->
+<!--                  <li class="dropdown">-->
+<!--                      <a href="http://cps.qt853.cn/admin/goods/copywriting/10/%E5%A7%93%E5%90%8D%E6%B5%8B%E7%AE%97?_url=admin%2Fgoods%2Fcopywriting%2F10%2F%E5%A7%93%E5%90%8D%E6%B5%8B%E7%AE%97#" class="dropdown-toggle" data-toggle="dropdown">-->
+<!--                        <i class="fa fa-header"></i>文案标题 <span class="caret"></span>-->
+<!--                        </a>-->
+<!--                      <ul id="titleUl" class="dropdown-menu"><li><a href="javascript:void(0)" onclick="selectTitle(725,&#39;姓名中带有此字的人，财富卷土而来，家人都有福！&#39;)" data-bind="text: title, click: $root.changeTitle">姓名中带有此字的人，财富卷土而来，家人都有福！</a></li><li><a href="javascript:void(0)" onclick="selectTitle(726,&#39;姓名中有这个字的人，猪年上上签，鸿运势头挡不住！&#39;)" data-bind="text: title, click: $root.changeTitle">姓名中有这个字的人，猪年上上签，鸿运势头挡不住！</a></li><li><a href="javascript:void(0)" onclick="selectTitle(727,&#39;姓名中有这几个字，运气好，美事多，终会富贵满满！&#39;)" data-bind="text: title, click: $root.changeTitle">姓名中有这几个字，运气好，美事多，终会富贵满满！</a></li><li><a href="javascript:void(0)" onclick="selectTitle(728,&#39;姓名中有这几个字的人，40岁后身份显贵，财富更上一层楼&#39;)" data-bind="text: title, click: $root.changeTitle">姓名中有这几个字的人，40岁后身份显贵，财富更上一层楼</a></li><li><a href="javascript:void(0)" onclick="selectTitle(729,&#39;姓名中有这些偏旁的人，天生财主命，越老福气越好！&#39;)" data-bind="text: title, click: $root.changeTitle">姓名中有这些偏旁的人，天生财主命，越老福气越好！</a></li><li><a href="javascript:void(0)" onclick="selectTitle(730,&#39;姓名中有这3个字，大器早成，行大运发大财，能成就非凡&#39;)" data-bind="text: title, click: $root.changeTitle">姓名中有这3个字，大器早成，行大运发大财，能成就非凡</a></li><li><a href="javascript:void(0)" onclick="selectTitle(731,&#39;姓名中有这几个字，十人有九人能富，财运多旺势！&#39;)" data-bind="text: title, click: $root.changeTitle">姓名中有这几个字，十人有九人能富，财运多旺势！</a></li><li><a href="javascript:void(0)" onclick="selectTitle(732,&#39;【姓名测算】你的名字是旺运还是败运？能否增长运势？&#39;)" data-bind="text: title, click: $root.changeTitle">【姓名测算】你的名字是旺运还是败运？能否增长运势？</a></li><li><a href="javascript:void(0)" onclick="selectTitle(733,&#39;你的姓名里藏着多少财?能纳多少福？你知道吗？&#39;)" data-bind="text: title, click: $root.changeTitle">你的姓名里藏着多少财?能纳多少福？你知道吗？</a></li><li><a href="javascript:void(0)" onclick="selectTitle(734,&#39;【超准！】你的名字里，隐藏着什么样的秘密？&#39;)" data-bind="text: title, click: $root.changeTitle">【超准！】你的名字里，隐藏着什么样的秘密？</a></li><li><a href="javascript:void(0)" onclick="selectTitle(742,&#39;名字里带这3个字，天生富贵命，一辈子不缺钱！&#39;)" data-bind="text: title, click: $root.changeTitle">名字里带这3个字，天生富贵命，一辈子不缺钱！</a></li><li><a href="javascript:void(0)" onclick="selectTitle(747,&#39;起错名字影响一生，你的名字值多少分？&#39;)" data-bind="text: title, click: $root.changeTitle">起错名字影响一生，你的名字值多少分？</a></li><li><a href="javascript:void(0)" onclick="selectTitle(749,&#39;姓名带这些偏旁的人，10个有9个富，财运多旺势！&#39;)" data-bind="text: title, click: $root.changeTitle">姓名带这些偏旁的人，10个有9个富，财运多旺势！</a></li><li><a href="javascript:void(0)" onclick="selectTitle(753,&#39;名字里带这3个字，天生招财命，一辈子不缺钱！&#39;)" data-bind="text: title, click: $root.changeTitle">名字里带这3个字，天生招财命，一辈子不缺钱！</a></li><li><a href="javascript:void(0)" onclick="selectTitle(773,&#39;起错名字影响一生，你的名字值多少分？&#39;)" data-bind="text: title, click: $root.changeTitle">起错名字影响一生，你的名字值多少分？</a></li><li><a href="javascript:void(0)" onclick="selectTitle(774,&#39;姓名，透视你一生命运！&#39;)" data-bind="text: title, click: $root.changeTitle">姓名，透视你一生命运！</a></li><li><a href="javascript:void(0)" onclick="selectTitle(775,&#39;好听的名字就是好名字？&#39;)" data-bind="text: title, click: $root.changeTitle">好听的名字就是好名字？</a></li><li><a href="javascript:void(0)" onclick="selectTitle(776,&#39;姓名吉凶|不怕生错命，最怕改错名&#39;)" data-bind="text: title, click: $root.changeTitle">姓名吉凶|不怕生错命，最怕改错名</a></li><li><a href="javascript:void(0)" onclick="selectTitle(777,&#39;名重千金！你的姓名影响着一生的走向！&#39;)" data-bind="text: title, click: $root.changeTitle">名重千金！你的姓名影响着一生的走向！</a></li><li><a href="javascript:void(0)" onclick="selectTitle(778,&#39;起错名字影响一生，你的名字值多少分？&#39;)" data-bind="text: title, click: $root.changeTitle">起错名字影响一生，你的名字值多少分？</a></li><li><a href="javascript:void(0)" onclick="selectTitle(779,&#39;命带桃花的姓名用字！看看你用了没？&#39;)" data-bind="text: title, click: $root.changeTitle">命带桃花的姓名用字！看看你用了没？</a></li></ul>-->
+<!--                  </li>-->
+<!--                  <li class="dropdown">-->
+<!--                      <a id="chooseSurfacePlot" href="http://cps.qt853.cn/admin/goods/copywriting/10/%E5%A7%93%E5%90%8D%E6%B5%8B%E7%AE%97?_url=admin%2Fgoods%2Fcopywriting%2F10%2F%E5%A7%93%E5%90%8D%E6%B5%8B%E7%AE%97#" class="dropdown-toggle" data-toggle="dropdown" data-bind="click: coverSelect"><i class="fa fa-image"></i> 头条封面 <span class="caret"></span></a>-->
+<!--                  </li>-->
+<!--                  <li class="dropdown">-->
+<!--                      <a id="chooseSurfacePlot2" href="http://cps.qt853.cn/admin/goods/copywriting/10/%E5%A7%93%E5%90%8D%E6%B5%8B%E7%AE%97?_url=admin%2Fgoods%2Fcopywriting%2F10%2F%E5%A7%93%E5%90%8D%E6%B5%8B%E7%AE%97#" class="dropdown-toggle" data-toggle="dropdown" data-bind="click: coverSelect"><i class="fa fa-image"></i> 次条封面 <span class="caret"></span></a>-->
+<!--                  </li>-->
+<!--                  <li class="dropdown">-->
+<!--                      <a href="http://cps.qt853.cn/admin/goods/copywriting/10/%E5%A7%93%E5%90%8D%E6%B5%8B%E7%AE%97?_url=admin%2Fgoods%2Fcopywriting%2F10%2F%E5%A7%93%E5%90%8D%E6%B5%8B%E7%AE%97#" class="dropdown-toggle" data-toggle="dropdown">正文内容 <span class="caret"></span></a>-->
+<!--                      <ul id="conUl" class="dropdown-menu"><li><a href="javascript:void(0)" onclick="selectCon(205,&#39;起错名字影响一生，你的名字值多少分？&#39;)" data-bind="text: title, click: $root.changeTitle">起错名字影响一生，你的名字值多少分？</a></li><li><a href="javascript:void(0)" onclick="selectCon(196,&#39;生孩子取这名，聪明伶俐，好运常伴！&#39;)" data-bind="text: title, click: $root.changeTitle">生孩子取这名，聪明伶俐，好运常伴！</a></li></ul>-->
+<!--                  </li>-->
+<!--                  <li class="dropdown">-->
+<!--                      <a id="chooseTemplate" href="http://cps.qt853.cn/admin/goods/copywriting/10/%E5%A7%93%E5%90%8D%E6%B5%8B%E7%AE%97?_url=admin%2Fgoods%2Fcopywriting%2F10%2F%E5%A7%93%E5%90%8D%E6%B5%8B%E7%AE%97#" class="dropdown-toggle" data-toggle="dropdown">原文引导模板<span class="caret"></span></a>-->
+<!--                  </li>-->
+<!--                  <li class="dropdown">-->
+<!--                      <a href="http://cps.qt853.cn/admin/goods/copywriting/10/%E5%A7%93%E5%90%8D%E6%B5%8B%E7%AE%97?_url=admin%2Fgoods%2Fcopywriting%2F10%2F%E5%A7%93%E5%90%8D%E6%B5%8B%E7%AE%97#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-copy"></i> 复制 <span class="caret"></span></a>-->
+<!--                      <ul class="dropdown-menu">-->
+<!--                          <li>-->
+<!--                              <a href="javascript:void(0);" data-toggle="copy-title" data-clipboard-target="#wx-article-title">复制标题</a>-->
+<!--                          </li>-->
+<!--                          <li>-->
+<!--                              <a href="javascript:void(0);" data-toggle="copy-content" data-clipboard-target="#wx-article-all-content">复制正文</a>-->
+<!--                          </li>-->
+<!--                      </ul>-->
+<!--                  </li>-->
+<!--              </ul>-->
+<!--              <div class="navbar-form navbar-right">-->
+<!--                  <span data-bind="visible: is_novel_online" style="display:none;">-->
+<!--                      <button type="button" class="btn btn-primary" data-bind="click: openReferralLinkModal">-->
+<!--                          <i class="fa fa-link"></i> 生成原文链接-->
+<!--                      </button>-->
+<!--                  </span>-->
+<!--                  <span data-bind="visible: !is_novel_online()" style="display:none;">-->
+<!--                      <button type="button" class="btn btn-disabled">小说已下架</button>-->
+<!--                  </span>-->
+<!--              </div>-->
+<!--              <div class="navbar-form navbar-right">-->
+<!--                  <span>-->
+<!--                      <button type="button" class="btn btn-primary showLink" title="">-->
+<!--                          <i class="fa fa-link"></i> 获取推广链接-->
+<!--                      </button>-->
+<!--                      -->
+<!--                  </span>-->
+<!--              </div>-->
+<!--          </div>-->
+<!--      </div>-->
+<!--  </nav>-->
+<!--    <div id="surfacePlotModal" class="cover-select-modal modal fade" tabindex="-1">-->
+<!--        <div class="modal-dialog" role="document">-->
+<!--            <div class="modal-content">-->
+<!--                <div class="modal-header">-->
+<!--                    <h4 class="modal-title">头条封面选择</h4>-->
+<!--                </div>-->
+<!--                <div class="modal-body">-->
+<!--                    <div class="row" id="conImgUl"><div class="col-sm-3" style="height: 75px; width: 112px; overflow: hidden"><a href="javascript:void(0)" onclick="selectConImg(54)" data-bind="click: $parent.selectCover" style="display:block;margin-bottom:10px;"><img src="./index/20181112100504584.png" data-bind="attr: { src: cover_url }" style="width:112px;height:75px;"></a></div><div class="col-sm-3" style="height: 75px; width: 112px; overflow: hidden"><a href="javascript:void(0)" onclick="selectConImg(58)" data-bind="click: $parent.selectCover" style="display:block;margin-bottom:10px;"><img src="./index/2018112703251223385.png" data-bind="attr: { src: cover_url }" style="width:112px;height:75px;"></a></div><div class="col-sm-3" style="height: 75px; width: 112px; overflow: hidden"><a href="javascript:void(0)" onclick="selectConImg(67)" data-bind="click: $parent.selectCover" style="display:block;margin-bottom:10px;"><img src="./index/2018112703392275887.png" data-bind="attr: { src: cover_url }" style="width:112px;height:75px;"></a></div><div class="col-sm-3" style="height: 75px; width: 112px; overflow: hidden"><a href="javascript:void(0)" onclick="selectConImg(75)" data-bind="click: $parent.selectCover" style="display:block;margin-bottom:10px;"><img src="./index/2018120504262177189.png" data-bind="attr: { src: cover_url }" style="width:112px;height:75px;"></a></div><div class="col-sm-3" style="height: 75px; width: 112px; overflow: hidden"><a href="javascript:void(0)" onclick="selectConImg(77)" data-bind="click: $parent.selectCover" style="display:block;margin-bottom:10px;"><img src="./index/2018120509455722307.jpg" data-bind="attr: { src: cover_url }" style="width:112px;height:75px;"></a></div><div class="col-sm-3" style="height: 75px; width: 112px; overflow: hidden"><a href="javascript:void(0)" onclick="selectConImg(103)" data-bind="click: $parent.selectCover" style="display:block;margin-bottom:10px;"><img src="./index/2018122308313297130.jpg" data-bind="attr: { src: cover_url }" style="width:112px;height:75px;"></a></div></div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div id="surfacePlotModal2" class="cover-select-modal modal fade" tabindex="-1">-->
+<!--        <div class="modal-dialog" role="document">-->
+<!--            <div class="modal-content">-->
+<!--                <div class="modal-header">-->
+<!--                    <h4 class="modal-title">次条封面选择</h4>-->
+<!--                </div>-->
+<!--                <div class="modal-body">-->
+<!--                    <div class="row" id="conImgUl2">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div id="templateModal" class="cover-select-modal modal fade" tabindex="-1">-->
+<!--        <div class="modal-dialog" role="document">-->
+<!--            <div class="modal-content">-->
+<!--                <div class="modal-header">-->
+<!--                    <h4 class="modal-title">原文引导模板</h4>-->
+<!--                </div>-->
+<!--                <div class="modal-body">-->
+<!--                    <div class="row" id="tempImgUl"><div class="col-sm-3" style="height: 75px; width: 112px; overflow: hidden"><a href="javascript:void(0)" onclick="selectTempImg(67)" data-bind="click: $parent.selectCover" style="display:block;margin-bottom:10px;"><img src="./index/2018120406005124841.gif" data-bind="attr: { src: cover_url }" style="width:112px;height:75px;"></a></div><div class="col-sm-3" style="height: 75px; width: 112px; overflow: hidden"><a href="javascript:void(0)" onclick="selectTempImg(68)" data-bind="click: $parent.selectCover" style="display:block;margin-bottom:10px;"><img src="./index/2018120406005889468.gif" data-bind="attr: { src: cover_url }" style="width:112px;height:75px;"></a></div></div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div id="articleLink" class="cover-select-modal modal fade" tabindex="-1">-->
+<!--        <div class="modal-dialog" role="document">-->
+<!--            <div class="modal-content">-->
+<!--                <div class="modal-header">-->
+<!--                    <h4 class="modal-title">文案公开链接</h4>-->
+<!--                </div>-->
+<!--                <div class="modal-body" style="position: relative;">-->
+<!--                    <div class="input-group">-->
+<!--                        <span class="input-group-addon">链接</span>-->
+<!--                        <input type="text" id="articleLinkId" readonly="" style="background:white" class="form-control" value="" onclick="this.select()">-->
+<!--                        <span class="input-group-btn">-->
+<!--                            <a href="javascript:void(0);" data-toggle="copy-text" data-clipboard-target="#articleLinkId" class="btn btn-default copy"><i class="fa fa-copy"></i> 复制</a>-->
+<!--                        </span>-->
+<!--                    </div>-->
+<!--                    <div style="margin: 10px 0;">有效期至：<span style="color: #981040;" id="valid_time"></span></div>-->
+<!--                    <div style="margin: 10px auto;display: flex;justify-content: center; ">-->
+<!--                        <button type="button" onclick="resetExpirationTime()" class="btn" style="background-color: #3771AF;color: #fff;">重置过期时间</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<script>
+  $(function() {
+    var id = 10;
+    var name = "姓名测算";
+    // select_goods_content(id);
+    var editor = new WxArticleEditor({
+        novel_id: 7122,
+        is_novel_online: true,
+        is_testing: false,
+        article_id: 3334552,
+        next_article_id: 3334553,
+        category_id: 15,
+        referral_link_id: null,
+        referral_link_url: '',
+        title_id: null,
+        cover_id: null,
+        body_template_id: '',
+        footer_template_id: '',
+        qrcode_template_id: null
+    });
+    editor.init();
+    // 头条封面选择
+    $('#chooseSurfacePlot').click(function() {
+        $('#surfacePlotModal').modal('show')
+    })
+    // 次条封面选择
+    $('#chooseSurfacePlot2').click(function() {
+        $('#surfacePlotModal2').modal('show')
+    })
+    // 引导模板
+    $('#chooseTemplate').click(function() {
+        $('#templateModal').modal('show')
+    });
+    $('.showLink').on('click', function () {
+        $("#promoteLinkModal #goods_name").val(name);
+        $("#promoteLinkModal .create-link").attr('data-id',id);
+        $("#promoteLinkModal").modal();
+    });
+  });
+</script>
+<script>
+    function LA() {}
+    LA.token = "AgCI2YruHc07fXHwpn2YPtSs74OxKSqGiJinkwTM";
+    // 复制标题
+    $('[data-toggle="copy-title"]').each(function() {
+        var clipboard = new Clipboard(this, {
+            text: function() {
+                return $('#wx-article-title').text();
+            }
+        });
+        clipboard.on('success', function(e) {
+            e.clearSelection();
+            toastr.success('复制标题成功！');
+        });
+    });
+    // 复制正文
+    $('[data-toggle="copy-content"]').each(function() {
+        var clipboard = new Clipboard(this, {
+            text: function() {
+                return $('#wx-article-all-content').val();
+            }
+        });
+        clipboard.on('success', function(e) {
+            e.clearSelection();
+            toastr.success('复制正文成功！');
+        });
+    });
+    function selectTitle(id, title) {
+        console.log(id);
+        console.log(title);
+        var title_id = id
+        $('#title_id').val(title_id)
+        $('#wx-article-title').html(title)
+    }
+    function selectCon(id, title) {
+        var con_id = id
+        $('#con_id').val(con_id)
+        for (var i = 0; i <= content_list.length - 1; i++) {
+            if (con_id == content_list[i].id) {
+                $('#wx-article-content').html(content_list[i].content);
+                return false
+            }
+        }
+    }
+    // 头条封面选择
+    function selectConImg(id) {
+        var con_img_id = id
+        $('#con_img_id').val(con_img_id)
+        for (var i = 0; i <= content_img_list.length - 1; i++) {
+            if (con_img_id == content_img_list[i].id) {
+                var con_img = '<div><img style="width:670px;" src="' + content_img_list[i].img_url + '"></div>';
+                $('#wx-article-content-img').html(con_img);
+                // 关闭
+                $('#surfacePlotModal').modal('hide')
+                return false
+            }
+        }
+    }
+    // 次条封面选择
+    function selectConImg2(id) {
+        var con_img_id = id
+        $('#con_img_id2').val(con_img_id)
+        for (var i = 0; i <= content_img_list.length - 1; i++) {
+            if (con_img_id == content_img_list[i].id) {
+                var con_img = '<div><img style="width:670px;" src="' + content_img_list[i].img_url + '"></div>';
+                $('#wx-article-content-img2').html(con_img);
+                // 关闭
+                $('#surfacePlotModal2').modal('hide')
+                return false
+            }
+        }
+    }
+    function selectTempImg(id) {
+        var temp_img_id = id;
+        $('#temp_img_id').val(temp_img_id);
+        for (var i = 0; i <= template_list.length - 1; i++) {
+            if (temp_img_id == template_list[i].id) {
+                var con_img = '<div><img style="width:670px;" src="' + template_list[i].img_url + '"></div>';
+                $('#wx-article-temp-img').html(con_img);
+                // 关闭
+                $('#templateModal').modal('hide');
+                return false
+            }
+        }
+    }
+    function select_goods_content(id) {
+        $.ajax({
+            url: '/admin/goods/select_goods_content',
+            type:'get',
+            data: { id: id },
+            success: function(res) {
+                if (res.status) {
+                    // 标题
+                    var title = res.data.title
+                    if(title.length>0){
+                        var t = ''
+                        $.each(title, function(j, obj) {
+                            t += `<li><a href="javascript:void(0)"  onclick="selectTitle(${obj.id},'${obj.title}')" data-bind="text: title, click: $root.changeTitle">${obj.title}</a></li>`;
+                        })
+                        $('#titleUl').html(t);
+                        // 默认标题
+                        selectTitle(title[0].id, title[0].title)
+                    }else{
+                        swal('该类型暂无标题可供选择');
+                    }
+                    
+                    // 正文内容
+                    content_list = res.data.content
+                    if(content_list.length>0){
+                        var c = ''
+                        $.each(content_list, function(j, obj) {
+                            c += `<li><a href="javascript:void(0)" onclick="selectCon(${obj.id},'${obj.title}')" data-bind="text: title, click: $root.changeTitle">${obj.title}</a></li>`;
+                        });
+                        $('#conUl').html(c);
+                        // 默认正文内容
+                        selectCon(content_list[0].id, content_list[0].title)
+                    }else{
+                        swal('该类型暂无正文可供选择');
+                    }
+                    // 头条封面
+                    content_img_list = res.data.content_img
+                    if(content_img_list.length>0){
+                        var ci = ''
+                        $.each(content_img_list, function(j, obj) {
+                            ci += '<div class="col-sm-3" style="height: 75px; width: 112px; overflow: hidden">'+
+                                        '<a href="javascript:void(0)" onclick="selectConImg('+obj.id+')" data-bind="click: $parent.selectCover" style="display:block;margin-bottom:10px;">'+
+                                            '<img src="'+obj.img_url+'" data-bind="attr: { src: cover_url }" style="width:112px;height:75px;" />'+
+                                    '</a></div>';
+                        });
+                        $('#conImgUl').html(ci);
+                        // 封面图片
+                        selectConImg(content_img_list[0].id)
+                    }else{
+                        swal('该类型暂无头条封面可供选择');
+                    }
+                    
+                        // 次条封面
+                    content_img_list2 = res.data.content_img_second
+                    if(content_img_list2.length>0){
+                        var second_cover = ''
+                        $.each(content_img_list2, function(j, obj) {
+                            second_cover += '<div class="col-sm-3" style="height: 75px; width: 112px; overflow: hidden">'+
+                                '<a href="javascript:void(0)" onclick="selectConImg2('+obj.id+')" data-bind="click: $parent.selectCover" style="display:block;margin-bottom:10px;">'+
+                                    '<img src="'+obj.img_url+'" data-bind="attr: { src: cover_url }" style="width:112px;height:75px;" />'+
+                            '</a></div>';
+                        })
+                        $('#conImgUl2').html(second_cover);
+                        // 封面图片
+                        selectConImg2(content_img_list2[0].id)
+                    }else{
+                        swal('该类型暂无次条封面可供选择');
+                    }
+                    // 原文引导模板
+                    template_list = res.data.template_img
+                    if(template_list.length>0){
+                        var tp = ''
+                        $.each(template_list, function(j, obj) {
+                            tp += '<div class="col-sm-3" style="height: 75px; width: 112px; overflow: hidden">'+
+                                '<a href="javascript:void(0)" onclick="selectTempImg('+obj.id+')" data-bind="click: $parent.selectCover" style="display:block;margin-bottom:10px;">'+
+                                    '<img src="'+obj.img_url+'" data-bind="attr: { src: cover_url }" style="width:112px;height:75px;" />'+
+                            '</a></div>';
+                        })
+                        $('#tempImgUl').html(tp);
+                        // 原文引导模板
+                        selectTempImg(template_list[0].id)
+                    }else{
+                        swal('该类型暂无原文引导模板可供选择');
+                    }
+                }
+            }
+        })
+    }
+    var WxArticleEditor = function(options) {
+      var self = this;
+      var previewArticles = [];
+      var covers = [];
+      var titles = [];
+      var footerTemplates = [];
+      var qrcodeTemplates = [];
+      var bodyTemplates = [];
+      var $title = $('#wx-article-title');
+      var $cover = $('#wx-article-cover');
+      var $body = $('#wx-article-body');
+      var $qrcode = $('#wx-article-qrcode');
+      var $footer = $('#wx-article-footer');
+      var editorBar = null;
+      this.titleId = options.title_id;
+      this.title = null;
+      this.coverId = options.cover_id;
+      this.coverUrl = null;
+      this.bodyTemplateId = options.body_template_id;
+      this.footerTemplateId = options.footer_template_id;
+      this.footerUrl = null;
+      this.qrcodeTemplateId = options.qrcode_template_id;
+      this.qrcodeUrl = null;
+      this.referralLinkId = options.referral_link_id;
+      this.referralLinkUrl = options.referral_link_url;
+      this.isNovelOnline = options.is_novel_online;
+      this.isTesting = options.is_testing;
+      this.novelId = options.novel_id;
+      this.categoryId = options.category_id;
+      this.articleId = options.article_id;
+      this.nextArticleId = options.next_article_id;
+      this.init = function() {
+          return $.when(
+                  loadTitles(),
+                  loadFooterTemplates(),
+                  loadQRCodeTemplates(),
+                  loadBodyTemplates(),
+                  loadPreviewArticles()
+              )
+              .then(function() {
+                  if (self.titleId) {
+                      self.changeTitle(self.titleId);
+                  } else {
+                      renderTitle(_.sample(titles));
+                  }
+                  if (self.coverId) {
+                      self.changeCover(self.coverId);
+                  } else {
+                      renderCover(_.sample(covers));
+                  }
+                  if (self.bodyTemplateId) {
+                      self.changeBodyTemplate(self.bodyTemplateId);
+                  } else {
+                      renderBody(_.sample(bodyTemplates));
+                  }
+                  if (self.footerTemplateId) {
+                      self.changeFooterTemplate(self.footerTemplateId);
+                  } else {
+                      renderFooter(_.sample(footerTemplates));
+                  }
+                  if (self.qrcodeTemplateId) {
+                      self.changeQRCodeTemplate(self.qrcodeTemplateId);
+                  }
+                  self.initReferralPanel();
+              });
+      };
+      this.$body = function() {
+          return $body;
+      };
+      this.changeTitle = function(id) {
+          var title = _.find(titles, function(it) {
+              return it.id == id;
+          });
+
+          renderTitle(title);
+      };
+      this.changeCover = function(id) {
+          var cover = _.find(covers, function(it) {
+              return it.id == id;
+          });
+          renderCover(cover);
+      };
+      this.changeBodyTemplate = function(id) {
+          var template = _.find(bodyTemplates, function(it) {
+              return it.id == id;
+          });
+          renderBody(template);
+      };
+      this.changeFooterTemplate = function(id) {
+          var template = _.find(footerTemplates, function(it) {
+              return it.id == id;
+          });
+
+          renderFooter(template);
+      };
+      this.changeQRCodeTemplate = function(id) {
+          if (!self.referralLinkUrl) {
+              return;
+          }
+          var template = _.find(qrcodeTemplates, function(it) {
+              return it.id == id;
+          });
+          if (!template) {
+              // 不设置二维码
+              renderQRCode(null);
+              return;
+          }
+          ajax({
+                  url: '',
+                  type: 'POST',
+                  contentType: 'application/json',
+                  data: JSON.stringify({
+                      referral_id: self.referralLinkId,
+                      template_id: template.id
+                  })
+              })
+              .then(function(data) {
+                  template = {
+                      'id': template.id,
+                      'preview_img': data.url,
+                      'template': '<img style="max-width:100%" src="' + data.url + '"/>'
+                  };
+                  renderQRCode(template);
+              }).fail(handleAjaxError);
+      };
+      this.drawHTML = function($el) {
+          $el.find('img').each(function() {
+              var src = $(this).attr('src');
+              if (src && src.indexOf('http') === 0) {
+              }
+          });
+          var canvas = document.createElement('canvas');
+          var scaleFactor = 2;
+          var targetWidth = 320;
+          var fontFamily = 'Kaiti, STKaiti, STSong, NSimSun, "Microsoft YaHei", sans-serif';
+          var fontWeight = 'normal';
+          var fontSize = '20px !important';
+          var html = $el.html();
+          html = '<html>' +
+              '<head>' +
+              '<style>' +
+              'html, body { padding:0;margin:0;font-family: ' + fontFamily + '; } ' +
+              '.chapter-title { font-size: 20px !important; }' +
+              '.chapter-content p {margin:0.6em 0; font-weight:' + fontWeight + '; text-indent:2em; font-size:' + fontSize + '; line-height:1.6em !important; } ' +
+              '</style>' +
+              '</head>' +
+              '<body style="background-color:white"><div style="width:' + targetWidth + 'px">' + html + '</div></body></html>';
+          return rasterizeHTML.drawHTML(html, null, {
+                  zoom: scaleFactor,
+                  width: parseInt(targetWidth, 10) * scaleFactor
+              })
+              .then(function(result) {
+                  var targetHeight = Math.floor(result.image.height / result.image.width * targetWidth);
+                  canvas.style.width = targetWidth + 'px';
+                  canvas.style.height = targetHeight + 'px';
+                  canvas.width = targetWidth * scaleFactor;
+                  canvas.height = targetHeight * scaleFactor;
+                  var ctx = canvas.getContext('2d');
+                  ctx.fillStyle = 'white';
+                  ctx.fillRect(0, 0, canvas.width, canvas.height);
+                  canvas.getContext('2d').drawImage(result.image, 0, 0);
+                  return canvas;
+              });
+      };
+      this.onReferralLinkGenerated = function(link) {
+          if (link) {
+              self.referralLinkId = link.id;
+              self.referralLinkUrl = link.url;
+
+              self.initReferralPanel();
+
+              if (self.qrcodeTemplateId) {
+                  self.changeQRCodeTemplate(self.qrcodeTemplateId);
+              }
+          }
+      };
+      this.initReferralPanel = function() {
+          if ((self.isNovelOnline || self.isTesting) && self.referralLinkId) {
+              $('#txt-referral-link').val(self.referralLinkUrl);
+              $('.panel-referral-link').show();
+          } else {
+              $('#txt-referral-link').val('');
+              $('.panel-referral-link').hide();
+          }
+      };
+      this.saveTmpReferralLink = function() {
+          var defer = $.Deferred();
+          if ((self.isNovelOnline || self.isTesting) && self.referralLinkId && self.referralLinkUrl) {
+              ajax({
+                      url: '/backend/referral_link_tmp/api_save',
+                      type: 'POST',
+                      contentType: 'application/json',
+                      data: JSON.stringify({
+                          referral_link_id: self.referralLinkId,
+                          mode: 1,
+                          settings: {
+                              referral_link_url: self.referralLinkUrl,
+                              title_id: self.titleId,
+                              title: self.title,
+                              cover_id: self.coverId,
+                              cover_url: self.coverUrl,
+                              body_template_id: self.bodyTemplateId,
+                              footer_template_id: self.footerTemplateId,
+                              footer_url: self.footerUrl,
+                              qrcode_template_id: self.qrcodeTemplateId,
+                              qrcode_url: self.qrcodeUrl
+                          }
+                      })
+                  })
+                  .then(function(data) {
+                      defer.resolve(data);
+                  })
+                  .fail(handleAjaxError);
+          }
+          return defer.promise();
+      };
+      this.changeCovers = function(data) {
+          covers = data;
+      };
+      function renderTitle(title) {
+          if (!title) {
+              self.title = null;
+              return false;
+          }
+          self.titleId = title.id;
+          self.title = title.title;
+          $title.html(title.title);
+
+      }
+      function renderCover(cover) {
+          if (!cover) {
+              self.coverUrl = null;
+              return false;
+          }
+          self.coverId = cover.id;
+          self.coverUrl = cover.cover_url;
+          $cover.html('<img style="width:100%;display:block;margin-bottom:20px;" src="' + cover.cover_url + '" />');
+      }
+      function renderBody(template) {
+          if (!template) {
+              self.bodyTemplateId = null;
+              return false;
+          }
+
+          self.bodyTemplateId = template.id;
+
+
+          if (!template.compiled_template) {
+              template.compiled_template = Handlebars.compile(template.template);
+          }
+
+          $body.html(template.compiled_template({ chapters: previewArticles }));
+      }
+      var selft = this;
+      function renderFooter(template) {
+          if (!template) {
+              self.footerTemplateId = null;
+              selft.footerUrl = null;
+              $footer.html('');
+          } else {
+              self.footerTemplateId = template.id;
+              self.footerUrl = template.preview_img;
+              $footer.html(template.template);
+          }
+      }
+      function renderQRCode(template) {
+          if (!template) {
+              self.qrcodeTemplateId = null;
+              self.qrcodeUrl = null;
+              $qrcode.html('');
+          } else {
+              self.qrcodeTemplateId = template.id;
+              self.qrcodeUrl = template.preview_img;
+              $qrcode.html(template.template);
+          }
+      }
+      function loadPreviewArticles() {
+          return
+      }
+      function loadTitles() {
+          return
+      }
+
+      function loadFooterTemplates() {
+          return
+      }
+      function loadQRCodeTemplates() {
+          return
+      }
+      function loadBodyTemplates() {
+          return
+      }
+    }
+</script>
+<!-- REQUIRED JS SCRIPTS -->
+<script src="./index/bootstrap.min.js"></script>
+<script src="./index/jquery.slimscroll.min.js"></script>
+<script src="./index/app.min.js"></script>
+<script src="./index/jquery.pjax.js"></script>
+<script src="./index/nprogress.js"></script>
+<script src="./index/jquery.nestable.js"></script>
+<script src="./index/toastr.min.js"></script>
+<script src="./index/bootstrap-editable.min.js"></script>
+<script src="./index/sweetalert2.min.js"></script>
+<script src="./index/laravel-admin.js"></script>
+<script src="./index/global.js"></script>
+<script src="./index/echarts.min.js"></script>
+<script src="./index/moment.min.js"></script>
+<script src="./index/daterangepicker.js"></script>
+<script src="./index/ueditor.config.js"></script>
+<script src="./index/ueditor.all.js"></script>
+<script src="./index/icheck.min.js"></script>
+<script src="./index/bootstrap-colorpicker.min.js"></script>
+<script src="./index/jquery.inputmask.bundle.min.js"></script>
+<script src="./index/moment-with-locales.min.js"></script>
+<script src="./index/bootstrap-datetimepicker.min.js"></script>
+<script src="./index/canvas-to-blob.min.js"></script>
+<script src="./index/fileinput.min.js"></script>
+<script src="./index/select2.full.min.js"></script>
+<script src="./index/bootstrap-number-input.js"></script>
+<script src="./index/icheck.min.js"></script>
+<script src="./index/ion.rangeSlider.min.js"></script>
+<script src="./index/bootstrap-switch.min.js"></script>
+<script src="./index/fontawesome-iconpicker.min.js"></script>
+<script src="./index/sortable.min.js"></script>
+<script src="./index/jquery.bootstrap-duallistbox.min.js"></script>
+
+
+
+
+<div id="fatkun-drop-panel">
+        <a id="fatkun-drop-panel-close-btn">×</a>
+            <div id="fatkun-drop-panel-inner">
+                <div class="fatkun-content">
+                    <svg class="fatkun-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5892"><path d="M494.933333 782.933333c2.133333 2.133333 4.266667 4.266667 8.533334 6.4h8.533333c6.4 0 10.666667-2.133333 14.933333-6.4l2.133334-2.133333 275.2-275.2c8.533333-8.533333 8.533333-21.333333 0-29.866667-8.533333-8.533333-21.333333-8.533333-29.866667 0L533.333333 716.8V128c0-12.8-8.533333-21.333333-21.333333-21.333333s-21.333333 8.533333-21.333333 21.333333v588.8L249.6 475.733333c-8.533333-8.533333-21.333333-8.533333-29.866667 0-8.533333 8.533333-8.533333 21.333333 0 29.866667l275.2 277.333333zM853.333333 874.666667H172.8c-12.8 0-21.333333 8.533333-21.333333 21.333333s8.533333 21.333333 21.333333 21.333333H853.333333c12.8 0 21.333333-8.533333 21.333334-21.333333s-10.666667-21.333333-21.333334-21.333333z" p-id="5893"></path></svg>
+                    <div class="fatkun-title">拖拽到此处</div>
+                    <div class="fatkun-desc">图片将通过Fatkun完成下载</div>
+                </div>
+            </div>
+    </div></body></html>
